@@ -17,7 +17,6 @@ vi.mock('@/lib/clerk-config', () => ({
   clerkEnabled: true,
   clerkPublishableKey: 'pk_test',
   e2eAuthEnabled: false,
-  selfHostAuthEnabled: false,
   clerkBundled: true,
 }));
 

@@ -22,7 +22,6 @@ vi.mock('@/lib/clerk-config', () => ({
     return config.clerk;
   },
   e2eAuthEnabled: false,
-  selfHostAuthEnabled: false,
   clerkBundled: true,
 }));
 vi.mock('next/navigation', () => ({ usePathname: () => '/embed/workbench/' }));

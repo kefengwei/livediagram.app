@@ -21,6 +21,7 @@
 // touches Clerk.
 
 import { useDeferredAuth } from '@/components/providers/deferred-auth';
+import { useSelfHostAuth } from '@/lib/self-host-auth';
 import Link from 'next/link';
 import { useId, useRef, type ReactNode } from 'react';
 import {
@@ -232,4 +233,19 @@ export function SignInIcon({ size = 13 }: { size?: number } = {}) {
   );
 }
 
-export const AuthControls = sessionsEnabled ? AuthControlsEnabled : AuthControlsDisabled;
+// Whether this deployment can have a session at all: a build carrying Clerk (or
+// the e2e bridge), or a self-hosted one whose own provider is discovered at
+// RUNTIME (lib/self-host-auth.ts asks the deployment's /api/auth/ok). The
+// self-hosted case cannot be a build-time constant — the image carries no
+// NEXT_PUBLIC_* value, and the flag this used to read never survived into the
+// client bundle (measured) — so the decision is made here, where the runtime
+// answer is available. While the probe is in flight nothing renders, which is
+// also what keeps a "Sign in" link from flashing before the pill.
+export function AuthControls(props: AuthControlsProps) {
+  const selfHosted = useSelfHostAuth();
+  return sessionsEnabled || selfHosted === true ? (
+    <AuthControlsEnabled {...props} />
+  ) : (
+    <AuthControlsDisabled {...props} />
+  );
+}

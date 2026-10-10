@@ -8,10 +8,11 @@
 // still had every page fetch Clerk: 38 kB on /, /new and the auth pages, 81 kB on the
 // explorer. `'use client'` was tried and does not change it.
 //
-// So `clerkBundled` and `selfHostAuthEnabled` decide what RENDERS, which is correct
-// and worth keeping; removing the library from the bundle is a build-time job — a
-// webpack alias for `@clerk/react` in next.config.ts, applied when the deployment has
-// no Clerk. Until that lands, a self-hosted deployment downloads Clerk and never runs it.
+// So `clerkBundled` and the runtime self-host probe decide what RENDERS, which is
+// correct and worth keeping; removing the library from the bundle is a build-time
+// job — a webpack alias for `@clerk/react` in next.config.ts, applied when the
+// deployment has no Clerk. Until that lands, a self-hosted deployment downloads
+// Clerk and never runs it.
 
 import { clerkPublishableKeyOrNull } from '@livediagram/ui/clerk-key';
 
@@ -57,19 +58,18 @@ export const clerkBundled = clerkKeyBaked;
 // never sets it) drops the branch and the bridge entirely.
 export const e2eAuthEnabled = process.env.NEXT_PUBLIC_E2E_AUTH === '1';
 
-// A self-hosted deployment (docs/specs/016-platform/self-hosted-runtime.md): the app
-// process serves its own identity provider at /api/auth/*, on the same origin, so
-// sign-in is an emailed one-time code rather than Clerk. A compile-time constant
-// like the rest of this file — the self-host image is built with
-// NEXT_PUBLIC_SELF_HOST_AUTH=1, so a build that does not set it drops this branch
-// and the bridge entirely.
-export const selfHostAuthEnabled = process.env.NEXT_PUBLIC_SELF_HOST_AUTH === '1';
-
-// Whether this build can have a signed-in session at all: real Clerk, the test
-// bridge, or the deployment's own provider. Only the session plumbing (the
-// deferred provider, the api bootstrap, the account menu) reads this; everything
-// Clerk-specific keeps reading clerkEnabled.
-export const sessionsEnabled = clerkEnabled || e2eAuthEnabled || selfHostAuthEnabled;
+// Whether this BUILD can have a signed-in session on its own: real Clerk, or the
+// e2e bridge. A self-hosted deployment (docs/specs/016-platform/self-hosted-runtime.md)
+// is deliberately absent: its app process serves its own identity provider at
+// /api/auth/*, and whether it does is discovered at RUNTIME
+// (lib/self-host-auth.ts) — the NEXT_PUBLIC_SELF_HOST_AUTH flag this used to read
+// was measured never to reach the client bundle, so a build that set it still
+// behaved like a Clerk-less one and the account menu vanished on a self-hosted
+// deployment that was signed in. Only the session plumbing (the deferred
+// provider, the api bootstrap, the account menu) reads this; everything
+// Clerk-specific keeps reading clerkEnabled, and what renders asks
+// `sessionsEnabled || selfHosted`.
+export const sessionsEnabled = clerkEnabled || e2eAuthEnabled;
 
 // Whether the sign-in / sign-up pages should show the "Continue with
 // Google" OAuth button. Gated by `NEXT_PUBLIC_GOOGLE_OAUTH_ENABLED`
