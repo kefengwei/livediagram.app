@@ -24,7 +24,12 @@ import {
   e2eAuthEnabled,
 } from '@/lib/clerk-config';
 import { useSelfHostAuth } from '@/lib/self-host-auth';
-import { DEFERRED_AUTH_DEFAULT, DEFERRED_AUTH_PENDING, DeferredAuthContext } from './deferred-auth';
+import {
+  DEFERRED_AUTH_DEFAULT,
+  DEFERRED_AUTH_PENDING,
+  DeferredAuthContext,
+  type DeferredAuthState,
+} from './deferred-auth';
 
 // Test builds only (see e2eAuthEnabled): never part of a real bundle.
 const LazyE2EAuthBridge = e2eAuthEnabled
@@ -69,7 +74,16 @@ const STATIC_CLERK_ROUTES = ['/sign-in', '/get-started', '/sso-callback'];
 export const WORKBENCH_ROUTE = '/embed/workbench';
 
 export function ClerkProvider({ children }: { children: ReactNode }) {
-  const [authState, setAuthState] = useState(DEFERRED_AUTH_DEFAULT);
+  // null until a bridge publishes. The defaults are NOT a safe starting point here: for
+  // a build with no Clerk they ARE the settled state — a signed-out guest — so a
+  // deployment whose session arrives asynchronously reads as a settled guest for the
+  // whole round trip. Everything keyed on `authLoaded` acts on that reading: the
+  // editor's identity bootstrap mints a guest id, loads the document under it, and a
+  // document that belongs to the signed-in account — a team-library document especially,
+  // whose reads require a VERIFIED identity — answers 404, which the document route
+  // treats as terminal. Measured on the self-hosted stack: the document fetch left
+  // before the bridge had even asked for the session.
+  const [authState, setAuthState] = useState<DeferredAuthState | null>(null);
   const pathname = usePathname();
   const selfHosted = useSelfHostAuth();
   const staticClerkRoute = STATIC_CLERK_ROUTES.some((r) => pathname?.startsWith(r));
@@ -82,11 +96,23 @@ export function ClerkProvider({ children }: { children: ReactNode }) {
   // the guest-data migration, loaded the document under the new account before
   // it owned it, and showed a 404 that a refresh cleared. Resetting here makes
   // every return from an auth page start "not settled", like a fresh load.
-  if (staticClerkRoute && authState !== DEFERRED_AUTH_DEFAULT) {
-    setAuthState(DEFERRED_AUTH_DEFAULT);
+  if (staticClerkRoute && authState !== null) {
+    setAuthState(null);
   }
+  // Waiting on an answer that can still produce a session, with nothing published yet:
+  // the self-host probe itself, or — once it says yes — the bridge it mounts, whose first
+  // act is a round trip to /api/auth/get-session. A route that stands the bridge down
+  // never waits (and keeps the provider's own defaults, which is what an auth page wants),
+  // nor does a deployment whose probe answered no, nor one whose bridge already published.
+  const awaitingSession = !staticClerkRoute && authState === null && selfHosted !== false;
   return (
-    <DeferredAuthContext.Provider value={workbenchRoute ? DEFERRED_AUTH_PENDING : authState}>
+    <DeferredAuthContext.Provider
+      value={
+        workbenchRoute || awaitingSession
+          ? DEFERRED_AUTH_PENDING
+          : (authState ?? DEFERRED_AUTH_DEFAULT)
+      }
+    >
       {children}
       {configured && LazyClerkBridge ? <LazyClerkBridge onState={setAuthState} /> : null}
       {LazyE2EAuthBridge && !staticClerkRoute && !workbenchRoute ? (

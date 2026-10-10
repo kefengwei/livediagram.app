@@ -169,6 +169,8 @@ The work is to make that pattern a product:
 
 The remaining 77 files read the bridged state (`isSignedIn`, `getToken()`, `signOut()`, the person's name and picture) and are **not touched**. `packages/ui` has no Clerk dependency beyond a publishable-key validator.
 
+**The bridge is asynchronous, so "no auth yet" is a state the app must not mistake for "no auth".** `deferred-auth.tsx` gives a Clerk-less build `authLoaded: true` — a settled guest — because for a build with no account system at all that IS the destination. A self-hosted deployment is not that build: it has an account system, discovered by asking (`lib/self-host-auth.ts`), and a session that costs two round trips to obtain. `ClerkProvider` therefore starts at `null` rather than at those defaults and holds `DEFERRED_AUTH_PENDING` until the probe answers and, on a yes, until `SelfHostAuthBridge` publishes. Without that hold, the editor's identity bootstrap reads a settled guest, loads the document under a freshly minted guest id, and a team-library document — whose reads require a verified identity — answers 404, a status the document route treats as terminal.
+
 The sign-in surface is the only new UI, and it inherits the rules the rest of the editor follows:
 
 - **States**: idle, code sent, wrong code, expired code, provider unreachable — each with its own copy, no silent spinner.
