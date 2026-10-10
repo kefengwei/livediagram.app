@@ -100,8 +100,9 @@ function logoGuidePartRow(
 // `preferences` (the live values) lets a nested row follow its parent switch
 // for the same reason: a setting for a panel that is off has nothing to act on.
 // `authEnabled` is whether this deployment offers sign-in at all
-// (`clerkEnabled`): API tokens are Clerk-only, so on a no-auth self-host they
-// are absent end to end rather than a sign-in prompt with nowhere to go
+// (`sessionsEnabled`, which the self-host build flag feeds): a deployment with no
+// accounts has no API tokens either — they belong to an account — so the
+// category is absent end to end rather than a sign-in prompt with nowhere to go
 // (docs/specs/015-api/public-api-and-tokens.md#37-self-hosting).
 export type SettingsRowContext = {
   emailEnabled: boolean;

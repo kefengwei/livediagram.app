@@ -16,6 +16,17 @@
 
 import { clerkPublishableKeyOrNull } from '@livediagram/ui/clerk-key';
 
+// A self-hosted deployment's provider is discovered at RUNTIME
+// (lib/self-host-auth.ts asks the deployment's own /api/auth/ok) for anything
+// that renders during a session — but a handful of decisions are made at MODULE
+// LOAD, where no hook can run: whether a settings category exists at all, which
+// component a module-level constant resolves to (`AuthControls`, `SignInPrompt`),
+// whether a pure catalogue function is handed `authEnabled`. Those need the
+// build to say so, and the self-host build says it here. Written as a literal
+// comparison, the form Next does fold (the hosted build's `clerkEnabled` has
+// worked this way in production all along).
+export const selfHostAuthEnabled = process.env.NEXT_PUBLIC_SELF_HOST_AUTH === '1';
+
 // Single source of truth for "is Clerk enabled on this deployment".
 //
 // Self-hosters (per docs/specs/002-project-scope/open-source-and-business-model.md + docs/specs/014-identity/auth-and-guest-access.md) can ship livediagram without
@@ -69,7 +80,7 @@ export const e2eAuthEnabled = process.env.NEXT_PUBLIC_E2E_AUTH === '1';
 // provider, the api bootstrap, the account menu) reads this; everything
 // Clerk-specific keeps reading clerkEnabled, and what renders asks
 // `sessionsEnabled || selfHosted`.
-export const sessionsEnabled = clerkEnabled || e2eAuthEnabled;
+export const sessionsEnabled = clerkEnabled || e2eAuthEnabled || selfHostAuthEnabled;
 
 // Whether the sign-in / sign-up pages should show the "Continue with
 // Google" OAuth button. Gated by `NEXT_PUBLIC_GOOGLE_OAUTH_ENABLED`

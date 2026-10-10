@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { clerkEnabled } from '@/lib/clerk-config';
+import { sessionsEnabled } from '@/lib/clerk-config';
 import { isMinimalChrome } from '@/lib/power-user-mode';
 import { useExplorer } from '../ExplorerContext';
 import { sidebarDivider, sidebarGroups } from './sidebar-structure';
@@ -23,7 +23,7 @@ export function ExplorerSidebar() {
   const divider = sidebarDivider(isMinimalChrome(prefs));
   const groups = sidebarGroups({
     signedIn: teamsEnabled,
-    signInAvailable: clerkEnabled,
+    signInAvailable: sessionsEnabled,
     pendingInvites: invites.length,
     offlineDocuments: offlineDocuments.length,
     selected: selected.kind,

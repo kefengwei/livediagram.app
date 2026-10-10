@@ -33,7 +33,7 @@ import type { UserPreferences } from '@/lib/user-preferences';
 import { isPowerUserMode } from '@/lib/power-user-mode';
 import { useDriveMirror } from '@/components/drive/drive-mirror-context';
 import type { CloudSyncProviderId } from '@/lib/cloud-sync/providers';
-import { clerkEnabled } from '@/lib/clerk-config';
+import { sessionsEnabled } from '@/lib/clerk-config';
 import { usePlacementDefaults } from '@/hooks/persistence/usePlacementDefaults';
 import { useWorkbenchSession } from '@/components/providers/workbench-session-context';
 
@@ -110,7 +110,7 @@ export function SettingsDialog({
       visibleCategories(aiCapable === true, {
         emailEnabled,
         signedIn,
-        authEnabled: clerkEnabled,
+        authEnabled: sessionsEnabled,
         powerUserMode,
         preferences: settings,
         cloudProviders,

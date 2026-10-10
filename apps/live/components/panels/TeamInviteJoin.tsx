@@ -12,7 +12,7 @@ import {
   SecondaryLink,
 } from '@/components/chrome/LandingCard';
 import { useClerkApiBootstrap } from '@/hooks/persistence/useClerkApiBootstrap';
-import { clerkEnabled } from '@/lib/clerk-config';
+import { sessionsEnabled } from '@/lib/clerk-config';
 import { useSignedGuestId } from '@/hooks/persistence/useSignedGuestId';
 import { track } from '@/lib/telemetry';
 import { apiJoinTeamByInviteLink, apiResolveTeamInviteLink } from '@/lib/api-client';
@@ -88,7 +88,7 @@ export function TeamInviteJoin() {
 
   // --- Render states ---------------------------------------------------
 
-  if (!clerkEnabled) {
+  if (!sessionsEnabled) {
     return (
       <Card>
         <Heading>Teams aren&apos;t enabled here</Heading>

@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useAppNavigation } from '@/hooks/navigation/useAppNavigation';
-import { clerkEnabled } from '@/lib/clerk-config';
+import { sessionsEnabled } from '@/lib/clerk-config';
 import { useExplorer } from '../ExplorerContext';
 import { ExplorerPane } from '../ExplorerPane';
 
@@ -17,7 +17,7 @@ export function InvitesRedirectGate() {
   const { authLoaded, clerkUserId } = useExplorer();
   // Full page loads once a newer build is live (docs/specs/016-platform/stale-builds.md).
   const router = useAppNavigation();
-  const signedOut = authLoaded && !clerkUserId && clerkEnabled;
+  const signedOut = authLoaded && !clerkUserId && sessionsEnabled;
 
   useEffect(() => {
     if (signedOut) {

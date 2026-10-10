@@ -9,7 +9,7 @@ import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ToggleSwitch } from '@/components/palette/palette-controls';
 import { apiExchangeOauthToken } from '@/lib/api-client';
-import { clerkEnabled } from '@/lib/clerk-config';
+import { sessionsEnabled } from '@/lib/clerk-config';
 import {
   completeDevice,
   denyDevice,
@@ -58,7 +58,7 @@ function Device() {
 
   if (step.kind === 'cancelled')
     return <Message heading="Connection cancelled" body="Your terminal will stop waiting." />;
-  if (!clerkEnabled)
+  if (!sessionsEnabled)
     return (
       <Message
         heading="Connecting apps isn’t available"

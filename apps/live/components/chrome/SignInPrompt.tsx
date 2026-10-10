@@ -32,7 +32,7 @@ import { buttonClassName, CloseIcon, ButtonContent } from '@livediagram/ui';
 import { useDeferredAuth } from '@/components/providers/deferred-auth';
 import Link from 'next/link';
 import { useAuthHrefs } from '@/components/chrome/auth-shared';
-import { clerkEnabled } from '@/lib/clerk-config';
+import { sessionsEnabled } from '@/lib/clerk-config';
 import { useLocalStorageValue, writeLocalStorageValue } from '@/hooks/ui/useLocalStorageValue';
 
 const DISMISS_KEY = 'livediagram:v2:signin-prompt-dismissed';
@@ -129,4 +129,4 @@ function SignInPromptDisabled({ fallback }: SignInPromptProps) {
   );
 }
 
-export const SignInPrompt = clerkEnabled ? SignInPromptEnabled : SignInPromptDisabled;
+export const SignInPrompt = sessionsEnabled ? SignInPromptEnabled : SignInPromptDisabled;

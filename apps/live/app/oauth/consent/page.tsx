@@ -12,7 +12,7 @@ import { CLI_CLIENT_ID } from '@livediagram/api-schema';
 import { OAUTH_PRIMARY, OauthHelpLink, OauthShell } from '../oauth-shell';
 import { ToggleSwitch } from '@/components/palette/palette-controls';
 import { apiExchangeOauthToken } from '@/lib/api-client';
-import { clerkEnabled } from '@/lib/clerk-config';
+import { sessionsEnabled } from '@/lib/clerk-config';
 import { MCP_ORIGIN } from '@/lib/mcp-config';
 import { fetchConsentSession, type McpConsentSession } from '@/lib/mcp-consent-session';
 import { track } from '@/lib/telemetry';
@@ -68,7 +68,7 @@ function Consent() {
     );
   }
 
-  if (!clerkEnabled) {
+  if (!sessionsEnabled) {
     return (
       <OauthShell>
         <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100">

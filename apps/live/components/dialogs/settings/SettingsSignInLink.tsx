@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuthHrefs } from '@/components/chrome/auth-shared';
-import { clerkEnabled } from '@/lib/clerk-config';
+import { sessionsEnabled } from '@/lib/clerk-config';
 
 // The Sign In link every signed-out Settings message ends with
 // (docs/specs/007-editor/user-preferences.md): the guest identity card, Delete
@@ -10,7 +10,7 @@ import { clerkEnabled } from '@/lib/clerk-config';
 // sign-in, since there would be nowhere for it to go.
 export function SettingsSignInLink() {
   const { signInHref } = useAuthHrefs();
-  if (!clerkEnabled) return null;
+  if (!sessionsEnabled) return null;
   return (
     <>
       {' '}

@@ -13,7 +13,7 @@ import { TeamFormModal } from '@/components/dialogs/TeamFormModal';
 import { MoveToFolderDialog } from '@/components/dialogs/MoveToFolderDialog';
 import { SettingsDialog } from '@/components/dialogs/SettingsDialog';
 import { SignInBanner, SIGNIN_BANNER_DISMISS_KEY } from '@/components/chrome/SignInBanner';
-import { clerkEnabled } from '@/lib/clerk-config';
+import { sessionsEnabled } from '@/lib/clerk-config';
 import { HELP_SEARCH_ITEMS } from '@/lib/help-search';
 import { SETTINGS_SEARCH_ITEMS } from '@/lib/settings-search-items';
 import { writeUserPreferences } from '@/lib/user-preferences';
@@ -129,7 +129,7 @@ function ShellChrome({ children }: { children: ReactNode }) {
   // floating card.
   const { dismissed: bannerDismissed, dismiss: dismissBanner } =
     useDismissibleBanner(SIGNIN_BANNER_DISMISS_KEY);
-  const showSignInBanner = clerkEnabled && !clerkUserId && !bannerDismissed;
+  const showSignInBanner = sessionsEnabled && !clerkUserId && !bannerDismissed;
 
   return (
     <div className="relative flex min-h-dvh flex-col bg-slate-50 dark:bg-slate-900">

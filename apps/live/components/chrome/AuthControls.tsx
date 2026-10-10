@@ -242,6 +242,11 @@ export function SignInIcon({ size = 13 }: { size?: number } = {}) {
 // answer is available. While the probe is in flight nothing renders, which is
 // also what keeps a "Sign in" link from flashing before the pill.
 export function AuthControls(props: AuthControlsProps) {
+  // Two independent answers, deliberately: `sessionsEnabled` now includes the
+  // self-host build flag (selfHostAuthEnabled), and the runtime probe covers a
+  // build that did not set it — a plain `pnpm dev`, or an operator building the
+  // sites themselves. While the probe is in flight nothing renders, which is also
+  // what keeps a "Sign in" link from flashing before the pill.
   const selfHosted = useSelfHostAuth();
   return sessionsEnabled || selfHosted === true ? (
     <AuthControlsEnabled {...props} />
