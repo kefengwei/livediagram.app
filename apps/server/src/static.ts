@@ -22,8 +22,11 @@ const EDITOR_PREFIXES = [
   'join',
   'sign-in',
   'get-started',
+  'drive',
   'embed',
+  'oauth',
   'sso-callback',
+  'workbench',
 ] as const;
 
 /** Mounted under a path rather than at the root. */
@@ -87,11 +90,20 @@ export function createStaticSite(options: StaticSiteOptions) {
     });
   };
 
-  /** The three layouts an export can use for one route, in order of likelihood. */
+  /**
+   * The two layouts an export can use for one route, in order of likelihood.
+   *
+   * This deliberately does NOT fall back to the app's own `index.html`. It used to,
+   * and that made every unknown path a hit: `/oauth/consent` was looked up in
+   * marketing first (the editor's routes are enumerated in EDITOR_PREFIXES, and
+   * anything unrecognised is marketing's), the lookup "succeeded" with marketing's
+   * home page, and the live-app branch below never ran. The consent page and the
+   * device page rendered the landing page instead of themselves. A miss has to be a
+   * miss for the callers to try the next app.
+   */
   const page = (app: string, route: string): Response | null =>
     read(app, route.endsWith('.html') ? route : `${route}.html`) ??
-    read(app, route === '/' ? '/index.html' : `${route}/index.html`) ??
-    read(app, '/index.html');
+    read(app, route === '/' ? '/index.html' : `${route}/index.html`);
 
   return async function serveStatic(request: Request): Promise<Response | null> {
     if (request.method !== 'GET' && request.method !== 'HEAD') return null;
@@ -148,12 +160,15 @@ export function createStaticSite(options: StaticSiteOptions) {
     // missing chunk becomes a reload loop instead of an honest error.
     if (/\.[a-z0-9]+$/i.test(target.route)) return null;
 
-    return (
-      page(target.app, target.route) ??
-      // A marketing route in a deployment that built only the editor: `/` is the app
-      // people came for.
-      (target.app === 'marketing' ? page('live', target.route) : null)
-    );
+    const own = page(target.app, target.route);
+    if (own) return own;
+    // Not in the app the table guessed. The editor's routes are enumerated, so a
+    // route it added since (or one nobody listed) lands here: try the editor, then
+    // fall back to the marketing home page, which is what every unknown path gets.
+    if (target.app === 'marketing') {
+      return page('live', target.route) ?? page('marketing', '/');
+    }
+    return null;
   };
 }
 
