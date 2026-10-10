@@ -131,7 +131,7 @@ MCP_SITE_ADDRESS=mcp.diagrams.example.com
 Caddy obtains a certificate for it, as it does for the site address; point the DNS
 record at the machine first. Both mounts reach the same handlers, so a client
 configured either way works — this one is what you want when the client runs on
-another machine, since `*.localhost` there means *that* machine.
+another machine, since `*.localhost` there means _that_ machine.
 
 **Connect a client with an API token.** Sign in (above), mint a token in the editor's
 Explorer under Account → API tokens, and hand it to the client:
@@ -240,12 +240,12 @@ every session, quietly.
 
 ## Troubleshooting
 
-| Symptom                                                                   | Cause                                                                                                                                                                              |
-| ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `required variable BETTER_AUTH_SECRET is missing a value`                 | Set it in `.env` (see above). The stack will not start without it.                                                                                                                 |
-| `[auth] BETTER_AUTH_SECRET is unset: sessions will not survive a restart` | Running the image without Compose. The stack works; every restart signs everyone out.                                                                                              |
-| The editor loads but saving fails                                         | The api is not reachable at the origin the browser uses. Check `PUBLIC_ORIGIN` matches the URL in the address bar.                                                                 |
-| Sign-in says the code is wrong                                            | The code expires. Ask for a new one; the log shows only the newest.                                                                                                                |
-| Rooms work for one person, not two                                        | Known: [relaying between two clients](../specs/016-platform/blueprints/self-hosted-runtime.md#known-defect-relaying-between-two-clients).                                          |
-| Caddy cannot get a certificate                                            | The domain must already resolve to this machine, and ports 80 and 443 must reach it.                                                                                               |
+| Symptom                                                                   | Cause                                                                                                                                                                                                                                |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `required variable BETTER_AUTH_SECRET is missing a value`                 | Set it in `.env` (see above). The stack will not start without it.                                                                                                                                                                   |
+| `[auth] BETTER_AUTH_SECRET is unset: sessions will not survive a restart` | Running the image without Compose. The stack works; every restart signs everyone out.                                                                                                                                                |
+| The editor loads but saving fails                                         | The api is not reachable at the origin the browser uses. Check `PUBLIC_ORIGIN` matches the URL in the address bar.                                                                                                                   |
+| Sign-in says the code is wrong                                            | The code expires. Ask for a new one; the log shows only the newest.                                                                                                                                                                  |
+| Rooms work for one person, not two                                        | Known: [relaying between two clients](../specs/016-platform/blueprints/self-hosted-runtime.md#known-defect-relaying-between-two-clients).                                                                                            |
+| Caddy cannot get a certificate                                            | The domain must already resolve to this machine, and ports 80 and 443 must reach it.                                                                                                                                                 |
 | An MCP client cannot connect                                              | The MCP lives at `http://<your site>/mcp`; send `Authorization: Bearer lvd_…` with a token from Account → API tokens. A client that speaks OAuth instead is walked through discovery to the editor's consent page — no token needed. |
