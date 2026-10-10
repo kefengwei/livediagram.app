@@ -6,7 +6,7 @@
 // model — the heavy lifting (verify, revoke, caps, expiry) is the token's.
 import { appBase } from './tool-helpers';
 import { bytesToBase64Url, DEVICE_CODE_GRANT, isLoopbackHostname } from '@livediagram/api-schema';
-import type { Hono } from 'hono';
+import type { Context, Hono } from 'hono';
 import type { Env } from './env';
 import { lookupClient, type ClientReg } from './oauth-clients';
 import { handleDeviceToken, registerDeviceRoutes } from './oauth-device';
@@ -77,19 +77,38 @@ export function isAllowedRedirectUri(uri: string): boolean {
   }
 }
 
+// The path every MCP endpoint also lives under. A deployment that gives the MCP
+// its own origin (the hosted one: mcp.livediagram.app) reaches it at the root; a
+// deployment that mounts it under a path on the site's own host (the self-hosted
+// default: example.com/mcp) reaches the same handlers through this prefix. Both
+// are registered — index.ts rewrites the prefix away before routing — so a
+// client that learned either URL keeps working.
+export const MCP_BASE_PATH = '/mcp';
+
 // The MCP's own public origin, derived from the request so it's host-agnostic
 // (works on mcp.livediagram.app and any self-host).
 function selfOrigin(reqUrl: string): string {
   return new URL(reqUrl).origin;
 }
 
+// The origin plus the path prefix: where this deployment actually serves MCP.
+function selfBase(reqUrl: string): string {
+  return `${selfOrigin(reqUrl)}${MCP_BASE_PATH}`;
+}
+
 export function registerOauthRoutes(app: Hono<{ Bindings: Env }>): void {
   registerDeviceRoutes(app);
-  // --- Discovery (RFC 8414 + protected-resource metadata) ---
-  app.get('/.well-known/oauth-authorization-server', (c) => {
-    const base = selfOrigin(c.req.url);
+  // --- Discovery (RFC 8414 + RFC 9728) ---
+  // Metadata is served twice: at the origin root, and — RFC 9728 §3 — inserted
+  // before the resource's path, `/.well-known/oauth-protected-resource/mcp`. A
+  // client that follows the URL we hand it in WWW-Authenticate never has to guess;
+  // the root copy stays for clients that probe the conventional location, and for
+  // the hosted deployment where the MCP owns its whole origin.
+  const authorizationServer = (c: Context<{ Bindings: Env }>) => {
+    const origin = selfOrigin(c.req.url);
+    const base = selfBase(c.req.url);
     return c.json({
-      issuer: base,
+      issuer: origin,
       authorization_endpoint: `${base}/oauth/authorize`,
       token_endpoint: `${base}/oauth/token`,
       registration_endpoint: `${base}/oauth/register`,
@@ -99,15 +118,18 @@ export function registerOauthRoutes(app: Hono<{ Bindings: Env }>): void {
       code_challenge_methods_supported: ['S256'],
       token_endpoint_auth_methods_supported: ['none'],
     });
-  });
-
-  app.get('/.well-known/oauth-protected-resource', (c) => {
-    const base = selfOrigin(c.req.url);
+  };
+  const protectedResource = (c: Context<{ Bindings: Env }>) => {
+    const origin = selfOrigin(c.req.url);
     return c.json({
-      resource: `${base}/mcp`,
-      authorization_servers: [base],
+      resource: selfBase(c.req.url),
+      authorization_servers: [origin],
     });
-  });
+  };
+  app.get('/.well-known/oauth-authorization-server', authorizationServer);
+  app.get('/.well-known/oauth-authorization-server/mcp', authorizationServer);
+  app.get('/.well-known/oauth-protected-resource', protectedResource);
+  app.get('/.well-known/oauth-protected-resource/mcp', protectedResource);
 
   // --- Dynamic client registration (RFC 7591) ---
   app.post('/oauth/register', async (c) => {

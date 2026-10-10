@@ -53,6 +53,45 @@ describe('the MCP process', () => {
     expect(await res.json()).toMatchObject({ resource: `${server.url}/mcp` });
   });
 
+  it('answers the RFC 9728 path form of its metadata', async () => {
+    // The resource has a path (/mcp), so §3 puts the well-known URI in front of it
+    // and appends that path. This is the URL WWW-Authenticate hands out.
+    const server = await start();
+    const res = await fetch(`${server.url}/.well-known/oauth-protected-resource/mcp`);
+    expect(res.status).toBe(200);
+    expect(await res.json()).toMatchObject({
+      resource: `${server.url}/mcp`,
+      authorization_servers: [server.url],
+    });
+  });
+
+  it('advertises endpoint URLs under /mcp, at both metadata locations', async () => {
+    const server = await start();
+    for (const path of [
+      '/.well-known/oauth-authorization-server',
+      '/.well-known/oauth-authorization-server/mcp',
+    ]) {
+      const res = await fetch(server.url + path);
+      expect(res.status).toBe(200);
+      const doc = (await res.json()) as Record<string, string>;
+      expect(doc.issuer).toBe(server.url);
+      expect(doc.authorization_endpoint).toBe(`${server.url}/mcp/oauth/authorize`);
+      expect(doc.token_endpoint).toBe(`${server.url}/mcp/oauth/token`);
+    }
+  });
+
+  it('serves the same routes under the /mcp prefix, so a host can mount it as a path', async () => {
+    const server = await start();
+    // /mcp/health is the alias of /health — a missing rewrite answers 404 here.
+    expect((await fetch(`${server.url}/mcp/health`)).status).toBe(200);
+    // DCR answers 400 for an empty registration on BOTH URLs: the prefix reaches
+    // the same handler, it is not a second implementation.
+    const post = (url: string) =>
+      fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' });
+    expect((await post(`${server.url}/oauth/register`)).status).toBe(400);
+    expect((await post(`${server.url}/mcp/oauth/register`)).status).toBe(400);
+  });
+
   it('refuses /mcp without a bearer token, and points at its metadata', async () => {
     const server = await start();
     const res = await fetch(`${server.url}/mcp`, {
@@ -64,6 +103,8 @@ describe('the MCP process', () => {
       body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'initialize', params: {} }),
     });
     expect(res.status).toBe(401);
-    expect(res.headers.get('www-authenticate')).toContain('/.well-known/oauth-protected-resource');
+    expect(res.headers.get('www-authenticate')).toContain(
+      '/.well-known/oauth-protected-resource/mcp',
+    );
   });
 });
