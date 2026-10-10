@@ -95,7 +95,16 @@ export function createStaticSite(options: StaticSiteOptions) {
 
   return async function serveStatic(request: Request): Promise<Response | null> {
     if (request.method !== 'GET' && request.method !== 'HEAD') return null;
-    const path = new URL(request.url).pathname.replace(/\/+/g, '/');
+    let path = new URL(request.url).pathname.replace(/\/+/g, '/');
+    // Next's static export writes a route's RSC payload as a DIRECTORY —
+    // `get-started/__next.get-started/__PAGE__.txt` — while the client prefetches the
+    // dotted form, `get-started/__next.get-started.__PAGE__.txt`. Without this rewrite
+    // every in-app prefetch is a 404 on a self-hosted deployment, which is the only
+    // place this layout is served (the hosted deployment answers from a Worker, and a
+    // Worker was never given these files). Rewritten before the path is split, so
+    // everything below looks up what the export actually wrote.
+    const rscPage = /^(.*\/__next\.[^/]+)\.(__PAGE__\.txt)$/.exec(path);
+    if (rscPage) path = `${rscPage[1]}/${rscPage[2]}`;
     // The api owns /api; a static site must never answer for it, not even with
     // its index page.
     if (path.startsWith('/api/')) return null;
