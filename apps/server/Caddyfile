@@ -12,10 +12,25 @@
 {$SITE_ADDRESS} {
 	encode zstd gzip
 
+	# The MCP, reached as a path on this host instead of as its own origin
+	# (docs/specs/016-platform/self-hosted-runtime.md). Two rules, deliberately —
+	# NOT one per endpoint: everything the MCP serves lives under /mcp, and the
+	# discovery documents it must answer at the origin root are all
+	# /.well-known/oauth-*, which nothing else here claims. Adding an OAuth
+	# endpoint to the MCP therefore needs no change to this file.
+	handle /mcp* {
+		reverse_proxy mcp:{$MCP_PORT:8788}
+	}
+	handle /.well-known/oauth-* {
+		reverse_proxy mcp:{$MCP_PORT:8788}
+	}
+
 	# The api, the rooms, the identity provider and the built sites: one process.
 	# The port comes from the environment docker-compose.yml hands this container,
 	# which is the same number the app service was given.
-	reverse_proxy app:{$APP_PORT:8787}
+	handle {
+		reverse_proxy app:{$APP_PORT:8787}
+	}
 
 	# A self-host on a LAN usually speaks plain HTTP; these keep the browser's
 	# stricter defaults from breaking the editor there.
@@ -26,9 +41,11 @@
 	}
 }
 
-# The MCP process, on its own origin (docs/specs/016-platform/blueprints/self-hosted-runtime.md,
-# "Static apps and routing"). A client reaches it at http://mcp.localhost:<port>/mcp by
-# default; an operator with a domain sets MCP_SITE_ADDRESS and gets a certificate for it.
+# The MCP process, optionally ALSO on its own origin — the same choice the hosted
+# deployment makes (mcp.livediagram.app). Both mounts reach the same handlers, so a
+# client configured either way works; set MCP_SITE_ADDRESS to a host that resolves
+# here to use this one (docs/specs/016-platform/self-hosted-runtime.md, "Static apps
+# and routing"). Leave it unset and the path mount above is the whole story.
 {$MCP_SITE_ADDRESS} {
 	encode zstd gzip
 

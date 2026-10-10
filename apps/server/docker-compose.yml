@@ -15,6 +15,11 @@ services:
       # `runtime` bakes the five static exports in; `app` leaves them out, for a
       # deployment that serves a build from the host or only wants the api.
       target: ${APP_TARGET:-runtime}
+      args:
+        # The editor's OAuth consent page posts its minted token to the MCP origin
+        # baked in at build time (apps/live/lib/mcp-config.ts). On this stack the MCP
+        # is served from the deployment's own origin under /mcp, so that is the value.
+        NEXT_PUBLIC_MCP_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost:8080}
     environment:
       # The port everything else follows: the healthcheck below reads it back out
       # of the process's own environment, the MCP service calls the api on it, and

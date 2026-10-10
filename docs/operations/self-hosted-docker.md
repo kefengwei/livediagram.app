@@ -110,20 +110,28 @@ To offer Google sign-in as well, set `AUTH_GOOGLE_CLIENT_ID` and
 
 The stack runs a second process: [the MCP server](../specs/015-api/mcp-server.md),
 which is how an AI client — Claude, Cursor, the CLI — reads and edits documents. It
-answers on **its own origin**, because a client asks for the OAuth discovery
-documents at `/.well-known/` on the MCP host, and your app's origin already answers
-those paths for itself.
+is served from **your site's own origin, under `/mcp`**, so a client needs the one
+address you already hand people:
 
-By default it is at <http://mcp.localhost:8080/mcp> — `*.localhost` resolves to this
-machine on every desktop OS. To use a real host, which is the only option for a
-client on another machine, set it in `.env`:
+```
+http://<your site>/mcp          e.g. http://127.0.0.1:8099/mcp
+```
+
+Its OAuth discovery documents answer at `/.well-known/oauth-*` — paths nothing else
+on that origin claims — and the consent step lands on the editor you already have, so
+a client can connect without anyone minting a token by hand.
+
+**Or give the MCP its own host** (optional; this is the shape the hosted deployment
+uses). Set it in `.env`:
 
 ```
 MCP_SITE_ADDRESS=mcp.diagrams.example.com
 ```
 
 Caddy obtains a certificate for it, as it does for the site address; point the DNS
-record at the machine first.
+record at the machine first. Both mounts reach the same handlers, so a client
+configured either way works — this one is what you want when the client runs on
+another machine, since `*.localhost` there means *that* machine.
 
 **Connect a client with an API token.** Sign in (above), mint a token in the editor's
 Explorer under Account → API tokens, and hand it to the client:
@@ -133,7 +141,7 @@ Explorer under Account → API tokens, and hand it to the client:
   "mcpServers": {
     "livediagram": {
       "type": "http",
-      "url": "http://mcp.localhost:8080/mcp",
+      "url": "http://127.0.0.1:8099/mcp",
       "headers": { "Authorization": "Bearer lvd_…" }
     }
   }
@@ -240,4 +248,4 @@ every session, quietly.
 | Sign-in says the code is wrong                                            | The code expires. Ask for a new one; the log shows only the newest.                                                                                                                |
 | Rooms work for one person, not two                                        | Known: [relaying between two clients](../specs/016-platform/blueprints/self-hosted-runtime.md#known-defect-relaying-between-two-clients).                                          |
 | Caddy cannot get a certificate                                            | The domain must already resolve to this machine, and ports 80 and 443 must reach it.                                                                                               |
-| An MCP client cannot connect                                              | Use the MCP origin, not the site's: `http://mcp.localhost:8080/mcp` with an `Authorization: Bearer lvd_…` header. The OAuth flow's consent step is not wired for self-hosting yet. |
+| An MCP client cannot connect                                              | The MCP lives at `http://<your site>/mcp`; send `Authorization: Bearer lvd_…` with a token from Account → API tokens. A client that speaks OAuth instead is walked through discovery to the editor's consent page — no token needed. |

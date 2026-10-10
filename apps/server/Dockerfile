@@ -37,6 +37,14 @@ FROM build AS sites
 # without it still works at runtime (lib/self-host-auth.ts probes /api/auth/ok),
 # but those module-level choices stay off.
 ENV NEXT_PUBLIC_SELF_HOST_AUTH=1
+# Where the editor's OAuth consent page posts the token it mints
+# (apps/live/lib/mcp-config.ts). This stack serves the MCP on its OWN origin at
+# /mcp, so the value is the deployment's public origin — compose passes it in.
+# Left empty the page falls back to the hosted mcp.livediagram.app, which is
+# wrong here: a self-hosted operator connecting a client would send the token to
+# a server they do not own.
+ARG NEXT_PUBLIC_MCP_ORIGIN=""
+ENV NEXT_PUBLIC_MCP_ORIGIN=${NEXT_PUBLIC_MCP_ORIGIN}
 RUN pnpm build
 
 # --- app: what a minimal deployment runs -------------------------------------
