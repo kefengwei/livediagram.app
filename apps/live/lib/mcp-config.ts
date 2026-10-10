@@ -17,3 +17,11 @@ export function resolveMcpOrigin(raw: string | undefined): string {
 }
 
 export const MCP_ORIGIN = resolveMcpOrigin(process.env.NEXT_PUBLIC_MCP_ORIGIN);
+
+// Where the MCP's OWN endpoints live, as opposed to its origin. Every route it
+// serves is mounted under this prefix too (apps/mcp/src/index.ts rewrites it away),
+// and that is what lets a self-hosted deployment put the MCP on the site's own
+// origin instead of giving it a whole host. The hosted deployment answers here as
+// well — the prefix is an alias there — so callers use this unconditionally, and
+// it is the same base the discovery documents advertise.
+export const MCP_BASE = `${MCP_ORIGIN}/mcp`;

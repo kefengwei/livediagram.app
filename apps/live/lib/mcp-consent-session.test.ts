@@ -11,7 +11,7 @@
 // "couldn't resolve" rather than rendering half a screen.
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { fetchConsentSession, parseConsentSession } from './mcp-consent-session';
-import { MCP_ORIGIN } from './mcp-config';
+import { MCP_BASE } from './mcp-config';
 
 afterEach(() => {
   vi.unstubAllGlobals();
@@ -80,13 +80,13 @@ describe('fetchConsentSession', () => {
   it('asks the trusted MCP origin, never a value from the page URL', async () => {
     const calls = stubFetch(ok({ clientName: 'Claude', redirectHost: 'claude.ai' }));
     await fetchConsentSession('sess-1');
-    expect(calls).toEqual([`${MCP_ORIGIN}/oauth/session/sess-1`]);
+    expect(calls).toEqual([`${MCP_BASE}/oauth/session/sess-1`]);
   });
 
   it('encodes the session id into the path', async () => {
     const calls = stubFetch(ok({ clientName: 'C', redirectHost: 'h' }));
     await fetchConsentSession('a/../b?x=1');
-    expect(calls[0]).toBe(`${MCP_ORIGIN}/oauth/session/a%2F..%2Fb%3Fx%3D1`);
+    expect(calls[0]).toBe(`${MCP_BASE}/oauth/session/a%2F..%2Fb%3Fx%3D1`);
   });
 
   it('returns the parsed session on success', async () => {

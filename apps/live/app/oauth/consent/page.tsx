@@ -13,7 +13,7 @@ import { OAUTH_PRIMARY, OauthHelpLink, OauthShell } from '../oauth-shell';
 import { ToggleSwitch } from '@/components/palette/palette-controls';
 import { apiExchangeOauthToken } from '@/lib/api-client';
 import { sessionsEnabled } from '@/lib/clerk-config';
-import { MCP_ORIGIN } from '@/lib/mcp-config';
+import { MCP_BASE } from '@/lib/mcp-config';
 import { fetchConsentSession, type McpConsentSession } from '@/lib/mcp-consent-session';
 import { track } from '@/lib/telemetry';
 import { useClerkApiBootstrap } from '@/hooks/persistence/useClerkApiBootstrap';
@@ -156,7 +156,7 @@ function Consent() {
     setStatus('connecting');
     try {
       const { token, expiresAt } = await apiExchangeOauthToken(clerkUserId, client, readOnly);
-      const res = await fetch(`${MCP_ORIGIN}/oauth/complete`, {
+      const res = await fetch(`${MCP_BASE}/oauth/complete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ session, token, expiresAt }),

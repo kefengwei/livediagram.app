@@ -13,7 +13,7 @@
 // fetched from) rather than in the page: it is the page's trust boundary, and
 // it is worth being able to test the parse without mounting React.
 
-import { MCP_ORIGIN } from './mcp-config';
+import { MCP_BASE } from './mcp-config';
 
 // The server's account of the connecting client. `redirectHost` is the host
 // the authorization code will actually be delivered to — the one fact the
@@ -46,7 +46,7 @@ export function parseConsentSession(body: unknown): McpConsentSession | null {
 // only invite rendering a half-trusted screen.
 export async function fetchConsentSession(session: string): Promise<McpConsentSession | null> {
   try {
-    const res = await fetch(`${MCP_ORIGIN}/oauth/session/${encodeURIComponent(session)}`);
+    const res = await fetch(`${MCP_BASE}/oauth/session/${encodeURIComponent(session)}`);
     if (!res.ok) return null;
     return parseConsentSession(await res.json());
   } catch {
