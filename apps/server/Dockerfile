@@ -30,6 +30,13 @@ RUN pnpm --filter @livediagram/mcp build:node
 
 # --- sites: the five static exports ------------------------------------------
 FROM build AS sites
+# The editor's self-host flag (docs/specs/016-platform/self-hosted-runtime.md). Next
+# folds this literal comparison into the client bundle, and the editor reads it at
+# module load for the decisions no hook can make — whether the account menu, the
+# API-token settings category and the MCP consent page exist at all. A build
+# without it still works at runtime (lib/self-host-auth.ts probes /api/auth/ok),
+# but those module-level choices stay off.
+ENV NEXT_PUBLIC_SELF_HOST_AUTH=1
 RUN pnpm build
 
 # --- app: what a minimal deployment runs -------------------------------------

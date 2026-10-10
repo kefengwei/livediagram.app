@@ -54,6 +54,22 @@ many:
 [server] listening on http://0.0.0.0:8787
 ```
 
+## If you build the sites yourself
+
+The default image bakes the five static exports in, and builds them with
+`NEXT_PUBLIC_SELF_HOST_AUTH=1` — the flag that tells the editor this deployment
+serves its own sign-in. On the `APP_TARGET=app` path the sites are built on **your**
+machine, so pass it there too:
+
+```bash
+NEXT_PUBLIC_SELF_HOST_AUTH=1 pnpm build
+```
+
+Miss it and sign-in still works — the editor asks `/api/auth/ok` at runtime — but the
+choices a build has to make at module load stay off: no account menu, no
+API-token settings category, and the MCP consent page reports that connecting apps
+isn't available.
+
 ## Accounts
 
 **The browser has no sign-in screen yet** ([Self-hosted runtime blueprint](../specs/016-platform/blueprints/self-hosted-runtime.md),
