@@ -7,7 +7,6 @@ import {
 } from '@/components/providers/workbench-session-context';
 import { useEffect, useLayoutEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { registerTokenProvider } from '@/lib/api-client';
-import { sessionsEnabled } from '@/lib/clerk-config';
 import {
   guestMigrationPending,
   settleGuestMigration,
@@ -157,23 +156,12 @@ function useClerkApiBootstrapEnabled(): BootstrapResult {
   return { isSignedIn, authLoaded, clerkUserId, clerkDisplayName };
 }
 
-function useClerkApiBootstrapDisabled(): BootstrapResult {
-  const workbench = useWorkbenchSession();
-  const auth = useDeferredAuth();
-  if (workbench) return workbenchResult(workbench);
-  if (auth === DEFERRED_AUTH_PENDING) return HELD;
-  // Stable stub for Clerk-disabled deployments. `authLoaded: true`
-  // so anything gated on "has Clerk reported its state yet?" doesn't
-  // wait forever; `isSignedIn: false` / `clerkUserId: null` keep the
-  // caller in pure-guest mode.
-  return {
-    isSignedIn: false,
-    authLoaded: true,
-    clerkUserId: null,
-    clerkDisplayName: null,
-  };
-}
-
-export const useClerkApiBootstrap = sessionsEnabled
-  ? useClerkApiBootstrapEnabled
-  : useClerkApiBootstrapDisabled;
+// One implementation, because the values come from the deferred auth context
+// either way. The old two-way swap existed because the enabled branch read
+// Clerk's `useAuth`, which throws outside a ClerkProvider — but that branch now
+// reads `useDeferredAuth` like everything else, and a self-hosted deployment's
+// provider publishes into the same context (SelfHostAuthBridge). Keeping the
+// swap meant freezing a signed-in self-hosted user into guest mode: no teams in
+// Spaces, no API tokens, no Bearer token provider, and every api call carrying
+// the guest X-Owner-Id instead of the account's.
+export const useClerkApiBootstrap = useClerkApiBootstrapEnabled;
