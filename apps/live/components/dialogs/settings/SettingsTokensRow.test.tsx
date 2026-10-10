@@ -13,7 +13,9 @@ vi.mock('@/hooks/persistence/useClerkApiBootstrap', () => ({
     clerkUserId: auth.signedIn ? 'user_1' : null,
   }),
 }));
-vi.mock('@/lib/clerk-config', () => ({ clerkEnabled: true }));
+// `sessionsEnabled` is what SettingsSignInLink reads now that a self-hosted
+// deployment can have accounts without Clerk (lib/clerk-config.ts).
+vi.mock('@/lib/clerk-config', () => ({ clerkEnabled: true, sessionsEnabled: true }));
 vi.mock('@/components/chrome/auth-shared', () => ({
   useAuthHrefs: () => ({ signInHref: '/sign-in/?redirect_url=%2Fexplorer' }),
 }));

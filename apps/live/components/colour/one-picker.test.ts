@@ -21,7 +21,10 @@ function sources(dir: string): string[] {
 }
 
 const files = ROOTS.flatMap(sources).map((path) => ({
-  path: relative(LIVE, path),
+  // `/`-separated on purpose: the allow-list above is written that way, and `relative`
+  // answers with backslashes on Windows — which made this guard fail on every Windows
+  // checkout while CI (Linux) stayed green.
+  path: relative(LIVE, path).replaceAll('\\', '/'),
   text: readFileSync(path, 'utf8'),
 }));
 
