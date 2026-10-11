@@ -68,7 +68,9 @@ function uiLabels(): Map<string, Set<string>> {
   )) {
     const key = m[1] ?? m[2]!;
     if (!/\.label$/.test(key)) continue;
-    const value = (m[3] !== undefined ? JSON.parse(`"${m[3]}"`) : m[4]!.replace(/\\'/g, "'")) as string;
+    const value = (
+      m[3] !== undefined ? JSON.parse(`"${m[3]}"`) : m[4]!.replace(/\\'/g, "'")
+    ) as string;
     if (value.length >= 3 && value.length <= 30) add(value);
   }
   return byLower;
