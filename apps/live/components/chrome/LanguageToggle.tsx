@@ -12,11 +12,6 @@ const LABELS: Record<Locale, string> = {
   'zh-CN': '中文',
 };
 
-const TITLES: Record<Locale, string> = {
-  en: 'English',
-  'zh-CN': '简体中文',
-};
-
 export function LanguageToggle({ className = '' }: { className?: string }) {
   const { locale, setLocale, t } = useTranslation();
   return (
@@ -33,7 +28,6 @@ export function LanguageToggle({ className = '' }: { className?: string }) {
             type="button"
             onClick={() => setLocale(option)}
             aria-pressed={active}
-            title={TITLES[option]}
             className={`rounded px-1.5 py-0.5 text-xs font-medium transition ${
               active
                 ? `bg-brand-500 text-white ${SOLID_BRAND_DARK_CONTROL}`

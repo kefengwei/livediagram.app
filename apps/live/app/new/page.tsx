@@ -241,7 +241,7 @@ export default function NewDocumentPage() {
     // Fetch the editor's chunk while identity + the create run. Fire-and-forget: a failure here
     // just leaves `dynamic` to retry the import at handoff.
     loadEditor().catch(() => {});
-  }, []);
+  }, [t]);
 
   // Back/forward-cache restore: creating navigates away with
   // `submitting === true` still set, and the browser Back button

@@ -71,7 +71,7 @@ export default function LivePage({ surface = 'app' }: { surface?: EditorSurface 
   useEffect(() => {
     const name = state.documentName?.trim();
     document.title = `${name || t('editor-page.untitled-document')} | livediagram`;
-  }, [state.documentName]);
+  }, [state.documentName, t]);
   const {
     documentNotFound,
     loadError,

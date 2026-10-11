@@ -465,7 +465,7 @@ export function DriveMirrorProvider({ children }: { children: ReactNode }) {
     setStatus(next);
     rt?.channel.post({ type: 'status', status: next });
     syncNow();
-  }, [clerkUserId, confirm, mode, syncNow]);
+  }, [clerkUserId, confirm, mode, syncNow, t]);
 
   const adopt = useCallback(async (notice: DriveMirrorNotice) => {
     const rt = runtime.current;

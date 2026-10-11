@@ -78,7 +78,7 @@ export function looksLikeCopy(text) {
   if (!/[A-Za-z]/.test(t)) return false;
   if (!/\s/.test(t)) return false; // single words are already caught as JSX text or a prop
   if (/[{}<>]|:\/\/|^\/|^\.|^#/.test(t)) return false;
-  if (/[:\[\]\/]/.test(t)) return false; // tailwind variant, arbitrary value, url path
+  if (/[:[\]/]/.test(t)) return false; // tailwind variant, arbitrary value, url path
   if (/^[a-z]+(?:[A-Z][a-z0-9]+)+$/.test(t)) return false;
   if (/^[^\s@]+@[^\s@]+$/.test(t)) return false;
   // Measured: without this, "rounded-none border-0 px-3.5 py-3" and a hundred more class
@@ -352,7 +352,7 @@ function sources(dir, out = []) {
 
 function tableFrom(file) {
   const map = new Map();
-  let source = '';
+  let source;
   try {
     source = readFileSync(file, 'utf8');
   } catch {
