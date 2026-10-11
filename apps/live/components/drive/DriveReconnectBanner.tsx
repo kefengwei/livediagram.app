@@ -26,7 +26,9 @@ export function DriveReconnectBanner() {
       role="status"
       className="fixed bottom-16 left-3 z-[var(--z-chrome)] flex max-w-[22rem] items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-lg shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:shadow-black/30"
     >
-      <span className="min-w-0 flex-1">{t('drivereconnectbanner.google-drive-sync-is-paused')}</span>
+      <span className="min-w-0 flex-1">
+        {t('drivereconnectbanner.google-drive-sync-is-paused')}
+      </span>
       <button
         type="button"
         onClick={() => void (reconnect ? connect() : resume())}

@@ -97,7 +97,9 @@ export function CommentPanelFace({
 
   const footer = !onAddComment ? undefined : resolved ? (
     onUnresolve ? (
-      <AccentBar onPress={onUnresolve} icon={<ReopenGlyph size={12} />}>{t('commentpanelface.reopen-thread')}</AccentBar>
+      <AccentBar onPress={onUnresolve} icon={<ReopenGlyph size={12} />}>
+        {t('commentpanelface.reopen-thread')}
+      </AccentBar>
     ) : undefined
   ) : (
     <CollabComposer
@@ -160,6 +162,8 @@ function ResolveChip({ onPress }: { onPress: () => void }) {
       className="pointer-events-auto inline-flex cursor-pointer items-center gap-1 rounded-full py-0.5 pl-1.5 pr-2 text-[10px] font-semibold transition hover:brightness-110"
       style={{ color: QA_ACCENT_INK, backgroundColor: tint(QA_ACCENT, 0.14) }}
     >
-      <CheckGlyph size={10} />{t('commentpanelface.resolve')}</button>
+      <CheckGlyph size={10} />
+      {t('commentpanelface.resolve')}
+    </button>
   );
 }

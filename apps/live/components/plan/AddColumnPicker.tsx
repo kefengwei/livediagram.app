@@ -78,7 +78,9 @@ export function AddColumnPicker({
             compact
             id={`${id}-name`}
             aria-label={t('addcolumnpicker.new-column-name')}
-            placeholder={combo ? t('addcolumnpicker.find-or-name-a-status') : t('addcolumnpicker.in-review')}
+            placeholder={
+              combo ? t('addcolumnpicker.find-or-name-a-status') : t('addcolumnpicker.in-review')
+            }
             maxLength={COLUMN_NAME_MAX}
             value={name}
             autoFocus={autoFocus}
@@ -116,7 +118,9 @@ export function AddColumnPicker({
             onClick={addTyped}
             className="h-9 shrink-0 gap-1 px-3 text-[13px] font-semibold"
           >
-            <PlusIcon size={14} />{t('addcolumnpicker.add-column')}</Button>
+            <PlusIcon size={14} />
+            {t('addcolumnpicker.add-column')}
+          </Button>
         </div>
         {note ? (
           <p

@@ -151,7 +151,11 @@ export function CodeThemePresetsSection({
 }) {
   const { t } = useTranslation();
   return (
-    <MenuAccordionSection title={t('presetsections.presets')} icon={<PresetsMenuGlyph />} {...accordion}>
+    <MenuAccordionSection
+      title={t('presetsections.presets')}
+      icon={<PresetsMenuGlyph />}
+      {...accordion}
+    >
       <CodeThemePresets
         current={current}
         onApply={props.onApplyCodeTheme}
@@ -191,7 +195,11 @@ export function TablePresetsSection({
 }) {
   const { t } = useTranslation();
   return (
-    <MenuAccordionSection title={t('presetsections.presets-2')} icon={<PresetsMenuGlyph />} {...accordion}>
+    <MenuAccordionSection
+      title={t('presetsections.presets-2')}
+      icon={<PresetsMenuGlyph />}
+      {...accordion}
+    >
       <TablePresets
         presets={props.tableColorPresets}
         current={current}
@@ -223,7 +231,11 @@ export function ChartPalettePresetsSection({
 }) {
   const { t } = useTranslation();
   return (
-    <MenuAccordionSection title={t('presetsections.presets-3')} icon={<PresetsMenuGlyph />} {...accordion}>
+    <MenuAccordionSection
+      title={t('presetsections.presets-3')}
+      icon={<PresetsMenuGlyph />}
+      {...accordion}
+    >
       <ChartPalettePresets
         current={current}
         onApply={props.onApplyChartPalette}

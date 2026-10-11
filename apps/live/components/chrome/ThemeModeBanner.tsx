@@ -35,7 +35,9 @@ export function ThemeModeBanner({ themeId }: { themeId: string | undefined }) {
   if (appearance === target || dismissedKey === key) return null;
 
   const toDark = target === 'dark';
-  const title = toDark ? t('thememodebanner.this-tab-uses-a-dark-theme') : t('thememodebanner.this-tab-uses-a-light-theme');
+  const title = toDark
+    ? t('thememodebanner.this-tab-uses-a-dark-theme')
+    : t('thememodebanner.this-tab-uses-a-light-theme');
   const sub = toDark
     ? t('thememodebanner.switch-the-editor-to-dark-mode')
     : t('thememodebanner.switch-the-editor-to-light-mode');
@@ -50,7 +52,11 @@ export function ThemeModeBanner({ themeId }: { themeId: string | undefined }) {
         <button
           type="button"
           onClick={() => set(target)}
-          aria-label={toDark ? t('thememodebanner.switch-to-dark-mode') : t('thememodebanner.switch-to-light-mode')}
+          aria-label={
+            toDark
+              ? t('thememodebanner.switch-to-dark-mode')
+              : t('thememodebanner.switch-to-light-mode')
+          }
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-500 text-white shadow-sm transition hover:bg-brand-600 ${SOLID_BRAND_DARK_CONTROL}`}
         >
           {toDark ? <MoonIcon /> : <SunIcon />}

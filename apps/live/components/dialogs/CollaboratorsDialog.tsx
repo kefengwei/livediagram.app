@@ -118,14 +118,18 @@ export function CollaboratorsDialog({
                 {group.tab?.name ?? t('collaboratorsdialog.another-tab-2')}
               </h3>
               {group.isActive ? (
-                <span className="shrink-0 rounded-full bg-brand-50 px-1.5 py-0.5 text-[10px] font-semibold text-brand-700 dark:bg-brand-500/15 dark:text-brand-300">{t('collaboratorsdialog.you-re-here')}</span>
+                <span className="shrink-0 rounded-full bg-brand-50 px-1.5 py-0.5 text-[10px] font-semibold text-brand-700 dark:bg-brand-500/15 dark:text-brand-300">
+                  {t('collaboratorsdialog.you-re-here')}
+                </span>
               ) : group.tab ? (
                 <Button
                   variant="secondary"
                   size="xs"
                   className="ml-auto shrink-0"
                   onClick={() => onGoToTab(group.tab!.id)}
-                >{t('collaboratorsdialog.go-to-tab')}</Button>
+                >
+                  {t('collaboratorsdialog.go-to-tab')}
+                </Button>
               ) : null}
             </div>
             <ul className="flex flex-col">

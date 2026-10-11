@@ -178,7 +178,9 @@ export function PlanBoardHeader({
               className={button}
               style={{ borderColor: palette.warning, color: palette.warning }}
               onClick={onRetry}
-            >{t('planboardheader.couldn-t-load-items-retry')}</button>
+            >
+              {t('planboardheader.couldn-t-load-items-retry')}
+            </button>
           ) : null}
           {setup.hideWriting && canEdit ? (
             <button
@@ -186,7 +188,9 @@ export function PlanBoardHeader({
               className={button}
               style={{ borderColor: palette.focus, color: palette.focus }}
               onClick={onReveal}
-            >{t('planboardheader.reveal')}</button>
+            >
+              {t('planboardheader.reveal')}
+            </button>
           ) : null}
         </div>
       ) : null}
@@ -208,7 +212,9 @@ export function PlanBoardHeader({
           role="dialog"
           aria-label={t('planboardheader.items-not-on-this-board')}
         >
-          <div className="mb-1 px-1 text-[11px]" style={{ color: palette.muted }}>{t('planboardheader.their-status-is-none-of-this')}</div>
+          <div className="mb-1 px-1 text-[11px]" style={{ color: palette.muted }}>
+            {t('planboardheader.their-status-is-none-of-this')}
+          </div>
           {projection.unplaced.map((item) => {
             // Only the columns whose status the card's type uses (docs/specs/026-plan/item-types.md).
             const open = setup.columns.filter(

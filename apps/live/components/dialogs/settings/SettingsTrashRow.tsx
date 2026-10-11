@@ -23,7 +23,9 @@ export function SettingsTrashRow({ row }: { row: SettingsTrashRowSpec }) {
             onClick={() => track('Trash', 'Opened', 'Settings')}
             aria-describedby={`${row.key}-description`}
             className="shrink-0 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-700 transition hover:border-brand-300 hover:bg-brand-50/40 dark:border-slate-600 dark:text-slate-200 dark:hover:border-brand-500/60"
-          >{t('settingstrashrow.open-trash')}</a>
+          >
+            {t('settingstrashrow.open-trash')}
+          </a>
         </div>
       )}
     />

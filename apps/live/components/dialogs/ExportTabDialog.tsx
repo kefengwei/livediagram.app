@@ -1,4 +1,3 @@
-
 import { useTranslation } from '@/lib/i18n';
 import { usePlan } from '@/components/plan/PlanContext';
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -411,11 +410,18 @@ export function ExportTabDialog({
     <Dialog
       open
       onClose={onClose}
-      ariaLabel={isSelection ? t('exporttabdialog.export-selection') : t('exporttabdialog.export-tab')}
+      ariaLabel={
+        isSelection ? t('exporttabdialog.export-selection') : t('exporttabdialog.export-tab')
+      }
       size="xl"
       className="max-h-[90vh]"
     >
-      <DialogHeader title={isSelection ? t('exporttabdialog.export-selection-2') : t('exporttabdialog.export-tab-2')} subtitle={subtitle}>
+      <DialogHeader
+        title={
+          isSelection ? t('exporttabdialog.export-selection-2') : t('exporttabdialog.export-tab-2')
+        }
+        subtitle={subtitle}
+      >
         <HelpArticleLink article="exportingDiagrams" size="md" />
         <DialogCloseButton onClick={onClose} />
       </DialogHeader>

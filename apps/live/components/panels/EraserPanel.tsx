@@ -10,7 +10,6 @@
 // restricted eraser that looks identical to an unrestricted one is how someone
 // concludes the eraser is broken.
 
-
 import { useState } from 'react';
 import {
   eraserRadius,
@@ -29,8 +28,6 @@ type Row = 'mode' | 'size' | 'target';
 // rather than a word. Capped to the preview box: a 72px radius is bigger than
 // the panel is tall, and a preview that overflows teaches nothing.
 function BrushPreview({ config }: { config: EraserConfig }) {
-  
-  
   const radius = Math.min(eraserRadius(config), 26);
   const filtered = config.target !== 'anything';
   return (
@@ -64,7 +61,7 @@ export function EraserPanel({
   onChange: <K extends keyof EraserConfig>(field: K, value: EraserConfig[K]) => void;
 } & ModePanelProps) {
   const { t } = useTranslation();
-  
+
   const [openRow, setOpenRow] = useState<Row | null>(null);
   const toggle = (row: Row) => setOpenRow((r) => (r === row ? null : row));
 

@@ -118,7 +118,9 @@ export function ThemeCategoryBrowser({
       {openCategory === 'custom' ? (
         <>
           <BackButton current="Custom" onClick={() => setOpenCategory(null)} />
-          <p className="mb-2 text-[11px] leading-snug text-slate-500 dark:text-slate-400">{t('themecategorybrowser.build-your-own-theme-your-saved')}</p>
+          <p className="mb-2 text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+            {t('themecategorybrowser.build-your-own-theme-your-saved')}
+          </p>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
             {custom.map((t) => (
               <CustomThemeCard
@@ -208,7 +210,9 @@ export function ThemeCategoryBrowser({
 
 function BackButton({ current, onClick }: { current?: string; onClick: () => void }) {
   const { t } = useTranslation();
-  return <BackBar label={t('themecategorybrowser.all-themes')} current={current} onClick={onClick} />;
+  return (
+    <BackBar label={t('themecategorybrowser.all-themes')} current={current} onClick={onClick} />
+  );
 }
 
 // A full-width iOS-style switch prompting the user to match the editor's
@@ -223,7 +227,10 @@ function ModeSwitchRow({ category }: { category: ThemeCategory | 'custom' }) {
   const target: 'light' | 'dark' | null =
     category === 'custom' ? null : category === 'dark' ? 'dark' : 'light';
   if (!target || appearance === target) return null;
-  const label = target === 'dark' ? t('themecategorybrowser.turn-on-dark-mode') : t('themecategorybrowser.turn-on-light-mode');
+  const label =
+    target === 'dark'
+      ? t('themecategorybrowser.turn-on-dark-mode')
+      : t('themecategorybrowser.turn-on-light-mode');
   const hint =
     target === 'dark'
       ? 'Match the editor chrome to these dark themes.'

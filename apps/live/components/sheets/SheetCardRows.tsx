@@ -46,7 +46,6 @@ const OPEN_INSET_PX = 3;
 const stop = (e: { stopPropagation: () => void }) => e.stopPropagation();
 
 export function SheetCardRows() {
-  
   const c = useSheetController();
   const plan = usePlan();
   const tables = c.sheet.layout.cardTables;
@@ -71,7 +70,7 @@ function TableRows({
   table: CardTable;
 }) {
   const { t } = useTranslation();
-  
+
   const ix = layoutIndex(c.sheet.layout);
   const cols = table.cols
     .map((col) => ix.colPos.get(col.c))
@@ -109,7 +108,12 @@ function TableRows({
           onPointerDown={stop}
           onDoubleClick={stop}
         >
-          <RowButton c={c} quiet label={t('sheetcardrows.open-card')} onClick={() => plan.openItem(itemId)}>
+          <RowButton
+            c={c}
+            quiet
+            label={t('sheetcardrows.open-card')}
+            onClick={() => plan.openItem(itemId)}
+          >
             <OpenGlyph />
           </RowButton>
         </div>
@@ -180,7 +184,7 @@ function TableRows({
 // The active cell's dropdown, when its column's field has set values or is a date.
 function ActiveCellChoice({ c, plan }: { c: SheetController; plan: PlanContextValue }) {
   const { t } = useTranslation();
-  
+
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const dateRef = useRef<HTMLInputElement>(null);
   const { r, c: col } = c.selection.active;
@@ -278,7 +282,9 @@ function ActiveCellChoice({ c, plan }: { c: SheetController; plan: PlanContextVa
                 onPick={(o) => write({ i: { s: o } })}
               />
             ) : (
-              <p className="px-2 py-1.5 text-[12px] text-slate-500 dark:text-slate-400">{t('sheetcardrows.no-choices-yet')}</p>
+              <p className="px-2 py-1.5 text-[12px] text-slate-500 dark:text-slate-400">
+                {t('sheetcardrows.no-choices-yet')}
+              </p>
             )}
           </div>
         </AnchoredPopover>
@@ -311,7 +317,6 @@ function RowButton({
   onClick: () => void;
   children: React.ReactNode;
 }) {
-  
   // Save, in the brand colour: classes alone (white text on a brand fill carries its dark shade, never an inline
   // background).
   if (primary)

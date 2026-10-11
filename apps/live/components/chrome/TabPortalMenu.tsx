@@ -335,7 +335,9 @@ export function PortalMenu({
                 icon={<PasteMenuIcon />}
                 label={t('tabportalmenu.paste')}
                 description={
-                  canvas.canPaste ? t('tabportalmenu.paste-what-you-copied-onto-this') : t('tabportalmenu.nothing-to-paste-yet')
+                  canvas.canPaste
+                    ? t('tabportalmenu.paste-what-you-copied-onto-this')
+                    : t('tabportalmenu.nothing-to-paste-yet')
                 }
                 onClick={() => {
                   canvas.onPaste();
@@ -349,7 +351,11 @@ export function PortalMenu({
             {sideBySide ? (
               <MenuToolButton
                 icon={<SideBySideIcon />}
-                label={sideBySide.closing ? t('tabportalmenu.close-side-by-side') : t('tabportalmenu.side-by-side')}
+                label={
+                  sideBySide.closing
+                    ? t('tabportalmenu.close-side-by-side')
+                    : t('tabportalmenu.side-by-side')
+                }
                 description={
                   sideBySide.closing
                     ? 'Go back to one tab: this one, across the whole window.'
@@ -443,7 +449,11 @@ export function PortalMenu({
                 onClick={onImport}
                 disabled={locked}
               />
-              <MenuTile icon={<FileExportIcon />} label={t('tabportalmenu.export')} onClick={onExport} />
+              <MenuTile
+                icon={<FileExportIcon />}
+                label={t('tabportalmenu.export')}
+                onClick={onExport}
+              />
               <MenuTile
                 icon={<ClearIcon />}
                 label={t('tabportalmenu.clear')}

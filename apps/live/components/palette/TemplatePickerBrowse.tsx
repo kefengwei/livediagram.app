@@ -150,7 +150,11 @@ export function TemplatePickerBrowse({
         {templateFilter ? (
           filteredTemplates.length === 0 ? (
             <div className="flex flex-col items-center gap-2 px-1 py-6 text-center">
-              <p className="text-xs text-slate-400 dark:text-slate-400">{t('templatepickerbrowse.no')}{modeFilter.choice === 'all' ? '' : `${editorModeLabel(modeFilter.choice)} `}{t('templatepickerbrowse.templates-match')}{templateQuery.trim()}”.
+              <p className="text-xs text-slate-400 dark:text-slate-400">
+                {t('templatepickerbrowse.no')}
+                {modeFilter.choice === 'all' ? '' : `${editorModeLabel(modeFilter.choice)} `}
+                {t('templatepickerbrowse.templates-match')}
+                {templateQuery.trim()}”.
               </p>
               {/* Found in other modes: one press shows them (docs/specs/007-editor/templates-by-mode.md). */}
               {matchesInEveryMode > 0 ? (

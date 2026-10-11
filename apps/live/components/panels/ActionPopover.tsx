@@ -106,11 +106,15 @@ export function ActionPopover({
           <h3 className="flex items-center gap-1.5 text-xs font-semibold text-slate-800 dark:text-slate-100">
             <span className="text-slate-400">
               <ClipboardIcon />
-            </span>{t('actionpopover.action')}</h3>
+            </span>
+            {t('actionpopover.action')}
+          </h3>
           <div className="flex items-center gap-1">
             {done ? (
               <span className="inline-flex items-center gap-1 rounded bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300">
-                <CheckIcon size={9} />{t('actionpopover.done')}</span>
+                <CheckIcon size={9} />
+                {t('actionpopover.done')}
+              </span>
             ) : null}
             <button
               type="button"
@@ -157,14 +161,20 @@ export function ActionPopover({
         {!readOnly ? (
           <footer className="flex items-center gap-1.5 border-t border-slate-100 px-3 py-2 dark:border-slate-800">
             {done ? (
-              <FooterButton onClick={onReopen} icon={<ReopenIcon />} label={t('actionpopover.reopen')} />
+              <FooterButton
+                onClick={onReopen}
+                icon={<ReopenIcon />}
+                label={t('actionpopover.reopen')}
+              />
             ) : (
               <button
                 type="button"
                 onClick={onComplete}
                 className="inline-flex items-center gap-1.5 rounded-md bg-emerald-600 px-2.5 py-1.5 text-[11px] font-medium text-white transition hover:bg-emerald-700"
               >
-                <CheckIcon size={11} />{t('actionpopover.complete')}</button>
+                <CheckIcon size={11} />
+                {t('actionpopover.complete')}
+              </button>
             )}
             <FooterButton onClick={onEdit} icon={<PencilIcon />} label={t('actionpopover.edit')} />
             <span className="flex-1" />
@@ -174,7 +184,9 @@ export function ActionPopover({
                 onClick={onDelete}
                 className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 px-2.5 py-1.5 text-[11px] font-medium text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
               >
-                <TrashIcon size={11} />{t('actionpopover.confirm')}</button>
+                <TrashIcon size={11} />
+                {t('actionpopover.confirm')}
+              </button>
             ) : (
               <button
                 type="button"

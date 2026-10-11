@@ -29,7 +29,11 @@ export function SettingsTokenList({
 
   if (tokens === null) {
     return (
-      <ul aria-busy className="flex flex-col gap-2.5" aria-label={t('settingstokenlist.loading-tokens')}>
+      <ul
+        aria-busy
+        className="flex flex-col gap-2.5"
+        aria-label={t('settingstokenlist.loading-tokens')}
+      >
         {[0, 1].map((i) => (
           <li
             key={i}

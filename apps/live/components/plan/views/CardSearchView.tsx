@@ -119,7 +119,9 @@ export function CardSearchView({
             />
           ) : null}
           {filters.length === 0 && !canEdit ? (
-            <span className="text-[12px]" style={{ color: palette.muted }}>{t('cardsearchview.every-card')}</span>
+            <span className="text-[12px]" style={{ color: palette.muted }}>
+              {t('cardsearchview.every-card')}
+            </span>
           ) : null}
           {canEdit && filters.length > 0 ? (
             <button
@@ -129,7 +131,9 @@ export function CardSearchView({
               onClick={() => {
                 save([]);
               }}
-            >{t('cardsearchview.clear-all')}</button>
+            >
+              {t('cardsearchview.clear-all')}
+            </button>
           ) : null}
         </div>
         {total === 0 ? (

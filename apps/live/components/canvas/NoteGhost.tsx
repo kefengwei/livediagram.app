@@ -1,4 +1,3 @@
-
 import { useTranslation } from '@/lib/i18n';
 import type { CSSProperties } from 'react';
 import { PlusIcon } from '@livediagram/ui';

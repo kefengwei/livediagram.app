@@ -58,7 +58,9 @@ export function ShareComposer({
 
   return (
     <section className="flex flex-col gap-2.5" aria-labelledby="share-issue-heading">
-      <p id="share-issue-heading" className={SECTION_LABEL}>{t('sharecomposer.issue-a-pass')}</p>
+      <p id="share-issue-heading" className={SECTION_LABEL}>
+        {t('sharecomposer.issue-a-pass')}
+      </p>
       <div
         role="radiogroup"
         aria-label={t('sharecomposer.what-the-pass-lets-people-do')}
@@ -124,7 +126,9 @@ export function ShareComposer({
             <label
               htmlFor="share-new-scope"
               className="text-xs font-medium text-slate-600 dark:text-slate-300"
-            >{t('sharecomposer.opens')}</label>
+            >
+              {t('sharecomposer.opens')}
+            </label>
             <Select
               id="share-new-scope"
               className="sm:col-span-2"
@@ -136,7 +140,9 @@ export function ShareComposer({
             </Select>
           </>
         ) : null}
-        <span className="flex items-center gap-1 text-xs font-medium text-slate-600 dark:text-slate-300">{t('sharecomposer.valid')}<HelpArticleLink article="shareLinkExpiry" />
+        <span className="flex items-center gap-1 text-xs font-medium text-slate-600 dark:text-slate-300">
+          {t('sharecomposer.valid')}
+          <HelpArticleLink article="shareLinkExpiry" />
         </span>
         <div
           role="radiogroup"
@@ -177,7 +183,9 @@ export function ShareComposer({
           disabled={busy}
           // The same height as the Valid control beside it, so the row reads as one line.
           className="h-9 shadow-sm whitespace-nowrap"
-        >{t('sharecomposer.create-pass')}</Button>
+        >
+          {t('sharecomposer.create-pass')}
+        </Button>
       </div>
     </section>
   );

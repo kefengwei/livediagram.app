@@ -29,7 +29,10 @@ export function CollaborateClusterButton({
   onTogglePopover: (button: HTMLElement) => void;
 }) {
   const { t } = useTranslation();
-  const label = openCount > 0 ? `Open Collaborate (${openCount} open)` : t('collaborateclusterbutton.open-collaborate');
+  const label =
+    openCount > 0
+      ? `Open Collaborate (${openCount} open)`
+      : t('collaborateclusterbutton.open-collaborate');
   const button = (
     <button
       type="button"

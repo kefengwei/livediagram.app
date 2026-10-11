@@ -126,7 +126,9 @@ export function ToolbarSearchPanel({
         />
       </div>
       {browsing && here.length > 0 ? (
-        <div className="px-1 text-[10px] text-slate-500 dark:text-slate-400">{t('toolbarsearch.on-this-tab')}</div>
+        <div className="px-1 text-[10px] text-slate-500 dark:text-slate-400">
+          {t('toolbarsearch.on-this-tab')}
+        </div>
       ) : null}
       {here.length > 0 ? (
         <PaletteTileGrid tiles={here} actions={actions} pendingDraw={pendingDraw} />
@@ -159,12 +161,18 @@ export function ToolbarSearchPanel({
           >
             <span className="min-w-0 flex-1">
               <span className="flex min-w-0 items-center gap-1.5">
-                <span className="truncate text-[11px] font-semibold text-slate-700 dark:text-slate-200">{t('toolbarsearch.not-in')}{modeName}{t('toolbarsearch.mode')}</span>
+                <span className="truncate text-[11px] font-semibold text-slate-700 dark:text-slate-200">
+                  {t('toolbarsearch.not-in')}
+                  {modeName}
+                  {t('toolbarsearch.mode')}
+                </span>
                 <span className="inline-flex h-[12.6px] shrink-0 items-center rounded-full bg-slate-100 px-1.5 text-[9px] font-semibold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
                   <span className="text-optical-centre">{elsewhere.length}</span>
                 </span>
               </span>
-              <span className="line-clamp-2 text-[10px] leading-snug text-slate-500 dark:text-slate-400">{t('toolbarsearch.elements-other-modes-offer-any-of')}</span>
+              <span className="line-clamp-2 text-[10px] leading-snug text-slate-500 dark:text-slate-400">
+                {t('toolbarsearch.elements-other-modes-offer-any-of')}
+              </span>
             </span>
             <span className="shrink-0 text-slate-400">
               <ChevronIcon open={othersOpen} />

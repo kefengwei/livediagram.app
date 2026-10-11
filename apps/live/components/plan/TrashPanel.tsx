@@ -67,7 +67,9 @@ export function TrashPanel({
                 <CountBadge size="md" background="#64748b26" color="#64748b">
                   {trashed.length}
                 </CountBadge>
-                {trashed.length === 1 ? 'card' : 'cards'}{t('trashpanel.in-the-trash')}</span>
+                {trashed.length === 1 ? 'card' : 'cards'}
+                {t('trashpanel.in-the-trash')}
+              </span>
             </div>
             <ul
               aria-label={t('trashpanel.cards-in-the-trash')}
@@ -117,7 +119,9 @@ export function TrashPanel({
                             setPurging({ id: it.id, key: it.key, anchor: e.currentTarget })
                           }
                         >
-                          <TrashIcon size={13} />{t('trashpanel.delete')}</button>
+                          <TrashIcon size={13} />
+                          {t('trashpanel.delete')}
+                        </button>
                         <Button
                           variant="secondary"
                           size="xs"
@@ -127,7 +131,9 @@ export function TrashPanel({
                             plan.restoreItem(it.id);
                             plan.announce(`#${it.key} restored`);
                           }}
-                        >{t('trashpanel.restore')}</Button>
+                        >
+                          {t('trashpanel.restore')}
+                        </Button>
                       </div>
                     ) : null}
                   </li>
@@ -146,7 +152,9 @@ export function TrashPanel({
                   onPopoverClose();
                 }}
               >
-                <TrashIcon size={14} />{t('trashpanel.empty-trash')}<CountBadge
+                <TrashIcon size={14} />
+                {t('trashpanel.empty-trash')}
+                <CountBadge
                   count={trashed.length}
                   background="rgba(255, 255, 255, 0.25)"
                   color="#ffffff"

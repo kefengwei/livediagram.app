@@ -117,7 +117,10 @@ function SheetBody({
         }
         action={
           model.status === 'error'
-            ? { label: t('plansheetview.try-again'), run: () => void model.store.loadTab(bridge.activeTabId, true) }
+            ? {
+                label: t('plansheetview.try-again'),
+                run: () => void model.store.loadTab(bridge.activeTabId, true),
+              }
             : !loading && !element.planSheet?.copyOf && bridge.canEdit
               ? {
                   label: t('plansheetview.remove'),
@@ -160,7 +163,9 @@ function SheetBody({
         >
           <p>{t('plansheetview.switch-to-plan-to-edit-this')}</p>
           <div className="mt-2 flex justify-end gap-2">
-            <Button variant="ghost" size="xs" onClick={() => setHint(false)}>{t('plansheetview.not-now')}</Button>
+            <Button variant="ghost" size="xs" onClick={() => setHint(false)}>
+              {t('plansheetview.not-now')}
+            </Button>
             <Button
               variant="primary"
               size="xs"
@@ -169,7 +174,9 @@ function SheetBody({
                 setHint(false);
                 bridge.switchToPlan();
               }}
-            >{t('plansheetview.switch-to-plan-2')}</Button>
+            >
+              {t('plansheetview.switch-to-plan-2')}
+            </Button>
           </div>
         </div>
       ) : null}
@@ -376,9 +383,13 @@ function SheetParts({
           onPointerDown={(e) => e.stopPropagation()}
         >
           <p className="font-semibold">{t('plansheetview.import-csv-2')}</p>
-          <p className="mt-1" style={{ color: c.palette.muted }}>{t('plansheetview.this-sheet-already-has-cells')}</p>
+          <p className="mt-1" style={{ color: c.palette.muted }}>
+            {t('plansheetview.this-sheet-already-has-cells')}
+          </p>
           <div className="mt-3 flex flex-wrap justify-end gap-2">
-            <Button variant="ghost" size="xs" onClick={() => setImportText(null)}>{t('plansheetview.cancel')}</Button>
+            <Button variant="ghost" size="xs" onClick={() => setImportText(null)}>
+              {t('plansheetview.cancel')}
+            </Button>
             <Button
               variant="ghost"
               size="xs"
@@ -386,7 +397,9 @@ function SheetParts({
                 importCsvText(c, importText, 'insert');
                 setImportText(null);
               }}
-            >{t('plansheetview.insert-at-selection')}</Button>
+            >
+              {t('plansheetview.insert-at-selection')}
+            </Button>
             <Button
               variant="primary"
               size="xs"
@@ -395,7 +408,9 @@ function SheetParts({
                 importCsvText(c, importText, 'replace');
                 setImportText(null);
               }}
-            >{t('plansheetview.replace-sheet')}</Button>
+            >
+              {t('plansheetview.replace-sheet')}
+            </Button>
           </div>
         </div>
       ) : null}

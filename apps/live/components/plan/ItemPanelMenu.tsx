@@ -96,7 +96,12 @@ export function ItemPanelMenu({
           {canEdit ? (
             <>
               <MenuGroupSeparator />
-              <MenuActionRow plain label={t('itempanelmenu.trash')} icon={<TrashIcon />} onClick={run(onTrash)} />
+              <MenuActionRow
+                plain
+                label={t('itempanelmenu.trash')}
+                icon={<TrashIcon />}
+                onClick={run(onTrash)}
+              />
             </>
           ) : null}
         </PortalMenu>

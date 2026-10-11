@@ -57,7 +57,9 @@ export function SnapColoursSection({ snap }: { snap: SnapColoursApi }) {
             disabled={blocked}
             onClick={press}
             className="flex h-10 items-center rounded-lg px-3 text-sm font-medium text-slate-700 ring-1 ring-slate-300 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-brand-500 disabled:cursor-not-allowed disabled:opacity-50 dark:text-slate-200 dark:ring-slate-600 dark:hover:bg-slate-800"
-          >{t('snapcolourssection.snap-to-stock-colours')}</button>
+          >
+            {t('snapcolourssection.snap-to-stock-colours')}
+          </button>
         </div>
       )}
       {/* Present while the offer shows, so the confirmation is announced when it lands. */}

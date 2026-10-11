@@ -1,4 +1,3 @@
-
 import { useTranslation } from '@/lib/i18n';
 import { type ReactNode } from 'react';
 
@@ -39,7 +38,9 @@ export function Trigger({
     <button
       type="button"
       data-table-ui
-      aria-label={vertical ? t('table-menu-controls.row-options') : t('table-menu-controls.column-options')}
+      aria-label={
+        vertical ? t('table-menu-controls.row-options') : t('table-menu-controls.column-options')
+      }
       onPointerDown={(e) => e.stopPropagation()}
       onClick={(e) => {
         e.stopPropagation();
@@ -134,10 +135,18 @@ export function TableHeaderMenu({
   const afterDir = isCol ? 'right' : 'down';
   return (
     <>
-      <MenuButton label={isCol ? t('table-menu-controls.insert-left') : t('table-menu-controls.insert-above')} onClick={() => onAdd(index)}>
+      <MenuButton
+        label={isCol ? t('table-menu-controls.insert-left') : t('table-menu-controls.insert-above')}
+        onClick={() => onAdd(index)}
+      >
         <ArrowIcon dir={beforeDir} />
       </MenuButton>
-      <MenuButton label={isCol ? t('table-menu-controls.insert-right') : t('table-menu-controls.insert-below')} onClick={() => onAdd(index + 1)}>
+      <MenuButton
+        label={
+          isCol ? t('table-menu-controls.insert-right') : t('table-menu-controls.insert-below')
+        }
+        onClick={() => onAdd(index + 1)}
+      >
         <ArrowIcon dir={afterDir} />
       </MenuButton>
       <MenuSeparator />

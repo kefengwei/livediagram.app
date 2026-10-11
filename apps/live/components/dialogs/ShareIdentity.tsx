@@ -35,10 +35,15 @@ export function ShareIdentity({
         <label
           htmlFor="share-name"
           className="text-[10px] font-semibold uppercase tracking-wider text-slate-400"
-        >{t('shareidentity.sharing-as')}</label>
+        >
+          {t('shareidentity.sharing-as')}
+        </label>
         {/* Shuffle sits right against the name it changes, not out by Done. */}
         <div className="-ml-1 flex min-w-0 items-center">
-          <HoverCard title={t('shareidentity.shuffle-name')} description={t('shareidentity.pick-a-different-random-name')}>
+          <HoverCard
+            title={t('shareidentity.shuffle-name')}
+            description={t('shareidentity.pick-a-different-random-name')}
+          >
             <button
               type="button"
               onClick={() => onChange(randomName())}

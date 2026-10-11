@@ -83,7 +83,9 @@ export function ActionPanelFace({
         aside={aside}
         footer={
           onAdd && actions.length > 0 ? (
-            <AccentBar onPress={onAdd} icon={<PlusGlyph size={12} />}>{t('actionpanelface.add-action')}</AccentBar>
+            <AccentBar onPress={onAdd} icon={<PlusGlyph size={12} />}>
+              {t('actionpanelface.add-action')}
+            </AccentBar>
           ) : undefined
         }
       >
@@ -139,6 +141,8 @@ function AddButton({ onPress }: { onPress: () => void }) {
       className="pointer-events-auto inline-flex cursor-pointer items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-semibold transition hover:scale-[1.03] active:scale-95"
       style={LOUD_ACCENT}
     >
-      <PlusGlyph size={12} />{t('actionpanelface.add-action-2')}</button>
+      <PlusGlyph size={12} />
+      {t('actionpanelface.add-action-2')}
+    </button>
   );
 }

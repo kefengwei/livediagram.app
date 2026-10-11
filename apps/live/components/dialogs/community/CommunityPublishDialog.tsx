@@ -152,7 +152,13 @@ export function CommunityPublishDialog({
           }}
         >
           <DialogHeader
-            title={<span id={titleId}>{editing ? t('communitypublishdialog.edit-listing') : t('communitypublishdialog.share-to-community')}</span>}
+            title={
+              <span id={titleId}>
+                {editing
+                  ? t('communitypublishdialog.edit-listing')
+                  : t('communitypublishdialog.share-to-community')}
+              </span>
+            }
             subtitle="Show what you made. Others can find it, learn from it and make their own copy."
           >
             <HelpArticleLink article="community" size="md" />
@@ -163,7 +169,9 @@ export function CommunityPublishDialog({
             {/* Each field: a label naming it alone, then its message and hint, which the control points to with
                 aria-describedby rather than carrying in its name. */}
             <div ref={form.register('title')} className="flex flex-col gap-1">
-              <label htmlFor={titleFieldId} className={LABEL}>{t('communitypublishdialog.title')}</label>
+              <label htmlFor={titleFieldId} className={LABEL}>
+                {t('communitypublishdialog.title')}
+              </label>
               <TextInput
                 id={titleFieldId}
                 value={title}
@@ -180,7 +188,9 @@ export function CommunityPublishDialog({
 
             <div ref={form.register('description')} className="flex flex-col gap-1">
               <span className="flex items-baseline justify-between gap-2">
-                <label htmlFor={descriptionFieldId} className={LABEL}>{t('communitypublishdialog.description')}</label>
+                <label htmlFor={descriptionFieldId} className={LABEL}>
+                  {t('communitypublishdialog.description')}
+                </label>
                 <span
                   className={`text-xs tabular-nums ${
                     errors.description
@@ -208,12 +218,16 @@ export function CommunityPublishDialog({
                 className="resize-y"
               />
               <FieldError id={fieldErrorId('description')} message={errors.description} />
-              <span id={descriptionHintId} className="text-xs text-slate-500 dark:text-slate-400">{t('communitypublishdialog.what-it-shows-how-you-made')}{' '}
-                {COMMUNITY_DESCRIPTION_MIN}{t('communitypublishdialog.characters')}</span>
+              <span id={descriptionHintId} className="text-xs text-slate-500 dark:text-slate-400">
+                {t('communitypublishdialog.what-it-shows-how-you-made')} {COMMUNITY_DESCRIPTION_MIN}
+                {t('communitypublishdialog.characters')}
+              </span>
             </div>
 
             <div ref={form.register('category')} className="flex flex-col gap-1.5">
-              <span id={categoryLabelId} className={LABEL}>{t('communitypublishdialog.category')}</span>
+              <span id={categoryLabelId} className={LABEL}>
+                {t('communitypublishdialog.category')}
+              </span>
               <CategoryPicker
                 value={category}
                 onChange={form.setCategory}
@@ -241,7 +255,9 @@ export function CommunityPublishDialog({
               onChange={form.setAnonymous}
               className="rounded-lg border border-slate-200 px-3 py-2.5 dark:border-slate-700"
             >
-              <span className="block text-sm font-medium text-slate-800 dark:text-slate-100">{t('communitypublishdialog.share-anonymously')}</span>
+              <span className="block text-sm font-medium text-slate-800 dark:text-slate-100">
+                {t('communitypublishdialog.share-anonymously')}
+              </span>
               <span className="block text-xs text-slate-500 dark:text-slate-400">
                 {anonymous
                   ? t('communitypublishdialog.shown-as-anonymous-your-name-and')
@@ -289,9 +305,15 @@ export function CommunityPublishDialog({
                 {error}
               </p>
             ) : null}
-            <Button variant="secondary" size="xs" onClick={onClose} disabled={busy}>{t('communitypublishdialog.cancel')}</Button>
+            <Button variant="secondary" size="xs" onClick={onClose} disabled={busy}>
+              {t('communitypublishdialog.cancel')}
+            </Button>
             <Button type="submit" size="xs" disabled={busy}>
-              {busy ? 'Saving' : editing ? t('communitypublishdialog.save-changes') : t('communitypublishdialog.share-to-community-2')}
+              {busy
+                ? 'Saving'
+                : editing
+                  ? t('communitypublishdialog.save-changes')
+                  : t('communitypublishdialog.share-to-community-2')}
             </Button>
           </DialogFooter>
         </form>

@@ -114,14 +114,18 @@ export function SettingsPlacementDefaultRow({
                   className={PLACEMENT_ROW_BUTTON}
                   aria-label={`Change default folder for ${entry.noun}`}
                   onClick={() => setChanging(true)}
-                >{t('settingsplacementdefaultrow.change')}</button>
+                >
+                  {t('settingsplacementdefaultrow.change')}
+                </button>
                 {destination.kind !== 'root' ? (
                   <button
                     type="button"
                     className={PLACEMENT_ROW_BUTTON}
                     aria-label={`Clear default folder for ${entry.noun}`}
                     onClick={() => void clearPlacementDefault(key, 'settings')}
-                  >{t('settingsplacementdefaultrow.clear')}</button>
+                  >
+                    {t('settingsplacementdefaultrow.clear')}
+                  </button>
                 ) : null}
               </>
             ) : null}

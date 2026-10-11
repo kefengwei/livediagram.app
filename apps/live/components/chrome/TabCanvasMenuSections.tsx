@@ -69,7 +69,11 @@ export function TabCanvasMenuSections({
             (docs/specs/008-canvas/layout-cleanup.md "Layout styles"): flowchart down / right, tree,
             mindmap. */}
       <MenuGroupSeparator />
-      <MenuAccordionSection title={t('tabcanvasmenusections.cleanup')} icon={<CleanupMenuIcon />} {...sectionProps('cleanup')}>
+      <MenuAccordionSection
+        title={t('tabcanvasmenusections.cleanup')}
+        icon={<CleanupMenuIcon />}
+        {...sectionProps('cleanup')}
+      >
         {/* One verb per row, icon on the left: six tidiers in a two-column
             grid read in two directions, and "Flowchart ↓" beside
             "Flowchart →" was easy to mix up. */}

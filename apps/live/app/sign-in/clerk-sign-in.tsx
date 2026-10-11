@@ -224,11 +224,14 @@ function SignInContent() {
       subtitle="Sign in to keep your documents and work across multiple devices."
       error={error}
       footer={
-        <>{t('clerk-sign-in.new-to-livediagram')}{' '}
+        <>
+          {t('clerk-sign-in.new-to-livediagram')}{' '}
           <Link
             href={authHrefWithReturn('/get-started/', searchParams.get('redirect_url'))}
             className="font-medium text-brand-600 hover:underline dark:text-brand-400"
-          >{t('clerk-sign-in.create-an-account')}</Link>
+          >
+            {t('clerk-sign-in.create-an-account')}
+          </Link>
         </>
       }
     >

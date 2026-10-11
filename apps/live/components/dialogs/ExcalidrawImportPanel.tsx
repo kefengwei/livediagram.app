@@ -94,7 +94,9 @@ function PickStep({ error, onPicked }: { error?: string; onPicked: (files: File[
         {...(error ? { error } : {})}
       />
       <div className="mt-4 flex justify-end gap-2">
-        <Button variant="primary" size="md" onClick={choose}>{t('excalidrawimportpanel.choose-files')}</Button>
+        <Button variant="primary" size="md" onClick={choose}>
+          {t('excalidrawimportpanel.choose-files')}
+        </Button>
       </div>
     </>
   );

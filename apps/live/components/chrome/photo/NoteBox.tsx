@@ -210,7 +210,11 @@ export function NoteBox({
               ticked ? '' : 'opacity-40'
             }`}
           >
-            {words === '' ? <span className="text-slate-300">{t('notebox.type-the-words')}</span> : words}
+            {words === '' ? (
+              <span className="text-slate-300">{t('notebox.type-the-words')}</span>
+            ) : (
+              words
+            )}
           </button>
         </Tooltip>
       )}

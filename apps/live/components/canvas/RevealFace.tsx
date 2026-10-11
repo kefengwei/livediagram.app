@@ -82,7 +82,9 @@ export function RevealFace({
           {...pillPress}
           className="flex cursor-pointer items-center gap-1 rounded-full bg-slate-900/75 px-2.5 py-1 text-[10px] font-semibold text-white shadow-lg ring-1 ring-white/10 backdrop-blur transition hover:bg-slate-900/90"
         >
-          <EyeOffIcon />{t('revealface.hide')}</button>
+          <EyeOffIcon />
+          {t('revealface.hide')}
+        </button>
       </div>
     );
   }
@@ -131,7 +133,9 @@ export function RevealFace({
         className="relative rounded-full px-2.5 py-1 text-[10.5px] font-semibold"
         style={{ color: textColor, backgroundColor: tint(textColor, 0.07) }}
       >
-        {gesture}{t('revealface.to-reveal')}</span>
+        {gesture}
+        {t('revealface.to-reveal')}
+      </span>
     </button>
   );
 }

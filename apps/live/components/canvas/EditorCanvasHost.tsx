@@ -496,7 +496,9 @@ export function EditorCanvasHost() {
       ? {
           onImportPhoto: openPhotoImport,
           photoDisabled: photoImportBlocked,
-          photoDisabledReason: photoDraft.draftOpen ? t('editorcanvashost.finish-the-current-draft-first') : undefined,
+          photoDisabledReason: photoDraft.draftOpen
+            ? t('editorcanvashost.finish-the-current-draft-first')
+            : undefined,
         }
       : {}),
   });

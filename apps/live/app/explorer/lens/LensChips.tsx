@@ -1,6 +1,5 @@
 'use client';
 
-
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import type { LensChip, LensDimension, LensIssue } from '@livediagram/explorer-lens';
 import { CheckIcon, ChevronDownIcon, Portal } from '@livediagram/ui';
@@ -35,7 +34,7 @@ export function LensChips({
   onClear: () => void;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <div className="mb-3">
       <div
@@ -57,7 +56,9 @@ export function LensChips({
           className={`${active ? '' : 'invisible '}ml-1 inline-flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-slate-600 underline-offset-2 hover:text-slate-900 hover:underline focus-visible:outline-2 focus-visible:outline-brand-500 dark:text-slate-300 dark:hover:text-white`}
           aria-hidden={!active}
           tabIndex={active ? undefined : -1}
-        >{t('lenschips.clear')}</button>
+        >
+          {t('lenschips.clear')}
+        </button>
       </div>
       <LensIssues issues={issues} />
     </div>
@@ -146,7 +147,6 @@ function ChipListbox({
   onChoose: (value: string | null) => void;
   onClose: (refocus: boolean) => void;
 }) {
-  
   const id = useId();
   const list = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);

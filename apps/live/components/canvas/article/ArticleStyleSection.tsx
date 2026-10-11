@@ -44,8 +44,7 @@ export function ArticleStyleSection({
   onPreview: (style: ArticleStyle | null) => void;
 }) {
   const { t } = useTranslation();
-  
-  
+
   // A choice hovered as the panel closes (Escape, a press elsewhere) is never left on the page.
   const clearPreview = useRef(onPreview);
   useEffect(() => {
@@ -61,7 +60,11 @@ export function ArticleStyleSection({
       {part === 'style' ? (
         <>
           <PanelSection title={t('articlestylesection.looks')}>
-            <div role="radiogroup" aria-label={t('articlestylesection.article-look')} className="grid grid-cols-5 gap-1.5">
+            <div
+              role="radiogroup"
+              aria-label={t('articlestylesection.article-look')}
+              className="grid grid-cols-5 gap-1.5"
+            >
               {ARTICLE_LOOK_IDS.map((id) => (
                 <LookCard
                   key={id}
@@ -81,7 +84,9 @@ export function ArticleStyleSection({
               <ColourPicker
                 label={t('articlestylesection.accent-colour')}
                 value={style?.accent ?? THEME_ACCENT}
-                leading={[{ id: THEME_ACCENT, colour: themeAccent, label: t('articlestylesection.theme') }]}
+                leading={[
+                  { id: THEME_ACCENT, colour: themeAccent, label: t('articlestylesection.theme') },
+                ]}
                 standard={[standardGroup('strong', 'light', 'hex')]}
                 yours={yours}
                 onPick={(id) =>
@@ -207,7 +212,7 @@ function LookCard({
   onHover: () => void;
 }) {
   const { t } = useTranslation();
-  
+
   const look = ARTICLE_LOOKS[id];
   const ink = '#1e293b';
   const heading = look.accentHeadings ? accent : ink;
@@ -242,7 +247,9 @@ function LookCard({
             color: heading,
             borderBottom: look.rules !== 'none' ? `1px solid ${accent}` : undefined,
           }}
-        >{t('articlestylesection.aa')}</span>
+        >
+          {t('articlestylesection.aa')}
+        </span>
         {[90, 70, 85].map((w, i) => (
           <span
             key={i}
@@ -298,7 +305,6 @@ function Toggle({
   on: boolean;
   onChange: (on: boolean) => void;
 }) {
-  
   return (
     <label className="mt-2 flex cursor-pointer items-center justify-between gap-2 text-xs text-slate-700 dark:text-slate-200">
       {label}
@@ -335,7 +341,6 @@ function Segmented<T extends string>({
   onChange: (v: T) => void;
   onHover: (v: T) => void;
 }): ReactNode {
-  
   return (
     <div className="mt-2 first:mt-0">
       <p className="mb-1 text-[11px] font-medium text-slate-500 dark:text-slate-400">{label}</p>

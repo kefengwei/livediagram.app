@@ -22,7 +22,6 @@
 // eight-hairstyles-by-three-facings combinations live) and
 // avatar-sprite-palette.ts (the colours both halves have to agree on).
 
-
 import type { AvatarConfig } from '@/lib/avatar-config';
 import { BARE_ARM_CLOTHING, BARE_LEG_CLOTHING } from '@/lib/avatar-config';
 import type { ReactionPose } from '@/lib/avatar-reactions';

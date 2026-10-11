@@ -109,7 +109,10 @@ export function RichTextToolbar({
           (docs/specs/004-interface-design/colour-picker.md) behind a swatch button. A press
           never takes focus from the text (the editor keeps its selection, and its onBlur ignores
           focus landing in the picker's popover). */}
-      <HoverCard title={t('richtexttoolbar.text-colour')} description={t('richtexttoolbar.colour-the-selected-text')}>
+      <HoverCard
+        title={t('richtexttoolbar.text-colour')}
+        description={t('richtexttoolbar.colour-the-selected-text')}
+      >
         <ColourSwatchButton
           label={t('richtexttoolbar.text-colour-2')}
           value={active.color ?? null}

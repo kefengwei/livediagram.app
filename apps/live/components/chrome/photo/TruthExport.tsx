@@ -53,7 +53,9 @@ export function TruthExport({
     'pointer-events-auto rounded-full border border-amber-300/60 bg-amber-950/80 px-3 py-1.5 text-xs font-medium text-amber-100 shadow-lg backdrop-blur hover:bg-amber-900/90';
   return (
     <>
-      <button type="button" onClick={() => picker.current?.click()} className={pill}>{t('truthexport.open-label')}</button>
+      <button type="button" onClick={() => picker.current?.click()} className={pill}>
+        {t('truthexport.open-label')}
+      </button>
       <input
         ref={picker}
         type="file"
@@ -71,7 +73,9 @@ export function TruthExport({
         type="button"
         onClick={() => downloadTruth(truthOf(photoName, size, kept))}
         className={pill}
-      >{t('truthexport.save-as-truth')}{kept.length})
+      >
+        {t('truthexport.save-as-truth')}
+        {kept.length})
       </button>
     </>
   );

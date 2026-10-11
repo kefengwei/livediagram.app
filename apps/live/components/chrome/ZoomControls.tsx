@@ -59,7 +59,10 @@ export function ZoomControls({
       className="pointer-events-auto flex animate-fade-in items-center gap-1 rounded-lg border border-slate-200 bg-white p-1 shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900 dark:shadow-slate-950/40"
     >
       {pinchOnly ? null : (
-        <HoverCard title={t('zoomcontrols.zoom-out-3')} description={t('zoomcontrols.zoom-out-by-10')}>
+        <HoverCard
+          title={t('zoomcontrols.zoom-out-3')}
+          description={t('zoomcontrols.zoom-out-by-10')}
+        >
           <IconButton onClick={onZoomOut} label={t('zoomcontrols.zoom-out-4')}>
             <Glyph size={14} units={14}>
               <line x1="3" y1="7" x2="11" y2="7" />
@@ -69,7 +72,10 @@ export function ZoomControls({
       )}
       <ZoomMenu zoom={zoom} onSetZoom={onSetZoom} onFitToScreen={onFitToScreen} />
       {pinchOnly ? null : (
-        <HoverCard title={t('zoomcontrols.zoom-in-3')} description={t('zoomcontrols.zoom-in-by-10')}>
+        <HoverCard
+          title={t('zoomcontrols.zoom-in-3')}
+          description={t('zoomcontrols.zoom-in-by-10')}
+        >
           <IconButton onClick={onZoomIn} label={t('zoomcontrols.zoom-in-4')}>
             <Glyph size={14} units={14}>
               <line x1="3" y1="7" x2="11" y2="7" />
@@ -85,13 +91,18 @@ export function ZoomControls({
         {pinchOnly ? null : (
           <div className="mx-0.5 h-6 w-px bg-slate-200 dark:bg-slate-700" aria-hidden />
         )}
-        <HoverCard title={t('zoomcontrols.fit-to-screen')} description={t('zoomcontrols.pan-and-zoom-so-everything-on')}>
+        <HoverCard
+          title={t('zoomcontrols.fit-to-screen')}
+          description={t('zoomcontrols.pan-and-zoom-so-everything-on')}
+        >
           <button
             type="button"
             onClick={onFitToScreen}
             aria-label={t('zoomcontrols.fit-to-screen-2')}
             className="flex h-9 items-center justify-center rounded-md px-2.5 text-xs font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
-          >{t('zoomcontrols.fit-2')}</button>
+          >
+            {t('zoomcontrols.fit-2')}
+          </button>
         </HoverCard>
       </span>
       {onIsoOrbit && onIsoReset ? (
@@ -116,7 +127,10 @@ export function ZoomControls({
                 : t('zoomcontrols.hide-every-panel-and-toolbar-to')
             }
           >
-            <IconButton onClick={onToggleZen} label={zenActive ? t('zoomcontrols.exit-zen-mode-2') : t('zoomcontrols.zen-mode-2')}>
+            <IconButton
+              onClick={onToggleZen}
+              label={zenActive ? t('zoomcontrols.exit-zen-mode-2') : t('zoomcontrols.zen-mode-2')}
+            >
               {zenActive ? <ZenExitIcon /> : <ZenIcon />}
             </IconButton>
           </HoverCard>

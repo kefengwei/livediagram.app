@@ -75,12 +75,23 @@ export function LogoKitPanel({
 
   return (
     <div className="flex flex-col gap-4">
-      <BackBar label={t('logokitpanel.all-formats')} current="Logo Kit" onClick={onBack} disabled={busy} />
-      <p className="text-sm text-slate-600 dark:text-slate-300">{t('logokitpanel.an-svg-pngs-at')}{LOGO_KIT_PNG_SIZES[0]}{t('logokitpanel.to')}{' '}
-        {LOGO_KIT_PNG_SIZES[LOGO_KIT_PNG_SIZES.length - 1]}{t('logokitpanel.px-and-a-favicon-ico-in')}</p>
+      <BackBar
+        label={t('logokitpanel.all-formats')}
+        current="Logo Kit"
+        onClick={onBack}
+        disabled={busy}
+      />
+      <p className="text-sm text-slate-600 dark:text-slate-300">
+        {t('logokitpanel.an-svg-pngs-at')}
+        {LOGO_KIT_PNG_SIZES[0]}
+        {t('logokitpanel.to')} {LOGO_KIT_PNG_SIZES[LOGO_KIT_PNG_SIZES.length - 1]}
+        {t('logokitpanel.px-and-a-favicon-ico-in')}
+      </p>
       {logoPages.length > 1 ? (
         // Each page by its full label, as the page picker of every other format names it.
-        <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200">{t('logokitpanel.logo-page')}<Select
+        <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200">
+          {t('logokitpanel.logo-page')}
+          <Select
             size="sm"
             className="min-w-0 flex-1"
             value={page.id}

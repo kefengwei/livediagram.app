@@ -37,7 +37,9 @@ export function ImportImageReport({
 
   return (
     <div role="status" data-testid="import-image-report">
-      <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{t('importimagereport.import-complete')}</h3>
+      <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+        {t('importimagereport.import-complete')}
+      </h3>
       {scene ? (
         <div className="mt-2">
           <BoardSceneReportList report={scene} showLanded />
@@ -100,7 +102,9 @@ export function ImportImageReport({
         </>
       ) : null}
       <div className="mt-5 flex justify-end">
-        <Button ref={doneRef} variant="primary" size="md" onClick={onDone}>{t('importimagereport.done')}</Button>
+        <Button ref={doneRef} variant="primary" size="md" onClick={onDone}>
+          {t('importimagereport.done')}
+        </Button>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 'use client';
 
-
 import { useState, type ReactNode } from 'react';
 import { Glyph } from '@livediagram/ui';
 import { useTranslation } from '@/lib/i18n';
@@ -56,8 +55,7 @@ function InlineCreateTile({
   enterIndex?: number;
 }) {
   const { t } = useTranslation();
-  
-  
+
   const row = layout === 'list';
   const enter = enterProps(layout, enterIndex);
   const [naming, setNaming] = useState(false);
@@ -171,7 +169,7 @@ export function NewFolderTile({
   enterIndex?: number;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <InlineCreateTile
       onCreate={onCreate}
@@ -198,7 +196,7 @@ export function NewTeamTile({
   enterIndex?: number;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <InlineCreateTile
       onCreate={onCreate}
@@ -252,7 +250,6 @@ export function PlacementCard({
   // least one, so a card that leads somewhere says so; 0 / absent = none.
   count?: number;
 }) {
-  
   const row = layout === 'list';
   const enter = enterProps(layout, enterIndex);
   const badge = count ? (

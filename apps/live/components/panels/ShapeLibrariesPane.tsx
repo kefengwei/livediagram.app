@@ -37,7 +37,11 @@ export function ShapeLibrariesPane() {
   const { libraries, status, reload } = useShapeLibraries();
   if (status === 'loading') {
     return (
-      <div role="status" aria-label={t('shapelibrariespane.loading-shape-libraries')} className="flex flex-col gap-3">
+      <div
+        role="status"
+        aria-label={t('shapelibrariespane.loading-shape-libraries')}
+        className="flex flex-col gap-3"
+      >
         {[0, 1].map((i) => (
           <div
             key={i}
@@ -51,7 +55,9 @@ export function ShapeLibrariesPane() {
     return (
       <div className="px-1 py-8 text-sm text-slate-600 dark:text-slate-300">
         <p>{t('shapelibrariespane.couldn-t-load-your-shape-libraries')}</p>
-        <button type="button" onClick={() => void reload()} className={`mt-2 ${BUTTON}`}>{t('shapelibrariespane.try-again')}</button>
+        <button type="button" onClick={() => void reload()} className={`mt-2 ${BUTTON}`}>
+          {t('shapelibrariespane.try-again')}
+        </button>
       </div>
     );
   }
@@ -136,13 +142,17 @@ function LibraryCard({ library }: { library: ShapeLibrary }) {
           aria-label={`Rename ${library.name}`}
           onClick={() => setRenaming(true)}
           className={BUTTON}
-        >{t('shapelibrariespane.rename')}</button>
+        >
+          {t('shapelibrariespane.rename')}
+        </button>
         <button
           type="button"
           aria-label={`Delete ${library.name}`}
           onClick={() => void remove()}
           className={BUTTON}
-        >{t('shapelibrariespane.delete')}</button>
+        >
+          {t('shapelibrariespane.delete')}
+        </button>
         {library.items.length > 0 ? (
           <button
             type="button"
@@ -176,7 +186,9 @@ function LibraryCard({ library }: { library: ShapeLibrary }) {
                 aria-label={`Delete ${titleOf(item, i)}`}
                 onClick={() => void deleteItem(library.id, item.id)}
                 className={BUTTON}
-              >{t('shapelibrariespane.delete-2')}</button>
+              >
+                {t('shapelibrariespane.delete-2')}
+              </button>
             </li>
           ))}
         </ul>

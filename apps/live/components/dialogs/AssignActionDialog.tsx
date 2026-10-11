@@ -216,7 +216,9 @@ export function AssignActionDialog({
               id="assign-action-title"
               className="text-lg font-semibold text-slate-900 dark:text-slate-50"
             >
-              {editing ? t('assignactiondialog.edit-action') : t('assignactiondialog.assign-an-action')}
+              {editing
+                ? t('assignactiondialog.edit-action')
+                : t('assignactiondialog.assign-an-action')}
             </h2>
             <div className="-mr-1.5 -mt-0.5 flex items-center gap-0.5">
               <HelpArticleLink article="assignedActions" variant="icon" />
@@ -239,7 +241,9 @@ export function AssignActionDialog({
 
         <div className="flex flex-col gap-4 px-6 py-5">
           <label className="flex flex-col gap-1.5">
-            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">{t('assignactiondialog.action-name')}</span>
+            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">
+              {t('assignactiondialog.action-name')}
+            </span>
             <TextInput
               ref={nameRef}
               value={name}
@@ -250,7 +254,9 @@ export function AssignActionDialog({
           </label>
 
           <label className="flex flex-col gap-1.5">
-            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">{t('assignactiondialog.description')}<span className="font-normal text-slate-400">{t('assignactiondialog.optional')}</span>
+            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">
+              {t('assignactiondialog.description')}
+              <span className="font-normal text-slate-400">{t('assignactiondialog.optional')}</span>
             </span>
             <textarea
               value={description}
@@ -296,13 +302,17 @@ export function AssignActionDialog({
                 // Informational, not a warning: access arrives with the
                 // invite acceptance, no owner action needed.
                 <>
-                  {assignee?.name}{t('assignactiondialog.hasn-t-accepted-the-team-invite')}</>
+                  {assignee?.name}
+                  {t('assignactiondialog.hasn-t-accepted-the-team-invite')}
+                </>
               ) : (
                 <>
                   {assignee?.name}{' '}
                   {assigneeAccess === 'no'
                     ? t('assignactiondialog.can-t-open-this-document-yet')
-                    : 'may not be able to open this document'}{t('assignactiondialog.share-it-or-move-it-to')}</>
+                    : 'may not be able to open this document'}
+                  {t('assignactiondialog.share-it-or-move-it-to')}
+                </>
               )}
             </p>
           ) : null}
@@ -314,7 +324,11 @@ export function AssignActionDialog({
               aria-pressed={notifyEmail}
               className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-slate-200 px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
             >
-              <span>{t('assignactiondialog.email')}{assignee?.name ?? 'them'}{t('assignactiondialog.about-this-action')}</span>
+              <span>
+                {t('assignactiondialog.email')}
+                {assignee?.name ?? 'them'}
+                {t('assignactiondialog.about-this-action')}
+              </span>
               <ToggleSwitch
                 checked={notifyEmail}
                 label={`Email ${assignee?.name ?? 'them'} about this action`}
@@ -332,10 +346,14 @@ export function AssignActionDialog({
               onClick={() => (confirmingDelete ? onDelete() : setConfirmingDelete(true))}
               className="mr-auto"
             >
-              {confirmingDelete ? t('assignactiondialog.confirm-delete') : t('assignactiondialog.delete-action')}
+              {confirmingDelete
+                ? t('assignactiondialog.confirm-delete')
+                : t('assignactiondialog.delete-action')}
             </Button>
           ) : null}
-          <Button type="button" variant="secondary" onClick={onClose}>{t('assignactiondialog.cancel')}</Button>
+          <Button type="button" variant="secondary" onClick={onClose}>
+            {t('assignactiondialog.cancel')}
+          </Button>
           <Button type="submit" disabled={!canSubmit}>
             {editing ? t('assignactiondialog.save-action') : t('assignactiondialog.assign-action')}
           </Button>

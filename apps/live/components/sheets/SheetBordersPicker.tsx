@@ -92,7 +92,11 @@ export function SheetBordersPicker({
   const { t } = useTranslation();
   return (
     <div className="flex w-[11.5rem] flex-col gap-2 p-2">
-      <div role="group" aria-label={t('sheetborderspicker.borders')} className="grid grid-cols-4 gap-1">
+      <div
+        role="group"
+        aria-label={t('sheetborderspicker.borders')}
+        className="grid grid-cols-4 gap-1"
+      >
         {MODES.map((m) => (
           <Tooltip key={m.mode} label={m.label}>
             <button
@@ -108,7 +112,11 @@ export function SheetBordersPicker({
         ))}
       </div>
       <div className="h-px bg-slate-200 dark:bg-slate-700" />
-      <div role="radiogroup" aria-label={t('sheetborderspicker.line')} className="grid grid-cols-5 gap-1">
+      <div
+        role="radiogroup"
+        aria-label={t('sheetborderspicker.line')}
+        className="grid grid-cols-5 gap-1"
+      >
         {BORDER_LINES.map((l) => {
           const on = l.label === line.label;
           return (

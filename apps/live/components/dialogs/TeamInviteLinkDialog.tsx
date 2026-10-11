@@ -122,7 +122,9 @@ export function TeamInviteLinkDialog({
         <h2
           id="invite-link-title"
           className="text-lg font-semibold text-slate-900 dark:text-slate-50"
-        >{t('teaminvitelinkdialog.invite-by-link')}</h2>
+        >
+          {t('teaminvitelinkdialog.invite-by-link')}
+        </h2>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           Anyone signed in who opens this link can join the team as a member. The link expires after
           a week, and you can turn it off any time.
@@ -130,7 +132,9 @@ export function TeamInviteLinkDialog({
 
         {inviteLink ? (
           <div className="mt-4">
-            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">{t('teaminvitelinkdialog.invite-link')}</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
+              {t('teaminvitelinkdialog.invite-link')}
+            </span>
             {/* Stacks on narrow screens so the URL field keeps its
                     width on mobile and the Copy button drops below it. */}
             <div className="mt-1 flex flex-col gap-2 sm:flex-row">
@@ -154,7 +158,9 @@ export function TeamInviteLinkDialog({
           <div className="mt-4">
             <Button size="md" onClick={() => void generate()} disabled={busy}>
               <LinkIcon />
-              {busy ? t('teaminvitelinkdialog.turning-on') : t('teaminvitelinkdialog.turn-on-invite-link')}
+              {busy
+                ? t('teaminvitelinkdialog.turning-on')
+                : t('teaminvitelinkdialog.turn-on-invite-link')}
             </Button>
           </div>
         )}
@@ -169,11 +175,15 @@ export function TeamInviteLinkDialog({
             onClick={() => void revoke()}
             disabled={busy}
             className="rounded-md px-2.5 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-800 disabled:opacity-50 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-          >{t('teaminvitelinkdialog.turn-off')}</button>
+          >
+            {t('teaminvitelinkdialog.turn-off')}
+          </button>
         ) : (
           <span />
         )}
-        <Button variant="secondary" onClick={onClose}>{t('teaminvitelinkdialog.done')}</Button>
+        <Button variant="secondary" onClick={onClose}>
+          {t('teaminvitelinkdialog.done')}
+        </Button>
       </div>
     </Dialog>
   );

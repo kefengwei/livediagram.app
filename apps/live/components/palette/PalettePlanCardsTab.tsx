@@ -31,7 +31,9 @@ export function PalettePlanCardsTab(props: GridProps) {
               track('Plan', 'Opened', 'EditCards');
               openCardTypes();
             }}
-          >{t('paletteplancardstab.edit-cards')}</button>
+          >
+            {t('paletteplancardstab.edit-cards')}
+          </button>
         </div>
       ) : null}
     </>

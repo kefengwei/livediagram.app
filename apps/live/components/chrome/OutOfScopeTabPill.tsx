@@ -25,13 +25,18 @@ export function OutOfScopeTabPill({
       draggable={false}
       className="flex shrink-0 items-center gap-1 rounded-lg border border-dashed border-slate-300 px-2.5 text-slate-500 dark:border-slate-600 dark:text-slate-400"
     >
-      <HoverCard title={t('outofscopetabpill.not-shared')} description={t('outofscopetabpill.this-tab-isn-t-shared-with')}>
+      <HoverCard
+        title={t('outofscopetabpill.not-shared')}
+        description={t('outofscopetabpill.this-tab-isn-t-shared-with')}
+      >
         <button
           type="button"
           aria-disabled="true"
           className="flex cursor-not-allowed items-center gap-1.5 rounded-lg py-1 text-sm font-medium"
         >
-          <TabNotSharedIcon />{t('outofscopetabpill.not-shared-2')}</button>
+          <TabNotSharedIcon />
+          {t('outofscopetabpill.not-shared-2')}
+        </button>
       </HoverCard>
       <TabPresenceStack participants={participants} selfId={selfId} selfRole={selfRole} />
     </div>

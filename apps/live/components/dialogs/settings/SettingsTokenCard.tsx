@@ -75,11 +75,16 @@ export function SettingsTokenCard({
               </p>
             </Tooltip>
             {token.readOnly ? (
-              <span className="shrink-0 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-600 dark:bg-slate-700 dark:text-slate-300">{t('settingstokencard.read-only')}</span>
+              <span className="shrink-0 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+                {t('settingstokencard.read-only')}
+              </span>
             ) : null}
           </div>
           <p className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-[11px] text-slate-500 dark:text-slate-400">
-            <span>{t('settingstokencard.created')}{formatTokenDate(token.createdAt)}</span>
+            <span>
+              {t('settingstokencard.created')}
+              {formatTokenDate(token.createdAt)}
+            </span>
             <span aria-hidden>·</span>
             {token.lastUsedAt ? (
               <span className="inline-flex items-center gap-1">
@@ -88,7 +93,9 @@ export function SettingsTokenCard({
                     aria-hidden
                     className="h-1.5 w-1.5 rounded-full bg-emerald-500 ring-2 ring-emerald-500/20"
                   />
-                ) : null}{t('settingstokencard.used')}{relativeTime(token.lastUsedAt, now)}
+                ) : null}
+                {t('settingstokencard.used')}
+                {relativeTime(token.lastUsedAt, now)}
               </span>
             ) : (
               <span>{t('settingstokencard.never-used')}</span>

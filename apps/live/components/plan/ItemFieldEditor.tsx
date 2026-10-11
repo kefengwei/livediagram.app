@@ -219,7 +219,9 @@ export function ItemFieldEditor({ f, ctx }: { f: string; ctx: ItemFieldContext }
         <div className="flex flex-col gap-1">
           <DateField id={id} value={value} disabled={disabled} onSave={(v) => onSave(f, v)} />
           {late ? (
-            <span className="text-[12px] text-amber-700 dark:text-amber-300" role="note">{t('itemfieldeditor.starts-after-it-is-due')}</span>
+            <span className="text-[12px] text-amber-700 dark:text-amber-300" role="note">
+              {t('itemfieldeditor.starts-after-it-is-due')}
+            </span>
           ) : null}
         </div>
       );

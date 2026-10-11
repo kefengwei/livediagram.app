@@ -21,7 +21,11 @@ export function ModelDownload({ download }: { download: Download }) {
       <p className="flex justify-between gap-3">
         <span>{t('modeldownload.downloading-the-reading-model-only-the')}</span>
         <span className="tabular-nums text-slate-300">
-          {Math.round(download.loaded / MB)}{t('modeldownload.of')}{Math.round(download.total / MB)}{t('modeldownload.mb')}</span>
+          {Math.round(download.loaded / MB)}
+          {t('modeldownload.of')}
+          {Math.round(download.total / MB)}
+          {t('modeldownload.mb')}
+        </span>
       </p>
       <div
         role="progressbar"

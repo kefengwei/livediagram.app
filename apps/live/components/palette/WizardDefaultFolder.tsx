@@ -50,18 +50,26 @@ export function WizardDefaultFolder({
         <p role="note" className="min-w-0">
           <span className="font-semibold text-slate-800 dark:text-slate-100">
             {defaultKeyEntry(shown.key).label}
-          </span>{' '}{t('wizarddefaultfolder.go-to')}{' '}
+          </span>{' '}
+          {t('wizarddefaultfolder.go-to')}{' '}
           <span className="font-semibold text-slate-800 dark:text-slate-100">
             {shown.folderName}
-          </span>{' '}{t('wizarddefaultfolder.by-default')}{' '}
+          </span>{' '}
+          {t('wizarddefaultfolder.by-default')}{' '}
           <button
             type="button"
             onClick={() => setChanging(true)}
             className="rounded font-semibold text-brand-700 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-brand-600 dark:text-brand-300 dark:focus-visible:outline-brand-400"
-          >{t('wizarddefaultfolder.change-default')}</button>
+          >
+            {t('wizarddefaultfolder.change-default')}
+          </button>
         </p>
       ) : offer ? (
-        <SwitchRow checked={alwaysSave} onChange={onAlwaysSave} className="text-sm">{t('wizarddefaultfolder.always-save')}{defaultKeyEntry(offer.key).noun}{t('wizarddefaultfolder.here')}</SwitchRow>
+        <SwitchRow checked={alwaysSave} onChange={onAlwaysSave} className="text-sm">
+          {t('wizarddefaultfolder.always-save')}
+          {defaultKeyEntry(offer.key).noun}
+          {t('wizarddefaultfolder.here')}
+        </SwitchRow>
       ) : null}
       {changing && shown && defaults ? (
         <DefaultFolderPickerDialog

@@ -1,4 +1,3 @@
-
 import type { ReactNode } from 'react';
 
 // The drawing kit the Settings illustrations share: the frame size, the

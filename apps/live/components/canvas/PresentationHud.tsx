@@ -8,7 +8,6 @@
 // the mouse away. It does NOT fade while the notes popover is open, or the
 // popover would be left orphaned over the slide.
 
-
 import { useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon, Tooltip, Glyph } from '@livediagram/ui';
 
@@ -54,8 +53,6 @@ function HudButton({
   disabled?: boolean;
   children: React.ReactNode;
 }) {
-  
-  
   return (
     <button
       type="button"
@@ -129,7 +126,9 @@ export function PresentationHud({
    * position to send the presenter to.
    */
   slides: readonly {
-    id: string; label: string }[];
+    id: string;
+    label: string;
+  }[];
   jumpOpen: boolean;
   onToggleJump: () => void;
   onJump: (index: number) => void;
@@ -144,7 +143,7 @@ export function PresentationHud({
   hidden: boolean;
 }) {
   const { t } = useTranslation();
-  
+
   const hasNotes = (notes ?? '').trim().length > 0;
   return (
     <>
@@ -198,7 +197,11 @@ export function PresentationHud({
             a projector often has a mouse and no keyboard within reach, and
             "click anywhere to advance" is not discoverable and cannot go
             BACK at all. */}
-        <HudButton label={t('presentationhud.previous-slide')} onPress={() => onBack?.()} disabled={!onBack}>
+        <HudButton
+          label={t('presentationhud.previous-slide')}
+          onPress={() => onBack?.()}
+          disabled={!onBack}
+        >
           <ChevronLeftIcon />
         </HudButton>
         <HudButton label={t('presentationhud.next-slide')} onPress={onNext}>
@@ -212,7 +215,11 @@ export function PresentationHud({
         {/* Jumping (docs/specs/012-collaboration/presentation-mode.md). Arrow keys walk the deck, which is everything
             you need until somebody asks about the slide from nine slides ago
             and you arrow back through nine of them in front of a room. */}
-        <HudButton label={t('presentationhud.jump-to-a-slide')} onPress={onToggleJump} active={jumpOpen}>
+        <HudButton
+          label={t('presentationhud.jump-to-a-slide')}
+          onPress={onToggleJump}
+          active={jumpOpen}
+        >
           <Glyph size={14} units={16}>
             <rect x="2" y="2.5" width="5" height="5" rx="1" />
             <rect x="9" y="2.5" width="5" height="5" rx="1" />
@@ -221,7 +228,11 @@ export function PresentationHud({
           </Glyph>
         </HudButton>
         {hasNotes ? (
-          <HudButton label={t('presentationhud.presenter-notes')} onPress={onToggleNotes} active={notesOpen}>
+          <HudButton
+            label={t('presentationhud.presenter-notes')}
+            onPress={onToggleNotes}
+            active={notesOpen}
+          >
             <Glyph size={14} units={16} strokeLinejoin="miter">
               <rect x="2.5" y="2" width="11" height="12" rx="1.6" />
               <path d="M5 5.5h6M5 8h6M5 10.5h3.5" />
@@ -232,7 +243,11 @@ export function PresentationHud({
             central circle read as a SUN at this size — which is exactly why it
             was replaced everywhere else (see SettingsIcon), and doubly wrong on a
             dark HUD where the stroke is light. */}
-        <HudButton label={t('presentationhud.presentation-settings')} onPress={onToggleSettings} active={settingsOpen}>
+        <HudButton
+          label={t('presentationhud.presentation-settings')}
+          onPress={onToggleSettings}
+          active={settingsOpen}
+        >
           <SettingsIcon />
         </HudButton>
         <HudButton label={t('presentationhud.exit-presentation')} onPress={onClose}>

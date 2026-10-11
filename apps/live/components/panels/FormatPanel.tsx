@@ -51,13 +51,17 @@ function BrushPreview({
           color: on.text ? (source?.textColor ?? '#0f172a') : '#cbd5e1',
           opacity: source ? 1 : 0.5,
         }}
-      >{t('formatpanel.aa')}</span>
+      >
+        {t('formatpanel.aa')}
+      </span>
       <span className="min-w-0">
         <span className="block truncate text-[11px] font-semibold text-slate-700 dark:text-slate-200">
           {source ? source.name : t('formatpanel.nothing-loaded')}
         </span>
         <span className="block truncate text-[10px] text-slate-500 dark:text-slate-400">
-          {source ? `Copies: ${formatCopiesSummary(config)}` : t('formatpanel.pick-something-to-copy-from')}
+          {source
+            ? `Copies: ${formatCopiesSummary(config)}`
+            : t('formatpanel.pick-something-to-copy-from')}
         </span>
       </span>
     </div>
@@ -147,7 +151,11 @@ export function FormatPanel({
               </span>
             }
           >
-            <div className="flex flex-wrap gap-1" role="radiogroup" aria-label={t('formatpanel.after-painting-2')}>
+            <div
+              className="flex flex-wrap gap-1"
+              role="radiogroup"
+              aria-label={t('formatpanel.after-painting-2')}
+            >
               {FORMAT_MODES.map((option) => {
                 const active = option.id === config.mode;
                 return (

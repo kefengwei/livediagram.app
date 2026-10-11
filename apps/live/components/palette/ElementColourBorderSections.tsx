@@ -217,7 +217,11 @@ export function ElementColourBorderSections({
             to style, so they're excluded. */}
       {borderable && !isChart ? (
         <>
-          <MenuAccordionSection title={t('elementcolourbordersections.border')} icon={<BorderGlyph />} {...sectionProps('border')}>
+          <MenuAccordionSection
+            title={t('elementcolourbordersections.border')}
+            icon={<BorderGlyph />}
+            {...sectionProps('border')}
+          >
             <BorderControls
               strokeWidth={borderStrokeVal}
               strokeStyle={borderStyleVal}

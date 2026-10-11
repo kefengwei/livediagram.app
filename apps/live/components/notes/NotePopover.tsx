@@ -134,7 +134,9 @@ export function NotePopover({
           transform: 'translate(-50%, 0)',
         }}
       >
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('notepopover.note')}</p>
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+          {t('notepopover.note')}
+        </p>
         {readOnly ? (
           <NoteRichText
             note={initial}
@@ -156,7 +158,9 @@ export function NotePopover({
               onCancel={onClose}
             />
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[10px] text-slate-400 dark:text-slate-400">{t('notepopover.cmd-enter-saves-esc-cancels')}</span>
+              <span className="text-[10px] text-slate-400 dark:text-slate-400">
+                {t('notepopover.cmd-enter-saves-esc-cancels')}
+              </span>
               <button
                 type="button"
                 onClick={() => {
@@ -165,7 +169,9 @@ export function NotePopover({
                 }}
                 disabled={!initial && !hasText}
                 className="text-[10px] font-medium text-slate-500 transition hover:text-slate-700 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:no-underline dark:text-slate-400 dark:hover:text-slate-200 dark:disabled:text-slate-600"
-              >{t('notepopover.delete-note')}</button>
+              >
+                {t('notepopover.delete-note')}
+              </button>
             </div>
           </>
         )}

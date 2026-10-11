@@ -1,6 +1,5 @@
 'use client';
 
-
 import { HoverCard } from '@livediagram/ui';
 import { SettingsPopover, SettingsPopoverResetRow } from '@/components/primitives/SettingsPopover';
 import { SettingsToggleRow } from '@/components/panels/SettingsToggleRow';
@@ -41,7 +40,6 @@ function ChoiceRow<T extends string | number>({
   value: T;
   onPick: (id: T) => void;
 }) {
-  
   return (
     <div className="flex flex-col gap-1 px-2 py-1.5">
       <span className="text-[11px] font-medium text-slate-700 dark:text-slate-200">{label}</span>
@@ -80,7 +78,7 @@ export function SlideDeckSettingsPopover({
   resettable: boolean;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <SettingsPopover
       label={t('slidedecksettingspopover.presentation')}

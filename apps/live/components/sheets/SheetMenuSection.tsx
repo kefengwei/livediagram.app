@@ -27,7 +27,12 @@ export function SheetMenuSection({
   const entry = useSheetSettingsEntry(element.id);
   if (!entry) return null;
   return (
-    <MenuFlyoutSection title={t('sheetmenusection.sheet')} icon={<SheetArt size={16} />} panel {...flyoutProps}>
+    <MenuFlyoutSection
+      title={t('sheetmenusection.sheet')}
+      icon={<SheetArt size={16} />}
+      panel
+      {...flyoutProps}
+    >
       <div className="flex flex-col py-1">
         <SheetControllerProvider value={entry.controller}>
           <SheetSettingsPanel

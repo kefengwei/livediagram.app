@@ -56,7 +56,8 @@ export function FilteredCards({
       (status === ALL || (namedStatus(c, statusNames) ?? NO_STATUS) === status),
   );
   const filtering = typeId !== ALL || status !== ALL;
-  const statusName = (s: string) => (s === NO_STATUS ? t('linkedcards.no-status') : (statusNames.get(s) ?? s));
+  const statusName = (s: string) =>
+    s === NO_STATUS ? t('linkedcards.no-status') : (statusNames.get(s) ?? s);
   return (
     <div className="flex flex-col gap-1.5">
       {filterable ? (
@@ -95,20 +96,26 @@ export function FilteredCards({
           ) : null}
           {filtering ? (
             <span className="text-[11px] tabular-nums text-slate-500 dark:text-slate-400">
-              {shown.length}{t('linkedcards.of')}{cards.length}
+              {shown.length}
+              {t('linkedcards.of')}
+              {cards.length}
             </span>
           ) : null}
         </div>
       ) : null}
       {shown.length === 0 ? (
-        <p className="flex items-center gap-2 text-[13px] text-slate-500 dark:text-slate-400">{t('linkedcards.no-cards-match')}<Button
+        <p className="flex items-center gap-2 text-[13px] text-slate-500 dark:text-slate-400">
+          {t('linkedcards.no-cards-match')}
+          <Button
             variant="ghost"
             size="xs"
             onClick={() => {
               setTypeId(ALL);
               setStatus(ALL);
             }}
-          >{t('linkedcards.clear-filters')}</Button>
+          >
+            {t('linkedcards.clear-filters')}
+          </Button>
         </p>
       ) : (
         <ul className="divide-y divide-slate-100 overflow-hidden rounded-lg border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-700 dark:bg-slate-900/40">
@@ -166,7 +173,9 @@ function ChildRow({
         {isArchived(child) ? (
           <span
             className={`${CHIP} bg-amber-50 text-amber-800 ring-amber-200 dark:bg-amber-500/10 dark:text-amber-300 dark:ring-amber-500/30`}
-          >{t('linkedcards.archived')}</span>
+          >
+            {t('linkedcards.archived')}
+          </span>
         ) : null}
         <span
           className={`${CHIP} max-w-[9rem] truncate bg-slate-50 text-slate-600 ring-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:ring-slate-700`}
@@ -206,13 +215,19 @@ export function LinkedCardGroup({
       <h3
         id={headingId}
         className="mb-2 flex items-center gap-1.5 text-[13px] font-semibold text-slate-800 dark:text-slate-100"
-      >{t('linkedcards.linked-as')}{group.label}
+      >
+        {t('linkedcards.linked-as')}
+        {group.label}
         <span className="rounded-full bg-slate-100 px-1.5 text-[11px] font-medium tabular-nums text-slate-500 dark:bg-slate-800 dark:text-slate-400">
           {group.cards.length}
         </span>
       </h3>
       {group.cards.length === 0 ? (
-        <p className="text-[13px] text-slate-500 dark:text-slate-400">{t('linkedcards.no-cards-link-here-as')}{group.label}{t('linkedcards.yet')}</p>
+        <p className="text-[13px] text-slate-500 dark:text-slate-400">
+          {t('linkedcards.no-cards-link-here-as')}
+          {group.label}
+          {t('linkedcards.yet')}
+        </p>
       ) : (
         <FilteredCards
           cards={group.cards}
@@ -233,7 +248,9 @@ export function LinkedCardGroup({
                 onClick={() => onAdd(typeId)}
                 className="inline-flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 text-[12px] font-medium text-brand-700 transition hover:bg-brand-50 dark:text-brand-300 dark:hover:bg-brand-500/10"
               >
-                <PlusIcon size={12} />{t('linkedcards.new')}{type.label}
+                <PlusIcon size={12} />
+                {t('linkedcards.new')}
+                {type.label}
               </button>
             );
           })}

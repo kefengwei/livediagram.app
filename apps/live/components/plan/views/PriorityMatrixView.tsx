@@ -56,7 +56,9 @@ export function PriorityMatrixView({ plan, items, palette, fontFamily }: PlanVie
           </span>
         ))}
         {model.rows.map((row) => {
-          const label = row.priority ? PRIORITY_LABELS[row.priority] : t('prioritymatrixview.no-priority');
+          const label = row.priority
+            ? PRIORITY_LABELS[row.priority]
+            : t('prioritymatrixview.no-priority');
           const tint = row.priority ? PRIORITY_COLOURS[row.priority] : palette.muted;
           return (
             <div key={row.priority ?? '-'} role="row" className="contents">

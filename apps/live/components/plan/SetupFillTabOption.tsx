@@ -28,8 +28,12 @@ export function SetupFillTabOption({
   return (
     <div className="mt-4 flex flex-col gap-2 border-t pt-4" style={{ borderColor: palette.border }}>
       <SwitchRow checked={on} onChange={onChange} className="cursor-pointer">
-        <span className="block text-[13px] font-semibold" style={{ color: palette.text }}>{t('setupfilltaboption.fill-tab')}</span>
-        <span className="block text-[12px]" style={{ color: palette.muted }}>{t('setupfilltaboption.the-board-always-fills-this-tab')}</span>
+        <span className="block text-[13px] font-semibold" style={{ color: palette.text }}>
+          {t('setupfilltaboption.fill-tab')}
+        </span>
+        <span className="block text-[12px]" style={{ color: palette.muted }}>
+          {t('setupfilltaboption.the-board-always-fills-this-tab')}
+        </span>
       </SwitchRow>
       {warning ? (
         <p

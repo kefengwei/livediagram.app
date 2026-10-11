@@ -61,14 +61,19 @@ export function ZoomControls({
           +
         </button>
       </HoverCard>
-      <HoverCard title={t('zoomcontrols.show-the-whole-photo')} description={t('zoomcontrols.shortcut-0')}>
+      <HoverCard
+        title={t('zoomcontrols.show-the-whole-photo')}
+        description={t('zoomcontrols.shortcut-0')}
+      >
         <button
           type="button"
           aria-label={t('zoomcontrols.show-the-whole-photo-2')}
           disabled={zoom === 1}
           onClick={onFit}
           className={`${button} text-xs`}
-        >{t('zoomcontrols.fit')}</button>
+        >
+          {t('zoomcontrols.fit')}
+        </button>
       </HoverCard>
     </div>
   );

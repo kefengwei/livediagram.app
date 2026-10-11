@@ -85,7 +85,9 @@ export function ItemTypeStatuses({
   const defaultId = useId();
   if (statuses.length === 0)
     return (
-      <p className="rounded-lg border border-dashed border-slate-300 px-3 py-4 text-center text-[12px] text-slate-500 dark:border-slate-600 dark:text-slate-400">{t('itemtypestatuses.no-boards-on-this-tab-have')}</p>
+      <p className="rounded-lg border border-dashed border-slate-300 px-3 py-4 text-center text-[12px] text-slate-500 dark:border-slate-600 dark:text-slate-400">
+        {t('itemtypestatuses.no-boards-on-this-tab-have')}
+      </p>
     );
   const onCount = statuses.filter((s) => !excluded.includes(s.status)).length;
   // A ready-made type's Default State by name, as this document has it (none chosen falls back to it).
@@ -111,20 +113,28 @@ export function ItemTypeStatuses({
           aria-live="polite"
           className="text-[12px] font-medium text-slate-600 dark:text-slate-300"
         >
-          {onCount}{t('itemtypestatuses.of')}{statuses.length} {statuses.length === 1 ? 'state' : 'states'}{t('itemtypestatuses.on')}</span>
+          {onCount}
+          {t('itemtypestatuses.of')}
+          {statuses.length} {statuses.length === 1 ? 'state' : 'states'}
+          {t('itemtypestatuses.on')}
+        </span>
         <Button
           variant="ghost"
           size="xs"
           className="ml-auto"
           disabled={allOn}
           onClick={() => onChange(selectAllStates(statuses, excluded))}
-        >{t('itemtypestatuses.select-all')}</Button>
+        >
+          {t('itemtypestatuses.select-all')}
+        </Button>
         <Button
           variant="ghost"
           size="xs"
           disabled={allOff}
           onClick={() => onChange(deselectAllStates(statuses, excluded))}
-        >{t('itemtypestatuses.deselect-all')}</Button>
+        >
+          {t('itemtypestatuses.deselect-all')}
+        </Button>
       </div>
       <div className="flex flex-col gap-3">
         {statusGroups(statuses, boards).map((g, gi) => {
@@ -135,7 +145,11 @@ export function ItemTypeStatuses({
                 <h4 className="mb-1.5 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   <span className="min-w-0 truncate">{g.title}</span>
                   <span className="font-medium normal-case tracking-normal tabular-nums">
-                    {groupOn}{t('itemtypestatuses.of-2')}{g.statuses.length} {g.statuses.length === 1 ? 'state' : 'states'}{' '}{t('itemtypestatuses.on-2')}</span>
+                    {groupOn}
+                    {t('itemtypestatuses.of-2')}
+                    {g.statuses.length} {g.statuses.length === 1 ? 'state' : 'states'}{' '}
+                    {t('itemtypestatuses.on-2')}
+                  </span>
                 </h4>
               ) : null}
               <OptionRows
@@ -166,17 +180,25 @@ export function ItemTypeStatuses({
         })}
       </div>
       {full ? (
-        <p role="note" className="text-[12px] text-slate-500 dark:text-slate-400">{t('itemtypestatuses.a-type-can-turn-off-at')}{ITEM_TYPE_EXCLUDED_STATUSES_MAX}{t('itemtypestatuses.states-turn-one-back-on-to')}</p>
+        <p role="note" className="text-[12px] text-slate-500 dark:text-slate-400">
+          {t('itemtypestatuses.a-type-can-turn-off-at')}
+          {ITEM_TYPE_EXCLUDED_STATUSES_MAX}
+          {t('itemtypestatuses.states-turn-one-back-on-to')}
+        </p>
       ) : null}
       {onCount === 0 ? (
-        <p role="note" className="text-[12px] text-slate-500 dark:text-slate-400">{t('itemtypestatuses.with-every-state-off-a-card')}</p>
+        <p role="note" className="text-[12px] text-slate-500 dark:text-slate-400">
+          {t('itemtypestatuses.with-every-state-off-a-card')}
+        </p>
       ) : null}
       {onDefaultStatus ? (
         <div className="mt-2 flex flex-col gap-1.5 border-t border-slate-200 pt-3 dark:border-slate-700">
           <label
             htmlFor={defaultId}
             className="text-[12px] font-semibold text-slate-700 dark:text-slate-200"
-          >{t('itemtypestatuses.default-state')}</label>
+          >
+            {t('itemtypestatuses.default-state')}
+          </label>
           <Select
             id={defaultId}
             className="w-full sm:w-64"
@@ -199,7 +221,9 @@ export function ItemTypeStatuses({
                 </option>
               ))}
           </Select>
-          <p className="text-[12px] text-slate-500 dark:text-slate-400">{t('itemtypestatuses.cards-made-outside-a-board-start')}</p>
+          <p className="text-[12px] text-slate-500 dark:text-slate-400">
+            {t('itemtypestatuses.cards-made-outside-a-board-start')}
+          </p>
         </div>
       ) : null}
     </div>

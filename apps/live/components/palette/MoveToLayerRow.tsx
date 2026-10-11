@@ -36,7 +36,9 @@ export function MoveToLayerRow({
   if (layers.length <= 1) return null;
   return (
     <div className="px-2 py-1.5">
-      <p className="px-1 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('movetolayerrow.move-to-layer')}</p>
+      <p className="px-1 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+        {t('movetolayerrow.move-to-layer')}
+      </p>
       <MenuTileGrid cols={2}>
         {[...layers].reverse().map((layer) => (
           <MenuTile

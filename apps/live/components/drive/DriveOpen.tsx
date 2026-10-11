@@ -166,7 +166,9 @@ export function DriveOpen() {
         <Heading>{t('driveopen.allow-livediagram-to-read-this-file')}</Heading>
         <Body>{t('driveopen.connect-google-drive-once-and-files')}</Body>
         <div className="mt-5 flex justify-center">
-          <Button size="md" onClick={() => void allowAccess()}>{t('driveopen.allow-access')}</Button>
+          <Button size="md" onClick={() => void allowAccess()}>
+            {t('driveopen.allow-access')}
+          </Button>
         </div>
       </LandingCard>
     );
@@ -204,7 +206,9 @@ export function DriveOpen() {
   }
   return (
     <LandingCard>
-      <Body>{phase.kind === 'importing' ? 'Importing…' : t('driveopen.opening-from-google-drive')}</Body>
+      <Body>
+        {phase.kind === 'importing' ? 'Importing…' : t('driveopen.opening-from-google-drive')}
+      </Body>
     </LandingCard>
   );
 }

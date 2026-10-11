@@ -74,7 +74,9 @@ export function ThemesPane() {
             type="button"
             onClick={() => setBuilding('new')}
             className={`rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-500 ${SOLID_BRAND_DARK_CONTROL}`}
-          >{t('themespane.new-theme')}</button>
+          >
+            {t('themespane.new-theme')}
+          </button>
         </EmptyState>
       ) : (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">

@@ -68,8 +68,6 @@ export function DebouncedText({
   // An accessible name when no label element names it.
   label?: string;
 }) {
-  
-  
   const [draft, setDraft] = useState(value);
   const wrapRef = useRef<HTMLTextAreaElement>(null);
   useAutoHeight(wrapRef, draft, { lines: wrapLines ?? 1 });
@@ -192,7 +190,7 @@ export function PersonPicker({
   onSave: Save;
 }) {
   const { t } = useTranslation();
-  
+
   const current = isItemPerson(value) ? value : null;
   const options =
     current && !people.some((p) => p.id === current.id) ? [current, ...people] : people;
@@ -230,7 +228,7 @@ export function PriorityPicker({
   onSave: Save;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <Select
       id={id}
@@ -270,7 +268,7 @@ export function LabelsEditor({
   onSave: Save;
 }) {
   const { t } = useTranslation();
-  
+
   const labels = Array.isArray(value)
     ? value.filter((l): l is string => typeof l === 'string')
     : [];
@@ -345,7 +343,7 @@ export function EstimateSelect({
   onSave: Save;
 }) {
   const { t } = useTranslation();
-  
+
   const current = typeof value === 'number' ? value : undefined;
   const sizes: number[] = [...ESTIMATE_POINTS];
   if (current !== undefined && !sizes.includes(current))
@@ -410,7 +408,7 @@ export function ChecklistEditor({
   onSave: Save;
 }) {
   const { t } = useTranslation();
-  
+
   const rows: Row[] = Array.isArray(value)
     ? value.flatMap((r) =>
         r && typeof r === 'object' && !Array.isArray(r) && typeof r.text === 'string'
@@ -435,7 +433,9 @@ export function ChecklistEditor({
             />
           </span>
           <span className="text-[12px] tabular-nums text-slate-500 dark:text-slate-400">
-            {done}{t('item-field-editors.of')}{rows.length}
+            {done}
+            {t('item-field-editors.of')}
+            {rows.length}
           </span>
         </div>
       ) : null}
@@ -499,7 +499,9 @@ export function ChecklistEditor({
       </ul>
       {disabled ? (
         rows.length === 0 ? (
-          <span className="text-[13px] text-slate-500 dark:text-slate-400">{t('item-field-editors.no-steps')}</span>
+          <span className="text-[13px] text-slate-500 dark:text-slate-400">
+            {t('item-field-editors.no-steps')}
+          </span>
         ) : null
       ) : (
         <label className="-mx-1.5 flex items-center gap-2.5 rounded-md px-1.5 py-1 text-slate-500 focus-within:bg-slate-50 dark:text-slate-400 dark:focus-within:bg-slate-800/60">

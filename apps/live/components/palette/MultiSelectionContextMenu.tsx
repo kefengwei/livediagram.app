@@ -204,7 +204,11 @@ export function MultiSelectionContextMenu({
             {/* ── Style band (docs/specs/008-canvas/canvas-and-palette.md): Presets + Colours + Border behind one
                   "Style" flyout row, matching the single-element menu. ── */}
             {showStyleFlyout ? (
-              <MenuFlyoutSection title={t('multiselectioncontextmenu.style')} icon={<StyleMenuGlyph />} {...flyoutProps('style')}>
+              <MenuFlyoutSection
+                title={t('multiselectioncontextmenu.style')}
+                icon={<StyleMenuGlyph />}
+                {...flyoutProps('style')}
+              >
                 {presetShapeSrc ? (
                   <ShapePresetsSection
                     shape={presetShapeSrc.shape}
@@ -219,7 +223,11 @@ export function MultiSelectionContextMenu({
                     onClose={onClose}
                     // Mixed selection shows both preset sections — disambiguate
                     // by kind, same as the Animation sections below.
-                    title={presetShapeSrc && arrowSrc ? t('multiselectioncontextmenu.shape-presets') : 'Presets'}
+                    title={
+                      presetShapeSrc && arrowSrc
+                        ? t('multiselectioncontextmenu.shape-presets')
+                        : 'Presets'
+                    }
                   />
                 ) : null}
                 {arrowSrc ? (
@@ -232,7 +240,11 @@ export function MultiSelectionContextMenu({
                     props={props}
                     accordion={sectionProps('m-arrow-presets')}
                     onClose={onClose}
-                    title={presetShapeSrc && arrowSrc ? t('multiselectioncontextmenu.arrow-presets') : 'Presets'}
+                    title={
+                      presetShapeSrc && arrowSrc
+                        ? t('multiselectioncontextmenu.arrow-presets')
+                        : 'Presets'
+                    }
                   />
                 ) : null}
                 <MultiStyleSections
@@ -277,7 +289,11 @@ export function MultiSelectionContextMenu({
                   one "Text" flyout, matching the single-element menu. Sits in
                   the style band (no separator) like its single counterpart. ── */}
             {showTextFlyout ? (
-              <MenuFlyoutSection title={t('multiselectioncontextmenu.text')} icon={<TextGlyph />} {...flyoutProps('text')}>
+              <MenuFlyoutSection
+                title={t('multiselectioncontextmenu.text')}
+                icon={<TextGlyph />}
+                {...flyoutProps('text')}
+              >
                 {alignSrc ? (
                   <TypographySections
                     currentFont={(alignSrc as { font?: string }).font ?? null}
@@ -345,7 +361,11 @@ export function MultiSelectionContextMenu({
             ) : null}
             {arrowSrc ? (
               <>
-                <MenuAccordionSection title={t('multiselectioncontextmenu.line')} icon={<LineGlyph />} {...sectionProps('m-line')}>
+                <MenuAccordionSection
+                  title={t('multiselectioncontextmenu.line')}
+                  icon={<LineGlyph />}
+                  {...sectionProps('m-line')}
+                >
                   <div className="px-3 py-1.5">
                     <ArrowLineControls
                       thickness={arrowThicknessOf(arrowSrc)}
@@ -386,9 +406,15 @@ export function MultiSelectionContextMenu({
                   every cell of the selection's tables, mirroring the single
                   menu's content Text section. */}
             {contentTextSrc ? (
-              <MenuAccordionSection title={t('multiselectioncontextmenu.text-2')} icon={<TextGlyph />} {...sectionProps('m-text')}>
+              <MenuAccordionSection
+                title={t('multiselectioncontextmenu.text-2')}
+                icon={<TextGlyph />}
+                {...sectionProps('m-text')}
+              >
                 {contentTextSrc.type === 'table' ? (
-                  <p className="px-3 pt-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('multiselectioncontextmenu.applies-to-every-cell')}</p>
+                  <p className="px-3 pt-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+                    {t('multiselectioncontextmenu.applies-to-every-cell')}
+                  </p>
                 ) : null}
                 <div className="flex gap-1 px-2 py-1.5">
                   <TextToggle
@@ -420,7 +446,9 @@ export function MultiSelectionContextMenu({
                     <StrikethroughIcon />
                   </TextToggle>
                 </div>
-                <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('multiselectioncontextmenu.size')}</p>
+                <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+                  {t('multiselectioncontextmenu.size')}
+                </p>
                 <TextSizeTiles
                   current={contentTextSrc.textSize ?? 'sm'}
                   onSet={props.onSetTextSize}

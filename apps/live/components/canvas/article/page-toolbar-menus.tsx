@@ -28,7 +28,6 @@ export function ToolbarPopover({
   label: string;
   width?: number;
 }) {
-  
   const box = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
   useLayoutEffect(() => {
@@ -75,7 +74,6 @@ export function MenuRow({
   children: ReactNode;
   label: string;
 }) {
-  
   return (
     <button
       type="button"
@@ -105,7 +103,7 @@ export function LinkField({
   onCancel: () => void;
 }) {
   const { t } = useTranslation();
-  
+
   const [value, setValue] = useState(initial);
   const input = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -148,13 +146,17 @@ export function LinkField({
       <button
         type="submit"
         className="h-8 rounded-md bg-brand-600 px-3 text-xs font-semibold text-white transition hover:bg-brand-700 dark:bg-brand-600"
-      >{t('page-toolbar-menus.apply')}</button>
+      >
+        {t('page-toolbar-menus.apply')}
+      </button>
       {onRemove ? (
         <button
           type="button"
           onClick={onRemove}
           className="h-8 rounded-md px-2 text-xs font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-        >{t('page-toolbar-menus.remove')}</button>
+        >
+          {t('page-toolbar-menus.remove')}
+        </button>
       ) : null}
     </form>
   );

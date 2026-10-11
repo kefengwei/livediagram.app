@@ -1,4 +1,3 @@
-
 import { Glyph } from '@livediagram/ui';
 // The navigation chevron: points the way a tap will take you. `forward` for a
 // row that pushes a screen, `back` for the control that returns from one.

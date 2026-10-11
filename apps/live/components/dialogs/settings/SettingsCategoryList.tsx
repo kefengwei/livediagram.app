@@ -1,6 +1,5 @@
 'use client';
 
-
 import { useState, type ReactNode } from 'react';
 import type { SettingsCategorySpec } from './settings-catalogue';
 import { NavChevron } from '@/components/primitives/NavChevron';
@@ -63,7 +62,7 @@ export function SettingsCategoryList({
   // A category's label is a key when the catalogue has one (docs/specs/004-interface-design/localization.md).
   const labelOf = (category: { label: string; labelKey?: MessageKey }) =>
     category.labelKey ? t(category.labelKey) : category.label;
-  
+
   const isRoot = variant === 'root';
   const [expanded, setExpanded] = useState<ReadonlySet<string>>(() => new Set());
   const toggle = (id: string) =>
@@ -255,7 +254,6 @@ function CategoryRow({
     onToggle: () => void;
   };
 }) {
-  
   const empty = searching === true && count === 0 && !reachable;
   const lit = !isRoot && current;
   // The row's background (hover, and the current highlight on the sidebar).

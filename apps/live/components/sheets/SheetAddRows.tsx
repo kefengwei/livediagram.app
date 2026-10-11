@@ -42,7 +42,9 @@ export function SheetAddRows({ top, onAdd }: { top: number; onAdd: (count: numbe
           backgroundColor: c.palette.surface,
         }}
         onClick={add}
-      >{t('sheetaddrows.add')}</button>
+      >
+        {t('sheetaddrows.add')}
+      </button>
       <input
         aria-label={t('sheetaddrows.rows-to-add')}
         inputMode="numeric"

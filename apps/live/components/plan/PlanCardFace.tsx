@@ -121,7 +121,9 @@ export function PlanCardFace({
           style={{ backgroundColor: item.createdBy.color }}
           aria-hidden
         />
-        <span className="text-[12px] italic" style={{ color: palette.muted }}>{t('plancardface.hidden-until-reveal')}</span>
+        <span className="text-[12px] italic" style={{ color: palette.muted }}>
+          {t('plancardface.hidden-until-reveal')}
+        </span>
       </div>
     );
   }
@@ -181,7 +183,11 @@ export function PlanCardFace({
       // The votes the card has gathered from ended session votes, read-only.
       case 'votes':
         return votes > 0 ? (
-          <MetaPill key={f} palette={palette} label={votes === 1 ? t('plancardface.1-vote') : `${votes} votes`}>
+          <MetaPill
+            key={f}
+            palette={palette}
+            label={votes === 1 ? t('plancardface.1-vote') : `${votes} votes`}
+          >
             <span aria-hidden>▲ {votes}</span>
           </MetaPill>
         ) : null;

@@ -9,7 +9,6 @@
 // live turnout, the rules in force, and ONE primary button for the next
 // step, so the flow is always "press the big button".
 
-
 import { useState, type ReactNode } from 'react';
 import {
   VOTE_DOTS_RANGE,
@@ -38,7 +37,6 @@ type VotePaneProps = Pick<
 > & { selfId: string };
 
 export function VotePane(props: VotePaneProps) {
-  
   return props.vote ? <LiveVote {...props} vote={props.vote} /> : <VoteSetupForm {...props} />;
 }
 
@@ -71,7 +69,7 @@ export function VoteSetupBody({
   onDotsChange: (dots: number) => void;
 }) {
   const { t } = useTranslation();
-  
+
   // Cursors hidden by default: the leak they cause is invisible to the
   // facilitator, so it's the safer default. Running counts shown by default,
   // because live tallies are how ordinary dot-voting works (docs/specs/012-collaboration/session-tools.md).
@@ -154,7 +152,9 @@ export function VoteSetupBody({
             onePerElement: dots > 1 && stacking === 'one',
           })
         }
-      >{t('votepane.start-vote')}</StudioButton>
+      >
+        {t('votepane.start-vote')}
+      </StudioButton>
     </div>
   );
 }
@@ -164,7 +164,7 @@ export function VoteSetupBody({
 // did.
 function DotBudgetPicker({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   const { t } = useTranslation();
-  
+
   const [hover, setHover] = useState<number | null>(null);
   const shown = hover ?? value;
   const count = VOTE_DOTS_RANGE.max - VOTE_DOTS_RANGE.min + 1;
@@ -216,7 +216,6 @@ function PrivacyCard({
   checked: boolean;
   onToggle: () => void;
 }) {
-  
   return (
     <button
       type="button"
@@ -255,7 +254,7 @@ const PHASES: { phase: Exclude<VotePhase, 'setup'>; label: string }[] = [
 
 function PhaseTrack({ phase }: { phase: VotePhase }) {
   const { t } = useTranslation();
-  
+
   const at = PHASES.findIndex((p) => p.phase === phase);
   return (
     <ol className="flex items-center" aria-label={t('votepane.vote-progress')}>
@@ -312,7 +311,7 @@ function LiveVote({
   onClearVote,
 }: VotePaneProps & { vote: TabVote }) {
   const { t } = useTranslation();
-  
+
   const phase = votePhase(vote);
   const { dots, voters } = voteTurnout(vote);
   const host = isVoteHost(vote, selfId, facilitating);
@@ -348,11 +347,17 @@ function LiveVote({
       {host ? (
         <div className="flex flex-col gap-1.5">
           {phase === 'casting' ? (
-            <StudioButton variant="primary" onClick={onEndVote}>{t('votepane.end-vote')}</StudioButton>
+            <StudioButton variant="primary" onClick={onEndVote}>
+              {t('votepane.end-vote')}
+            </StudioButton>
           ) : phase === 'closed' ? (
-            <StudioButton variant="primary" onClick={onRevealVote}>{t('votepane.show-results')}</StudioButton>
+            <StudioButton variant="primary" onClick={onRevealVote}>
+              {t('votepane.show-results')}
+            </StudioButton>
           ) : (
-            <StudioButton variant="primary" onClick={onClearVote}>{t('votepane.clear-vote')}</StudioButton>
+            <StudioButton variant="primary" onClick={onClearVote}>
+              {t('votepane.clear-vote')}
+            </StudioButton>
           )}
           {phase !== 'results' ? (
             <StudioButton onClick={onClearVote}>{t('votepane.clear-vote-2')}</StudioButton>

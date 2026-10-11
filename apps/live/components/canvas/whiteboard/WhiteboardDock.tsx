@@ -7,7 +7,6 @@
 // flyouts open on its board side; on a narrow screen the groups scroll sideways together. One
 // flyout at a time, and nothing moves under the pointer when a tool is picked.
 
-
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useCanvasSurface } from '@/components/canvas/CanvasSurfaceContext';
 import type { WhiteboardDockModel } from '@/hooks/canvas/useWhiteboard';
@@ -66,7 +65,7 @@ export type WhiteboardDockProps = {
 
 export function WhiteboardDock({ model, ink }: WhiteboardDockProps) {
   const { t } = useTranslation();
-  
+
   // The dock is the Toolbar layout strip's twin, so it draws at the toolbar UI scale
   // (docs/specs/007-editor/ui-scale.md).
   const scale = useUiScale('toolbar');
@@ -322,7 +321,6 @@ function DockBody({
   open: OpenFlyout;
   groups: ReactNode;
 }) {
-  
   return (
     <>
       <DockFlyoutHost fly={fly} open={open} below={below} />

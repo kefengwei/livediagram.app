@@ -68,7 +68,9 @@ export function SettingsPresetSummaryRow({
                     onClick={() => onGoToRow(line.categoryId, line.rowKey)}
                     aria-label={`Change ${line.label} in ${line.categoryLabel}`}
                     className="shrink-0 rounded-md px-2 py-1 text-xs font-medium text-brand-700 transition hover:bg-brand-50 dark:text-brand-300 dark:hover:bg-brand-500/15"
-                  >{t('settingspresetsummaryrow.change')}</button>
+                  >
+                    {t('settingspresetsummaryrow.change')}
+                  </button>
                 ) : null}
               </li>
             ))}

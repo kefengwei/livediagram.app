@@ -243,7 +243,9 @@ function ItemPanelContent({
           className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold"
           style={{ color: FLAG_COLOUR, backgroundColor: `${FLAG_COLOUR}14` }}
         >
-          <PlanTypeGlyph glyph="flag" size={12} color={FLAG_COLOUR} />{t('itempanel.flagged')}</span>
+          <PlanTypeGlyph glyph="flag" size={12} color={FLAG_COLOUR} />
+          {t('itempanel.flagged')}
+        </span>
       ) : null}
       <span className="flex-1" />
       <ItemPanelMenu
@@ -301,7 +303,9 @@ function ItemPanelContent({
       ) : current.fields.length > 0 ? (
         current.fields.map(mainField)
       ) : (
-        <p className="py-6 text-center text-[13px] text-slate-500 dark:text-slate-400">{t('itempanel.nothing-on-this-tab-yet-edit')}</p>
+        <p className="py-6 text-center text-[13px] text-slate-500 dark:text-slate-400">
+          {t('itempanel.nothing-on-this-tab-yet-edit')}
+        </p>
       )}
     </div>
   ) : null;

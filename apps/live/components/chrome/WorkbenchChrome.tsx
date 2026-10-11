@@ -25,7 +25,10 @@ export function WorkbenchOpenLink({
 }) {
   const { t } = useTranslation();
   return (
-    <HoverCard title={t('workbenchchrome.open-in-livediagram')} description={t('workbenchchrome.opens-this-document-in-a-full')}>
+    <HoverCard
+      title={t('workbenchchrome.open-in-livediagram')}
+      description={t('workbenchchrome.opens-this-document-in-a-full')}
+    >
       <a
         href={`/document/${encodeURIComponent(documentId)}`}
         target="_blank"

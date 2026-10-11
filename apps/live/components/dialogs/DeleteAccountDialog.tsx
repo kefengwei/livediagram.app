@@ -140,7 +140,9 @@ export function DeleteAccountDialog({
             <h2
               id="delete-account-title"
               className="text-lg font-semibold text-slate-900 dark:text-slate-100"
-            >{t('deleteaccountdialog.delete-account')}</h2>
+            >
+              {t('deleteaccountdialog.delete-account')}
+            </h2>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
               This permanently removes your documents (including any in the Trash), folders, and
               participant record from the livediagram server, then deletes your account. This cannot
@@ -152,10 +154,13 @@ export function DeleteAccountDialog({
             <label
               htmlFor="delete-confirm-email"
               className="block text-sm font-medium text-slate-700 dark:text-slate-300"
-            >{t('deleteaccountdialog.type')}{' '}
+            >
+              {t('deleteaccountdialog.type')}{' '}
               <strong className="font-semibold text-slate-900 dark:text-slate-100">
                 {expectedEmail || 'your email address'}
-              </strong>{' '}{t('deleteaccountdialog.to-confirm')}</label>
+              </strong>{' '}
+              {t('deleteaccountdialog.to-confirm')}
+            </label>
             <input
               ref={inputRef}
               id="delete-confirm-email"
@@ -176,7 +181,9 @@ export function DeleteAccountDialog({
           </div>
 
           <DialogFooter>
-            <Button variant="secondary" onClick={onClose} disabled={phase === 'submitting'}>{t('deleteaccountdialog.cancel')}</Button>
+            <Button variant="secondary" onClick={onClose} disabled={phase === 'submitting'}>
+              {t('deleteaccountdialog.cancel')}
+            </Button>
             <Button
               variant="primary"
               onClick={handleDelete}

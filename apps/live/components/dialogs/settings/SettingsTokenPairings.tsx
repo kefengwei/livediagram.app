@@ -33,7 +33,9 @@ export function SettingsTokenPairings({
       <p
         id={labelId}
         className="text-[10px] font-semibold text-slate-500 uppercase dark:text-slate-400"
-      >{t('settingstokenpairings.paired-workbenches')}</p>
+      >
+        {t('settingstokenpairings.paired-workbenches')}
+      </p>
       <ul aria-labelledby={labelId} className="flex flex-col gap-1.5">
         {pairings.map((pairing) => {
           const name = pairing.name ?? UNNAMED;
@@ -48,7 +50,10 @@ export function SettingsTokenPairings({
                     {pairing.origin}
                   </code>
                   <span aria-hidden>·</span>
-                  <span>{t('settingstokenpairings.paired')}{relativeTime(pairing.pairedAt, now)}</span>
+                  <span>
+                    {t('settingstokenpairings.paired')}
+                    {relativeTime(pairing.pairedAt, now)}
+                  </span>
                 </p>
               </div>
               <button
@@ -56,7 +61,9 @@ export function SettingsTokenPairings({
                 onClick={(e) => setConfirm({ pairing, anchor: e.currentTarget })}
                 aria-label={`Unpair ${name} at ${pairing.origin}`}
                 className="min-h-6 shrink-0 rounded-md px-1.5 text-[11px] font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-800 focus-visible:outline-2 focus-visible:outline-brand-400 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-              >{t('settingstokenpairings.unpair')}</button>
+              >
+                {t('settingstokenpairings.unpair')}
+              </button>
             </li>
           );
         })}

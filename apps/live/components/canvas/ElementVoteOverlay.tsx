@@ -112,7 +112,9 @@ export function ElementVoteOverlay({
               label={`Remove a dot from ${name}`}
               disabled={myVotes === 0}
               onClick={() => onRetractVote?.(voteKey)}
-            >{t('elementvoteoverlay.')}</VoteStepButton>
+            >
+              {t('elementvoteoverlay.')}
+            </VoteStepButton>
             <span
               className={
                 'min-w-[18px] text-center text-[13px] font-semibold tabular-nums ' +

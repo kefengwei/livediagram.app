@@ -1,4 +1,3 @@
-
 import { useRef } from 'react';
 import { useEdgeAwarePlacement } from '@/hooks/canvas/useEdgeAwarePlacement';
 import { FloatingTitle } from '@/components/chrome/FloatingTitle';
@@ -103,7 +102,7 @@ export function SelectionPopover({
   title,
 }: SelectionPopoverProps) {
   const { t } = useTranslation();
-  
+
   const ellipsisRef = useRef<HTMLButtonElement>(null);
   // More opens the element menu: on every device, since right-click is not something a desktop
   // user finds, except in power user mode, where right-click is the way in. Touch can't
@@ -143,7 +142,10 @@ export function SelectionPopover({
       {title && !minimalChrome ? <FloatingTitle title={title} placeAbove={placeAbove} /> : null}
       {showMore && onOpenContextMenu ? (
         <>
-          <HoverCard title={t('selectionpopover.more')} description={t('selectionpopover.open-the-element-menu')}>
+          <HoverCard
+            title={t('selectionpopover.more')}
+            description={t('selectionpopover.open-the-element-menu')}
+          >
             <button
               ref={ellipsisRef}
               // A stable id: this toolbar unmounts while the element menu it opens is up, and
@@ -171,7 +173,11 @@ export function SelectionPopover({
         <>
           <PopoverButton
             label={hasText ? t('selectionpopover.edit-text') : t('selectionpopover.add-text')}
-            description={hasText ? t('selectionpopover.edit-this-element-s-text') : t('selectionpopover.give-this-element-a-text-label')}
+            description={
+              hasText
+                ? t('selectionpopover.edit-this-element-s-text')
+                : t('selectionpopover.give-this-element-a-text-label')
+            }
             onClick={onEditText}
           >
             <TextIcon />
@@ -291,7 +297,9 @@ export function SelectionPopover({
           <HoverCard
             title={t('selectionpopover.delete')}
             description={
-              locked ? t('selectionpopover.locked-unlock-it-to-delete') : t('selectionpopover.delete-this-element-arrows-too')
+              locked
+                ? t('selectionpopover.locked-unlock-it-to-delete')
+                : t('selectionpopover.delete-this-element-arrows-too')
             }
           >
             <button
@@ -331,7 +339,6 @@ function PopoverButton({
   children: React.ReactNode;
   active?: boolean;
 }) {
-  
   return (
     <HoverCard title={label} description={description}>
       <button

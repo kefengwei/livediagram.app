@@ -85,7 +85,9 @@ export function DuePill({
       label={`Due ${dayLabel(due)}${state === 'late' ? t('plan-card-parts.overdue') : ''}`}
     >
       <PlanTypeGlyph glyph="calendar" size={11} />
-      <span aria-hidden className={state === 'late' ? 'font-semibold' : undefined}>{t('plan-card-parts.due')}{dayLabel(due)}
+      <span aria-hidden className={state === 'late' ? 'font-semibold' : undefined}>
+        {t('plan-card-parts.due')}
+        {dayLabel(due)}
       </span>
     </MetaPill>
   );
@@ -96,7 +98,10 @@ export function StartPill({ start, palette }: { start: string; palette: PlanPale
   const { t } = useTranslation();
   return (
     <MetaPill palette={palette} label={`Starts ${dayLabel(start)}`}>
-      <span aria-hidden>{t('plan-card-parts.from')}{dayLabel(start)}</span>
+      <span aria-hidden>
+        {t('plan-card-parts.from')}
+        {dayLabel(start)}
+      </span>
     </MetaPill>
   );
 }

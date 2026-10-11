@@ -27,7 +27,9 @@ export default function GlobalError({
       <body className="bg-slate-50 text-slate-800 antialiased dark:bg-slate-950 dark:text-slate-100">
         <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-6 text-center">
           <h1 className="text-lg font-semibold">{t('global-error.this-page-couldn-t-load')}</h1>
-          <p className="text-sm text-slate-600 dark:text-slate-300">{t('global-error.reload-to-try-again')}</p>
+          <p className="text-sm text-slate-600 dark:text-slate-300">
+            {t('global-error.reload-to-try-again')}
+          </p>
           <Button onClick={() => window.location.reload()}>{t('global-error.reload')}</Button>
         </main>
       </body>

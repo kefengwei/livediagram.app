@@ -227,11 +227,14 @@ function GetStartedContent() {
       }
       error={error}
       footer={
-        <>{t('clerk-sign-up.already-have-an-account')}{' '}
+        <>
+          {t('clerk-sign-up.already-have-an-account')}{' '}
           <Link
             href={authHrefWithReturn('/sign-in/', searchParams.get('redirect_url'))}
             className="font-medium text-brand-600 hover:underline dark:text-brand-400"
-          >{t('clerk-sign-up.sign-in')}</Link>
+          >
+            {t('clerk-sign-up.sign-in')}
+          </Link>
         </>
       }
     >
@@ -253,7 +256,9 @@ function GetStartedContent() {
               <label
                 htmlFor="firstName"
                 className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >{t('clerk-sign-up.first-name')}</label>
+              >
+                {t('clerk-sign-up.first-name')}
+              </label>
               <TextInput
                 id="firstName"
                 type="text"
@@ -267,7 +272,9 @@ function GetStartedContent() {
               <label
                 htmlFor="lastName"
                 className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >{t('clerk-sign-up.last-name')}</label>
+              >
+                {t('clerk-sign-up.last-name')}
+              </label>
               <TextInput
                 id="lastName"
                 type="text"

@@ -18,12 +18,16 @@ export function EstimateEmpty({ textColor, canPick }: { textColor: string; canPi
           />
         ))}
       </div>
-      <p className="text-[12.5px] font-semibold leading-tight" style={{ color: textColor }}>{t('estimateempty.no-picks-yet')}</p>
+      <p className="text-[12.5px] font-semibold leading-tight" style={{ color: textColor }}>
+        {t('estimateempty.no-picks-yet')}
+      </p>
       {canPick ? (
         <p
           className="-mt-2 max-w-[30ch] text-[11px] leading-relaxed"
           style={{ color: textColor, opacity: 0.55 }}
-        >{t('estimateempty.your-pick-stays-hidden-from-everyone')}</p>
+        >
+          {t('estimateempty.your-pick-stays-hidden-from-everyone')}
+        </p>
       ) : null}
     </div>
   );

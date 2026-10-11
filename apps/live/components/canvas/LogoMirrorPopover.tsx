@@ -28,11 +28,19 @@ export function LogoMirrorSettings({ pageId, tools }: { pageId: string; tools: L
         checked={on}
         onChange={(next) => tools.setMirror(pageId, next)}
         className="py-1 text-xs"
-      >{t('logomirrorpopover.mirror-while-drawing')}</SwitchRow>
+      >
+        {t('logomirrorpopover.mirror-while-drawing')}
+      </SwitchRow>
       {/* The settings, dimmed while off: choosing an axis turns it on. */}
       <div className={on ? '' : 'opacity-50'}>
-        <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">{t('logomirrorpopover.axis')}</p>
-        <div role="radiogroup" aria-label={t('logomirrorpopover.mirror-axis')} className="mt-1 grid grid-cols-2 gap-1">
+        <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">
+          {t('logomirrorpopover.axis')}
+        </p>
+        <div
+          role="radiogroup"
+          aria-label={t('logomirrorpopover.mirror-axis')}
+          className="mt-1 grid grid-cols-2 gap-1"
+        >
           {MIRROR_AXES.map((axis) => {
             const chosen = settings.axis === axis.id;
             return (
@@ -56,7 +64,9 @@ export function LogoMirrorSettings({ pageId, tools }: { pageId: string; tools: L
         </div>
         {settings.axis === 'radial' ? (
           <>
-            <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">{t('logomirrorpopover.copies')}</p>
+            <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">
+              {t('logomirrorpopover.copies')}
+            </p>
             <SegmentedRadio
               label={t('logomirrorpopover.radial-copies')}
               options={COPIES}
@@ -70,7 +80,9 @@ export function LogoMirrorSettings({ pageId, tools }: { pageId: string; tools: L
           checked={settings.merge}
           onChange={(merge) => tools.setMirrorSettings(pageId, { merge })}
           className="mt-2 py-1 text-xs"
-        >{t('logomirrorpopover.merge-into-one')}</SwitchRow>
+        >
+          {t('logomirrorpopover.merge-into-one')}
+        </SwitchRow>
         <p className="text-[11px] text-slate-500 dark:text-slate-400">
           {settings.merge
             ? t('logomirrorpopover.each-drawing-and-its-copies-become')

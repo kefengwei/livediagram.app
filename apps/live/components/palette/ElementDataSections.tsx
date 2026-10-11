@@ -265,7 +265,11 @@ export function ElementDataSections({
         />
       ) : null}
       {showTools ? (
-        <MenuFlyoutSection title={t('elementdatasections.tools')} icon={<ToolsMenuGlyph />} {...flyoutProps('tools')}>
+        <MenuFlyoutSection
+          title={t('elementdatasections.tools')}
+          icon={<ToolsMenuGlyph />}
+          {...flyoutProps('tools')}
+        >
           {/* Progress (docs/specs/009-elements/progress.md) — the percentage + how the fill animates. Only
             for progress bars / rings. */}
           {isProgress ? (
@@ -360,7 +364,11 @@ export function ElementDataSections({
           {/* Code (docs/specs/009-elements/code-block.md) — the snippet summary + the modal opener (the
             multi-line editor is too big for the menu, like the line grid). */}
           {isCodeBlock ? (
-            <MenuAccordionSection title={t('elementdatasections.code')} icon={<DataMenuGlyph />} {...sectionProps('code')}>
+            <MenuAccordionSection
+              title={t('elementdatasections.code')}
+              icon={<DataMenuGlyph />}
+              {...sectionProps('code')}
+            >
               <CodeSummary
                 code={shapeTarget?.code ?? ''}
                 language={shapeTarget?.codeLanguage ?? 'plain'}
@@ -488,7 +496,9 @@ export function ElementDataSections({
               icon={<ToolsMenuGlyph />}
               {...sectionProps('button-mode')}
             >
-              <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('elementdatasections.switches-the-presser-to')}</p>
+              <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+                {t('elementdatasections.switches-the-presser-to')}
+              </p>
               <MenuTileGrid cols={3}>
                 {SELECTION_MODES.map((mode) => (
                   <MenuTile
@@ -556,7 +566,9 @@ export function ElementDataSections({
               icon={<ChartMenuGlyph />}
               {...sectionProps('chart')}
             >
-              <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('elementdatasections.legend-2')}</p>
+              <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+                {t('elementdatasections.legend-2')}
+              </p>
               <LegendPositionTiles
                 position={shapeTarget?.chartLegendPosition ?? 'bottom'}
                 show={shapeTarget?.chartLegend !== false}

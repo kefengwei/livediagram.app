@@ -102,7 +102,11 @@ export function SheetCellMenu({
           />
         ) : (
           <>
-            <MenuAccordionSection title={t('sheetcellmenu.insert')} icon={<Glyph t="+" />} {...section('insert')}>
+            <MenuAccordionSection
+              title={t('sheetcellmenu.insert')}
+              icon={<Glyph t="+" />}
+              {...section('insert')}
+            >
               <ActionRows
                 rows={[
                   {
@@ -128,11 +132,23 @@ export function SheetCellMenu({
                 ]}
               />
             </MenuAccordionSection>
-            <MenuAccordionSection title={t('sheetcellmenu.delete')} icon={<Glyph t="−" />} {...section('delete')}>
+            <MenuAccordionSection
+              title={t('sheetcellmenu.delete')}
+              icon={<Glyph t="−" />}
+              {...section('delete')}
+            >
               <ActionRows
                 rows={[
-                  { label: t('sheetcellmenu.row'), icon: <Glyph t="⇕" />, run: act(() => actions.remove('r')) },
-                  { label: t('sheetcellmenu.column'), icon: <Glyph t="⇔" />, run: act(() => actions.remove('c')) },
+                  {
+                    label: t('sheetcellmenu.row'),
+                    icon: <Glyph t="⇕" />,
+                    run: act(() => actions.remove('r')),
+                  },
+                  {
+                    label: t('sheetcellmenu.column'),
+                    icon: <Glyph t="⇔" />,
+                    run: act(() => actions.remove('c')),
+                  },
                   {
                     label: t('sheetcellmenu.cells-shift-left'),
                     icon: <Glyph t="←" />,
@@ -166,7 +182,11 @@ export function SheetCellMenu({
                 ]}
               />
             </MenuAccordionSection>
-            <MenuAccordionSection title={t('sheetcellmenu.clear')} icon={<ClearFormatIcon />} {...section('clear')}>
+            <MenuAccordionSection
+              title={t('sheetcellmenu.clear')}
+              icon={<ClearFormatIcon />}
+              {...section('clear')}
+            >
               <ActionRows
                 rows={[
                   {
@@ -182,7 +202,11 @@ export function SheetCellMenu({
                 ]}
               />
             </MenuAccordionSection>
-            <MenuAccordionSection title={t('sheetcellmenu.cells')} icon={<MergeIcon />} {...section('cells')}>
+            <MenuAccordionSection
+              title={t('sheetcellmenu.cells')}
+              icon={<MergeIcon />}
+              {...section('cells')}
+            >
               <ActionRows
                 rows={[
                   {
@@ -194,7 +218,11 @@ export function SheetCellMenu({
                 ]}
               />
             </MenuAccordionSection>
-            <MenuAccordionSection title={t('sheetcellmenu.chart')} icon={<BarChartIcon />} {...section('chart')}>
+            <MenuAccordionSection
+              title={t('sheetcellmenu.chart')}
+              icon={<BarChartIcon />}
+              {...section('chart')}
+            >
               <ActionRows
                 rows={[
                   {

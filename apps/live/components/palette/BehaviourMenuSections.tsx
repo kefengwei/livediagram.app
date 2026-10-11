@@ -81,7 +81,9 @@ function LinesRow({
           className={`${fieldClass} resize-none`}
         />
       </label>
-      <p className="pb-1 pt-1 text-[10px] text-slate-400">{t('behaviourmenusections.one-per-line')}</p>
+      <p className="pb-1 pt-1 text-[10px] text-slate-400">
+        {t('behaviourmenusections.one-per-line')}
+      </p>
     </div>
   );
 }
@@ -113,7 +115,12 @@ export function SessionMenuSection({
     // choice fields ran off the right-hand edge and were simply cut off. The
     // Studio itself is reached the same way, as the tab menu's Collaborate
     // flyout, so this also makes the two open alike.
-    <MenuFlyoutSection title={t('behaviourmenusections.session')} icon={<ToolsMenuGlyph />} panel {...sectionProps}>
+    <MenuFlyoutSection
+      title={t('behaviourmenusections.session')}
+      icon={<ToolsMenuGlyph />}
+      panel
+      {...sectionProps}
+    >
       <SessionElementSettings config={{ ...config, tool }} onChange={onSetSession} />
     </MenuFlyoutSection>
   );
@@ -131,8 +138,14 @@ export function RevealMenuSection({
   const { t } = useTranslation();
   const revealed = element.revealed === true;
   return (
-    <MenuAccordionSection title={t('behaviourmenusections.reveal')} icon={<RevealIcon />} {...sectionProps}>
-      <p className="px-3 pt-1 text-[10px] leading-snug text-slate-500 dark:text-slate-400">{t('behaviourmenusections.anyone-can-click-the-cover-to')}<strong>{t('behaviourmenusections.everyone')}</strong>.
+    <MenuAccordionSection
+      title={t('behaviourmenusections.reveal')}
+      icon={<RevealIcon />}
+      {...sectionProps}
+    >
+      <p className="px-3 pt-1 text-[10px] leading-snug text-slate-500 dark:text-slate-400">
+        {t('behaviourmenusections.anyone-can-click-the-cover-to')}
+        <strong>{t('behaviourmenusections.everyone')}</strong>.
       </p>
       <MenuTileGrid cols={2}>
         <MenuTile
@@ -208,8 +221,14 @@ export function PickerMenuSection({
   const { t } = useTranslation();
   const source = element.pickerSource ?? DEFAULT_PICKER_SOURCE;
   return (
-    <MenuAccordionSection title={t('behaviourmenusections.picker')} icon={<PickerIcon />} {...sectionProps}>
-      <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('behaviourmenusections.picks-from')}</p>
+    <MenuAccordionSection
+      title={t('behaviourmenusections.picker')}
+      icon={<PickerIcon />}
+      {...sectionProps}
+    >
+      <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+        {t('behaviourmenusections.picks-from')}
+      </p>
       <MenuTileGrid cols={2}>
         <MenuTile
           icon={<ToolsMenuGlyph />}

@@ -364,15 +364,18 @@ function panelSwitch(
 export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   {
     id: 'editor',
-    label: 'Editor', labelKey: 'settings.category.editor.label' as const,
+    label: 'Editor',
+    labelKey: 'settings.category.editor.label' as const,
     rows: [
       {
         kind: 'toggle',
         key: 'quickAddOnHover',
         keywords: 'plus menu hover add shortcut',
-        label: 'Quick-Add on Hover', labelKey: 'settings.quickAddOnHover.label' as const,
+        label: 'Quick-Add on Hover',
+        labelKey: 'settings.quickAddOnHover.label' as const,
         description:
-          "Opens an element's quick-add “+” menu when you hover it, instead of waiting for a click; moving away closes it again. The “+” buttons still only appear on the selected element either way.", descriptionKey: 'settings.quickAddOnHover.description' as const,
+          "Opens an element's quick-add “+” menu when you hover it, instead of waiting for a click; moving away closes it again. The “+” buttons still only appear on the selected element either way.",
+        descriptionKey: 'settings.quickAddOnHover.description' as const,
         helpArticle: 'quickAddOnHover',
         read: (p) => p.quickAddOnHover === true,
         write: (p, v) => ({ ...p, quickAddOnHover: v }),
@@ -385,13 +388,27 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'elementIndicatorStyle',
         keywords:
           'badges icons note action comment link markers indicators top corner footer metadata chip hide off',
-        label: 'Element Indicators', labelKey: 'settings.elementIndicatorStyle.label' as const,
+        label: 'Element Indicators',
+        labelKey: 'settings.elementIndicatorStyle.label' as const,
         description:
-          'How an element shows that it has a link, a note, an action or comments. Top puts quiet icons near its top (top-right on boxes, centred on round or pointed shapes); Footer puts a labelled row along its bottom edge; Off hides them. On an element too small for either, they sit in a small chip on its edge.', descriptionKey: 'settings.elementIndicatorStyle.description' as const,
+          'How an element shows that it has a link, a note, an action or comments. Top puts quiet icons near its top (top-right on boxes, centred on round or pointed shapes); Footer puts a labelled row along its bottom edge; Off hides them. On an element too small for either, they sit in a small chip on its edge.',
+        descriptionKey: 'settings.elementIndicatorStyle.description' as const,
         options: [
-          { id: 'top', label: 'Top', labelKey: 'settings.elementIndicatorStyle.option.top' as const },
-          { id: 'footer', label: 'Footer', labelKey: 'settings.elementIndicatorStyle.option.footer' as const },
-          { id: 'off', label: 'Off', labelKey: 'settings.elementIndicatorStyle.option.off' as const },
+          {
+            id: 'top',
+            label: 'Top',
+            labelKey: 'settings.elementIndicatorStyle.option.top' as const,
+          },
+          {
+            id: 'footer',
+            label: 'Footer',
+            labelKey: 'settings.elementIndicatorStyle.option.footer' as const,
+          },
+          {
+            id: 'off',
+            label: 'Off',
+            labelKey: 'settings.elementIndicatorStyle.option.off' as const,
+          },
         ],
         read: readElementIndicatorStyle,
         write: (p, v) => withElementIndicatorStyle(p, v as ElementIndicatorStyle),
@@ -402,9 +419,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'alignmentGuides',
         keywords: 'snap lines smart guides align',
         illustration: 'alignmentGuides',
-        label: 'Alignment Guides', labelKey: 'settings.alignmentGuides.label' as const,
+        label: 'Alignment Guides',
+        labelKey: 'settings.alignmentGuides.label' as const,
         description:
-          'Shows snap lines while you move or resize an element, so it lines up with its neighbours.', descriptionKey: 'settings.alignmentGuides.description' as const,
+          'Shows snap lines while you move or resize an element, so it lines up with its neighbours.',
+        descriptionKey: 'settings.alignmentGuides.description' as const,
         helpArticle: 'alignmentGuides',
         read: (p) => p.alignmentGuides !== false,
         write: (p, v) => ({ ...p, alignmentGuides: v }),
@@ -414,9 +433,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         kind: 'toggle',
         key: 'autoRebindArrows',
         keywords: 'connector reattach sticky arrows connections',
-        label: 'Auto-Attach Arrows', labelKey: 'settings.autoRebindArrows.label' as const,
+        label: 'Auto-Attach Arrows',
+        labelKey: 'settings.autoRebindArrows.label' as const,
         description:
-          'When a move leaves an arrow running through a shape it connects, its end moves to the side facing the other end and keeps its corner, quarter or middle spot.', descriptionKey: 'settings.autoRebindArrows.description' as const,
+          'When a move leaves an arrow running through a shape it connects, its end moves to the side facing the other end and keeps its corner, quarter or middle spot.',
+        descriptionKey: 'settings.autoRebindArrows.description' as const,
         helpArticle: 'autoAttachArrows',
         // On by default (docs/specs/007-editor/user-preferences.md); the editor gates the rebind on this
         // same helper, so the switch and the behaviour cannot disagree.
@@ -428,9 +449,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         kind: 'toggle',
         key: 'middleMousePan',
         keywords: 'scroll wheel drag pan navigate mouse',
-        label: 'Middle-Mouse Pan', labelKey: 'settings.middleMousePan.label' as const,
+        label: 'Middle-Mouse Pan',
+        labelKey: 'settings.middleMousePan.label' as const,
         description:
-          'Hold the middle mouse button and drag to pan the canvas in any direction, from anywhere, over empty space or over elements, whatever tool is active. Turn off to leave the middle button to your browser.', descriptionKey: 'settings.middleMousePan.description' as const,
+          'Hold the middle mouse button and drag to pan the canvas in any direction, from anywhere, over empty space or over elements, whatever tool is active. Turn off to leave the middle button to your browser.',
+        descriptionKey: 'settings.middleMousePan.description' as const,
         read: (p) => p.middleMousePan !== false,
         write: (p, v) => ({ ...p, middleMousePan: v }),
         event: { category: 'UI', on: 'MiddleMousePanOn', off: 'MiddleMousePanOff' },
@@ -442,9 +465,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'powerUserMode',
         keywords: 'power user expert advanced pro minimal chrome fewer labels declutter',
         section: 'Power User',
-        label: 'Power User Mode', labelKey: 'settings.powerUserMode.label' as const,
+        label: 'Power User Mode',
+        labelKey: 'settings.powerUserMode.label' as const,
         description:
-          'Applies a set of recommended settings for people who know their way around: alignment guides and auto-attach arrows on, the welcome and Plan tours marked as seen, and AI suggested prompts off. Change any of them afterwards and the mode stays on. Switching it off puts back the settings you did not change.', descriptionKey: 'settings.powerUserMode.description' as const,
+          'Applies a set of recommended settings for people who know their way around: alignment guides and auto-attach arrows on, the welcome and Plan tours marked as seen, and AI suggested prompts off. Change any of them afterwards and the mode stays on. Switching it off puts back the settings you did not change.',
+        descriptionKey: 'settings.powerUserMode.description' as const,
         helpArticle: 'powerUserMode',
         read: isPowerUserMode,
         write: (p, v) => setPowerUserMode(p, v).prefs,
@@ -455,9 +480,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'minimalChrome',
         keywords: 'minimal chrome hide labels captions titles hints icons only declutter',
         section: 'Power User',
-        label: 'Minimal Chrome', labelKey: 'settings.minimalChrome.label' as const,
+        label: 'Minimal Chrome',
+        labelKey: 'settings.minimalChrome.label' as const,
         description:
-          'Hides labels and hints you no longer need: palette captions, panel titles, the selection caption, status bar text and onboarding notices. Every control stays; its name shows when you hover or focus it.', descriptionKey: 'settings.minimalChrome.description' as const,
+          'Hides labels and hints you no longer need: palette captions, panel titles, the selection caption, status bar text and onboarding notices. Every control stays; its name shows when you hover or focus it.',
+        descriptionKey: 'settings.minimalChrome.description' as const,
         helpArticle: 'powerUserMode',
         parent: 'powerUserMode',
         available: (ctx) => ctx.powerUserMode === true,
@@ -470,9 +497,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'powerUserPreset',
         keywords: 'power user preset recommended defaults restore',
         section: 'Power User',
-        label: 'Set By Power User Mode', labelKey: 'settings.powerUserPreset.label' as const,
+        label: 'Set By Power User Mode',
+        labelKey: 'settings.powerUserPreset.label' as const,
         description:
-          'What switching the mode on set. Change any of them in its own row; switching the mode off restores the ones you left alone.', descriptionKey: 'settings.powerUserPreset.description' as const,
+          'What switching the mode on set. Change any of them in its own row; switching the mode off restores the ones you left alone.',
+        descriptionKey: 'settings.powerUserPreset.description' as const,
         parent: 'powerUserMode',
         available: (ctx) => ctx.powerUserMode === true,
       },
@@ -484,7 +513,8 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
     // switch names it (docs/specs/007-editor/editor-modes.md "Naming in the interface").
     // There is no Diagram sibling while no setting applies only to Diagram mode.
     id: 'draw',
-    label: 'Draw', labelKey: 'settings.category.draw.label' as const,
+    label: 'Draw',
+    labelKey: 'settings.category.draw.label' as const,
     parent: 'editor',
     rows: [
       {
@@ -494,13 +524,23 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'whiteboardDockPosition',
         keywords:
           'draw mode drawing mode whiteboard dock toolbar tools pens top bottom position tablet ipad drawing',
-        label: 'Dock Position', labelKey: 'settings.whiteboardDockPosition.label' as const,
+        label: 'Dock Position',
+        labelKey: 'settings.whiteboardDockPosition.label' as const,
         description:
-          "Where Draw mode's dock of pens, shapes and tools sits. Top keeps it where the palette strip sits; Bottom puts it closer to hand when drawing on a tablet. Only Draw mode has a dock, so Diagram mode is unchanged.", descriptionKey: 'settings.whiteboardDockPosition.description' as const,
+          "Where Draw mode's dock of pens, shapes and tools sits. Top keeps it where the palette strip sits; Bottom puts it closer to hand when drawing on a tablet. Only Draw mode has a dock, so Diagram mode is unchanged.",
+        descriptionKey: 'settings.whiteboardDockPosition.description' as const,
         helpArticle: 'drawMode',
         options: [
-          { id: 'top', label: 'Top', labelKey: 'settings.whiteboardDockPosition.option.top' as const },
-          { id: 'bottom', label: 'Bottom', labelKey: 'settings.whiteboardDockPosition.option.bottom' as const },
+          {
+            id: 'top',
+            label: 'Top',
+            labelKey: 'settings.whiteboardDockPosition.option.top' as const,
+          },
+          {
+            id: 'bottom',
+            label: 'Bottom',
+            labelKey: 'settings.whiteboardDockPosition.option.bottom' as const,
+          },
         ],
         read: readWhiteboardDockPosition,
         write: (p, v) => withWhiteboardDockPosition(p, v as WhiteboardDockPosition),
@@ -511,18 +551,22 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   {
     // Illustrate mode's own settings (docs/specs/007-editor/logo-pages.md "Construction guides").
     id: 'illustrate',
-    label: 'Illustrate', labelKey: 'settings.category.illustrate.label' as const,
+    label: 'Illustrate',
+    labelKey: 'settings.category.illustrate.label' as const,
     parent: 'editor',
     rows: [
       {
         kind: 'toggle',
         key: 'logoGuides',
         keywords: 'logo guides construction grid keylines safe area centre lines snap artboard',
-        label: 'Logo Guides', labelKey: 'settings.logoGuides.label' as const,
+        label: 'Logo Guides',
+        labelKey: 'settings.logoGuides.label' as const,
         description:
-          "Shows a logo page's construction guides: centre lines, keyline circles and square, the safe area and a grid. The keylines snap while they show. A page you switch them on or off for keeps its own choice.", descriptionKey: 'settings.logoGuides.description' as const,
+          "Shows a logo page's construction guides: centre lines, keyline circles and square, the safe area and a grid. The keylines snap while they show. A page you switch them on or off for keeps its own choice.",
+        descriptionKey: 'settings.logoGuides.description' as const,
         helpArticle: 'logoPages',
-        alsoIn: "a logo page's panel", alsoInKey: 'settings.logoGuides.alsoIn' as const,
+        alsoIn: "a logo page's panel",
+        alsoInKey: 'settings.logoGuides.alsoIn' as const,
         read: (p) => p.logoGuides !== false,
         write: (p, v) => ({ ...p, logoGuides: v }),
         event: { category: 'UI', on: 'LogoGuidesOn', off: 'LogoGuidesOff' },
@@ -531,14 +575,29 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         kind: 'choice',
         key: 'logoGuideStrength',
         keywords: 'logo guides strength opacity faint strong contrast',
-        label: 'Logo Guide Strength', labelKey: 'settings.logoGuideStrength.label' as const,
-        description: "How strongly a logo page's construction guides show over the artwork.", descriptionKey: 'settings.logoGuideStrength.description' as const,
+        label: 'Logo Guide Strength',
+        labelKey: 'settings.logoGuideStrength.label' as const,
+        description: "How strongly a logo page's construction guides show over the artwork.",
+        descriptionKey: 'settings.logoGuideStrength.description' as const,
         helpArticle: 'logoPages',
-        alsoIn: "a logo page's panel", alsoInKey: 'settings.logoGuideStrength.alsoIn' as const,
+        alsoIn: "a logo page's panel",
+        alsoInKey: 'settings.logoGuideStrength.alsoIn' as const,
         options: [
-          { id: 'faint', label: 'Faint', labelKey: 'settings.logoGuideStrength.option.faint' as const },
-          { id: 'medium', label: 'Medium', labelKey: 'settings.logoGuideStrength.option.medium' as const },
-          { id: 'strong', label: 'Strong', labelKey: 'settings.logoGuideStrength.option.strong' as const },
+          {
+            id: 'faint',
+            label: 'Faint',
+            labelKey: 'settings.logoGuideStrength.option.faint' as const,
+          },
+          {
+            id: 'medium',
+            label: 'Medium',
+            labelKey: 'settings.logoGuideStrength.option.medium' as const,
+          },
+          {
+            id: 'strong',
+            label: 'Strong',
+            labelKey: 'settings.logoGuideStrength.option.strong' as const,
+          },
         ],
         read: readLogoGuideStrength,
         write: (p, v) => ({ ...p, logoGuideStrength: v as LogoGuideStrength }),
@@ -574,16 +633,20 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   },
   {
     id: 'appearance',
-    label: 'Appearance', labelKey: 'settings.category.appearance.label' as const,
+    label: 'Appearance',
+    labelKey: 'settings.category.appearance.label' as const,
     rows: [
       {
         kind: 'appearance',
         key: 'appearance',
         keywords: 'dark mode light theme colour color night scheme',
-        label: 'Theme', labelKey: 'settings.appearance.label' as const,
+        label: 'Theme',
+        labelKey: 'settings.appearance.label' as const,
         description:
-          "Sets whether the editor chrome is light or dark. System follows your device. A tab's own canvas theme is a separate setting, except for Default, which follows this one. Stored on this device only, so it does not sync with your other settings.", descriptionKey: 'settings.appearance.description' as const,
-        alsoIn: 'the editor’s footer bar', alsoInKey: 'settings.appearance.alsoIn' as const,
+          "Sets whether the editor chrome is light or dark. System follows your device. A tab's own canvas theme is a separate setting, except for Default, which follows this one. Stored on this device only, so it does not sync with your other settings.",
+        descriptionKey: 'settings.appearance.description' as const,
+        alsoIn: 'the editor’s footer bar',
+        alsoInKey: 'settings.appearance.alsoIn' as const,
         illustration: 'appearance',
       },
       // UI scale (docs/specs/007-editor/ui-scale.md): the working chrome only,
@@ -594,9 +657,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'uiScale',
         keywords:
           'zoom size bigger smaller larger text font scale magnify chrome interface ui accessibility',
-        label: 'UI Scale', labelKey: 'settings.uiScale.label' as const,
+        label: 'UI Scale',
+        labelKey: 'settings.uiScale.label' as const,
         description:
-          'Makes the panels, the toolbar and the buttons in the bottom-right corner bigger or smaller. The canvas, dialogs and menus stay as they are. Sets all three; adjust one on its own below.', descriptionKey: 'settings.uiScale.description' as const,
+          'Makes the panels, the toolbar and the buttons in the bottom-right corner bigger or smaller. The canvas, dialogs and menus stay as they are. Sets all three; adjust one on its own below.',
+        descriptionKey: 'settings.uiScale.description' as const,
         read: (p: UserPreferences) => resolveUiScale(p),
         write: (p: UserPreferences, v: number) => withUiScalePatch(p, uiScalePatch(v)),
         preview: (v) => setUiScalePreview(v === null ? null : uiScalePatch(v)),
@@ -629,37 +694,45 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
     // list and the switch that turns it off belong on one screen. No key
     // opens it: reach it through Settings.
     id: 'keyboard',
-    label: 'Keyboard', labelKey: 'settings.category.keyboard.label' as const,
+    label: 'Keyboard',
+    labelKey: 'settings.category.keyboard.label' as const,
     rows: [
       {
         kind: 'shortcuts',
         key: 'shortcutsEnabled',
         keywords: 'hotkeys keybindings keys accelerators cmd ctrl',
-        label: 'Keyboard Shortcuts', labelKey: 'settings.shortcutsEnabled.label' as const,
+        label: 'Keyboard Shortcuts',
+        labelKey: 'settings.shortcutsEnabled.label' as const,
         description:
-          'Binds the editor’s keyboard shortcuts, undo, delete, Escape to cancel a mode, and the rest. Turn off if you dictate into this browser, or share it with something that needs the keys. Stored on this device only, so it does not sync with your other settings.', descriptionKey: 'settings.shortcutsEnabled.description' as const,
+          'Binds the editor’s keyboard shortcuts, undo, delete, Escape to cancel a mode, and the rest. Turn off if you dictate into this browser, or share it with something that needs the keys. Stored on this device only, so it does not sync with your other settings.',
+        descriptionKey: 'settings.shortcutsEnabled.description' as const,
         helpArticle: 'keyboardShortcuts',
       },
       {
         kind: 'shortcutList',
         key: 'shortcutList',
         keywords: 'hotkeys keybindings list reference cheat sheet keys cmd ctrl',
-        label: 'All Shortcuts', labelKey: 'settings.shortcutList.label' as const,
-        description: '⌘ = Cmd on Mac, Ctrl on Windows / Linux.', descriptionKey: 'settings.shortcutList.description' as const,
+        label: 'All Shortcuts',
+        labelKey: 'settings.shortcutList.label' as const,
+        description: '⌘ = Cmd on Mac, Ctrl on Windows / Linux.',
+        descriptionKey: 'settings.shortcutList.description' as const,
       },
     ],
   },
   {
     id: 'panels',
-    label: 'Panels', labelKey: 'settings.category.panels.label' as const,
+    label: 'Panels',
+    labelKey: 'settings.category.panels.label' as const,
     rows: [
       {
         kind: 'slider',
         key: 'panelOpacity',
         keywords: 'transparency translucent fade see through alpha',
-        label: 'Panel Opacity', labelKey: 'settings.panelOpacity.label' as const,
+        label: 'Panel Opacity',
+        labelKey: 'settings.panelOpacity.label' as const,
         description:
-          'Fades every panel and the toolbar so the canvas shows through behind it; a panel snaps back to fully opaque while hovered or focused. Buttons stay opaque.', descriptionKey: 'settings.panelOpacity.description' as const,
+          'Fades every panel and the toolbar so the canvas shows through behind it; a panel snaps back to fully opaque while hovered or focused. Buttons stay opaque.',
+        descriptionKey: 'settings.panelOpacity.description' as const,
         helpArticle: 'panelOpacity',
         min: 0.3,
         max: 1,
@@ -673,7 +746,8 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   },
   {
     id: 'layers',
-    label: 'Layers', labelKey: 'settings.category.layers.label' as const,
+    label: 'Layers',
+    labelKey: 'settings.category.layers.label' as const,
     parent: 'panels',
     rows: [
       panelSwitch('layersPanelEnabled', {
@@ -689,9 +763,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         parent: 'layersPanelEnabled',
         keywords: 'thumbnail preview layer picture',
         illustration: 'layerThumbnails',
-        label: 'Layer Thumbnails', labelKey: 'settings.layersShowPreview.label' as const,
+        label: 'Layer Thumbnails',
+        labelKey: 'settings.layersShowPreview.label' as const,
         description:
-          'Draws a small preview of each layer’s contents beside its row in the Layers panel.', descriptionKey: 'settings.layersShowPreview.description' as const,
+          'Draws a small preview of each layer’s contents beside its row in the Layers panel.',
+        descriptionKey: 'settings.layersShowPreview.description' as const,
         read: (p) => p.layersShowPreview !== false,
         write: (p, v) => ({ ...p, layersShowPreview: v }),
         event: { category: 'UI', on: 'LayerPreviewOn', off: 'LayerPreviewOff' },
@@ -701,9 +777,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'layersShowCount',
         parent: 'layersPanelEnabled',
         keywords: 'number badge count layer',
-        label: 'Layer Element Counts', labelKey: 'settings.layersShowCount.label' as const,
+        label: 'Layer Element Counts',
+        labelKey: 'settings.layersShowCount.label' as const,
         description:
-          'Shows how many elements each layer holds, beside its name in the Layers panel.', descriptionKey: 'settings.layersShowCount.description' as const,
+          'Shows how many elements each layer holds, beside its name in the Layers panel.',
+        descriptionKey: 'settings.layersShowCount.description' as const,
         read: (p) => p.layersShowCount !== false,
         write: (p, v) => ({ ...p, layersShowCount: v }),
         event: { category: 'UI', on: 'LayerCountOn', off: 'LayerCountOff' },
@@ -713,9 +791,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'layerHoverPreview',
         parent: 'layersPanelEnabled',
         keywords: 'highlight hover layer preview',
-        label: 'Preview Layer on Hover', labelKey: 'settings.layerHoverPreview.label' as const,
+        label: 'Preview Layer on Hover',
+        labelKey: 'settings.layerHoverPreview.label' as const,
         description:
-          'Shows only that layer on the canvas while you rest on its row, so you can see what a layer holds without selecting it.', descriptionKey: 'settings.layerHoverPreview.description' as const,
+          'Shows only that layer on the canvas while you rest on its row, so you can see what a layer holds without selecting it.',
+        descriptionKey: 'settings.layerHoverPreview.description' as const,
         read: (p) => p.layerHoverPreview !== false,
         write: (p, v) => ({ ...p, layerHoverPreview: v }),
         event: { category: 'UI', on: 'LayerHoverPreviewOn', off: 'LayerHoverPreviewOff' },
@@ -724,7 +804,8 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   },
   {
     id: 'map',
-    label: 'Map', labelKey: 'settings.category.map.label' as const,
+    label: 'Map',
+    labelKey: 'settings.category.map.label' as const,
     parent: 'panels',
     rows: [
       {
@@ -735,10 +816,12 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'showMinimap',
         keywords: 'minimap overview thumbnail navigator birds eye hide show turn off',
         illustration: 'showMinimap',
-        label: 'Enable Map', labelKey: 'settings.showMinimap.label' as const,
+        label: 'Enable Map',
+        labelKey: 'settings.showMinimap.label' as const,
         desktopOnly: MINIMAP_DESKTOP_ONLY,
         description:
-          'Shows the Map, a small overview of the whole canvas in the bottom-left corner, once a tab has a few elements. Tap or drag it to jump around; scroll on it to zoom. Desktop only.', descriptionKey: 'settings.showMinimap.description' as const,
+          'Shows the Map, a small overview of the whole canvas in the bottom-left corner, once a tab has a few elements. Tap or drag it to jump around; scroll on it to zoom. Desktop only.',
+        descriptionKey: 'settings.showMinimap.description' as const,
         read: (p) => p.showMinimap !== false,
         write: (p, v) => ({ ...p, showMinimap: v }),
         event: { category: 'UI', on: 'MinimapOn', off: 'MinimapOff' },
@@ -749,10 +832,12 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         parent: 'showMinimap',
         keywords: 'shade minimap viewport dim',
         illustration: 'mapDimOutside',
-        label: 'Dim Outside the View', labelKey: 'settings.mapDimOutside.label' as const,
+        label: 'Dim Outside the View',
+        labelKey: 'settings.mapDimOutside.label' as const,
         desktopOnly: MINIMAP_DESKTOP_ONLY,
         description:
-          'Shades the part of the Map that falls outside what you are currently looking at, so the viewport rectangle stands out.', descriptionKey: 'settings.mapDimOutside.description' as const,
+          'Shades the part of the Map that falls outside what you are currently looking at, so the viewport rectangle stands out.',
+        descriptionKey: 'settings.mapDimOutside.description' as const,
         read: (p) => p.mapDimOutside !== false,
         write: (p, v) => ({ ...p, mapDimOutside: v }),
         event: { category: 'UI', on: 'MapDimOn', off: 'MapDimOff' },
@@ -762,9 +847,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'mapSize',
         parent: 'showMinimap',
         keywords: 'minimap height short medium tall',
-        label: 'Map Size', labelKey: 'settings.mapSize.label' as const,
+        label: 'Map Size',
+        labelKey: 'settings.mapSize.label' as const,
         desktopOnly: MINIMAP_DESKTOP_ONLY,
-        description: 'How much of the bottom-left corner the Map takes up.', descriptionKey: 'settings.mapSize.description' as const,
+        description: 'How much of the bottom-left corner the Map takes up.',
+        descriptionKey: 'settings.mapSize.description' as const,
         options: [
           { id: 'short', label: 'Short', labelKey: 'settings.mapSize.option.short' as const },
           { id: 'medium', label: 'Medium', labelKey: 'settings.mapSize.option.medium' as const },
@@ -778,7 +865,8 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   },
   {
     id: 'collaborate',
-    label: 'Collaborate', labelKey: 'settings.category.collaborate.label' as const,
+    label: 'Collaborate',
+    labelKey: 'settings.category.collaborate.label' as const,
     parent: 'panels',
     rows: [
       panelSwitch('collaboratePanelEnabled', {
@@ -792,7 +880,8 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   },
   {
     id: 'quickStyle',
-    label: 'Quick Style', labelKey: 'settings.category.quickStyle.label' as const,
+    label: 'Quick Style',
+    labelKey: 'settings.category.quickStyle.label' as const,
     parent: 'panels',
     rows: [
       panelSwitch('quickStylePanelEnabled', {
@@ -806,15 +895,18 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   },
   {
     id: 'accessibility',
-    label: 'Accessibility', labelKey: 'settings.category.accessibility.label' as const,
+    label: 'Accessibility',
+    labelKey: 'settings.category.accessibility.label' as const,
     rows: [
       {
         kind: 'toggle',
         key: 'reduceMotion',
         keywords: 'animation transitions accessibility motion sickness vestibular',
-        label: 'Reduce Motion', labelKey: 'settings.reduceMotion.label' as const,
+        label: 'Reduce Motion',
+        labelKey: 'settings.reduceMotion.label' as const,
         description:
-          "Turns off the editor's decorative animations and transitions (panels, popovers, the snap guides, etc.) so the interface appears instantly instead of sliding or popping. Your device's own 'reduce motion' setting is always respected; this lets you force it on here too, and it syncs across your devices.", descriptionKey: 'settings.reduceMotion.description' as const,
+          "Turns off the editor's decorative animations and transitions (panels, popovers, the snap guides, etc.) so the interface appears instantly instead of sliding or popping. Your device's own 'reduce motion' setting is always respected; this lets you force it on here too, and it syncs across your devices.",
+        descriptionKey: 'settings.reduceMotion.description' as const,
         read: (p) => p.reduceMotion === true,
         write: (p, v) => ({ ...p, reduceMotion: v }),
         event: { category: 'UI', on: 'ReduceMotionOn', off: 'ReduceMotionOff' },
@@ -823,9 +915,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         kind: 'toggle',
         key: 'tourSeen',
         keywords: 'walkthrough onboarding intro show me around getting started',
-        label: 'Show Welcome Tour', labelKey: 'settings.tourSeen.label' as const,
+        label: 'Show Welcome Tour',
+        labelKey: 'settings.tourSeen.label' as const,
         description:
-          'Offers the Show me around tour the next time you open a document. It switches itself off once you have taken or dismissed the tour, so it only ever offers itself once. Turn it back on and close Settings to run the tour again straight away.', descriptionKey: 'settings.tourSeen.description' as const,
+          'Offers the Show me around tour the next time you open a document. It switches itself off once you have taken or dismissed the tour, so it only ever offers itself once. Turn it back on and close Settings to run the tour again straight away.',
+        descriptionKey: 'settings.tourSeen.description' as const,
         helpArticle: 'welcomeTour',
         // INVERTED against the stored preference: the row asks "show me the
         // tour?", `tourSeen` records "already seen". Switch on === not seen.
@@ -841,9 +935,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'planTourSeen',
         keywords:
           'walkthrough onboarding intro show me around plan board kanban cards getting started',
-        label: 'Show Plan Tour', labelKey: 'settings.planTourSeen.label' as const,
+        label: 'Show Plan Tour',
+        labelKey: 'settings.planTourSeen.label' as const,
         description:
-          'Offers a short tour of Plan mode the next time you work in Plan. It switches itself off once you have taken or dismissed the tour. Turn it back on and close Settings to run it again: straight away if you are in Plan, otherwise the next time you are.', descriptionKey: 'settings.planTourSeen.description' as const,
+          'Offers a short tour of Plan mode the next time you work in Plan. It switches itself off once you have taken or dismissed the tour. Turn it back on and close Settings to run it again: straight away if you are in Plan, otherwise the next time you are.',
+        descriptionKey: 'settings.planTourSeen.description' as const,
         helpArticle: 'planTour',
         // Inverted like Show Welcome Tour: the row asks "show me the tour?", `planTourSeen` records
         // "already seen" (docs/specs/026-plan/plan-tour.md).
@@ -855,7 +951,8 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   },
   {
     id: 'ai',
-    label: 'AI Tools', labelKey: 'settings.category.ai.label' as const,
+    label: 'AI Tools',
+    labelKey: 'settings.category.ai.label' as const,
     requiresAi: true,
     rows: [
       {
@@ -863,9 +960,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'aiAssistanceEnabled',
         keywords: 'assistant chat ask clean llm',
         section: 'Assistant',
-        label: 'AI Assistant', labelKey: 'settings.aiAssistanceEnabled.label' as const,
+        label: 'AI Assistant',
+        labelKey: 'settings.aiAssistanceEnabled.label' as const,
         description:
-          'Shows an AI panel in the editor with two modes: Ask questions about the active tab, and Clean to tidy up labels, sizes, and styles. Off by default.', descriptionKey: 'settings.aiAssistanceEnabled.description' as const,
+          'Shows an AI panel in the editor with two modes: Ask questions about the active tab, and Clean to tidy up labels, sizes, and styles. Off by default.',
+        descriptionKey: 'settings.aiAssistanceEnabled.description' as const,
         helpArticle: 'aiTools',
         read: (p) => p.aiAssistanceEnabled === true,
         write: (p, v) => ({ ...p, aiAssistanceEnabled: v }),
@@ -876,8 +975,10 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'aiSuggestedPrompts',
         keywords: 'starter questions prompts suggestions ai',
         section: 'Assistant',
-        label: 'Suggested Prompts', labelKey: 'settings.aiSuggestedPrompts.label' as const,
-        description: 'Shows a row of one-click starter prompts under the AI panel’s mode buttons.', descriptionKey: 'settings.aiSuggestedPrompts.description' as const,
+        label: 'Suggested Prompts',
+        labelKey: 'settings.aiSuggestedPrompts.label' as const,
+        description: 'Shows a row of one-click starter prompts under the AI panel’s mode buttons.',
+        descriptionKey: 'settings.aiSuggestedPrompts.description' as const,
         read: (p) => p.aiSuggestedPrompts !== false,
         write: (p, v) => ({ ...p, aiSuggestedPrompts: v }),
         event: { category: 'AI', on: 'AiSuggestedPromptsOn', off: 'AiSuggestedPromptsOff' },
@@ -887,28 +988,33 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'apiTokensLink',
         keywords: 'api token key mcp integration script developer access',
         section: 'API Access',
-        label: 'API Tokens', labelKey: 'settings.apiTokensLink.label' as const,
+        label: 'API Tokens',
+        labelKey: 'settings.apiTokensLink.label' as const,
         cta: 'Manage API Tokens',
         target: 'tokens',
         description:
-          'Tokens let your own scripts, and AI tools connected over MCP, call the livediagram API as you. They have their own category in Settings.', descriptionKey: 'settings.apiTokensLink.description' as const,
+          'Tokens let your own scripts, and AI tools connected over MCP, call the livediagram API as you. They have their own category in Settings.',
+        descriptionKey: 'settings.apiTokensLink.description' as const,
         available: (ctx) => ctx.authEnabled === true,
       },
     ],
   },
   {
     id: 'documents',
-    label: 'Documents', labelKey: 'settings.category.documents.label' as const,
+    label: 'Documents',
+    labelKey: 'settings.category.documents.label' as const,
     rows: [
       {
         kind: 'skipLocationStep',
         key: 'skipLocationStep',
         section: 'Where New Documents Go',
-        label: 'Skip the Location Step', labelKey: 'settings.skipLocationStep.label' as const,
+        label: 'Skip the Location Step',
+        labelKey: 'settings.skipLocationStep.label' as const,
         keywords:
           'skip location step new document wizard always save every new document same place folder ask where',
         description:
-          'Saves every new document in one place without asking. Turn it on from the Location step of the New Document wizard.', descriptionKey: 'settings.skipLocationStep.description' as const,
+          'Saves every new document in one place without asking. Turn it on from the Location step of the New Document wizard.',
+        descriptionKey: 'settings.skipLocationStep.description' as const,
         helpArticle: 'defaultFolders',
       },
       // One row per default folder entry, in list order: guests have defaults too.
@@ -927,17 +1033,20 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   },
   {
     id: 'account',
-    label: 'Account', labelKey: 'settings.category.account.label' as const,
+    label: 'Account',
+    labelKey: 'settings.category.account.label' as const,
     rows: [
       {
         kind: 'identity',
         key: 'identity',
         section: 'You',
-        label: 'Guest', labelKey: 'settings.identity.label' as const,
+        label: 'Guest',
+        labelKey: 'settings.identity.label' as const,
         keywords:
           'account profile identity name email signed in sign in avatar picture photo google joined',
         description:
-          'Your name, email and picture come from your account and are changed there, not here. Signing in keeps your documents across browsers and devices; without it they belong to this browser alone.', descriptionKey: 'settings.identity.description' as const,
+          'Your name, email and picture come from your account and are changed there, not here. Signing in keeps your documents across browsers and devices; without it they belong to this browser alone.',
+        descriptionKey: 'settings.identity.description' as const,
         helpArticle: 'guestVsAccount',
       },
       {
@@ -945,9 +1054,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'showProfilePicture',
         keywords: 'profile picture photo avatar google show hide privacy collaborators',
         section: 'You',
-        label: 'Show My Profile Picture', labelKey: 'settings.showProfilePicture.label' as const,
+        label: 'Show My Profile Picture',
+        labelKey: 'settings.showProfilePicture.label' as const,
         description:
-          'Signed-in collaborators see your picture on presence, cursors, comments and teams. People who open your share links without signing in always see your initials. You always see it yourself.', descriptionKey: 'settings.showProfilePicture.description' as const,
+          'Signed-in collaborators see your picture on presence, cursors, comments and teams. People who open your share links without signing in always see your initials. You always see it yourself.',
+        descriptionKey: 'settings.showProfilePicture.description' as const,
         available: (ctx) => ctx.signedIn,
         read: (p) => showProfilePictureEnabled(p),
         write: (p, v) => ({ ...p, showProfilePicture: v }),
@@ -957,11 +1068,13 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         kind: 'trash',
         key: 'trash',
         section: 'Your Data',
-        label: 'Trash', labelKey: 'settings.trash.label' as const,
+        label: 'Trash',
+        labelKey: 'settings.trash.label' as const,
         keywords:
           'trash bin recycle deleted undo undelete restore recover get back document diagram permanently empty',
         description:
-          'Deleted documents wait here for 30 days before they are removed for good. Restore one to put it back where it was.', descriptionKey: 'settings.trash.description' as const,
+          'Deleted documents wait here for 30 days before they are removed for good. Restore one to put it back where it was.',
+        descriptionKey: 'settings.trash.description' as const,
         helpArticle: 'trash',
       },
       // One row per provider, from the Cloud Sync catalogue.
@@ -980,16 +1093,19 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         kind: 'deleteAccount',
         key: 'deleteAccount',
         section: 'Danger Zone',
-        label: 'Delete Account', labelKey: 'settings.deleteAccount.label' as const,
+        label: 'Delete Account',
+        labelKey: 'settings.deleteAccount.label' as const,
         keywords: 'delete account remove wipe erase close cancel data gdpr',
         description:
-          'Removes your documents, folders, and the account itself, everywhere. There is no undo and no recovery, so you are asked to type your email to confirm.', descriptionKey: 'settings.deleteAccount.description' as const,
+          'Removes your documents, folders, and the account itself, everywhere. There is no undo and no recovery, so you are asked to type your email to confirm.',
+        descriptionKey: 'settings.deleteAccount.description' as const,
       },
     ],
   },
   {
     id: 'notifications',
-    label: 'Notifications', labelKey: 'settings.category.notifications.label' as const,
+    label: 'Notifications',
+    labelKey: 'settings.category.notifications.label' as const,
     parent: 'account',
     rows: [
       {
@@ -997,9 +1113,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'notificationsEnabled',
         keywords: 'toast popup confirmation message alert',
         section: 'In the editor',
-        label: 'In-Editor Notifications', labelKey: 'settings.notificationsEnabled.label' as const,
+        label: 'In-Editor Notifications',
+        labelKey: 'settings.notificationsEnabled.label' as const,
         description:
-          "Shows a brief confirmation when you do something whose result isn't on screen, like moving a document to a folder or linking a tab. Errors are always shown so a failure is never hidden. Turn off for a quieter editor.", descriptionKey: 'settings.notificationsEnabled.description' as const,
+          "Shows a brief confirmation when you do something whose result isn't on screen, like moving a document to a folder or linking a tab. Errors are always shown so a failure is never hidden. Turn off for a quieter editor.",
+        descriptionKey: 'settings.notificationsEnabled.description' as const,
         read: (p) => p.notificationsEnabled !== false,
         write: (p, v) => ({ ...p, notificationsEnabled: v }),
         event: { category: 'UI', on: 'NotificationsOn', off: 'NotificationsOff' },
@@ -1014,11 +1132,13 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'emailSignIn',
         keywords: 'email notifications sign in account',
         section: 'Email',
-        label: 'Email Notifications', labelKey: 'settings.emailSignIn.label' as const,
+        label: 'Email Notifications',
+        labelKey: 'settings.emailSignIn.label' as const,
         note: 'Sign in to choose which emails you get.',
         signIn: true,
         description:
-          'We can email you when someone joins one of your documents, comments on it, assigns you an action, and for a few other moments. Which ones is an account setting.', descriptionKey: 'settings.emailSignIn.description' as const,
+          'We can email you when someone joins one of your documents, comments on it, assigns you an action, and for a few other moments. Which ones is an account setting.',
+        descriptionKey: 'settings.emailSignIn.description' as const,
         available: (ctx) => ctx.emailEnabled && !ctx.signedIn,
       },
       {
@@ -1026,8 +1146,10 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'notifyDocumentJoin',
         keywords: 'email join collaborator opened',
         section: 'Email',
-        label: 'Someone Joins My Document', labelKey: 'settings.notifyDocumentJoin.label' as const,
-        description: 'When a new person opens one of your shared documents for the first time.', descriptionKey: 'settings.notifyDocumentJoin.description' as const,
+        label: 'Someone Joins My Document',
+        labelKey: 'settings.notifyDocumentJoin.label' as const,
+        description: 'When a new person opens one of your shared documents for the first time.',
+        descriptionKey: 'settings.notifyDocumentJoin.description' as const,
         available: (ctx) => ctx.emailEnabled && ctx.signedIn,
         read: (p) => p.notifyDocumentJoin !== false,
         write: (p, v) => ({ ...p, notifyDocumentJoin: v }),
@@ -1038,8 +1160,10 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'notifyInviteResponse',
         keywords: 'email invite team accepted declined',
         section: 'Email',
-        label: 'Someone Responds to a Team Invite', labelKey: 'settings.notifyInviteResponse.label' as const,
-        description: 'When someone you invited accepts or declines, for teams you’re an admin of.', descriptionKey: 'settings.notifyInviteResponse.description' as const,
+        label: 'Someone Responds to a Team Invite',
+        labelKey: 'settings.notifyInviteResponse.label' as const,
+        description: 'When someone you invited accepts or declines, for teams you’re an admin of.',
+        descriptionKey: 'settings.notifyInviteResponse.description' as const,
         available: (ctx) => ctx.emailEnabled && ctx.signedIn,
         read: (p) => p.notifyInviteResponse !== false,
         write: (p, v) => ({ ...p, notifyInviteResponse: v }),
@@ -1050,8 +1174,10 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'notifyComments',
         keywords: 'email comment reply feedback',
         section: 'Email',
-        label: 'Someone Comments on My Document', labelKey: 'settings.notifyComments.label' as const,
-        description: 'When someone leaves a comment on a document you own.', descriptionKey: 'settings.notifyComments.description' as const,
+        label: 'Someone Comments on My Document',
+        labelKey: 'settings.notifyComments.label' as const,
+        description: 'When someone leaves a comment on a document you own.',
+        descriptionKey: 'settings.notifyComments.description' as const,
         available: (ctx) => ctx.emailEnabled && ctx.signedIn,
         read: (p) => p.notifyComments !== false,
         write: (p, v) => ({ ...p, notifyComments: v }),
@@ -1062,8 +1188,10 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'notifyActionAssigned',
         keywords: 'email action assigned task todo',
         section: 'Email',
-        label: 'Someone Assigns Me an Action', labelKey: 'settings.notifyActionAssigned.label' as const,
-        description: 'When a teammate assigns you an action on an element.', descriptionKey: 'settings.notifyActionAssigned.description' as const,
+        label: 'Someone Assigns Me an Action',
+        labelKey: 'settings.notifyActionAssigned.label' as const,
+        description: 'When a teammate assigns you an action on an element.',
+        descriptionKey: 'settings.notifyActionAssigned.description' as const,
         available: (ctx) => ctx.emailEnabled && ctx.signedIn,
         read: (p) => p.notifyActionAssigned !== false,
         write: (p, v) => ({ ...p, notifyActionAssigned: v }),
@@ -1074,8 +1202,10 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'notifyMentions',
         keywords: 'email mention tag at comment',
         section: 'Email',
-        label: 'Someone Mentions Me in a Comment', labelKey: 'settings.notifyMentions.label' as const,
-        description: 'When a teammate @mentions you in a comment.', descriptionKey: 'settings.notifyMentions.description' as const,
+        label: 'Someone Mentions Me in a Comment',
+        labelKey: 'settings.notifyMentions.label' as const,
+        description: 'When a teammate @mentions you in a comment.',
+        descriptionKey: 'settings.notifyMentions.description' as const,
         available: (ctx) => ctx.emailEnabled && ctx.signedIn,
         read: (p) => p.notifyMentions !== false,
         write: (p, v) => ({ ...p, notifyMentions: v }),
@@ -1086,9 +1216,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'notifyTips',
         keywords: 'email tips onboarding nudge newsletter',
         section: 'Email',
-        label: 'Tips and Check-Ins', labelKey: 'settings.notifyTips.label' as const,
+        label: 'Tips and Check-Ins',
+        labelKey: 'settings.notifyTips.label' as const,
         description:
-          'Occasional getting-started tips, and a friendly nudge if you’ve been away for a while.', descriptionKey: 'settings.notifyTips.description' as const,
+          'Occasional getting-started tips, and a friendly nudge if you’ve been away for a while.',
+        descriptionKey: 'settings.notifyTips.description' as const,
         available: (ctx) => ctx.emailEnabled && ctx.signedIn,
         read: (p) => p.notifyTips !== false,
         write: (p, v) => ({ ...p, notifyTips: v }),
@@ -1099,9 +1231,11 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
         key: 'notifyMilestones',
         keywords: 'email milestone achievement celebrate',
         section: 'Email',
-        label: 'Milestones', labelKey: 'settings.notifyMilestones.label' as const,
+        label: 'Milestones',
+        labelKey: 'settings.notifyMilestones.label' as const,
         description:
-          'A note when you hit a milestone, like sharing your first document or reaching your tenth.', descriptionKey: 'settings.notifyMilestones.description' as const,
+          'A note when you hit a milestone, like sharing your first document or reaching your tenth.',
+        descriptionKey: 'settings.notifyMilestones.description' as const,
         available: (ctx) => ctx.emailEnabled && ctx.signedIn,
         read: (p) => p.notifyMilestones !== false,
         write: (p, v) => ({ ...p, notifyMilestones: v }),
@@ -1111,16 +1245,19 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   },
   {
     id: 'tokens',
-    label: 'API Tokens', labelKey: 'settings.category.tokens.label' as const,
+    label: 'API Tokens',
+    labelKey: 'settings.category.tokens.label' as const,
     parent: 'account',
     rows: [
       {
         kind: 'tokens',
         key: 'apiTokens',
         keywords: 'api token key mcp integration script developer access create revoke secret',
-        label: 'API Tokens', labelKey: 'settings.apiTokens.label' as const,
+        label: 'API Tokens',
+        labelKey: 'settings.apiTokens.label' as const,
         description:
-          'Tokens let your own scripts, and AI tools connected over MCP, call the livediagram API as you. Treat one like a password. Each expires six months after it is created, and you can revoke any of them at any time.', descriptionKey: 'settings.apiTokens.description' as const,
+          'Tokens let your own scripts, and AI tools connected over MCP, call the livediagram API as you. Treat one like a password. Each expires six months after it is created, and you can revoke any of them at any time.',
+        descriptionKey: 'settings.apiTokens.description' as const,
         helpArticle: 'apiTokens',
         available: (ctx) => ctx.authEnabled === true,
       },
@@ -1128,15 +1265,18 @@ export const SETTINGS_CATEGORIES: SettingsCategorySpec[] = [
   },
   {
     id: 'privacy',
-    label: 'Privacy', labelKey: 'settings.category.privacy.label' as const,
+    label: 'Privacy',
+    labelKey: 'settings.category.privacy.label' as const,
     rows: [
       {
         kind: 'toggle',
         key: 'telemetryEnabled',
         keywords: 'analytics tracking usage data privacy anonymous',
-        label: 'Send Anonymous Usage Events', labelKey: 'settings.telemetryEnabled.label' as const,
+        label: 'Send Anonymous Usage Events',
+        labelKey: 'settings.telemetryEnabled.label' as const,
         description:
-          'Sends the small, first-party events listed on /telemetry (no user content, no third-party trackers) so we can see which features actually help. Turn off to keep everything you do strictly on your device.', descriptionKey: 'settings.telemetryEnabled.description' as const,
+          'Sends the small, first-party events listed on /telemetry (no user content, no third-party trackers) so we can see which features actually help. Turn off to keep everything you do strictly on your device.',
+        descriptionKey: 'settings.telemetryEnabled.description' as const,
         helpArticle: 'whatWeCollect',
         read: (p) => p.telemetryEnabled !== false,
         write: (p, v) => ({ ...p, telemetryEnabled: v }),

@@ -175,7 +175,9 @@ export function CustomColourEditor({
           type="button"
           onClick={() => onUse(hex)}
           className={`ml-auto h-7 rounded-md bg-brand-600 px-3 text-xs font-medium text-white hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-slate-900 ${SOLID_BRAND_DARK_CONTROL}`}
-        >{t('customcoloureditor.use')}</button>
+        >
+          {t('customcoloureditor.use')}
+        </button>
       </div>
       {/* The warning's line, always there so it never shifts the picker; empty until needed. */}
       {boardWarning ? (
@@ -187,7 +189,11 @@ export function CustomColourEditor({
           {readable ? (
             <>
               <WarningIcon aria-hidden />
-              <span>{t('customcoloureditor.hard-to-see-on-the')}{hard[0]}{t('customcoloureditor.board')}</span>
+              <span>
+                {t('customcoloureditor.hard-to-see-on-the')}
+                {hard[0]}
+                {t('customcoloureditor.board')}
+              </span>
               <Tooltip label={`Use ${readable}, readable on both boards`}>
                 <button
                   type="button"

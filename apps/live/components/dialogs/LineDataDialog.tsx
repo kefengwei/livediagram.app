@@ -67,7 +67,9 @@ export function LineDataDialog({
       </DialogHeader>
 
       <div className="flex items-center gap-2 px-6 pt-4">
-        <label className={`${addBtn} cursor-pointer`}>{t('linedatadialog.import-csv')}<input
+        <label className={`${addBtn} cursor-pointer`}>
+          {t('linedatadialog.import-csv')}
+          <input
             type="file"
             accept=".csv,text/csv"
             className="hidden"
@@ -205,8 +207,12 @@ export function LineDataDialog({
             )
           }
           className={addBtn}
-        >{t('linedatadialog.add-row')}</button>
-        <Button variant="primary" size="md" onClick={onClose}>{t('linedatadialog.done')}</Button>
+        >
+          {t('linedatadialog.add-row')}
+        </button>
+        <Button variant="primary" size="md" onClick={onClose}>
+          {t('linedatadialog.done')}
+        </Button>
       </div>
     </Dialog>
   );

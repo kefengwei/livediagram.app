@@ -275,7 +275,9 @@ export function SettingsDialog({
               searching={result.searching}
             />
             {isMobile && result.searching && result.totalMatches === 0 ? (
-              <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-400">{t('settingsdialog.no-settings-match')}{query.trim()}”.
+              <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-400">
+                {t('settingsdialog.no-settings-match')}
+                {query.trim()}”.
               </p>
             ) : null}
           </div>
@@ -322,14 +324,18 @@ export function SettingsDialog({
           </div>
         ) : result.searching && !isMobile ? (
           <div className="flex min-w-0 flex-1 items-center justify-center px-6 py-10">
-            <p className="text-center text-xs text-slate-500 dark:text-slate-400">{t('settingsdialog.no-settings-match-2')}{query.trim()}”.
+            <p className="text-center text-xs text-slate-500 dark:text-slate-400">
+              {t('settingsdialog.no-settings-match-2')}
+              {query.trim()}”.
             </p>
           </div>
         ) : null}
       </div>
 
       <footer className="border-t border-slate-200 px-4 py-3 dark:border-slate-800">
-        <p className="text-[10px] text-slate-500 dark:text-slate-400">{t('settingsdialog.settings-sync-to-your-account-and')}</p>
+        <p className="text-[10px] text-slate-500 dark:text-slate-400">
+          {t('settingsdialog.settings-sync-to-your-account-and')}
+        </p>
       </footer>
     </Dialog>
   );

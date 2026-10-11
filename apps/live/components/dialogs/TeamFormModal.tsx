@@ -102,7 +102,9 @@ export function TeamFormModal({
             Members edit shared work; admins also manage who&rsquo;s in the team.
           </p>
           <label className="mt-4 block">
-            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">{t('teamformmodal.team-name')}</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
+              {t('teamformmodal.team-name')}
+            </span>
             <TextInput
               ref={nameRef}
               value={name}
@@ -113,7 +115,9 @@ export function TeamFormModal({
             />
           </label>
           <label className="mt-3 block">
-            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">{t('teamformmodal.organisation')}<span className="normal-case text-slate-400">{t('teamformmodal.optional')}</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
+              {t('teamformmodal.organisation')}
+              <span className="normal-case text-slate-400">{t('teamformmodal.optional')}</span>
             </span>
             <TextInput
               value={organisation}
@@ -125,7 +129,9 @@ export function TeamFormModal({
           </label>
         </div>
         <DialogFooter>
-          <Button variant="secondary" onClick={onCancel}>{t('teamformmodal.cancel')}</Button>
+          <Button variant="secondary" onClick={onCancel}>
+            {t('teamformmodal.cancel')}
+          </Button>
           <Button type="submit" disabled={!name.trim()}>
             {submitLabel}
           </Button>

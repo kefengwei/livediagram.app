@@ -21,7 +21,6 @@ const COMBINE_CHOICES: readonly { op: CombineOp; label: string }[] = [
 
 /** The four operations as a two-by-two grid of tiles. */
 export function CombineTiles({ onCombine }: { onCombine: (op: CombineOp) => void }) {
-  
   return (
     <MenuTileGrid cols={2}>
       {COMBINE_CHOICES.map((c) => (
@@ -38,12 +37,15 @@ export function CombineTiles({ onCombine }: { onCombine: (op: CombineOp) => void
 
 export function CombineMenuButton({ onCombine }: { onCombine: (op: CombineOp) => void }) {
   const { t } = useTranslation();
-  
+
   const [open, setOpen] = useState(false);
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
   return (
     <>
-      <HoverCard title={t('combinemenu.combine')} description={t('combinemenu.make-one-shape-of-these-unite')}>
+      <HoverCard
+        title={t('combinemenu.combine')}
+        description={t('combinemenu.make-one-shape-of-these-unite')}
+      >
         <button
           ref={setAnchor}
           type="button"
@@ -72,7 +74,6 @@ export function CombineMenuButton({ onCombine }: { onCombine: (op: CombineOp) =>
 
 // Two overlapping squares, the part each operation keeps filled.
 export function CombineOpGlyph({ op, size = 20 }: { op: CombineOp; size?: number }) {
-  
   const a = 'M2.5 2.5h7v7h-7z';
   const b = 'M6.5 6.5h7v7h-7z';
   const overlap = 'M6.5 6.5h3v3h-3z';

@@ -19,8 +19,12 @@ export function SidebarSignInNudge() {
         <SignInIcon />
       </span>
       <span>
-        <span className="block text-xs font-semibold text-slate-700 dark:text-slate-100">{t('sidebarsigninnudge.sign-in-to-access-teams')}</span>
-        <span className="mt-0.5 block text-[11px] leading-snug text-slate-500 dark:text-slate-400">{t('sidebarsigninnudge.free-and-your-guest-documents-come')}</span>
+        <span className="block text-xs font-semibold text-slate-700 dark:text-slate-100">
+          {t('sidebarsigninnudge.sign-in-to-access-teams')}
+        </span>
+        <span className="mt-0.5 block text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+          {t('sidebarsigninnudge.free-and-your-guest-documents-come')}
+        </span>
       </span>
     </Link>
   );

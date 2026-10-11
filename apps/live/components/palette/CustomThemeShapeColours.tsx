@@ -79,7 +79,9 @@ export function PerShapeColoursSection({
       open={open}
       onToggle={onToggle}
     >
-      <p className="mb-2 text-[11px] leading-snug text-slate-500 dark:text-slate-300">{t('customthemeshapecolours.give-a-shape-kind-its-own')}</p>
+      <p className="mb-2 text-[11px] leading-snug text-slate-500 dark:text-slate-300">
+        {t('customthemeshapecolours.give-a-shape-kind-its-own')}
+      </p>
       {/* Compact two-column rows: a shape preview + name, then its
             three colour dots (fill / outline / text, hover-carded). Dense
             and scannable rather than a wall of big swatch blocks. */}
@@ -113,7 +115,10 @@ export function PerShapeColoursSection({
                 >[0])}
               </span>
               <div className="flex shrink-0 items-center gap-1">
-                <HoverCard title={t('customthemeshapecolours.fill')} description={t('customthemeshapecolours.the-shape-s-interior-colour')}>
+                <HoverCard
+                  title={t('customthemeshapecolours.fill')}
+                  description={t('customthemeshapecolours.the-shape-s-interior-colour')}
+                >
                   <ColorDot
                     label={`${kind} fill`}
                     value={r.fill}
@@ -121,7 +126,10 @@ export function PerShapeColoursSection({
                     painter={painter}
                   />
                 </HoverCard>
-                <HoverCard title={t('customthemeshapecolours.outline')} description={t('customthemeshapecolours.the-shape-s-border-colour')}>
+                <HoverCard
+                  title={t('customthemeshapecolours.outline')}
+                  description={t('customthemeshapecolours.the-shape-s-border-colour')}
+                >
                   <ColorDot
                     label={`${kind} outline`}
                     value={r.stroke}
@@ -129,7 +137,10 @@ export function PerShapeColoursSection({
                     painter={painter}
                   />
                 </HoverCard>
-                <HoverCard title={t('customthemeshapecolours.text')} description={t('customthemeshapecolours.the-shape-s-label-colour')}>
+                <HoverCard
+                  title={t('customthemeshapecolours.text')}
+                  description={t('customthemeshapecolours.the-shape-s-label-colour')}
+                >
                   <ColorDot
                     label={`${kind} text`}
                     value={r.text}
@@ -137,7 +148,10 @@ export function PerShapeColoursSection({
                     painter={painter}
                   />
                 </HoverCard>
-                <HoverCard title={t('customthemeshapecolours.reset')} description={t('customthemeshapecolours.use-the-base-colours-for-this')}>
+                <HoverCard
+                  title={t('customthemeshapecolours.reset')}
+                  description={t('customthemeshapecolours.use-the-base-colours-for-this')}
+                >
                   <button
                     type="button"
                     onClick={() => clearShape(kind)}

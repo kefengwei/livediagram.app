@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { NAME_MAX_LENGTH } from '@livediagram/document';
 

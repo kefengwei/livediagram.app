@@ -356,10 +356,10 @@ export function ToolbarPalette(props: Props) {
                       grid
                       menuClassName=""
                       groupLabels={{
-                          0: t('toolbarpalette.group.edit'),
-                          1: t('toolbarpalette.group.present'),
-                          2: t('toolbarpalette.group.preview'),
-                        }}
+                        0: t('toolbarpalette.group.edit'),
+                        1: t('toolbarpalette.group.present'),
+                        2: t('toolbarpalette.group.preview'),
+                      }}
                       onChange={onCanvasToolChange}
                       options={canvasToolOptions}
                     />
@@ -450,7 +450,9 @@ export function ToolbarPalette(props: Props) {
                     ) : (
                       <HoverCard
                         title={`More ${category?.label ?? ''}`.trim()}
-                        description={category?.description ?? t('toolbarpalette.everything-in-this-category')}
+                        description={
+                          category?.description ?? t('toolbarpalette.everything-in-this-category')
+                        }
                       >
                         {moreButton}
                       </HoverCard>

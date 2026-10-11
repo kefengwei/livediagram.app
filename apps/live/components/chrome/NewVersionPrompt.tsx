@@ -65,7 +65,9 @@ export function NewVersionPrompt({
       className="fixed bottom-20 left-1/2 z-[var(--z-chrome)] flex w-[calc(100vw-2rem)] max-w-md -translate-x-1/2 items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-lg dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
     >
       <p className="min-w-0 flex-1">{COPY[phase]}</p>
-      <Button size="sm" disabled={phase === 'saving'} onClick={() => void onReload()}>{t('newversionprompt.reload')}</Button>
+      <Button size="sm" disabled={phase === 'saving'} onClick={() => void onReload()}>
+        {t('newversionprompt.reload')}
+      </Button>
       <Button
         size="sm"
         variant="secondary"
@@ -74,7 +76,9 @@ export function NewVersionPrompt({
           setDismissedAt(server);
           setPhase('offered');
         }}
-      >{t('newversionprompt.not-now')}</Button>
+      >
+        {t('newversionprompt.not-now')}
+      </Button>
     </div>
   );
 }

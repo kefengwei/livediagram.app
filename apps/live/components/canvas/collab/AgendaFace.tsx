@@ -79,7 +79,9 @@ export function AgendaFace({
         aside={items.length ? formatMinutes(total) : undefined}
       >
         {items.length === 0 ? (
-          <EmptyRows textColor={textColor} title={t('agendaface.no-segments-yet')}>{t('agendaface.add-them-from-the-element-s')}</EmptyRows>
+          <EmptyRows textColor={textColor} title={t('agendaface.no-segments-yet')}>
+            {t('agendaface.add-them-from-the-element-s')}
+          </EmptyRows>
         ) : (
           <>
             <span

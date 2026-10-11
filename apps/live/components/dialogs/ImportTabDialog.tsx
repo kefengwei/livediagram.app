@@ -190,8 +190,11 @@ function ImportChooser({
         <span className="mt-0.5 shrink-0">
           <WarningIcon />
         </span>
-        <span>{t('importtabdialog.this-replaces-everything-on')}{' '}
-          <strong className="font-semibold">{tabName || 'this tab'}</strong>{t('importtabdialog.with-the-imported-content-undo-z')}</span>
+        <span>
+          {t('importtabdialog.this-replaces-everything-on')}{' '}
+          <strong className="font-semibold">{tabName || 'this tab'}</strong>
+          {t('importtabdialog.with-the-imported-content-undo-z')}
+        </span>
       </div>
       {activeFormat ? (
         <TextImportPanel

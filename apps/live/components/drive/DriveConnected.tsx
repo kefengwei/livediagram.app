@@ -94,7 +94,9 @@ export function DriveConnected() {
       <LandingCard>
         <Heading>{t('driveconnected.google-drive-wasn-t-connected')}</Heading>
         <Body>{t('driveconnected.nothing-changed-you-can-connect-it')}</Body>
-        <PrimaryLink href="/explorer?settings=account&section=cloud-sync">{t('driveconnected.back')}</PrimaryLink>
+        <PrimaryLink href="/explorer?settings=account&section=cloud-sync">
+          {t('driveconnected.back')}
+        </PrimaryLink>
       </LandingCard>
     );
   }
@@ -105,8 +107,12 @@ export function DriveConnected() {
         <Body>
           {phase === 'invalid'
             ? t('driveconnected.this-connection-was-not-started-from')
-            : t('driveconnected.google-did-not-accept-the-connection')}{' '}{t('driveconnected.try-again-from-settings-account-cloud')}</Body>
-        <PrimaryLink href="/explorer?settings=account&section=cloud-sync">{t('driveconnected.back-to-cloud-sync')}</PrimaryLink>
+            : t('driveconnected.google-did-not-accept-the-connection')}{' '}
+          {t('driveconnected.try-again-from-settings-account-cloud')}
+        </Body>
+        <PrimaryLink href="/explorer?settings=account&section=cloud-sync">
+          {t('driveconnected.back-to-cloud-sync')}
+        </PrimaryLink>
       </LandingCard>
     );
   }

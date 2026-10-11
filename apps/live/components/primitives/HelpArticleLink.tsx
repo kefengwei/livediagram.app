@@ -120,7 +120,9 @@ export function HelpArticleLink({
               label rules (docs/specs/004-interface-design/optical-alignment.md); without them the
               content sat over half a pixel right of centre. */}
           {icon ?? <HelpMarkIcon />}
-          <span className="text-optical-line">{label === t('helparticlelink.learn-more') ? 'Help' : label}</span>
+          <span className="text-optical-line">
+            {label === t('helparticlelink.learn-more') ? 'Help' : label}
+          </span>
         </a>
       </HoverCard>
     );
@@ -151,7 +153,9 @@ export function HelpArticleLink({
         >
           <span aria-hidden className="text-[14px] font-semibold leading-none">
             ?
-          </span>{t('helparticlelink.help')}</a>
+          </span>
+          {t('helparticlelink.help')}
+        </a>
       </HoverCard>
     );
   }

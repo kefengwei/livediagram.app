@@ -48,7 +48,10 @@ export function TeamLibraryHeader({
   const [createButton, setCreateButton] = useState<HTMLButtonElement | null>(null);
   return (
     <div className="flex items-center justify-between gap-3 border-b border-slate-200 bg-slate-50/70 px-4 py-2.5 dark:border-slate-700 dark:bg-slate-900/40">
-      <nav aria-label={t('teamlibraryheader.team-folders')} className="flex min-w-0 flex-wrap items-center text-xs">
+      <nav
+        aria-label={t('teamlibraryheader.team-folders')}
+        className="flex min-w-0 flex-wrap items-center text-xs"
+      >
         {crumbs.map((c, i) => {
           const isLast = i === crumbs.length - 1;
           return (
@@ -97,7 +100,9 @@ export function TeamLibraryHeader({
             // classes append after the size scale, so they win.
             className="shrink-0 gap-1.5 px-2 py-1 text-[11px] shadow-sm"
           >
-            <PlusIcon />{t('teamlibraryheader.create')}<Glyph size={9} units={16} className="-mr-0.5">
+            <PlusIcon />
+            {t('teamlibraryheader.create')}
+            <Glyph size={9} units={16} className="-mr-0.5">
               <path d="M4 6l4 4 4-4" />
             </Glyph>
           </Button>
@@ -133,7 +138,11 @@ export function TeamLibraryHeader({
                       <FolderOutlineIcon />
                     </span>
                   }
-                  label={inFolder ? t('teamlibraryheader.new-subfolder') : t('teamlibraryheader.new-folder')}
+                  label={
+                    inFolder
+                      ? t('teamlibraryheader.new-subfolder')
+                      : t('teamlibraryheader.new-folder')
+                  }
                   onClick={() => {
                     setCreateOpen(false);
                     void createFolder(currentFolderId).then((created) => {

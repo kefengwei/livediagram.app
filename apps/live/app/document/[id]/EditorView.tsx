@@ -243,7 +243,8 @@ export function EditorView() {
   // so there is nothing to explain.
   const facilitatorName =
     facilitator.sessionToolsBlocked && facilitator.facilitatorId
-      ? (livePresence.find((p) => p.id === facilitator.facilitatorId)?.name ?? t('editorview.someone-else'))
+      ? (livePresence.find((p) => p.id === facilitator.facilitatorId)?.name ??
+        t('editorview.someone-else'))
       : null;
   const selectTab = useSelectTab();
   // Contextual command palette for the SearchPanel "Actions" group (docs/specs/008-canvas/canvas-and-palette.md):
@@ -523,10 +524,14 @@ export function EditorView() {
                                   type="button"
                                   onClick={cancelConnect}
                                   className="pointer-events-auto flex items-center gap-2 rounded-full border border-brand-300 bg-brand-50 px-3 py-1.5 text-xs font-medium text-brand-700 shadow-sm transition hover:bg-brand-100 dark:border-brand-500/40 dark:bg-brand-500/15 dark:text-brand-200"
-                                >{t('editorview.click-a-shape-to-connect-the')}<span className="text-brand-300" aria-hidden>
+                                >
+                                  {t('editorview.click-a-shape-to-connect-the')}
+                                  <span className="text-brand-300" aria-hidden>
                                     |
                                   </span>
-                                  <span className="text-brand-500 dark:text-brand-300">{t('editorview.cancel')}</span>
+                                  <span className="text-brand-500 dark:text-brand-300">
+                                    {t('editorview.cancel')}
+                                  </span>
                                 </button>
                               </div>
                             ) : null}

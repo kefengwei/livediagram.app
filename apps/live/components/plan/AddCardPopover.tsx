@@ -84,7 +84,9 @@ export function AddCardPopover({
         onPointerDown={stop}
       >
         <div className="flex flex-col gap-1 px-2 pb-3" onKeyDown={stop}>
-          <p className="px-2 text-xs font-semibold text-slate-500 dark:text-slate-400">{t('addcardpopover.add-a-card-2')}</p>
+          <p className="px-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            {t('addcardpopover.add-a-card-2')}
+          </p>
           {choices}
         </div>
       </BottomSheet>

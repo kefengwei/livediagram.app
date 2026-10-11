@@ -366,7 +366,9 @@ export function TabBar({
             className="hidden items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400 sm:flex dark:text-slate-400"
             aria-hidden
           >
-            <TabsLabelIcon />{t('tabbar.tabs')}</span>
+            <TabsLabelIcon />
+            {t('tabbar.tabs')}
+          </span>
         )}
         {/* -m-1/p-1 gives the scroll clip 4px of clearance on every side
             without moving the content: the active pill's accent ring and

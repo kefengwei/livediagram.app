@@ -49,14 +49,24 @@ function RemoveQuestion({
       aria-label={`Remove ${removed.length} ${one ? 'node' : 'nodes'}?`}
       className="rounded-lg bg-rose-50 p-3 ring-1 ring-rose-200 dark:bg-rose-500/10 dark:ring-rose-500/30"
     >
-      <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{t('mindoutlinedialog.remove')}{removed.length} {one ? 'node' : 'nodes'}?
+      <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+        {t('mindoutlinedialog.remove')}
+        {removed.length} {one ? 'node' : 'nodes'}?
       </p>
       <p className="mt-0.5 text-xs text-slate-600 dark:text-slate-300">
         {names}
-        {more > 0 ? ` and ${more} more` : ''}{t('mindoutlinedialog.will-go-with')}{one ? 'its' : 'their'}{t('mindoutlinedialog.connectors-undo-brings-them-back')}</p>
+        {more > 0 ? ` and ${more} more` : ''}
+        {t('mindoutlinedialog.will-go-with')}
+        {one ? 'its' : 'their'}
+        {t('mindoutlinedialog.connectors-undo-brings-them-back')}
+      </p>
       <div className="mt-2.5 flex justify-end gap-2">
-        <Button size="sm" variant="secondary" onClick={onKeep}>{t('mindoutlinedialog.keep-editing')}</Button>
-        <Button size="sm" variant="primary" autoFocus onClick={onRemove}>{t('mindoutlinedialog.remove-2')}</Button>
+        <Button size="sm" variant="secondary" onClick={onKeep}>
+          {t('mindoutlinedialog.keep-editing')}
+        </Button>
+        <Button size="sm" variant="primary" autoFocus onClick={onRemove}>
+          {t('mindoutlinedialog.remove-2')}
+        </Button>
       </div>
     </div>
   );
@@ -128,11 +138,19 @@ export function MindOutlineDialog({
         ) : null}
         <div className="flex items-center justify-between gap-3">
           <p className="text-xs text-slate-500 dark:text-slate-400" aria-live="polite">
-            {empty ? t('mindoutlinedialog.write-the-root-first') : summary ? countLine(summary) : ''}
+            {empty
+              ? t('mindoutlinedialog.write-the-root-first')
+              : summary
+                ? countLine(summary)
+                : ''}
           </p>
           <div className="flex items-center gap-2">
-            <Button variant="secondary" onClick={onClose}>{t('mindoutlinedialog.cancel')}</Button>
-            <Button onClick={save} disabled={empty || confirming}>{t('mindoutlinedialog.save')}</Button>
+            <Button variant="secondary" onClick={onClose}>
+              {t('mindoutlinedialog.cancel')}
+            </Button>
+            <Button onClick={save} disabled={empty || confirming}>
+              {t('mindoutlinedialog.save')}
+            </Button>
           </div>
         </div>
       </div>

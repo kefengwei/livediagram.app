@@ -25,10 +25,16 @@ export function LogoGuidesSettings({ pageId, tools }: { pageId: string; tools: L
         checked={guides}
         onChange={(on) => tools.setGuides(pageId, on)}
         className="py-1 text-xs"
-      >{t('logoguidespopover.show-guides')}</SwitchRow>
+      >
+        {t('logoguidespopover.show-guides')}
+      </SwitchRow>
       {/* Which guides show and how strongly, dimmed while the page shows none. */}
       <div className={guides ? '' : 'opacity-50'}>
-        <div role="group" aria-label={t('logoguidespopover.which-guides-show')} className="mt-2 grid grid-cols-2 gap-1">
+        <div
+          role="group"
+          aria-label={t('logoguidespopover.which-guides-show')}
+          className="mt-2 grid grid-cols-2 gap-1"
+        >
           {LOGO_GUIDE_PARTS.map((part) => {
             const on = tools.guideParts.has(part.id);
             return (
@@ -52,7 +58,9 @@ export function LogoGuidesSettings({ pageId, tools }: { pageId: string; tools: L
             );
           })}
         </div>
-        <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">{t('logoguidespopover.strength')}</p>
+        <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">
+          {t('logoguidespopover.strength')}
+        </p>
         <SegmentedRadio
           label={t('logoguidespopover.guide-strength')}
           options={LOGO_GUIDE_STRENGTHS}

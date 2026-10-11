@@ -92,7 +92,9 @@ export function RollCallFace({
         }
       >
         {entries.length === 0 ? (
-          <EmptyRows textColor={textColor} title={t('rollcallface.nobody-recorded-yet')} rows={0}>{t('rollcallface.take-the-roll-to-freeze-who')}</EmptyRows>
+          <EmptyRows textColor={textColor} title={t('rollcallface.nobody-recorded-yet')} rows={0}>
+            {t('rollcallface.take-the-roll-to-freeze-who')}
+          </EmptyRows>
         ) : (
           <div className="flex min-h-0 flex-col gap-2.5">
             <div
@@ -109,7 +111,9 @@ export function RollCallFace({
                 <span
                   className="text-[10px] font-semibold uppercase tracking-[0.06em]"
                   style={{ color: textColor, opacity: 0.55 }}
-                >{t('rollcallface.present')}</span>
+                >
+                  {t('rollcallface.present')}
+                </span>
               </span>
               <span className="flex -space-x-2" aria-hidden>
                 {entries.slice(0, STACK).map((entry, i) => (

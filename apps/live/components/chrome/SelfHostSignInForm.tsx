@@ -146,12 +146,18 @@ export function SelfHostSignInForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
       error={error}
       footer={
         mode === 'sign-in' ? (
-          <>{t('selfhostsigninform.no-account-yet')}{' '}
-            <Link href={signUpHref} className="font-medium text-slate-900 dark:text-slate-100">{t('selfhostsigninform.create-one')}</Link>
+          <>
+            {t('selfhostsigninform.no-account-yet')}{' '}
+            <Link href={signUpHref} className="font-medium text-slate-900 dark:text-slate-100">
+              {t('selfhostsigninform.create-one')}
+            </Link>
           </>
         ) : (
-          <>{t('selfhostsigninform.already-have-an-account')}{' '}
-            <Link href={signInHref} className="font-medium text-slate-900 dark:text-slate-100">{t('selfhostsigninform.sign-in')}</Link>
+          <>
+            {t('selfhostsigninform.already-have-an-account')}{' '}
+            <Link href={signInHref} className="font-medium text-slate-900 dark:text-slate-100">
+              {t('selfhostsigninform.sign-in')}
+            </Link>
           </>
         )
       }
@@ -189,7 +195,9 @@ export function SelfHostSignInForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
           <Button type="submit" size="md" disabled={loading} className="w-full shadow-sm">
             {loading ? 'Sending…' : t('selfhostsigninform.email-me-a-code')}
           </Button>
-          <p className="text-xs text-slate-500 dark:text-slate-400">{t('selfhostsigninform.we-ll-email-you-a-six')}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            {t('selfhostsigninform.we-ll-email-you-a-six')}
+          </p>
         </form>
       )}
     </AuthCard>

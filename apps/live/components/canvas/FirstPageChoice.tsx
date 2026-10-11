@@ -33,8 +33,12 @@ export function FirstPageChoice({
         <p
           id="first-page-choice-title"
           className="px-0.5 text-sm font-semibold text-slate-900 dark:text-slate-100"
-        >{t('firstpagechoice.what-is-this-page-for')}</p>
-        <p className="mb-2.5 mt-0.5 px-0.5 text-xs text-slate-500 dark:text-slate-400">{t('firstpagechoice.choose-now-a-page-keeps-its')}</p>
+        >
+          {t('firstpagechoice.what-is-this-page-for')}
+        </p>
+        <p className="mb-2.5 mt-0.5 px-0.5 text-xs text-slate-500 dark:text-slate-400">
+          {t('firstpagechoice.choose-now-a-page-keeps-its')}
+        </p>
         <div
           className="grid grid-cols-2 gap-2"
           // Arrow keys move between the cards, as in the Add a Page popover.

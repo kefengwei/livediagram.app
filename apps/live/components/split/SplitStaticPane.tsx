@@ -127,7 +127,9 @@ export function SplitStaticPane({
         <span className="truncate text-sm font-semibold text-slate-800 dark:text-slate-100">
           {tab.name}
         </span>
-        <span className="shrink-0 rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">{t('splitstaticpane.live')}</span>
+        <span className="shrink-0 rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">
+          {t('splitstaticpane.live')}
+        </span>
       </div>
     </section>
   );

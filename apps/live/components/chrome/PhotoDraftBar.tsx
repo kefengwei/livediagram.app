@@ -70,13 +70,17 @@ export function PhotoDraftBar({
           onClick={onDiscard}
           disabled={busy}
           className="rounded-full border border-slate-300 px-2.5 py-1 text-[11px] font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-50 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800"
-        >{t('photodraftbar.discard')}</button>
+        >
+          {t('photodraftbar.discard')}
+        </button>
         <button
           type="button"
           onClick={onAccept}
           disabled={busy || draftCount === 0}
           className={`rounded-full bg-brand-500 px-3 py-1 text-[11px] font-semibold text-white transition hover:bg-brand-600 disabled:opacity-50 ${SOLID_BRAND_DARK_CONTROL}`}
-        >{t('photodraftbar.add')}{draftCount} {draftCount === 1 ? 'note' : 'notes'}
+        >
+          {t('photodraftbar.add')}
+          {draftCount} {draftCount === 1 ? 'note' : 'notes'}
         </button>
       </div>
     </div>

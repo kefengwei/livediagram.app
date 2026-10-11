@@ -59,7 +59,9 @@ export function RailPointsRow({
     'flex h-6 w-6 items-center justify-center rounded-md border border-slate-200 bg-white text-sm font-medium text-slate-700 transition enabled:cursor-pointer enabled:hover:border-brand-300 enabled:hover:bg-brand-50 disabled:opacity-40 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:enabled:hover:border-brand-500/60';
   return (
     <div className="px-3 py-1.5">
-      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('context-menu-data-rows.points')}</p>
+      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
+        {t('context-menu-data-rows.points')}
+      </p>
       <div className="mt-1 flex items-center gap-2">
         <button
           type="button"
@@ -122,7 +124,9 @@ export function RatingPickerRow({
   const { t } = useTranslation();
   return (
     <div className="px-2 py-1.5">
-      <p className="px-1 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('context-menu-data-rows.stars')}</p>
+      <p className="px-1 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+        {t('context-menu-data-rows.stars')}
+      </p>
       <div className="flex items-center justify-center gap-1 text-slate-400">
         {Array.from({ length: RATING_MAX }, (_, i) => {
           const n = i + 1;
@@ -177,7 +181,9 @@ function AnimTiles<T extends string>({
   return (
     <>
       {header ? (
-        <p className="px-3 pb-1 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('context-menu-data-rows.animation')}</p>
+        <p className="px-3 pb-1 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+          {t('context-menu-data-rows.animation')}
+        </p>
       ) : null}
       <div className={`grid grid-cols-4 gap-1 px-2 ${header ? 'pb-1.5' : 'py-1.5'}`}>
         {withNone(anims).map((v) => (
@@ -252,7 +258,13 @@ export function PercentSliderRow({
 
 export function ProgressRow({ value, onChange }: { value: number; onChange: (v: number) => void }) {
   const { t } = useTranslation();
-  return <PercentSliderRow label={t('context-menu-data-rows.percentage')} pct={clampPercent(value)} onPct={onChange} />;
+  return (
+    <PercentSliderRow
+      label={t('context-menu-data-rows.percentage')}
+      pct={clampPercent(value)}
+      onPct={onChange}
+    />
+  );
 }
 
 // Progress fill-animation tiles (docs/specs/009-elements/progress.md): None / Fill / Pulse / Stripes, plus

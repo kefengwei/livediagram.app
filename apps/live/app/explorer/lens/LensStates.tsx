@@ -86,7 +86,9 @@ export function FilteredEmpty({
     >
       <div className="flex flex-col items-center gap-3">
         <LensIssues issues={issues} />
-        <Button size="sm" variant="secondary" onClick={onClear}>{t('lensstates.clear-filters')}</Button>
+        <Button size="sm" variant="secondary" onClick={onClear}>
+          {t('lensstates.clear-filters')}
+        </Button>
       </div>
     </EmptyState>
   );
@@ -101,7 +103,9 @@ export function LoadFailed({ onRetry }: { onRetry: () => void }) {
       title={LOAD_FAILED_TITLE}
       description={t('lensstates.check-your-connection-then-try-again')}
     >
-      <Button size="sm" onClick={onRetry}>{t('lensstates.try-again')}</Button>
+      <Button size="sm" onClick={onRetry}>
+        {t('lensstates.try-again')}
+      </Button>
     </EmptyState>
   );
 }

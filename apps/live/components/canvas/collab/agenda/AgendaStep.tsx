@@ -126,7 +126,9 @@ export function AgendaStep({
                   className="agenda-start absolute right-0 top-1/2 flex -translate-y-1/2 items-center gap-1 whitespace-nowrap font-semibold"
                   style={{ color: QA_ACCENT_INK }}
                 >
-                  <PlayGlyph />{t('agendastep.start')}</span>
+                  <PlayGlyph />
+                  {t('agendastep.start')}
+                </span>
               ) : null}
             </span>
           )}

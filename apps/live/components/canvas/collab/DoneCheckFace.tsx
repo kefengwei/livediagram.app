@@ -95,7 +95,9 @@ export function DoneCheckFace({
                       onToggleMine();
                       close();
                     }}
-                  >{t('donecheckface.clear-my-mark')}</ElementMenuItem>
+                  >
+                    {t('donecheckface.clear-my-mark')}
+                  </ElementMenuItem>
                 ) : null}
                 {onResetAll ? (
                   <ElementMenuItem
@@ -103,7 +105,9 @@ export function DoneCheckFace({
                       onResetAll();
                       close();
                     }}
-                  >{t('donecheckface.reset-everyone')}</ElementMenuItem>
+                  >
+                    {t('donecheckface.reset-everyone')}
+                  </ElementMenuItem>
                 ) : null}
                 {onOpenSettings ? (
                   <ElementMenuSettingsRow
@@ -124,13 +128,17 @@ export function DoneCheckFace({
         }
       >
         {keys.length === 0 ? (
-          <EmptyRows textColor={textColor} title={t('donecheckface.nobody-here-yet')} rows={0}>{t('donecheckface.share-the-document-and-the-card')}</EmptyRows>
+          <EmptyRows textColor={textColor} title={t('donecheckface.nobody-here-yet')} rows={0}>
+            {t('donecheckface.share-the-document-and-the-card')}
+          </EmptyRows>
         ) : (
           <div className="flex min-h-0 flex-1 items-center gap-4">
             <DoneRing done={done.length} total={keys.length} textColor={textColor} />
             <div className="flex min-w-0 flex-1 flex-col gap-2.5">
               {everyone ? (
-                <p className="text-[13px] font-bold text-emerald-600 dark:text-emerald-400">{t('donecheckface.everyone-s-done')}</p>
+                <p className="text-[13px] font-bold text-emerald-600 dark:text-emerald-400">
+                  {t('donecheckface.everyone-s-done')}
+                </p>
               ) : null}
               <DoneRoster
                 title={t('donecheckface.done')}

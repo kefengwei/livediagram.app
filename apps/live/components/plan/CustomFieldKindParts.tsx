@@ -67,7 +67,11 @@ export function CustomFieldKindTiles({
 }) {
   const { t } = useTranslation();
   return (
-    <div role="radiogroup" aria-label={t('customfieldkindparts.new-field-s-kind')} className="grid grid-cols-4 gap-1">
+    <div
+      role="radiogroup"
+      aria-label={t('customfieldkindparts.new-field-s-kind')}
+      className="grid grid-cols-4 gap-1"
+    >
       {kinds.map((k) => {
         const on = k === value;
         return (
@@ -110,14 +114,18 @@ function SampleValue({
       return <div className={box}>{t('customfieldkindparts.some-text')}</div>;
     case 'longtext':
       return (
-        <div className={`${box} leading-snug`}>{t('customfieldkindparts.a-few-lines-of-notes-as')}</div>
+        <div className={`${box} leading-snug`}>
+          {t('customfieldkindparts.a-few-lines-of-notes-as')}
+        </div>
       );
     case 'number':
       return <div className={`${box} w-20 tabular-nums`}>42</div>;
     case 'date':
       return (
         <div className={`${box} inline-flex items-center gap-1.5`}>
-          <PlanTypeGlyph glyph="calendar" size={13} />{t('customfieldkindparts.12-oct-2026')}</div>
+          <PlanTypeGlyph glyph="calendar" size={13} />
+          {t('customfieldkindparts.12-oct-2026')}
+        </div>
       );
     case 'checkbox':
       return (
@@ -126,7 +134,11 @@ function SampleValue({
         </span>
       );
     case 'link':
-      return <span className="text-brand-700 underline dark:text-brand-300">{t('customfieldkindparts.example-com')}</span>;
+      return (
+        <span className="text-brand-700 underline dark:text-brand-300">
+          {t('customfieldkindparts.example-com')}
+        </span>
+      );
     case 'choice':
       return (
         <span className="inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-[12px] text-slate-700 dark:bg-slate-800 dark:text-slate-200">
@@ -161,7 +173,9 @@ export function CustomFieldPreview({
       aria-label={t('customfieldkindparts.preview')}
       className="rounded-lg bg-slate-50 px-3 py-1.5 dark:bg-slate-800/50"
     >
-      <figcaption className="pt-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-400">{t('customfieldkindparts.preview-2')}</figcaption>
+      <figcaption className="pt-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+        {t('customfieldkindparts.preview-2')}
+      </figcaption>
       <div className="pointer-events-none" aria-hidden>
         <ItemDetailsRow label={label.trim() || t('customfieldkindparts.field-name')}>
           <SampleValue kind={kind} options={options} linkLabel={linkLabel} />

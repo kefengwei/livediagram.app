@@ -52,7 +52,9 @@ export function SheetNamedRanges({
                   onClose();
                   c.focusGrid();
                 }}
-              >{t('sheetnamedranges.go-to')}</button>
+              >
+                {t('sheetnamedranges.go-to')}
+              </button>
             ) : null}
             {c.canEdit ? (
               <Tooltip label={`Remove ${x.name}`}>

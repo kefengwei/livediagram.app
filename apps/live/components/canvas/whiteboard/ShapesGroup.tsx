@@ -6,7 +6,6 @@
 // menu (right-click, long-press, Shift+F10) does the same without a drag. Shapes dragged from the
 // flyout land here, with a drop marker while they travel.
 
-
 import { useRef } from 'react';
 import { WHITEBOARD_TOOL_KEYS } from '@/hooks/canvas/editor-shortcut-keys';
 import { useLongPress } from '@/hooks/ui/useLongPress';
@@ -43,7 +42,7 @@ export function ShapesGroup({
   pickAndClose: (pick: () => void) => void;
 }) {
   const { t } = useTranslation();
-  
+
   const { drag } = slotDrag;
   const armed = model.armedShape;
   // Any shape in hand (a catalogue shape, the sticky note included) that is not pinned.
@@ -131,7 +130,6 @@ function PinnedShape({
   onPointerDown: (e: React.PointerEvent, source: SlotSource) => void;
   onMenu: (el: HTMLElement, key: WhiteboardShapeKey) => void;
 }) {
-  
   const ref = useRef<HTMLButtonElement>(null);
   const longPressed = useRef(false);
   const longPress = useLongPress(() => {

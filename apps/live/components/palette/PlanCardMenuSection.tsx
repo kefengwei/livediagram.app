@@ -32,7 +32,11 @@ export function PlanCardMenuSection({
   const ref = element.planCard;
   if (!plan || !plan.canEdit || !ref) return null;
   return (
-    <MenuFlyoutSection title={t('plancardmenusection.card')} icon={<PlanIcon size={16} />} {...flyoutProps}>
+    <MenuFlyoutSection
+      title={t('plancardmenusection.card')}
+      icon={<PlanIcon size={16} />}
+      {...flyoutProps}
+    >
       <MenuAccordionSection
         title={t('plancardmenusection.card-size')}
         icon={<CardSizeArt size={ref.size ?? 'detailed'} />}

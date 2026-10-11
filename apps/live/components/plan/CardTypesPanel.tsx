@@ -174,7 +174,9 @@ export function CardTypesPanel({
                 aria-haspopup="dialog"
                 aria-expanded={confirmingAt !== null}
                 onClick={(e) => setConfirmingAt(e.currentTarget)}
-              >{t('cardtypespanel.add-default-types')}</Button>
+              >
+                {t('cardtypespanel.add-default-types')}
+              </Button>
             ) : null}
             {confirmingAt && missingDefaults.length > 0 ? (
               <ConfirmPopover

@@ -4,7 +4,6 @@
 // into it). Lifted out of TemplatePicker so the same card renders across
 // the overview and the category detail view.
 
-
 import type { CustomTheme } from '@livediagram/api-schema';
 import { CopyIcon, PencilIcon, PlusIcon, TrashIcon } from '@livediagram/ui';
 import { PickerCard } from '@/components/palette/PickerCard';
@@ -70,7 +69,9 @@ export function ThemeCard({
           aria-label={`Copy ${theme.label} to a new theme`}
           className="absolute right-1.5 top-1.5 flex items-center gap-1 rounded-md bg-white/90 px-1.5 py-1 text-[10px] font-semibold text-slate-600 opacity-0 shadow-sm transition hover:text-brand-600 focus:opacity-100 group-hover:opacity-100 dark:bg-slate-900/85 dark:text-slate-200"
         >
-          <CopyIcon size={11} />{t('theme-picker-cards.copy')}</button>
+          <CopyIcon size={11} />
+          {t('theme-picker-cards.copy')}
+        </button>
       ) : null}
     </div>
   );
@@ -132,7 +133,6 @@ export function CustomThemeCard({
   onEdit: () => void;
   onDelete: () => void;
 }) {
-  
   return (
     <div
       className={
@@ -183,7 +183,7 @@ export function CustomThemeCard({
 // theme tiles, just dashed + a plus where the swatch would be.
 export function NewThemeCard({ onClick }: { onClick: () => void }) {
   const { t } = useTranslation();
-  
+
   return (
     <button
       type="button"
@@ -193,7 +193,9 @@ export function NewThemeCard({ onClick }: { onClick: () => void }) {
       <span className="flex h-20 w-full items-center justify-center rounded-md bg-slate-50 text-slate-400 transition group-hover:text-brand-500 dark:bg-slate-800/60 dark:group-hover:text-brand-300">
         <PlusIcon size={18} />
       </span>
-      <span className="w-full truncate text-center text-[10px] font-medium text-slate-600 dark:text-slate-300">{t('theme-picker-cards.new-theme')}</span>
+      <span className="w-full truncate text-center text-[10px] font-medium text-slate-600 dark:text-slate-300">
+        {t('theme-picker-cards.new-theme')}
+      </span>
     </button>
   );
 }

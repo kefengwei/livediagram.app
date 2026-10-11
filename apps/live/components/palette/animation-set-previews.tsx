@@ -4,8 +4,6 @@
 // exactly what picking it does. AnimationPreviewTile freezes it on a telling frame
 // (ANIMATION_PREVIEW_FRAME) and plays it on hover.
 
-
-
 import type { CSSProperties } from 'react';
 import type { AnimationSetId, PathElement } from '@livediagram/document';
 import { PathSvg } from '@/components/canvas/path/PathSvg';
@@ -115,7 +113,6 @@ export function previewFrame(set: string, value: string | null): number {
 
 /** The miniature for one option of a set; `null` is the still element (None). */
 export function AnimationSetPreview({ set, value }: { set: AnimationSetId; value: string | null }) {
-  
   switch (set) {
     case 'text':
       return <TextPreview value={value} />;
@@ -165,7 +162,7 @@ function ShapePreview({ value }: { value: string | null }) {
 // The words a Text miniature animates: two words for Words, one otherwise.
 function TextPreview({ value }: { value: string | null }) {
   const { t } = useTranslation();
-  
+
   const text = value === 'words' ? t('animation-set-previews.hi-there') : 'Hello';
   if (!value) return <span className="text-[13px] font-semibold leading-none">{text}</span>;
   const plan = planTextAnimation([text], value as never, 'tile');
@@ -259,7 +256,6 @@ function MediaPreview({ value }: { value: string | null }) {
 const TABLE_SHAPE = new Set(['pulse', 'glow']);
 
 function TablePreview({ value }: { value: string | null }) {
-  
   const cls = !value
     ? ''
     : TABLE_SHAPE.has(value)

@@ -136,17 +136,23 @@ function SwitchCard({
             <h2
               id="leave-illustrate-title"
               className="text-sm font-semibold text-slate-900 dark:text-slate-50"
-            >{t('leaveillustrateconfirm.switch-to')}{label}?
+            >
+              {t('leaveillustrateconfirm.switch-to')}
+              {label}?
             </h2>
             <p
               id="leave-illustrate-body"
               className="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300"
             >
-              {label}{t('leaveillustrateconfirm.mode-doesn-t-show-pages-changes')}</p>
+              {label}
+              {t('leaveillustrateconfirm.mode-doesn-t-show-pages-changes')}
+            </p>
           </div>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-2">
-          <Button size="sm" variant="secondary" className="whitespace-nowrap" onClick={onCancel}>{t('leaveillustrateconfirm.cancel')}</Button>
+          <Button size="sm" variant="secondary" className="whitespace-nowrap" onClick={onCancel}>
+            {t('leaveillustrateconfirm.cancel')}
+          </Button>
           <Button ref={confirmRef} size="sm" className="whitespace-nowrap" onClick={onConfirm}>
             <span className="inline-flex shrink-0">
               <ModeIcon size={14} aria-hidden />

@@ -1,6 +1,5 @@
 'use client';
 
-
 import { useMemo } from 'react';
 import { useSelectionOf } from '@/hooks/canvas/useSelectionStore';
 import { sameMembers, selectionIds, type Selection } from '@/lib/selection-store';
@@ -72,7 +71,7 @@ export function AiPanelContent({
   showSuggestions,
 }: AiPanelProps) {
   const { t } = useTranslation();
-  
+
   // What the request is about: the selection, read from the store (empty = the whole tab). The panel
   // describes it, so a selection change renders the panel and not the editor
   // (docs/specs/008-canvas/blueprints/selection-store.md).
@@ -199,7 +198,9 @@ export function AiPanelContent({
               ) : (
                 <>
                   {summary && <p className="text-slate-600 dark:text-slate-300">{summary}</p>}
-                  <p className="text-slate-400 dark:text-slate-400">{t('aipanel.press-z-to-undo')}</p>
+                  <p className="text-slate-400 dark:text-slate-400">
+                    {t('aipanel.press-z-to-undo')}
+                  </p>
                 </>
               )}
             </div>
@@ -211,17 +212,25 @@ export function AiPanelContent({
       {history.length > 0 && (
         <div className="flex items-center justify-between gap-2 px-2 pb-1 pt-0.5">
           <span className="text-[10px] text-slate-400 dark:text-slate-400">
-            {Math.floor(history.length / 2)}{t('aipanel.prior-exchange')}{history.length > 2 ? 's' : ''}{t('aipanel.in-context')}</span>
+            {Math.floor(history.length / 2)}
+            {t('aipanel.prior-exchange')}
+            {history.length > 2 ? 's' : ''}
+            {t('aipanel.in-context')}
+          </span>
           <button
             type="button"
             onClick={() => setHistory([])}
             className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-medium text-slate-500 transition hover:border-slate-300 hover:bg-slate-100 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200"
-          >{t('aipanel.clear-context')}</button>
+          >
+            {t('aipanel.clear-context')}
+          </button>
         </div>
       )}
 
       {/* Context hint */}
-      <p className="px-3 pb-0.5 pt-0.5 text-[10px] text-slate-400 dark:text-slate-400">{t('aipanel.context')}{contextLabel}
+      <p className="px-3 pb-0.5 pt-0.5 text-[10px] text-slate-400 dark:text-slate-400">
+        {t('aipanel.context')}
+        {contextLabel}
       </p>
 
       {/* Prompt + send */}
@@ -275,7 +284,6 @@ function inlineFormat(text: string): React.ReactNode[] {
 }
 
 function MarkdownText({ text }: { text: string }) {
-  
   if (!text) return null;
   const lines = text.split('\n');
   const nodes: React.ReactNode[] = [];

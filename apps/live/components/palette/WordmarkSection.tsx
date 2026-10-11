@@ -56,7 +56,11 @@ export function WordmarkSection({
   });
   const weight = resolvedFontWeight(element);
   return (
-    <MenuAccordionSection title={t('wordmarksection.wordmark')} icon={<WordmarkGlyph />} {...section}>
+    <MenuAccordionSection
+      title={t('wordmarksection.wordmark')}
+      icon={<WordmarkGlyph />}
+      {...section}
+    >
       <SliderRow
         label={t('wordmarksection.tracking')}
         min={LETTER_SPACING_MIN * 100}
@@ -106,7 +110,9 @@ export function WordmarkSection({
         onCommit={(v) => onSet({ textArc: v === 0 ? null : v })}
         onPreviewEnd={onPreviewEnd}
         reset={
-          element.textArc ? { label: t('wordmarksection.flat'), onReset: () => onSet({ textArc: null }) } : undefined
+          element.textArc
+            ? { label: t('wordmarksection.flat'), onReset: () => onSet({ textArc: null }) }
+            : undefined
         }
       />
     </MenuAccordionSection>

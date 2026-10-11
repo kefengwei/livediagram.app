@@ -12,7 +12,7 @@ const SECRET_PREFIX = 'lvd_';
 
 export function SettingsTokenReveal({ secret, onDone }: { secret: string; onDone: () => void }) {
   const { t } = useTranslation();
-  
+
   // Outlives each 1.5s "Copied" flash: once the secret is safe, Done leads.
   const [secretCopied, setSecretCopied] = useState(false);
   const hasPrefix = secret.startsWith(SECRET_PREFIX);
@@ -28,10 +28,16 @@ export function SettingsTokenReveal({ secret, onDone }: { secret: string; onDone
           <CheckIcon />
         </span>
         <span className="text-sm font-semibold">{t('settingstokenreveal.token-created')}</span>
-        <span className="ml-auto rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:border-amber-400/40 dark:bg-amber-400/10 dark:text-amber-300">{t('settingstokenreveal.shown-once')}</span>
+        <span className="ml-auto rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-amber-700 dark:border-amber-400/40 dark:bg-amber-400/10 dark:text-amber-300">
+          {t('settingstokenreveal.shown-once')}
+        </span>
       </div>
 
-      <CopyField label={t('settingstokenreveal.copy-token')} onCopied={() => setSecretCopied(true)} value={secret}>
+      <CopyField
+        label={t('settingstokenreveal.copy-token')}
+        onCopied={() => setSecretCopied(true)}
+        value={secret}
+      >
         {hasPrefix ? (
           <>
             <span className="text-emerald-600 dark:text-emerald-400">{SECRET_PREFIX}</span>
@@ -43,13 +49,17 @@ export function SettingsTokenReveal({ secret, onDone }: { secret: string; onDone
       </CopyField>
 
       <div className="flex items-center justify-between gap-3">
-        <p className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">{t('settingstokenreveal.store-it-somewhere-safe-we-keep')}</p>
+        <p className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+          {t('settingstokenreveal.store-it-somewhere-safe-we-keep')}
+        </p>
         <Button
           size="xs"
           variant={secretCopied ? 'primary' : 'secondary'}
           onClick={onDone}
           className="shrink-0"
-        >{t('settingstokenreveal.done')}</Button>
+        >
+          {t('settingstokenreveal.done')}
+        </Button>
       </div>
     </div>
   );
@@ -70,7 +80,6 @@ function CopyField({
   onCopied?: () => void;
   children: React.ReactNode;
 }) {
-  
   const { copied, flash } = useCopiedFlash(1500);
   const copy = () => {
     void navigator.clipboard

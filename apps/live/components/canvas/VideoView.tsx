@@ -1,6 +1,5 @@
 'use client';
 
-
 import { useState } from 'react';
 import { HoverCard, SOLID_BRAND_DARK_CONTROL, Tooltip, Glyph } from '@livediagram/ui';
 import {
@@ -34,8 +33,7 @@ import { useTranslation } from '@/lib/i18n';
 
 export function VideoView({ element }: { element: VideoElement }) {
   const { t } = useTranslation();
-  
-  
+
   const url = element.link?.kind === 'url' ? element.link.url : undefined;
   const target = embedTargetFor(url);
   const [playing, setPlaying] = useState(false);
@@ -180,15 +178,19 @@ export function VideoView({ element }: { element: VideoElement }) {
 // the one thing that always works: opening the page properly.
 function BlockedNotice({ target }: { target: EmbedTarget }) {
   const { t } = useTranslation();
-  
+
   return (
     <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1.5 rounded-[inherit] bg-slate-900/95 px-5 text-center">
       <span className="text-slate-400">
         <BlockedGlyph />
       </span>
       <span className="text-[11px] font-medium text-slate-200">
-        {target.label}{t('videoview.isn-t-loading')}</span>
-      <span className="max-w-full text-[10px] leading-snug text-slate-400">{t('videoview.many-sites-refuse-to-be-shown')}</span>
+        {target.label}
+        {t('videoview.isn-t-loading')}
+      </span>
+      <span className="max-w-full text-[10px] leading-snug text-slate-400">
+        {t('videoview.many-sites-refuse-to-be-shown')}
+      </span>
       <a
         href={target.embedUrl}
         target="_blank"
@@ -198,7 +200,9 @@ function BlockedNotice({ target }: { target: EmbedTarget }) {
         onClick={(e) => e.stopPropagation()}
         onPointerDown={(e) => e.stopPropagation()}
         className="pointer-events-auto mt-1 cursor-pointer rounded-md bg-white/15 px-2.5 py-1 text-[11px] font-medium text-white transition hover:bg-white/25"
-      >{t('videoview.open-in-a-new-tab')}</a>
+      >
+        {t('videoview.open-in-a-new-tab')}
+      </a>
     </div>
   );
 }
@@ -218,7 +222,7 @@ function BlockedGlyph() {
 // a button. Deliberately not an auto-mounted iframe — see the header.
 function LoadCard({ target, onLoad }: { target: EmbedTarget; onLoad: () => void }) {
   const { t } = useTranslation();
-  
+
   return (
     <div className="pointer-events-none flex h-full w-full flex-col items-center justify-center gap-2 rounded-[inherit] px-3 text-center">
       <span className="inline-flex items-center rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-slate-300">
@@ -232,7 +236,9 @@ function LoadCard({ target, onLoad }: { target: EmbedTarget; onLoad: () => void 
           track('Element', 'Used', 'Video');
         }}
         className="pointer-events-auto cursor-pointer rounded-md bg-white/15 px-2.5 py-1 text-[11px] font-medium text-white transition hover:bg-white/25"
-      >{t('videoview.load-embed')}</button>
+      >
+        {t('videoview.load-embed')}
+      </button>
     </div>
   );
 }
@@ -258,7 +264,7 @@ function PlayerControls({
   openUrl?: string;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <div
       // Inert strip, interactive buttons — same rule as the poster: anything
@@ -271,7 +277,11 @@ function PlayerControls({
     >
       <ControlButton
         onClick={onToggleControls}
-        label={controls ? t('videoview.lock-the-player-drag-the-video') : t('videoview.use-the-player-controls')}
+        label={
+          controls
+            ? t('videoview.lock-the-player-drag-the-video')
+            : t('videoview.use-the-player-controls')
+        }
         active={controls}
       >
         {/* A pointer arrow: "the pointer goes to the player". */}
@@ -316,7 +326,6 @@ function ControlButton({
   active?: boolean;
   children: React.ReactNode;
 }) {
-  
   return (
     <Tooltip label={label}>
       <button
@@ -373,7 +382,7 @@ function EmptyState({
   provider: EmbedProvider | undefined;
 }) {
   const { t } = useTranslation();
-  
+
   // Name the service this embed was made for, when it was made from one of
   // the provider tiles (docs/specs/009-elements/embed-providers.md); the generic list is the fallback.
   const named = provider ? EMBED_PROVIDER_LABEL[provider] : null;
@@ -382,14 +391,17 @@ function EmptyState({
       <EmbedGlyph />
       {url ? (
         <>
-          <span className="text-[11px] font-medium text-slate-200">{t('videoview.can-t-embed-that-link')}</span>
+          <span className="text-[11px] font-medium text-slate-200">
+            {t('videoview.can-t-embed-that-link')}
+          </span>
           <span className="w-full truncate text-[10px] text-slate-400">{url}</span>
         </>
       ) : (
         <>
           <span className="text-[11px] font-medium text-slate-200">
             {/* "Add a Website link" reads like a typo; a website has an
-                address, not a link. */}{t('videoview.double-click-to')}{' '}
+                address, not a link. */}
+            {t('videoview.double-click-to')}{' '}
             {provider === 'website'
               ? 'add a web address'
               : named

@@ -121,9 +121,15 @@ export function SignInReasonsModal({
               <CloseIcon size={16} />
             </button>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-white/80">
-              <SparkleIcon className="opacity-90" />{t('signinreasonsmodal.free-account')}</div>
-            <h2 id="signin-reasons-title" className="mt-1.5 text-xl font-bold">{t('signinreasonsmodal.why-sign-in')}</h2>
-            <p className="mt-1 text-sm text-white/85">{t('signinreasonsmodal.livediagram-always-works-without-an-account')}</p>
+              <SparkleIcon className="opacity-90" />
+              {t('signinreasonsmodal.free-account')}
+            </div>
+            <h2 id="signin-reasons-title" className="mt-1.5 text-xl font-bold">
+              {t('signinreasonsmodal.why-sign-in')}
+            </h2>
+            <p className="mt-1 text-sm text-white/85">
+              {t('signinreasonsmodal.livediagram-always-works-without-an-account')}
+            </p>
           </div>
 
           <ul className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto px-3 py-3 sm:px-4">
@@ -155,14 +161,18 @@ export function SignInReasonsModal({
               type="button"
               onClick={onClose}
               className="w-full rounded-lg px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 sm:w-auto dark:text-slate-300 dark:hover:bg-slate-800"
-            >{t('signinreasonsmodal.maybe-later')}</button>
+            >
+              {t('signinreasonsmodal.maybe-later')}
+            </button>
             <Link
               href={signInHref}
               onClick={onSignIn}
               className={buttonClassName({ size: 'md', className: 'w-full shadow-sm sm:w-auto' })}
             >
               <ButtonContent>
-                <SignInIcon size={14} />{t('signinreasonsmodal.sign-in')}</ButtonContent>
+                <SignInIcon size={14} />
+                {t('signinreasonsmodal.sign-in')}
+              </ButtonContent>
             </Link>
           </div>
         </div>

@@ -56,7 +56,9 @@ export function SettingsTokenCreate({
         <label
           htmlFor="settings-token-name"
           className="text-xs font-semibold text-slate-700 dark:text-slate-200"
-        >{t('settingstokencreate.what-is-it-for')}</label>
+        >
+          {t('settingstokencreate.what-is-it-for')}
+        </label>
         <input
           id="settings-token-name"
           value={name}
@@ -68,7 +70,11 @@ export function SettingsTokenCreate({
           placeholder={t('settingstokencreate.name-your-token')}
           className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-brand-400 focus:ring-2 focus:ring-brand-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:ring-brand-500/20"
         />
-        <div className="flex flex-wrap gap-1.5" role="group" aria-label={t('settingstokencreate.suggested-names')}>
+        <div
+          className="flex flex-wrap gap-1.5"
+          role="group"
+          aria-label={t('settingstokencreate.suggested-names')}
+        >
           {NAME_SUGGESTIONS.map((suggestion) => (
             <button
               key={suggestion}
@@ -87,7 +93,8 @@ export function SettingsTokenCreate({
         </div>
       </div>
 
-      <p className="text-[11px] text-slate-500 dark:text-slate-400">{t('settingstokencreate.full-read-and-write-access-to')}{' '}
+      <p className="text-[11px] text-slate-500 dark:text-slate-400">
+        {t('settingstokencreate.full-read-and-write-access-to')}{' '}
         <span className="font-semibold text-slate-700 dark:text-slate-200">
           {formatTokenDate(expires)}
         </span>
@@ -102,7 +109,9 @@ export function SettingsTokenCreate({
 
       <div className="flex items-center justify-end gap-2">
         {onCancel ? (
-          <Button size="xs" variant="secondary" onClick={onCancel}>{t('settingstokencreate.cancel')}</Button>
+          <Button size="xs" variant="secondary" onClick={onCancel}>
+            {t('settingstokencreate.cancel')}
+          </Button>
         ) : null}
         <Button type="submit" size="xs" disabled={tokens.creating || tokens.atCap}>
           {tokens.creating ? 'Creating…' : t('settingstokencreate.create-token')}

@@ -45,8 +45,12 @@ export function SettingsTokenOverview({
           {TokensGlyph}
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100">{t('settingstokenoverview.api-tokens')}</span>
-          <span className="block text-xs leading-relaxed text-slate-500 dark:text-slate-400">{t('settingstokenoverview.let-your-scripts-and-ai-tools')}</span>
+          <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100">
+            {t('settingstokenoverview.api-tokens')}
+          </span>
+          <span className="block text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+            {t('settingstokenoverview.let-your-scripts-and-ai-tools')}
+          </span>
         </span>
         {composing || firstRun ? null : (
           // Visibly just "New" beside the API Tokens title; the accessible
@@ -58,7 +62,9 @@ export function SettingsTokenOverview({
             aria-label={t('settingstokenoverview.new-token')}
             className="shrink-0"
           >
-            <PlusIcon />{t('settingstokenoverview.new')}</Button>
+            <PlusIcon />
+            {t('settingstokenoverview.new')}
+          </Button>
         )}
       </div>
 
@@ -83,13 +89,15 @@ export function SettingsTokenOverview({
             ))}
           </div>
           <span className="shrink-0 text-[11px] tabular-nums text-slate-500 dark:text-slate-400">
-            <span className="font-semibold text-slate-700 dark:text-slate-200">{count}</span>{t('settingstokenoverview.of')}{' '}
-            {max}
+            <span className="font-semibold text-slate-700 dark:text-slate-200">{count}</span>
+            {t('settingstokenoverview.of')} {max}
           </span>
         </div>
       )}
       {atCap ? (
-        <p className="text-[11px] text-rose-600 dark:text-rose-400">{t('settingstokenoverview.every-slot-is-taken-revoke-a')}</p>
+        <p className="text-[11px] text-rose-600 dark:text-rose-400">
+          {t('settingstokenoverview.every-slot-is-taken-revoke-a')}
+        </p>
       ) : null}
     </div>
   );

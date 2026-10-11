@@ -89,7 +89,12 @@ export function QaBoardFace({
 
   const menu =
     actions.clear || onOpenSettings ? (
-      <ElementEllipsisMenu kind="command" label={t('qaboardface.q-a-board-options')} color={textColor} align="left">
+      <ElementEllipsisMenu
+        kind="command"
+        label={t('qaboardface.q-a-board-options')}
+        color={textColor}
+        align="left"
+      >
         {(close) => (
           <>
             {discussing && actions.discuss ? (
@@ -98,7 +103,9 @@ export function QaBoardFace({
                   actions.discuss!(null);
                   close();
                 }}
-              >{t('qaboardface.clear-the-spotlight')}</ElementMenuItem>
+              >
+                {t('qaboardface.clear-the-spotlight')}
+              </ElementMenuItem>
             ) : null}
             {actions.clear ? (
               <ElementMenuItem
@@ -106,7 +113,9 @@ export function QaBoardFace({
                   actions.clear!();
                   close();
                 }}
-              >{t('qaboardface.empty-the-board')}{total ? <CountBadge count={total} /> : null}
+              >
+                {t('qaboardface.empty-the-board')}
+                {total ? <CountBadge count={total} /> : null}
               </ElementMenuItem>
             ) : null}
             {onOpenSettings ? (
@@ -159,14 +168,14 @@ export function QaBoardFace({
             onReturn={actions.discuss ? () => actions.discuss!(null) : undefined}
           />
         ) : running && queue.length > 0 ? (
-          <AccentBar onPress={() => actions.discuss!(queue[0]!.id)} icon={<DiscussGlyph />}>{t('qaboardface.discuss-the-top-note')}</AccentBar>
+          <AccentBar onPress={() => actions.discuss!(queue[0]!.id)} icon={<DiscussGlyph />}>
+            {t('qaboardface.discuss-the-top-note')}
+          </AccentBar>
         ) : null}
 
         {queue.length === 0 && !discussing && done.length === 0 ? (
           <EmptyRows textColor={textColor} title={t('qaboardface.no-notes-yet')}>
-            {actions.add
-              ? t('qaboardface.be-the-first-to-add-one')
-              : undefined}
+            {actions.add ? t('qaboardface.be-the-first-to-add-one') : undefined}
           </EmptyRows>
         ) : (
           <ul className="relative flex flex-col gap-1.5">
@@ -193,7 +202,9 @@ export function QaBoardFace({
               />
             ))}
             {queue.length === 0 && discussing ? (
-              <li className="px-1 py-1 text-[11px] opacity-50" style={{ color: textColor }}>{t('qaboardface.nothing-else-queued-new-notes-land')}</li>
+              <li className="px-1 py-1 text-[11px] opacity-50" style={{ color: textColor }}>
+                {t('qaboardface.nothing-else-queued-new-notes-land')}
+              </li>
             ) : null}
           </ul>
         )}

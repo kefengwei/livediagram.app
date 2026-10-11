@@ -171,7 +171,9 @@ export function ActiveSharePass({
         </span>
         {sharePasswordSet ? (
           <span className="inline-flex items-center gap-1 font-medium text-emerald-700 dark:text-emerald-300">
-            <LockIcon size={11} />{t('activesharepass.password')}</span>
+            <LockIcon size={11} />
+            {t('activesharepass.password')}
+          </span>
         ) : null}
       </div>
 
@@ -219,7 +221,9 @@ export function ActiveSharePass({
               // when there's more than one tab. Selecting the first tab
               // clears back to the cached default (null → no `?tab=`).
               tabs.length > 1 && !scoped ? (
-                <label className="flex items-center gap-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">{t('activesharepass.tab')}<Select
+                <label className="flex items-center gap-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                  {t('activesharepass.tab')}
+                  <Select
                     size="sm"
                     value={liveImageTabId ?? firstTabId ?? ''}
                     onChange={(e) => {

@@ -17,11 +17,22 @@ export function SheetMergeConfirm({
 }) {
   const { t } = useTranslation();
   return (
-    <div className="w-64 px-3 py-2 text-[13px]" role="alertdialog" aria-label={t('sheetmergeconfirm.merge-cells')}>
-      <p>{t('sheetmergeconfirm.merging-keeps-only-the-top-left')}{formatRange(range)}?</p>
+    <div
+      className="w-64 px-3 py-2 text-[13px]"
+      role="alertdialog"
+      aria-label={t('sheetmergeconfirm.merge-cells')}
+    >
+      <p>
+        {t('sheetmergeconfirm.merging-keeps-only-the-top-left')}
+        {formatRange(range)}?
+      </p>
       <div className="mt-2 flex justify-end gap-2">
-        <Button variant="ghost" size="xs" onClick={onCancel}>{t('sheetmergeconfirm.cancel')}</Button>
-        <Button variant="primary" size="xs" onClick={onMerge}>{t('sheetmergeconfirm.merge')}</Button>
+        <Button variant="ghost" size="xs" onClick={onCancel}>
+          {t('sheetmergeconfirm.cancel')}
+        </Button>
+        <Button variant="primary" size="xs" onClick={onMerge}>
+          {t('sheetmergeconfirm.merge')}
+        </Button>
       </div>
     </div>
   );

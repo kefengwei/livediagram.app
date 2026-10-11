@@ -27,10 +27,16 @@ export function NotFound({ onCreateNew }: NotFoundProps) {
         <p className="mt-4 text-[10px] font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-300">
           404
         </p>
-        <h1 className="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">{t('notfound.document-not-found')}</h1>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{t('notfound.this-document-doesn-t-exist-or')}</p>
+        <h1 className="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">
+          {t('notfound.document-not-found')}
+        </h1>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+          {t('notfound.this-document-doesn-t-exist-or')}
+        </p>
         <Button size="md" onClick={onCreateNew} className="mt-6 shadow-sm">
-          <SparkleIcon />{t('notfound.create-a-new-document')}</Button>
+          <SparkleIcon />
+          {t('notfound.create-a-new-document')}
+        </Button>
       </div>
     </div>
   );

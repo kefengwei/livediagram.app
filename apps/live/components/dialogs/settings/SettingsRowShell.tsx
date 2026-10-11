@@ -106,9 +106,11 @@ export function SettingsRowShell({
         </p>
       ) : null}
       {/* A row with nothing to say under it (a pair sharing one footnote) leaves the space out. */}
-      {!descriptionContent && !row.description && !row.descriptionKey && !row.helpArticle && !row.alsoIn
-        ? null
-        : (
+      {!descriptionContent &&
+      !row.description &&
+      !row.descriptionKey &&
+      !row.helpArticle &&
+      !row.alsoIn ? null : (
         <p
           id={`${row.key}-description`}
           className="mt-1.5 px-3.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400"

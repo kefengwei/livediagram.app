@@ -65,7 +65,9 @@ export function ItemSlideView({
   );
   if (!item) {
     return frame(
-      <p className="text-2xl font-medium" style={{ color: palette.muted }}>{t('itemslideview.this-card-was-deleted')}</p>,
+      <p className="text-2xl font-medium" style={{ color: palette.muted }}>
+        {t('itemslideview.this-card-was-deleted')}
+      </p>,
     );
   }
   const type = typeIn(types.length ? types : ITEM_TYPES, item.type);
@@ -100,7 +102,9 @@ export function ItemSlideView({
         <span style={{ color: palette.muted }}>#{item.key}</span>
         {isFlagged(item) ? (
           <span className="flex items-center gap-1.5" style={{ color: FLAG_COLOUR }}>
-            <PlanTypeGlyph glyph="flag" size={22} color={FLAG_COLOUR} />{t('itemslideview.flagged')}</span>
+            <PlanTypeGlyph glyph="flag" size={22} color={FLAG_COLOUR} />
+            {t('itemslideview.flagged')}
+          </span>
         ) : null}
       </div>
       <h1 className="mt-4 text-4xl font-bold leading-tight sm:text-5xl">
@@ -130,10 +134,14 @@ export function ItemSlideView({
               style={{ backgroundColor: PRIORITY_COLOURS[priority] }}
               aria-hidden
             />
-            {PRIORITY_LABELS[priority]}{t('itemslideview.priority')}</span>
+            {PRIORITY_LABELS[priority]}
+            {t('itemslideview.priority')}
+          </span>
         ) : null}
         {typeof due === 'string' ? (
-          <span className={fact} style={factStyle}>{t('itemslideview.due')}{dayLabel(due, 'long')}
+          <span className={fact} style={factStyle}>
+            {t('itemslideview.due')}
+            {dayLabel(due, 'long')}
           </span>
         ) : null}
         {typeof estimate === 'number' ? (
@@ -154,7 +162,13 @@ export function ItemSlideView({
       ) : null}
       {checklist.length > 0 ? (
         <section className="mt-9">
-          <h2 className="mb-3 text-lg font-semibold" style={{ color: palette.muted }}>{t('itemslideview.checklist')}{doneCount}{t('itemslideview.of')}{checklist.length}{t('itemslideview.done')}</h2>
+          <h2 className="mb-3 text-lg font-semibold" style={{ color: palette.muted }}>
+            {t('itemslideview.checklist')}
+            {doneCount}
+            {t('itemslideview.of')}
+            {checklist.length}
+            {t('itemslideview.done')}
+          </h2>
           <ul className="flex flex-col gap-2 text-xl">
             {checklist.map((r, i) => (
               <li key={i} className="flex items-center gap-3">

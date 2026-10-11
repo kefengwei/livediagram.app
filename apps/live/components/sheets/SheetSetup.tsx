@@ -177,7 +177,9 @@ export function SheetSetup({ onImportCsv }: { onImportCsv: () => void }) {
         <>
           {at > 0 ? (
             <Button variant="secondary" size="sm" onClick={() => setStep(at - 1)}>
-              <ChevronLeftIcon size={12} />{t('sheetsetup.back')}</Button>
+              <ChevronLeftIcon size={12} />
+              {t('sheetsetup.back')}
+            </Button>
           ) : (
             <Button
               variant="ghost"
@@ -187,7 +189,9 @@ export function SheetSetup({ onImportCsv }: { onImportCsv: () => void }) {
                 done();
                 c.focusGrid();
               }}
-            >{t('sheetsetup.start-blank')}</Button>
+            >
+              {t('sheetsetup.start-blank')}
+            </Button>
           )}
           {current !== 'style' ? (
             <Button variant="primary" size="sm" disabled={cardsEmpty} onClick={next}>
@@ -195,7 +199,9 @@ export function SheetSetup({ onImportCsv }: { onImportCsv: () => void }) {
             </Button>
           ) : (
             <Button variant="primary" size="sm" onClick={create}>
-              <CheckIcon size={12} />{t('sheetsetup.create-sheet')}</Button>
+              <CheckIcon size={12} />
+              {t('sheetsetup.create-sheet')}
+            </Button>
           )}
         </>
       }

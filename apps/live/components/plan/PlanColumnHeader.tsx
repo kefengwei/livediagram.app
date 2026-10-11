@@ -113,7 +113,9 @@ export function PlanColumnHeader({
         ) : null}
       </div>
       {col.overLimit ? (
-        <div className="text-[10px] font-medium" style={{ color: palette.warning }}>{t('plancolumnheader.over-wip-limit')}</div>
+        <div className="text-[10px] font-medium" style={{ color: palette.warning }}>
+          {t('plancolumnheader.over-wip-limit')}
+        </div>
       ) : null}
       {open ? (
         <PlanColumnPopover

@@ -6,7 +6,6 @@
 // the card becomes a normal estimate card. A viewer who can't edit sees that
 // it is waiting.
 
-
 import { useTranslation } from '@/lib/i18n';
 import {
   ESTIMATE_SCALE_LABELS,
@@ -56,7 +55,9 @@ export function EstimateScalePicker({
         </GlyphDisc>
         <div className="flex min-w-0 flex-col">
           <span className="text-[12.5px] font-semibold leading-tight" style={{ color: textColor }}>
-            {onChoose ? t('estimatescalepicker.choose-a-scale') : t('estimatescalepicker.waiting-for-a-scale')}
+            {onChoose
+              ? t('estimatescalepicker.choose-a-scale')
+              : t('estimatescalepicker.waiting-for-a-scale')}
           </span>
           <span className="text-[10.5px] leading-snug" style={{ color: textColor, opacity: 0.55 }}>
             {onChoose

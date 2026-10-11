@@ -85,7 +85,11 @@ export function TableCellMenu({
       <p className="px-3 pb-0.5 pt-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
         {single ? t('tablecellmenu.selected-cell') : `${cells.length} Cells`}
       </p>
-      <MenuAccordionSection title={t('tablecellmenu.text')} icon={<TextGlyph />} {...section('text')}>
+      <MenuAccordionSection
+        title={t('tablecellmenu.text')}
+        icon={<TextGlyph />}
+        {...section('text')}
+      >
         <div className="flex gap-1 px-2 py-1.5">
           <button
             type="button"
@@ -112,7 +116,9 @@ export function TableCellMenu({
             <span className="underline">U</span>
           </button>
         </div>
-        <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('tablecellmenu.size')}</p>
+        <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+          {t('tablecellmenu.size')}
+        </p>
         <TextSizeTiles
           current={(sc?.textSize ?? element.textSize ?? 'md') as TextSize}
           onSet={(size) => applyStyle({ textSize: size })}
@@ -120,7 +126,11 @@ export function TableCellMenu({
       </MenuAccordionSection>
       {/* The SAME colour picker every other element gets (docs/specs/004-interface-design/colour-picker.md):
           the theme's colours, the standard colours and Custom colours. */}
-      <MenuAccordionSection title={t('tablecellmenu.colours')} icon={<PaletteMenuIcon />} {...section('colours')}>
+      <MenuAccordionSection
+        title={t('tablecellmenu.colours')}
+        icon={<PaletteMenuIcon />}
+        {...section('colours')}
+      >
         <ColourRow
           label={t('tablecellmenu.background')}
           tone="soft"

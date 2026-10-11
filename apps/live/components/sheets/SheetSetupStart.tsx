@@ -116,7 +116,9 @@ export function SheetSetupStart({
   return (
     <div className="flex flex-col gap-4">
       <section className="flex flex-col gap-1.5" aria-labelledby="setup-sheet-start">
-        <h3 id="setup-sheet-start" className={HEADING} style={{ color: palette.muted }}>{t('sheetsetupstart.start-from')}</h3>
+        <h3 id="setup-sheet-start" className={HEADING} style={{ color: palette.muted }}>
+          {t('sheetsetupstart.start-from')}
+        </h3>
         <OptionRows
           kind="single"
           label={t('sheetsetupstart.start-from-2')}
@@ -155,8 +157,12 @@ export function SheetSetupCards({
   const { t } = useTranslation();
   return (
     <section className="flex flex-col gap-2.5" aria-labelledby="setup-sheet-cards">
-      <h3 id="setup-sheet-cards" className={HEADING} style={{ color: palette.muted }}>{t('sheetsetupstart.cards')}</h3>
-      <p className="text-[12px]" style={{ color: palette.muted }}>{t('sheetsetupstart.search-and-filter-as-the-cards')}</p>
+      <h3 id="setup-sheet-cards" className={HEADING} style={{ color: palette.muted }}>
+        {t('sheetsetupstart.cards')}
+      </h3>
+      <p className="text-[12px]" style={{ color: palette.muted }}>
+        {t('sheetsetupstart.search-and-filter-as-the-cards')}
+      </p>
       <CardSearchControls plan={plan} live={live} search={search} />
       <p role="status" className="text-[12px]" style={{ color: palette.muted }}>
         {search.found.length === 0
@@ -219,7 +225,11 @@ function CardsPreview({
         })}
       </ul>
       {more > 0 ? (
-        <p className="mt-1.5 text-[12px]" style={{ color: palette.muted }}>{t('sheetsetupstart.and')}{more}{t('sheetsetupstart.more')}</p>
+        <p className="mt-1.5 text-[12px]" style={{ color: palette.muted }}>
+          {t('sheetsetupstart.and')}
+          {more}
+          {t('sheetsetupstart.more')}
+        </p>
       ) : null}
     </div>
   );
@@ -242,8 +252,12 @@ export function SheetSetupColumns({
   const { t } = useTranslation();
   return (
     <section className="flex flex-col gap-1.5" aria-labelledby="setup-sheet-columns">
-      <h3 id="setup-sheet-columns" className={HEADING} style={{ color: palette.muted }}>{t('sheetsetupstart.columns')}</h3>
-      <p className="text-[12px]" style={{ color: palette.muted }}>{t('sheetsetupstart.the-fields-your-cards-have-one')}</p>
+      <h3 id="setup-sheet-columns" className={HEADING} style={{ color: palette.muted }}>
+        {t('sheetsetupstart.columns')}
+      </h3>
+      <p className="text-[12px]" style={{ color: palette.muted }}>
+        {t('sheetsetupstart.the-fields-your-cards-have-one')}
+      </p>
       <OptionRows
         kind="multiple"
         label={t('sheetsetupstart.columns-2')}

@@ -102,7 +102,11 @@ export function AddFilterPicker({
                 <TextInput
                   compact
                   aria-label={field ? `Find a ${field.label}` : t('addfilterpicker.find-a-field')}
-                  placeholder={field ? `Find a ${field.label.toLowerCase()}` : t('addfilterpicker.find-a-field-2')}
+                  placeholder={
+                    field
+                      ? `Find a ${field.label.toLowerCase()}`
+                      : t('addfilterpicker.find-a-field-2')
+                  }
                   className="pl-7"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
@@ -145,7 +149,9 @@ export function AddFilterPicker({
                   ))}
             </ul>
             {(field ? shownValues : shownFields).length === 0 ? (
-              <p className="px-2 py-2 text-[12px] text-slate-500 dark:text-slate-400">{t('addfilterpicker.nothing-matches')}{query.trim()}”.
+              <p className="px-2 py-2 text-[12px] text-slate-500 dark:text-slate-400">
+                {t('addfilterpicker.nothing-matches')}
+                {query.trim()}”.
               </p>
             ) : null}
           </div>

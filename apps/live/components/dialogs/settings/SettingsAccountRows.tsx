@@ -30,7 +30,8 @@ export function SettingsIdentityRow({ row }: { row: SettingsIdentityRowSpec }) {
   const { t } = useTranslation();
   const { authLoaded, isSignedIn, user } = useDeferredAuth();
   const signedIn = Boolean(authLoaded && isSignedIn && user);
-  const name = user?.fullName ?? user?.username ?? user?.email ?? t('settingsaccountrows.your-account');
+  const name =
+    user?.fullName ?? user?.username ?? user?.email ?? t('settingsaccountrows.your-account');
   const joined = user?.createdAt
     ? user.createdAt.toLocaleDateString(undefined, {
         year: 'numeric',
@@ -64,7 +65,10 @@ export function SettingsIdentityRow({ row }: { row: SettingsIdentityRowSpec }) {
                   </span>
                 ) : null}
                 {joined ? (
-                  <span className="mt-0.5 block text-[11px] text-slate-400">{t('settingsaccountrows.joined')}{joined}</span>
+                  <span className="mt-0.5 block text-[11px] text-slate-400">
+                    {t('settingsaccountrows.joined')}
+                    {joined}
+                  </span>
                 ) : null}
               </span>
             </>
@@ -73,7 +77,9 @@ export function SettingsIdentityRow({ row }: { row: SettingsIdentityRowSpec }) {
               <span className="block text-sm font-medium text-slate-800 dark:text-slate-100">
                 {row.label}
               </span>
-              <span className="block text-xs text-slate-500 dark:text-slate-400">{t('settingsaccountrows.you-are-working-as-a-guest')}<SettingsSignInLink />
+              <span className="block text-xs text-slate-500 dark:text-slate-400">
+                {t('settingsaccountrows.you-are-working-as-a-guest')}
+                <SettingsSignInLink />
               </span>
             </span>
           )}
@@ -123,7 +129,9 @@ export function SettingsDeleteAccountRow({ row }: { row: SettingsDeleteAccountRo
               size="sm"
               onClick={() => setOpen(true)}
               className="shrink-0"
-            >{t('settingsaccountrows.delete-account')}</Button>
+            >
+              {t('settingsaccountrows.delete-account')}
+            </Button>
           ) : (
             // A guest is offered the way in, beside the label.
             <span className="shrink-0 text-xs text-slate-500 dark:text-slate-400">

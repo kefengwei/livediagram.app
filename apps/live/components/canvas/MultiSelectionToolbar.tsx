@@ -71,7 +71,10 @@ export function MultiSelectionToolbar({
     <>
       {onOpenContextMenu && (touch || !powerUser) ? (
         <>
-          <HoverCard title={t('multiselectiontoolbar.more')} description={t('multiselectiontoolbar.open-the-selection-menu')}>
+          <HoverCard
+            title={t('multiselectiontoolbar.more')}
+            description={t('multiselectiontoolbar.open-the-selection-menu')}
+          >
             <button
               type="button"
               data-context-menu-trigger
@@ -96,7 +99,10 @@ export function MultiSelectionToolbar({
           <span aria-hidden className="h-5 w-px bg-slate-200 dark:bg-slate-700" />
         </>
       ) : null}
-      <HoverCard title={t('multiselectiontoolbar.duplicate')} description={t('multiselectiontoolbar.duplicate-the-selection-arrows-included')}>
+      <HoverCard
+        title={t('multiselectiontoolbar.duplicate')}
+        description={t('multiselectiontoolbar.duplicate-the-selection-arrows-included')}
+      >
         <button
           type="button"
           onClick={onDuplicate}
@@ -115,7 +121,10 @@ export function MultiSelectionToolbar({
           decide whether these elements can still be touched, and locking is
           what makes the Delete beside it refuse. A divider between them read
           as Lock belonging with Export, which it does not. */}
-      <HoverCard title={t('multiselectiontoolbar.export')} description={t('multiselectiontoolbar.export-just-these-elements')}>
+      <HoverCard
+        title={t('multiselectiontoolbar.export')}
+        description={t('multiselectiontoolbar.export-just-these-elements')}
+      >
         <button
           type="button"
           onClick={onExport}
@@ -128,12 +137,20 @@ export function MultiSelectionToolbar({
       <span aria-hidden className="h-5 w-px bg-slate-200 dark:bg-slate-700" />
       <HoverCard
         title={anyLocked ? 'Unlock' : 'Lock'}
-        description={anyLocked ? t('multiselectiontoolbar.unlock-so-they-move-again') : t('multiselectiontoolbar.lock-so-they-can-t-move')}
+        description={
+          anyLocked
+            ? t('multiselectiontoolbar.unlock-so-they-move-again')
+            : t('multiselectiontoolbar.lock-so-they-can-t-move')
+        }
       >
         <button
           type="button"
           onClick={onToggleLock}
-          aria-label={anyLocked ? t('multiselectiontoolbar.unlock-selected-elements') : t('multiselectiontoolbar.lock-selected-elements')}
+          aria-label={
+            anyLocked
+              ? t('multiselectiontoolbar.unlock-selected-elements')
+              : t('multiselectiontoolbar.lock-selected-elements')
+          }
           aria-pressed={anyLocked}
           className={anyLocked ? TOOLBAR_BTN_ON : TOOLBAR_BTN}
         >
@@ -144,7 +161,9 @@ export function MultiSelectionToolbar({
         <HoverCard
           title={t('multiselectiontoolbar.delete')}
           description={
-            allLocked ? t('multiselectiontoolbar.all-locked-unlock-to-delete') : t('multiselectiontoolbar.delete-selected-locked-ones-are-kept')
+            allLocked
+              ? t('multiselectiontoolbar.all-locked-unlock-to-delete')
+              : t('multiselectiontoolbar.delete-selected-locked-ones-are-kept')
           }
         >
           <button

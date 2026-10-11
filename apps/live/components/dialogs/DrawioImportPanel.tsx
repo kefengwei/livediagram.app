@@ -131,8 +131,12 @@ function PickStep({ error, onPicked }: { error?: string; onPicked: (files: File[
           variant="secondary"
           size="md"
           onClick={async () => onPicked(filesOfPick(await pickExport('folder')))}
-        >{t('drawioimportpanel.choose-a-folder')}</Button>
-        <Button variant="primary" size="md" onClick={choose}>{t('drawioimportpanel.choose-files')}</Button>
+        >
+          {t('drawioimportpanel.choose-a-folder')}
+        </Button>
+        <Button variant="primary" size="md" onClick={choose}>
+          {t('drawioimportpanel.choose-files')}
+        </Button>
       </div>
     </>
   );

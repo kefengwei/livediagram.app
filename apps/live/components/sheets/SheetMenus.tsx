@@ -179,7 +179,12 @@ function ResizeRow({
   const min = axis === 'c' ? 24 : 18;
   if (!open)
     return (
-      <MenuActionRow plain label={t('sheetmenus.resize')} icon={<Glyph t="↔" />} onClick={() => setOpen(true)} />
+      <MenuActionRow
+        plain
+        label={t('sheetmenus.resize')}
+        icon={<Glyph t="↔" />}
+        onClick={() => setOpen(true)}
+      />
     );
   const done = () => {
     const n = Math.round(Number(px));
@@ -204,7 +209,9 @@ function ResizeRow({
         }}
       />
       <span style={{ color: c.palette.muted }}>{t('sheetmenus.px')}</span>
-      <Button variant="primary" size="xs" onClick={done}>{t('sheetmenus.ok')}</Button>
+      <Button variant="primary" size="xs" onClick={done}>
+        {t('sheetmenus.ok')}
+      </Button>
     </div>
   );
 }
@@ -288,12 +295,16 @@ function FilterMenu({
             type="button"
             className="cursor-pointer underline"
             onClick={() => setKept(new Set(values.map((v) => v.text)))}
-          >{t('sheetmenus.select-all')}</button>
+          >
+            {t('sheetmenus.select-all')}
+          </button>
           <button
             type="button"
             className="cursor-pointer underline"
             onClick={() => setKept(new Set())}
-          >{t('sheetmenus.clear-2')}</button>
+          >
+            {t('sheetmenus.clear-2')}
+          </button>
         </div>
         <ul className="mt-1 max-h-40 overflow-auto">
           {shown.map((v) => (
@@ -353,9 +364,13 @@ function FilterMenu({
           />
         ) : null}
         <div className="mt-2 flex justify-end gap-2">
-          <Button variant="ghost" size="xs" onClick={onClose}>{t('sheetmenus.cancel')}</Button>
+          <Button variant="ghost" size="xs" onClick={onClose}>
+            {t('sheetmenus.cancel')}
+          </Button>
           <Button variant="primary" size="xs" onClick={apply}>
-            <FilterIcon />{t('sheetmenus.ok-2')}</Button>
+            <FilterIcon />
+            {t('sheetmenus.ok-2')}
+          </Button>
         </div>
       </div>
     </ContextMenu>
@@ -379,10 +394,14 @@ function SortDialog({ actions, onClose }: { actions: SheetActions; onClose: () =
       <div className="w-72 px-3 py-2 text-[12px]" onKeyDown={(e) => e.stopPropagation()}>
         <div className="mb-2 font-semibold">{t('sheetmenus.sort-range-2')}</div>
         <label className="mb-2 flex cursor-pointer items-center gap-1.5">
-          <input type="checkbox" checked={header} onChange={(e) => setHeader(e.target.checked)} />{t('sheetmenus.data-has-a-header-row')}</label>
+          <input type="checkbox" checked={header} onChange={(e) => setHeader(e.target.checked)} />
+          {t('sheetmenus.data-has-a-header-row')}
+        </label>
         {keys.map((k, i) => (
           <div key={i} className="mb-1 flex items-center gap-1.5">
-            <span className="w-14">{i === 0 ? t('sheetmenus.sort-by') : t('sheetmenus.then-by')}</span>
+            <span className="w-14">
+              {i === 0 ? t('sheetmenus.sort-by') : t('sheetmenus.then-by')}
+            </span>
             <select
               aria-label={t('sheetmenus.column')}
               className="h-7 flex-1 rounded-md border bg-transparent px-1"
@@ -393,7 +412,9 @@ function SortDialog({ actions, onClose }: { actions: SheetActions; onClose: () =
               }
             >
               {cols.map((col) => (
-                <option key={col} value={col}>{t('sheetmenus.column-2')}{columnLetters(col)}
+                <option key={col} value={col}>
+                  {t('sheetmenus.column-2')}
+                  {columnLetters(col)}
                 </option>
               ))}
             </select>
@@ -417,9 +438,13 @@ function SortDialog({ actions, onClose }: { actions: SheetActions; onClose: () =
           type="button"
           className="mt-1 cursor-pointer underline"
           onClick={() => setKeys([...keys, { col: g.c1, ascending: true }])}
-        >{t('sheetmenus.add-another-sort-column')}</button>
+        >
+          {t('sheetmenus.add-another-sort-column')}
+        </button>
         <div className="mt-2 flex justify-end gap-2">
-          <Button variant="ghost" size="xs" onClick={onClose}>{t('sheetmenus.cancel-2')}</Button>
+          <Button variant="ghost" size="xs" onClick={onClose}>
+            {t('sheetmenus.cancel-2')}
+          </Button>
           <Button
             variant="primary"
             size="xs"
@@ -428,7 +453,9 @@ function SortDialog({ actions, onClose }: { actions: SheetActions; onClose: () =
               actions.sortRange(keys, header);
               onClose();
             }}
-          >{t('sheetmenus.sort')}</Button>
+          >
+            {t('sheetmenus.sort')}
+          </Button>
         </div>
       </div>
     </ContextMenu>

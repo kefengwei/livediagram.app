@@ -14,8 +14,12 @@ export function LoadRecoveryCard({ ownerId }: { ownerId: string | null }) {
   const { t } = useTranslation();
   return (
     <div className="mt-6 w-full border-t border-slate-200 pt-5 text-left dark:border-slate-800">
-      <p className="text-sm font-medium text-slate-800 dark:text-slate-100">{t('loadrecoverycard.still-not-loading')}</p>
-      <p className="mt-1 mb-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{t('loadrecoverycard.copy-the-diagnostics-to-send-to')}</p>
+      <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
+        {t('loadrecoverycard.still-not-loading')}
+      </p>
+      <p className="mt-1 mb-3 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+        {t('loadrecoverycard.copy-the-diagnostics-to-send-to')}
+      </p>
       <BrowserRepairPanel
         buildReport={() => buildLoadDiagnostics(ownerId)}
         onCopied={() => track('UI', 'Copied', 'Diagnostics')}

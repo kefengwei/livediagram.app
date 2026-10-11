@@ -153,7 +153,10 @@ export function VisibilityBadge({
   }
   if (liveDoc.shared || liveDoc.shareCode) {
     return (
-      <HoverCard title={t('document-badges.shared')} description={t('document-badges.anyone-with-the-link-can-open')}>
+      <HoverCard
+        title={t('document-badges.shared')}
+        description={t('document-badges.anyone-with-the-link-can-open')}
+      >
         <span
           tabIndex={iconOnly ? 0 : undefined}
           className={`${base} bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/30`}
@@ -186,7 +189,10 @@ export function VisibilityBadge({
     );
   }
   return (
-    <HoverCard title={t('document-badges.private')} description={t('document-badges.only-visible-to-you')}>
+    <HoverCard
+      title={t('document-badges.private')}
+      description={t('document-badges.only-visible-to-you')}
+    >
       <span
         tabIndex={iconOnly ? 0 : undefined}
         className={`${base} bg-slate-100 text-slate-500 ring-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:ring-slate-700`}

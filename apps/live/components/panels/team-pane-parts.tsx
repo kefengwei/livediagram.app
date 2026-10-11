@@ -125,10 +125,14 @@ export function TeamMemberRow({
             {name}
           </span>
           {isSelf ? (
-            <span className="shrink-0 rounded-full bg-slate-100 px-1.5 text-[10px] font-medium text-slate-500 ring-1 ring-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:ring-slate-600">{t('team-pane-parts.you')}</span>
+            <span className="shrink-0 rounded-full bg-slate-100 px-1.5 text-[10px] font-medium text-slate-500 ring-1 ring-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:ring-slate-600">
+              {t('team-pane-parts.you')}
+            </span>
           ) : null}
           {pending ? (
-            <span className="shrink-0 rounded-full bg-amber-100 px-1.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-200">{t('team-pane-parts.invited')}</span>
+            <span className="shrink-0 rounded-full bg-amber-100 px-1.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-200">
+              {t('team-pane-parts.invited')}
+            </span>
           ) : null}
         </span>
         {/* Email under the name for every member (docs/specs/013-workspace/teams.md) — the
@@ -141,7 +145,9 @@ export function TeamMemberRow({
             {m.email}
           </span>
         ) : pending ? (
-          <span className="block truncate text-xs text-slate-400 dark:text-slate-400">{t('team-pane-parts.waiting-for-them-to-accept')}</span>
+          <span className="block truncate text-xs text-slate-400 dark:text-slate-400">
+            {t('team-pane-parts.waiting-for-them-to-accept')}
+          </span>
         ) : null}
       </span>
       {isAdmin && !pinnedAdmin ? (

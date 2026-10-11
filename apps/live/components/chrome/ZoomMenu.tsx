@@ -164,7 +164,9 @@ function ZoomPresets({
             }}
             className="flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
           >
-            <FitGlyph />{t('zoommenu.fit-to-screen-2')}</button>
+            <FitGlyph />
+            {t('zoommenu.fit-to-screen-2')}
+          </button>
         </div>
         {/* Caret pointing back at the percentage button. */}
         <div

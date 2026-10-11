@@ -40,7 +40,10 @@ export function IsometricOrbitButton({
 }) {
   const { t } = useTranslation();
   return (
-    <HoverCard title={t('isometricorbitbutton.orbit')} description={t('isometricorbitbutton.drag-to-orbit-click-to-reset')}>
+    <HoverCard
+      title={t('isometricorbitbutton.orbit')}
+      description={t('isometricorbitbutton.drag-to-orbit-click-to-reset')}
+    >
       <button
         type="button"
         // Begin the orbit drag, and watch for a no-drag release (a tap) to

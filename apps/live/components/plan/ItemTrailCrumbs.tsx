@@ -52,7 +52,8 @@ function FoldedCrumbs({
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [button, setButton] = useState<HTMLButtonElement | null>(null);
-  const label = folded.length === 1 ? t('itemtrailcrumbs.1-earlier-card') : `${folded.length} earlier cards`;
+  const label =
+    folded.length === 1 ? t('itemtrailcrumbs.1-earlier-card') : `${folded.length} earlier cards`;
   return (
     <>
       <Tooltip label={label}>

@@ -133,12 +133,16 @@ function PickStep({
           variant="secondary"
           size="md"
           onClick={async () => onPicked(await pickExport('zip'))}
-        >{t('mswhiteboardimportpanel.choose-a-zip')}</Button>
+        >
+          {t('mswhiteboardimportpanel.choose-a-zip')}
+        </Button>
         <Button
           variant="primary"
           size="md"
           onClick={async () => onPicked(await pickExport('folder'))}
-        >{t('mswhiteboardimportpanel.choose-a-folder')}</Button>
+        >
+          {t('mswhiteboardimportpanel.choose-a-folder')}
+        </Button>
       </div>
     </>
   );

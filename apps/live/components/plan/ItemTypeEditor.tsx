@@ -272,11 +272,15 @@ export function ItemTypeEditor({
               onClick={(e) => setConfirmingAt(e.currentTarget)}
             >
               <TrashIcon size={14} />
-              {/* One word, so a phone's footer keeps each button on one line. */}{t('itemtypeeditor.delete')}</Button>
+              {/* One word, so a phone's footer keeps each button on one line. */}
+              {t('itemtypeeditor.delete')}
+            </Button>
           ) : null}
           {type && onDuplicate ? (
             <Button variant="secondary" className="mr-auto" onClick={onDuplicate}>
-              <DuplicateIcon size={14} />{t('itemtypeeditor.duplicate')}</Button>
+              <DuplicateIcon size={14} />
+              {t('itemtypeeditor.duplicate')}
+            </Button>
           ) : null}
           {problem && draft.label ? (
             <span className="self-center text-[12px] text-rose-600 dark:text-rose-400">
@@ -284,14 +288,18 @@ export function ItemTypeEditor({
             </span>
           ) : null}
           <Button variant="secondary" onClick={onClose}>
-            <CloseIcon size={12} />{t('itemtypeeditor.cancel')}</Button>
+            <CloseIcon size={12} />
+            {t('itemtypeeditor.cancel')}
+          </Button>
           <Button
             variant="primary"
             data-tour-id="card-type-save"
             disabled={!!problem}
             onClick={() => check.ok && onSave(check.catalogue.types[0]!)}
           >
-            <CheckIcon size={14} />{t('itemtypeeditor.save')}</Button>
+            <CheckIcon size={14} />
+            {t('itemtypeeditor.save')}
+          </Button>
         </>
       </DialogFooter>
       <CardTypeTourStage tour={tour} />

@@ -67,8 +67,7 @@ export function ZoneBar({
   onMoveStep?: (by: -1 | 1) => void;
 }) {
   const { t } = useTranslation();
-  
-  
+
   return (
     <div
       role="toolbar"
@@ -117,13 +116,21 @@ export function ZoneBar({
           <Sep />
         </>
       ) : null}
-      <Choice label={t('zonebar.in-line')} pressed={fit === 'inline'} onPress={() => onFit('inline')}>
+      <Choice
+        label={t('zonebar.in-line')}
+        pressed={fit === 'inline'}
+        onPress={() => onFit('inline')}
+      >
         <Inline />
       </Choice>
       <Choice label={t('zonebar.wrap-left')} pressed={fit === 'left'} onPress={() => onFit('left')}>
         <WrapLeft />
       </Choice>
-      <Choice label={t('zonebar.wrap-right')} pressed={fit === 'right'} onPress={() => onFit('right')}>
+      <Choice
+        label={t('zonebar.wrap-right')}
+        pressed={fit === 'right'}
+        onPress={() => onFit('right')}
+      >
         <WrapRight />
       </Choice>
       <Choice label={t('zonebar.float')} pressed={fit === 'float'} onPress={() => onFit('float')}>
@@ -132,7 +139,11 @@ export function ZoneBar({
       {fit === 'inline' ? (
         <>
           <Sep />
-          <Choice label={t('zonebar.align-left')} pressed={align === 'left'} onPress={() => onAlign('left')}>
+          <Choice
+            label={t('zonebar.align-left')}
+            pressed={align === 'left'}
+            onPress={() => onAlign('left')}
+          >
             <AlignLeft />
           </Choice>
           <Choice
@@ -142,7 +153,11 @@ export function ZoneBar({
           >
             <AlignCenter />
           </Choice>
-          <Choice label={t('zonebar.align-right')} pressed={align === 'right'} onPress={() => onAlign('right')}>
+          <Choice
+            label={t('zonebar.align-right')}
+            pressed={align === 'right'}
+            onPress={() => onAlign('right')}
+          >
             <AlignRight />
           </Choice>
         </>
@@ -181,7 +196,6 @@ function Choice({
   onPress: () => void;
   children: ReactNode;
 }) {
-  
   return (
     <Tooltip label={label}>
       <button
@@ -216,7 +230,7 @@ export function ZoneResizeGrips({
   onResize: (size: { width?: number; height?: number }) => void;
 }) {
   const { t } = useTranslation();
-  
+
   const zoneEl = () =>
     document.querySelector<HTMLElement>(`.article-zone[data-block-id="${CSS.escape(zoneId)}"]`);
   const start = (e: React.PointerEvent<HTMLElement>, axes: { x: boolean; y: boolean }) => {

@@ -1,6 +1,5 @@
 'use client';
 
-
 import type { ModelDownload as Download } from '@/lib/reading/download-progress';
 import { ModelDownload } from './ModelDownload';
 import type { ProcessorReason, ReaderBackend } from '@/lib/reading/reader-protocol';
@@ -30,8 +29,6 @@ function Pill({
   testId?: string;
   children: React.ReactNode;
 }) {
-  
-  
   return (
     <p
       data-testid={testId}
@@ -101,7 +98,7 @@ export function PhotoStatus({
   readError: string | null;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <div
       aria-live="polite"
@@ -112,10 +109,16 @@ export function PhotoStatus({
           <span
             aria-hidden
             className="h-3 w-3 shrink-0 animate-spin rounded-full border-2 border-slate-500 border-t-brand-400"
-          />{t('photostatus.finding-the-stickies')}</Pill>
+          />
+          {t('photostatus.finding-the-stickies')}
+        </Pill>
       ) : null}
       {revealed < detected ? (
-        <Pill>{t('photostatus.detecting')}{revealed}{t('photostatus.of')}{detected}
+        <Pill>
+          {t('photostatus.detecting')}
+          {revealed}
+          {t('photostatus.of')}
+          {detected}
         </Pill>
       ) : null}
       {reading ? (
@@ -125,7 +128,9 @@ export function PhotoStatus({
           <span className="shrink-0 whitespace-nowrap">{t('photostatus.reading-the-words')}</span>
           {readTotal > 0 ? (
             <span className="shrink-0 whitespace-nowrap tabular-nums text-slate-300">
-              {readSoFar}{t('photostatus.of-2')}{readTotal}
+              {readSoFar}
+              {t('photostatus.of-2')}
+              {readTotal}
             </span>
           ) : null}
           {readerBackend === 'webgpu' ? (
@@ -133,34 +138,50 @@ export function PhotoStatus({
           ) : readerBackend === 'wasm' ? (
             // A big wall is minutes here, not seconds: say so, rather than
             // let a slow bar pass for a stuck one.
-            <span className="text-slate-300">{t('photostatus.on-the-processor-which-is-slower')}{readerWhy ? `: ${PROCESSOR_WHY[readerWhy]}` : null}
+            <span className="text-slate-300">
+              {t('photostatus.on-the-processor-which-is-slower')}
+              {readerWhy ? `: ${PROCESSOR_WHY[readerWhy]}` : null}
             </span>
           ) : null}
         </Pill>
       ) : null}
       {rereading > 0 ? (
         <Pill testId="photo-rereading">
-          <Busy still={readerBackend === 'webgpu'} />{t('photostatus.reading')}{rereading}{t('photostatus.changed')}{rereading === 1 ? 'note' : 'notes'}…
+          <Busy still={readerBackend === 'webgpu'} />
+          {t('photostatus.reading')}
+          {rereading}
+          {t('photostatus.changed')}
+          {rereading === 1 ? 'note' : 'notes'}…
         </Pill>
       ) : null}
       {readerFallback === 'budget' ? (
         // Whose budget it was (the deployment's key, or the author's free
         // share) is deliberately not said.
-        <Pill tone="warn" testId="photo-reader-fallback">{t('photostatus.free-monthly-budget-reached-reading-on')}</Pill>
+        <Pill tone="warn" testId="photo-reader-fallback">
+          {t('photostatus.free-monthly-budget-reached-reading-on')}
+        </Pill>
       ) : null}
       {readError === 'reader_unavailable' ? (
         // The in-browser model never started: not the photograph's fault, and
         // not a partial read — say what it is.
-        <Pill tone="warn" testId="photo-reader-unavailable">{t('photostatus.the-reading-model-couldn-t-start')}</Pill>
+        <Pill tone="warn" testId="photo-reader-unavailable">
+          {t('photostatus.the-reading-model-couldn-t-start')}
+        </Pill>
       ) : readError?.startsWith('partial:') ? (
         // PART of the run is not all of it. The words that arrived are on their
         // notes; this says how many did not, so the author knows which boxes
         // are blank because nobody read them rather than because the paper was
         // blank.
         <Pill tone="warn">
-          {readError.slice('partial:'.length)}{t('photostatus.notes-could-not-be-read-type')}</Pill>
+          {readError.slice('partial:'.length)}
+          {t('photostatus.notes-could-not-be-read-type')}
+        </Pill>
       ) : readError ? (
-        <Pill tone="warn">{t('photostatus.the-reader-could-not-finish')}{readError}{t('photostatus.type-the-words-in-yourself')}</Pill>
+        <Pill tone="warn">
+          {t('photostatus.the-reader-could-not-finish')}
+          {readError}
+          {t('photostatus.type-the-words-in-yourself')}
+        </Pill>
       ) : null}
       {modelDownload && !modelDownload.done && modelDownload.total > 0 ? (
         <ModelDownload download={modelDownload} />
@@ -172,7 +193,9 @@ export function PhotoStatus({
       ) : null}
       {dropped > 0 ? (
         <Pill tone="warn" testId="photo-dropped">
-          {dropped}{t('photostatus.more-notes-were-found-than-one')}</Pill>
+          {dropped}
+          {t('photostatus.more-notes-were-found-than-one')}
+        </Pill>
       ) : null}
       {foundNothing ? (
         <Pill tone="warn" testId="photo-found-nothing">

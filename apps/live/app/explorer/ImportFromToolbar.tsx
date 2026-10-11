@@ -31,7 +31,9 @@ export function ImportFromToolbar({
       }}
       className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white py-[2px] pr-[2px] pl-[2px] text-xs font-medium text-slate-500 shadow-sm sm:pl-3 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400"
     >
-      <span aria-hidden className="hidden pr-1 text-optical-line sm:inline">{t('importfromtoolbar.import-from-2')}</span>
+      <span aria-hidden className="hidden pr-1 text-optical-line sm:inline">
+        {t('importfromtoolbar.import-from-2')}
+      </span>
       {sources.map((source) => (
         <Tooltip key={source.id} label={source.name}>
           <button

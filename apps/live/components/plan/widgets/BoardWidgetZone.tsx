@@ -105,7 +105,9 @@ export function BoardWidgetZone({
         ) : canEdit && selected ? (
           // The hint only while the board is selected, so an unselected header stays clean.
           <span className="inline-flex items-center gap-1.5">
-            <InfoArt />{t('boardwidgetzone.drag-widgets-here-from-the-palette')}<button
+            <InfoArt />
+            {t('boardwidgetzone.drag-widgets-here-from-the-palette')}
+            <button
               type="button"
               aria-label={t('boardwidgetzone.add-a-widget')}
               className="ml-1 flex h-6 w-6 items-center justify-center rounded-md border border-dashed transition hover:bg-black/5 dark:hover:bg-white/10"
@@ -140,7 +142,9 @@ export function BoardWidgetZone({
             role="listitem"
             tabIndex={canEdit ? 0 : undefined}
             aria-label={canEdit ? `${BOARD_WIDGET_INFO[kind].label} widget` : undefined}
-            aria-keyshortcuts={canEdit ? t('boardwidgetzone.alt-arrowleft-alt-arrowright-delete') : undefined}
+            aria-keyshortcuts={
+              canEdit ? t('boardwidgetzone.alt-arrowleft-alt-arrowright-delete') : undefined
+            }
             className={`group/widget relative flex shrink-0 items-center rounded-md outline-none focus-visible:ring-2 ${
               flash === kind ? 'animate-pulse motion-reduce:animate-none' : ''
             } ${canEdit ? 'cursor-grab active:cursor-grabbing' : ''}`}

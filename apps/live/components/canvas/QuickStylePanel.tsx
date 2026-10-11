@@ -223,7 +223,9 @@ export function QuickStylePanel({
               <span
                 aria-hidden
                 className="select-none px-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400"
-              >{t('quickstylepanel.actions')}</span>
+              >
+                {t('quickstylepanel.actions')}
+              </span>
             ) : null}
             <div role="group" aria-label={t('quickstylepanel.actions-2')}>
               <button
@@ -232,7 +234,9 @@ export function QuickStylePanel({
                 data-testid="quick-style-clear"
                 className="flex h-7 w-full items-center justify-center gap-1.5 rounded-md text-xs font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:text-slate-200 dark:hover:bg-slate-800"
               >
-                <ClearStylesGlyph />{t('quickstylepanel.clear-styles')}</button>
+                <ClearStylesGlyph />
+                {t('quickstylepanel.clear-styles')}
+              </button>
             </div>
           </div>
         ) : null}
@@ -321,7 +325,11 @@ function QuickStyleSections({
             <BoardColourRows
               key={row.role}
               title={row.title}
-              customTitle={row.role === 'stroke' ? t('quickstylepanel.custom-stroke-colours') : t('quickstylepanel.custom-text-colours')}
+              customTitle={
+                row.role === 'stroke'
+                  ? t('quickstylepanel.custom-stroke-colours')
+                  : t('quickstylepanel.custom-text-colours')
+              }
               testId={row.testId}
               section={board}
               showTitles={showTitles}

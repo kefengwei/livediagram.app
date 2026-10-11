@@ -32,7 +32,10 @@ export function UndoRedoClusterStrip({
       }}
       className={CLUSTER_STRIP}
     >
-      <HoverCard title={t('undoredoclusterstrip.undo')} description={t('undoredoclusterstrip.undo-last-edit')}>
+      <HoverCard
+        title={t('undoredoclusterstrip.undo')}
+        description={t('undoredoclusterstrip.undo-last-edit')}
+      >
         <button
           type="button"
           onPointerDown={(e) => e.stopPropagation()}
@@ -44,7 +47,10 @@ export function UndoRedoClusterStrip({
           <UndoIcon />
         </button>
       </HoverCard>
-      <HoverCard title={t('undoredoclusterstrip.redo')} description={t('undoredoclusterstrip.redo-last-undone-edit')}>
+      <HoverCard
+        title={t('undoredoclusterstrip.redo')}
+        description={t('undoredoclusterstrip.redo-last-undone-edit')}
+      >
         <button
           type="button"
           onPointerDown={(e) => e.stopPropagation()}

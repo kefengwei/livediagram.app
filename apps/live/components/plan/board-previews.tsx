@@ -373,7 +373,9 @@ function Blank({ palette }: P) {
           color: palette.muted,
         }}
       >
-        <span className="text-[10px] leading-none">+</span>{t('board-previews.setup-board')}</span>
+        <span className="text-[10px] leading-none">+</span>
+        {t('board-previews.setup-board')}
+      </span>
     </div>
   );
 }

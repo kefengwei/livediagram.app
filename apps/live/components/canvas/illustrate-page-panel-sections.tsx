@@ -88,7 +88,11 @@ export function SizeSection({
   if (sizes.length < 2) return null;
   return (
     <PanelSection title={t('illustrate-page-panel-sections.size')}>
-      <div role="radiogroup" aria-label={t('illustrate-page-panel-sections.page-size')} className="grid grid-cols-4 gap-1">
+      <div
+        role="radiogroup"
+        aria-label={t('illustrate-page-panel-sections.page-size')}
+        className="grid grid-cols-4 gap-1"
+      >
         {sizes.map((id) => (
           <Tooltip key={id} label={SIZE_TILE[id].hint}>
             <button

@@ -67,7 +67,9 @@ export function CustomGradientEditor({
           type="button"
           onClick={() => onCommit({ ...fill, from: fill.to, to: fill.from })}
           className="ml-auto rounded-md px-2 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-brand-600 dark:text-slate-300 dark:hover:bg-slate-800"
-        >{t('page-background-custom.swap')}</button>
+        >
+          {t('page-background-custom.swap')}
+        </button>
       </div>
       <MenuSliderRow
         label={t('page-background-custom.angle')}

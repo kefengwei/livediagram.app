@@ -1,4 +1,3 @@
-
 import { useState, type ReactNode } from 'react';
 import { Glyph } from '@livediagram/ui';
 import { ToggleSwitch } from '@/components/palette/palette-controls';

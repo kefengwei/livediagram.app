@@ -94,17 +94,23 @@ export function PlanSetupBoard({
               size="sm"
               onClick={() => setStep(step === 'layout' ? 'columns' : 'types')}
             >
-              <ChevronLeftIcon size={12} />{t('plansetupboard.back')}</Button>
+              <ChevronLeftIcon size={12} />
+              {t('plansetupboard.back')}
+            </Button>
           ) : (
             <span
               className="flex items-center gap-1.5 text-[12px]"
               style={{ color: palette.muted }}
             >
-              <PlanCardsIcon size={14} />{t('plansetupboard.step-1-of-3')}</span>
+              <PlanCardsIcon size={14} />
+              {t('plansetupboard.step-1-of-3')}
+            </span>
           )}
           <span className="flex items-center gap-2">
             {onCancel ? (
-              <Button variant="secondary" size="sm" onClick={onCancel}>{t('plansetupboard.cancel')}</Button>
+              <Button variant="secondary" size="sm" onClick={onCancel}>
+                {t('plansetupboard.cancel')}
+              </Button>
             ) : null}
             {step === 'types' ? (
               <Button
@@ -112,7 +118,9 @@ export function PlanSetupBoard({
                 size="sm"
                 disabled={typeIds.length === 0}
                 onClick={() => setStep('columns')}
-              >{t('plansetupboard.next-columns')}</Button>
+              >
+                {t('plansetupboard.next-columns')}
+              </Button>
             ) : (
               <>
                 {/* Create Board (or Save Board) is the Layout step's alone; Columns leads on to it. The step
@@ -123,7 +131,9 @@ export function PlanSetupBoard({
                     size="sm"
                     disabled={columns.length === 0}
                     onClick={() => setStep('layout')}
-                  >{t('plansetupboard.next-layout')}</Button>
+                  >
+                    {t('plansetupboard.next-layout')}
+                  </Button>
                 ) : (
                   <Button
                     variant="primary"

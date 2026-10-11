@@ -65,7 +65,11 @@ export function PathEditToolbar({
         zoom={zoom}
         title={t('pathedittoolbar.edit-path')}
       >
-        <div role="radiogroup" aria-label={t('pathedittoolbar.node-type')} className="flex items-center gap-0.5">
+        <div
+          role="radiogroup"
+          aria-label={t('pathedittoolbar.node-type')}
+          className="flex items-center gap-0.5"
+        >
           {NODE_TYPES.map((t) => (
             <Tip key={t.id} label={`${t.label} point`}>
               <button
@@ -89,7 +93,9 @@ export function PathEditToolbar({
             disabled={!view.hasSelection}
             onClick={onDelete}
             className={BUTTON}
-          >{t('pathedittoolbar.delete-point-2')}</button>
+          >
+            {t('pathedittoolbar.delete-point-2')}
+          </button>
         </Tip>
         <Tip label={view.closed ? t('pathedittoolbar.open-path') : t('pathedittoolbar.close-path')}>
           <button
@@ -104,7 +110,9 @@ export function PathEditToolbar({
         </Tip>
         <Divider />
         <Tip label={t('pathedittoolbar.done')}>
-          <button type="button" aria-keyshortcuts="Escape" onClick={onDone} className={BUTTON}>{t('pathedittoolbar.done-2')}</button>
+          <button type="button" aria-keyshortcuts="Escape" onClick={onDone} className={BUTTON}>
+            {t('pathedittoolbar.done-2')}
+          </button>
         </Tip>
       </FloatingToolbar>
     </div>

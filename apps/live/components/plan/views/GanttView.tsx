@@ -335,7 +335,9 @@ export function GanttView({
               backgroundColor: OVERDUE_RED,
               color: '#ffffff',
             }}
-          >{t('ganttview.today')}</span>
+          >
+            {t('ganttview.today')}
+          </span>
         </div>
         {editable ? (
           <GanttNamesResizer

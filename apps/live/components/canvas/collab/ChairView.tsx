@@ -76,7 +76,9 @@ export function ChairView({
         style={{ transform: `rotate(${CHAIR_FACING_ROTATION[facing]}deg)` }}
         role="img"
         aria-label={
-          occupied ? `Chair, ${sitters.map((s) => s.name).join(' and ')} sitting` : t('chairview.empty-chair')
+          occupied
+            ? `Chair, ${sitters.map((s) => s.name).join(' and ')} sitting`
+            : t('chairview.empty-chair')
         }
       >
         {/* Contact shadow, so the chair sits ON the canvas rather than

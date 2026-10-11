@@ -48,12 +48,16 @@ export function ItemTypeConfiguration({
   removedSome: boolean;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <div className="flex flex-col">
       {/* General opens the panel, so it needs no visible heading: the Name field says what it is. Still named for
           assistive tech and the tour. */}
-      <ConfigurationSection title={t('itemtypeconfiguration.general')} tourId="card-type-general" hideTitle>
+      <ConfigurationSection
+        title={t('itemtypeconfiguration.general')}
+        tourId="card-type-general"
+        hideTitle
+      >
         <SheetRow label={t('itemtypeconfiguration.name')} htmlFor={nameId}>
           {/* One field: pick the glyph at its start, type the name after it, pick the colour at its end. */}
           <div className="flex max-w-xs items-center gap-1 rounded-lg border border-slate-200 bg-white px-1 transition focus-within:border-brand-400 focus-within:ring-2 focus-within:ring-brand-500/20 dark:border-slate-700 dark:bg-slate-900">
@@ -76,7 +80,9 @@ export function ItemTypeConfiguration({
         tourId="card-type-fields"
         className="mt-2 border-t border-slate-100 pt-4 dark:border-slate-800"
       >
-        <p className="mb-2 text-[12px] text-slate-500 dark:text-slate-400">{t('itemtypeconfiguration.laid-out-as-the-card-s')}</p>
+        <p className="mb-2 text-[12px] text-slate-500 dark:text-slate-400">
+          {t('itemtypeconfiguration.laid-out-as-the-card-s')}
+        </p>
         <ItemTypeLayoutEditor
           typeId={typeId}
           draft={layout}
@@ -105,7 +111,6 @@ function ConfigurationSection({
   hideTitle?: boolean;
   children: ReactNode;
 }) {
-  
   const headingId = useId();
   return (
     <section

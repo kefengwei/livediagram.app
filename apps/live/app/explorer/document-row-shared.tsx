@@ -182,7 +182,12 @@ export function DocumentActionsMenu({
             onClick={onOpen ? then(onOpen) : () => window.location.assign(href)}
           />
           {onShare ? (
-            <MenuActionRow plain icon={<ShareIcon />} label={t('document-row-shared.share')} onClick={then(onShare)} />
+            <MenuActionRow
+              plain
+              icon={<ShareIcon />}
+              label={t('document-row-shared.share')}
+              onClick={then(onShare)}
+            />
           ) : null}
           <MenuGroupSeparator />
         </>
@@ -224,7 +229,12 @@ export function DocumentActionsMenu({
         />
       ) : null}
       {onShowHistory ? (
-        <MenuActionRow plain icon={<HistoryIcon />} label={t('document-row-shared.history')} onClick={then(onShowHistory)} />
+        <MenuActionRow
+          plain
+          icon={<HistoryIcon />}
+          label={t('document-row-shared.history')}
+          onClick={then(onShowHistory)}
+        />
       ) : null}
       {onToggleRecentExclusion ? (
         <MenuActionRow
@@ -233,7 +243,11 @@ export function DocumentActionsMenu({
           // The label states what the click DOES, and by doing so tells
           // you the current state — which is why the document needs no
           // badge anywhere else (docs/specs/013-workspace/hide-from-recent.md).
-          label={recentExcluded ? t('document-row-shared.show-in-recent') : t('document-row-shared.hide-from-recent')}
+          label={
+            recentExcluded
+              ? t('document-row-shared.show-in-recent')
+              : t('document-row-shared.hide-from-recent')
+          }
           onClick={then(onToggleRecentExclusion)}
         />
       ) : null}

@@ -132,7 +132,9 @@ export function SessionTimerFace({
           {/* Idle: the same kicker and clock, showing the configured length,
               with one control. Reading identically to a running timer is the
               point — the element does not change shape when it starts. */}
-          <span className="select-none text-[10px] font-medium uppercase tracking-wide opacity-70">{t('sessiontimerface.timer')}</span>
+          <span className="select-none text-[10px] font-medium uppercase tracking-wide opacity-70">
+            {t('sessiontimerface.timer')}
+          </span>
           <span className="select-none text-sm font-semibold tabular-nums">
             {formatTimerClock(durationMs)}
           </span>

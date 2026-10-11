@@ -86,10 +86,22 @@ export function MultiPlacementSections({
       {/* Layer — front/back, opacity and (for boxed members) the
                   aspect-ratio lock, selection-wide, mirroring the single
                   menu's pinned-first Layer section. */}
-      <MenuAccordionSection title={t('multiplacementsections.layer')} icon={<LayersGlyph />} {...sectionProps('m-layer')}>
+      <MenuAccordionSection
+        title={t('multiplacementsections.layer')}
+        icon={<LayersGlyph />}
+        {...sectionProps('m-layer')}
+      >
         <MenuTileGrid cols={2}>
-          <MenuTile icon={<LayerUpIcon />} label={t('multiplacementsections.bring-to-front')} onClick={props.onBringToFront} />
-          <MenuTile icon={<LayerDownIcon />} label={t('multiplacementsections.send-to-back')} onClick={props.onSendToBack} />
+          <MenuTile
+            icon={<LayerUpIcon />}
+            label={t('multiplacementsections.bring-to-front')}
+            onClick={props.onBringToFront}
+          />
+          <MenuTile
+            icon={<LayerDownIcon />}
+            label={t('multiplacementsections.send-to-back')}
+            onClick={props.onSendToBack}
+          />
         </MenuTileGrid>
         {/* Move the whole selection to a named layer (docs/specs/006-document/layers.md). */}
         {props.onMoveSelectionToLayer ? (
@@ -118,7 +130,9 @@ export function MultiPlacementSections({
               <span className="flex items-center gap-2">
                 <span className="text-slate-400 dark:text-slate-400">
                   <AspectLockMenuIcon />
-                </span>{t('multiplacementsections.lock-aspect-ratio')}</span>
+                </span>
+                {t('multiplacementsections.lock-aspect-ratio')}
+              </span>
               <ToggleSwitch
                 presentational
                 checked={!!boxedSel[0]!.aspectLocked}
@@ -130,7 +144,11 @@ export function MultiPlacementSections({
       </MenuAccordionSection>
       {/* Shape — morph every morphable member to a common kind. */}
       {morphSrc ? (
-        <MenuAccordionSection title={t('multiplacementsections.shape')} icon={<SquareMenuIcon />} {...sectionProps('m-shape')}>
+        <MenuAccordionSection
+          title={t('multiplacementsections.shape')}
+          icon={<SquareMenuIcon />}
+          {...sectionProps('m-shape')}
+        >
           <div className="grid grid-cols-4 gap-1 px-2 py-1.5">
             {COMMON_SHAPES.map((kind) => (
               <SizeButton

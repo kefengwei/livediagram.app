@@ -694,7 +694,11 @@ function PageLimitNotice({ page }: { page: LaidOutPage }) {
         height: 32,
       }}
     >
-      <span className="rounded-md bg-amber-50 px-2 py-1 text-xs font-medium text-amber-800 ring-1 ring-amber-200 dark:bg-amber-500/15 dark:text-amber-200 dark:ring-amber-500/30">{t('articleeditor.this-tab-has-reached')}{MAX_ILLUSTRATE_PAGES}{t('articleeditor.pages-the-writing-below-this-line')}</span>
+      <span className="rounded-md bg-amber-50 px-2 py-1 text-xs font-medium text-amber-800 ring-1 ring-amber-200 dark:bg-amber-500/15 dark:text-amber-200 dark:ring-amber-500/30">
+        {t('articleeditor.this-tab-has-reached')}
+        {MAX_ILLUSTRATE_PAGES}
+        {t('articleeditor.pages-the-writing-below-this-line')}
+      </span>
     </div>
   );
 }

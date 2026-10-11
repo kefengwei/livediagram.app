@@ -43,6 +43,8 @@ export function OauthHelpLink() {
         <circle cx="8" cy="8" r="6.5" />
         <path d="M6.2 6.3a1.8 1.8 0 1 1 2.3 1.8c-.5.2-.7.5-.7 1.1" strokeLinecap="round" />
         <circle cx="8" cy="11.4" r="0.5" fill="currentColor" stroke="none" />
-      </Glyph>{t('oauth-shell.learn-about-connecting-ai-tools')}</a>
+      </Glyph>
+      {t('oauth-shell.learn-about-connecting-ai-tools')}
+    </a>
   );
 }

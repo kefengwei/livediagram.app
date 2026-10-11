@@ -49,7 +49,10 @@ export function LayersClusterButton({
       {popoverOpen ? (
         button
       ) : (
-        <HoverCard title={t('layersclusterbutton.open-layers-2')} description={t('layersclusterbutton.show-this-tab-s-layers')}>
+        <HoverCard
+          title={t('layersclusterbutton.open-layers-2')}
+          description={t('layersclusterbutton.show-this-tab-s-layers')}
+        >
           {button}
         </HoverCard>
       )}

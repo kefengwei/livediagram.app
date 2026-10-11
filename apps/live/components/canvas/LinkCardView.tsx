@@ -71,7 +71,9 @@ export function LinkCardView({
 
   if (!link) {
     return (
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-3 text-center text-[12px] font-medium text-slate-400 dark:text-slate-400">{t('linkcardview.double-click-to-add-a-link')}</div>
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-3 text-center text-[12px] font-medium text-slate-400 dark:text-slate-400">
+        {t('linkcardview.double-click-to-add-a-link')}
+      </div>
     );
   }
 

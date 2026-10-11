@@ -15,7 +15,12 @@ import { DefaultKeyIcon, UseAsDefaultIcon } from './default-key-icons';
 export function UseAsDefaultMenu({ menu }: { menu: DefaultFolderMenu }) {
   const { t } = useTranslation();
   return (
-    <MenuFlyoutSection plain flush title={t('useasdefaultmenu.use-as-default-for')} icon={<UseAsDefaultIcon />}>
+    <MenuFlyoutSection
+      plain
+      flush
+      title={t('useasdefaultmenu.use-as-default-for')}
+      icon={<UseAsDefaultIcon />}
+    >
       <MenuHeader title={t('useasdefaultmenu.new-documents-that-open-as')} />
       {DEFAULT_KEY_ENTRIES.map((entry) => (
         <MenuCheckRow

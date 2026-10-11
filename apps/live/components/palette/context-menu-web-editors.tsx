@@ -134,7 +134,9 @@ export function StatsEditor({
         disabled={rows.length >= STATS_MAX}
         onClick={() => onChange([...rows, { value: '0', caption: 'Metric' }])}
         className={MENU_ADD_ROW_BUTTON}
-      >{t('context-menu-web-editors.add-stat')}</button>
+      >
+        {t('context-menu-web-editors.add-stat')}
+      </button>
     </div>
   );
 }
@@ -208,7 +210,11 @@ export function WebRowsMenuSection({
   const { t } = useTranslation();
   if (target.shape === 'stat-row') {
     return (
-      <MenuAccordionSection title={t('context-menu-web-editors.stats')} icon={<DataMenuGlyph />} {...sectionProps('stats')}>
+      <MenuAccordionSection
+        title={t('context-menu-web-editors.stats')}
+        icon={<DataMenuGlyph />}
+        {...sectionProps('stats')}
+      >
         {/* Keyed on the rows so a change from elsewhere (an inline edit, the
             ring's Add) resets the local draft rather than being shadowed by it. */}
         <StatsEditor
@@ -221,7 +227,11 @@ export function WebRowsMenuSection({
   }
   if (target.shape === 'process') {
     return (
-      <MenuAccordionSection title={t('context-menu-web-editors.steps')} icon={<DataMenuGlyph />} {...sectionProps('steps')}>
+      <MenuAccordionSection
+        title={t('context-menu-web-editors.steps')}
+        icon={<DataMenuGlyph />}
+        {...sectionProps('steps')}
+      >
         <TextRowsEditor
           key={JSON.stringify(target.processSteps ?? [])}
           rows={target.processSteps ?? []}
@@ -237,7 +247,11 @@ export function WebRowsMenuSection({
   }
   if (target.shape === 'site-header') {
     return (
-      <MenuAccordionSection title={t('context-menu-web-editors.links')} icon={<DataMenuGlyph />} {...sectionProps('links')}>
+      <MenuAccordionSection
+        title={t('context-menu-web-editors.links')}
+        icon={<DataMenuGlyph />}
+        {...sectionProps('links')}
+      >
         <TextRowsEditor
           key={JSON.stringify(target.navLinks ?? [])}
           rows={target.navLinks ?? []}

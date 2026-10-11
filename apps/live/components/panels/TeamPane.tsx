@@ -160,12 +160,16 @@ export function TeamPane({
           <p className="mt-4 text-[10px] font-semibold uppercase tracking-wider text-rose-600">
             404
           </p>
-          <h1 className="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">{t('teampane.team-not-found')}</h1>
+          <h1 className="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">
+            {t('teampane.team-not-found')}
+          </h1>
           <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
             This team doesn&apos;t exist, or you&apos;re not a member of it. Ask an admin for an
             invite, or head back to your own documents.
           </p>
-          <Button size="md" onClick={onLeftTeam} className="mt-6 shadow-sm">{t('teampane.back-to-your-documents')}</Button>
+          <Button size="md" onClick={onLeftTeam} className="mt-6 shadow-sm">
+            {t('teampane.back-to-your-documents')}
+          </Button>
         </div>
       </div>
     );
@@ -319,7 +323,9 @@ export function TeamPane({
               size="xs"
               disabled={!inviteEmail.trim() || inviteBusy}
               className="shrink-0 py-1 shadow-sm"
-            >{t('teampane.invite')}</Button>
+            >
+              {t('teampane.invite')}
+            </Button>
           </form>
         ) : null}
       </div>

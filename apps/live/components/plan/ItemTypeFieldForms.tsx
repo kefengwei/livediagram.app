@@ -87,7 +87,9 @@ function LinksToSelect({
       value={value ?? ''}
       onChange={(e) => onChange(e.target.value)}
     >
-      <option value="" disabled>{t('itemtypefieldforms.links-to-a-card-type')}</option>
+      <option value="" disabled>
+        {t('itemtypefieldforms.links-to-a-card-type')}
+      </option>
       {types.map((t) => (
         <option key={t.id} value={t.id}>
           Links To {t.label}
@@ -165,7 +167,9 @@ export function NewFieldForm({
     <div className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-2.5 dark:border-slate-700 dark:bg-slate-900">
       {missing.length > 0 ? (
         <div>
-          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{t('itemtypefieldforms.built-in-fields')}</p>
+          <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+            {t('itemtypefieldforms.built-in-fields')}
+          </p>
           <div className="flex flex-wrap gap-1.5">
             {missing.map((id) => (
               <button
@@ -182,7 +186,9 @@ export function NewFieldForm({
       ) : null}
       {canAddCustom ? (
         <div className="flex flex-col gap-2">
-          <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{t('itemtypefieldforms.new-custom-field')}</p>
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+            {t('itemtypefieldforms.new-custom-field')}
+          </p>
           <TextInput
             aria-label={t('itemtypefieldforms.new-field-s-name')}
             placeholder={t('itemtypefieldforms.name')}
@@ -221,7 +227,9 @@ export function NewFieldForm({
       ) : null}
       <div className="flex justify-end gap-2">
         <Button variant="secondary" size="sm" onClick={onCancel}>
-          <CloseIcon size={12} />{t('itemtypefieldforms.cancel')}</Button>
+          <CloseIcon size={12} />
+          {t('itemtypefieldforms.cancel')}
+        </Button>
         {canAddCustom ? (
           <Button
             size="sm"
@@ -235,7 +243,9 @@ export function NewFieldForm({
               })
             }
           >
-            <PlusIcon size={12} />{t('itemtypefieldforms.add-custom-field')}</Button>
+            <PlusIcon size={12} />
+            {t('itemtypefieldforms.add-custom-field')}
+          </Button>
         ) : null}
       </div>
     </div>

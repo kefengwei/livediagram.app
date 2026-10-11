@@ -5,7 +5,6 @@
 // same way; each passes its own chip (the Q&A board's Anonymous switch, the
 // Idea box's fixed Anonymous badge).
 
-
 import { useRef, useState, type ReactNode } from 'react';
 import type { CommentMention } from '@livediagram/document';
 import { MentionMenu } from '@/components/primitives/MentionMenu';

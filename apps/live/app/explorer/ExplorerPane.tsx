@@ -238,7 +238,11 @@ export function ExplorerPane() {
             ? () => createFolder(selected.kind === 'folder' ? selected.id : null)
             : undefined
         }
-        folderLabel={selected.kind === 'folder' ? t('explorerpane.new-subfolder') : t('explorerpane.new-folder')}
+        folderLabel={
+          selected.kind === 'folder'
+            ? t('explorerpane.new-subfolder')
+            : t('explorerpane.new-folder')
+        }
       />
 
       {/* A view the app gathers explains itself under the breadcrumb. */}

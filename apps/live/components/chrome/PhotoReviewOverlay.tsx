@@ -383,7 +383,9 @@ export function PhotoReviewOverlay({
             <span
               aria-hidden
               className="h-3 w-3 shrink-0 animate-spin rounded-full border-2 border-slate-500 border-t-brand-400"
-            />{t('photoreviewoverlay.loading-your-photo')}</div>
+            />
+            {t('photoreviewoverlay.loading-your-photo')}
+          </div>
         )}
         <div className="pointer-events-none absolute right-2 top-2">
           <ZoomControls zoom={view.zoom} onZoomIn={zoomIn} onZoomOut={zoomOut} onFit={fit} />
@@ -439,13 +441,17 @@ export function PhotoReviewOverlay({
             type="button"
             onClick={onCancel}
             className="pointer-events-auto rounded-full border border-white/40 bg-slate-900/70 px-4 py-1.5 text-sm text-white shadow-lg backdrop-blur hover:bg-slate-900/90"
-          >{t('photoreviewoverlay.cancel')}</button>
+          >
+            {t('photoreviewoverlay.cancel')}
+          </button>
           <button
             type="button"
             onClick={confirm}
             disabled={edits.ticked.size === 0}
             className={`pointer-events-auto rounded-full bg-brand-500 px-4 py-1.5 text-sm font-semibold text-white shadow-lg hover:bg-brand-600 disabled:opacity-50 ${SOLID_BRAND_DARK_CONTROL}`}
-          >{t('photoreviewoverlay.add')}{edits.ticked.size} {edits.ticked.size === 1 ? 'note' : 'notes'}
+          >
+            {t('photoreviewoverlay.add')}
+            {edits.ticked.size} {edits.ticked.size === 1 ? 'note' : 'notes'}
           </button>
         </div>
       </div>

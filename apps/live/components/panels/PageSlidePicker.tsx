@@ -39,7 +39,9 @@ export function PageSlidePicker({
         type="button"
         onClick={() => onAdd(pageId)}
         className="shrink-0 cursor-pointer rounded-md border border-slate-200 bg-white px-2 py-1.5 text-[11px] font-medium text-slate-600 transition hover:border-brand-300 hover:text-brand-700 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300"
-      >{t('pageslidepicker.add-as-slide')}</button>
+      >
+        {t('pageslidepicker.add-as-slide')}
+      </button>
     </div>
   );
 }

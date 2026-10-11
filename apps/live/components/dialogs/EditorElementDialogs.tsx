@@ -119,7 +119,11 @@ export function EditorElementDialogs() {
     <>
       {linkPickerOpenForId !== null && !isReadOnly ? (
         <LinkPickerDialog
-          title={linkTarget?.type === 'video' ? t('editorelementdialogs.link-embed') : t('editorelementdialogs.link-element')}
+          title={
+            linkTarget?.type === 'video'
+              ? t('editorelementdialogs.link-embed')
+              : t('editorelementdialogs.link-element')
+          }
           urlOnly={urlOnly}
           currentLink={linkTarget?.link ?? null}
           tabs={tabs.map((t) => ({ id: t.id, name: t.name }))}

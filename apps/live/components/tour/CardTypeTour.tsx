@@ -53,7 +53,9 @@ export function ShowMeButton({ tour }: { tour: TourEngine<CardTypeTourApi> }) {
         tour.start();
       }}
     >
-      <FootprintsIcon />{t('cardtypetour.show-me')}</button>
+      <FootprintsIcon />
+      {t('cardtypetour.show-me')}
+    </button>
   );
 }
 

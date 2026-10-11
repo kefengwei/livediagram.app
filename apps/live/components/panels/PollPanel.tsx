@@ -85,7 +85,11 @@ export function PollPanel({
         </div>
 
         <p className="text-[10px] text-slate-400">
-          {answered}{t('pollpanel.answered')}{skipped}{t('pollpanel.skipped')}</p>
+          {answered}
+          {t('pollpanel.answered')}
+          {skipped}
+          {t('pollpanel.skipped')}
+        </p>
 
         {/* Two rows, not three side-by-side buttons. Three in a ~230px panel
             wrap to different line counts, and a row of buttons at three
@@ -109,15 +113,23 @@ export function PollPanel({
                     type="button"
                     onClick={onKeepResults}
                     className={`flex h-7 w-full items-center justify-center rounded-md bg-brand-500 px-2 text-[11px] font-semibold text-white transition hover:bg-brand-600 ${SOLID_BRAND_DARK_CONTROL}`}
-                  >{t('pollpanel.keep-results-2')}</button>
+                  >
+                    {t('pollpanel.keep-results-2')}
+                  </button>
                 </HoverCard>
               ) : null}
-              <HoverCard block title={t('pollpanel.end-poll')} description={t('pollpanel.end-the-poll-for-everyone')}>
+              <HoverCard
+                block
+                title={t('pollpanel.end-poll')}
+                description={t('pollpanel.end-the-poll-for-everyone')}
+              >
                 <button
                   type="button"
                   onClick={onEnd}
                   className="flex h-7 w-full items-center justify-center rounded-md border border-slate-200 px-2 text-[11px] font-medium text-slate-600 transition hover:border-brand-300 hover:text-brand-700 dark:border-slate-700 dark:text-slate-300"
-                >{t('pollpanel.end-poll-2')}</button>
+                >
+                  {t('pollpanel.end-poll-2')}
+                </button>
               </HoverCard>
             </>
           ) : (
@@ -125,7 +137,9 @@ export function PollPanel({
               type="button"
               onClick={onDismiss}
               className="flex h-7 w-full items-center justify-center rounded-md border border-slate-200 px-2 text-[11px] font-medium text-slate-600 transition hover:border-brand-300 hover:text-brand-700 dark:border-slate-700 dark:text-slate-300"
-            >{t('pollpanel.dismiss')}</button>
+            >
+              {t('pollpanel.dismiss')}
+            </button>
           )}
         </div>
       </div>

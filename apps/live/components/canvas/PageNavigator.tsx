@@ -58,7 +58,9 @@ export function PageNavigator({
       <div className={`pointer-events-auto ${TOOLBAR_CARD} !p-0.5`}>
         {arrow('Previous page', index - 1, <Prev />)}
         <span className="min-w-[4.5rem] px-1 text-center text-xs tabular-nums text-slate-600 dark:text-slate-300">
-          {index + 1}{t('pagenavigator.of')}{count}
+          {index + 1}
+          {t('pagenavigator.of')}
+          {count}
         </span>
         {arrow('Next page', index + 1, <Next />)}
       </div>

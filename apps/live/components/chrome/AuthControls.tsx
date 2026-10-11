@@ -84,7 +84,9 @@ function AuthControlsEnabled({ onOpenAccount }: AuthControlsProps) {
       <Link href={signInHref} className={`${HEADER_ACTION_BTN} ${HEADER_ACTION_TONE}`}>
         <HeaderGlyph>
           <SignInIcon />
-        </HeaderGlyph>{t('authcontrols.sign-in')}</Link>
+        </HeaderGlyph>
+        {t('authcontrols.sign-in')}
+      </Link>
     );
   }
 
@@ -155,7 +157,9 @@ function AuthControlsEnabled({ onOpenAccount }: AuthControlsProps) {
                 onOpenAccount();
               }}
               className="block w-full rounded px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700"
-            >{t('authcontrols.account')}</button>
+            >
+              {t('authcontrols.account')}
+            </button>
           ) : (
             <Link
               href="/explorer?settings=account"
@@ -163,7 +167,9 @@ function AuthControlsEnabled({ onOpenAccount }: AuthControlsProps) {
               tabIndex={-1}
               onClick={closeMenu}
               className="block w-full rounded px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700"
-            >{t('authcontrols.account-2')}</Link>
+            >
+              {t('authcontrols.account-2')}
+            </Link>
           )}
           <button
             type="button"
@@ -178,7 +184,9 @@ function AuthControlsEnabled({ onOpenAccount }: AuthControlsProps) {
               void signOut({ redirectUrl: '/' });
             }}
             className="block w-full rounded px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700"
-          >{t('authcontrols.sign-out')}</button>
+          >
+            {t('authcontrols.sign-out')}
+          </button>
         </AccountMenu>
       ) : null}
     </div>

@@ -64,8 +64,6 @@ function Swatch({
   onPreview: () => void;
   children?: ReactNode;
 }) {
-  
-  
   return (
     <Tooltip label={label}>
       <button
@@ -116,7 +114,7 @@ function CategoryControl({
   onChange: (c: BackgroundCategory) => void;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <div
       role="radiogroup"
@@ -162,7 +160,7 @@ export function BackgroundSection({
   onPreview: (patch: Partial<PageBackground> | null) => void;
 }) {
   const { t } = useTranslation();
-  
+
   const fill = page.background?.fill;
   const pattern = page.background?.pattern;
   const categories: BackgroundCategory[] = themePresets.length
@@ -283,7 +281,11 @@ export function BackgroundSection({
       {/* A logo page takes no pattern (docs/specs/007-editor/logo-pages.md "A logo page"). */}
       {pageKindOf(page) === 'logo' ? null : (
         <PanelSection title={t('page-background-section.pattern')}>
-          <div role="radiogroup" aria-label={t('page-background-section.pattern-2')} className="grid grid-cols-4 gap-1">
+          <div
+            role="radiogroup"
+            aria-label={t('page-background-section.pattern-2')}
+            className="grid grid-cols-4 gap-1"
+          >
             {(['none', ...PAGE_PATTERNS] as const).map((p) => {
               const on = (pattern ?? 'none') === p;
               const value = p === 'none' ? undefined : p;

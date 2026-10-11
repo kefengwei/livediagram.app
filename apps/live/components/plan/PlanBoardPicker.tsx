@@ -261,7 +261,9 @@ export function PlanBoardPicker({
         style={{ backgroundColor: palette.card, borderColor: palette.border, color: palette.text }}
       >
         <div className="flex items-center gap-2">
-          <h2 id="plan-board-picker-title" className="text-[17px] font-semibold">{t('planboardpicker.start-planning')}</h2>
+          <h2 id="plan-board-picker-title" className="text-[17px] font-semibold">
+            {t('planboardpicker.start-planning')}
+          </h2>
           <HelpArticleLink article="planBoards" variant="icon" />
         </div>
         <p className="mt-1 text-[13px]" style={{ color: palette.muted }}>
@@ -371,7 +373,9 @@ export function PlanBoardPicker({
                 ['--tw-ring-color' as string]: palette.focus,
               }}
             >
-              <SparkleIcon size={14} />{t('planboardpicker.open-quick-start')}</button>
+              <SparkleIcon size={14} />
+              {t('planboardpicker.open-quick-start')}
+            </button>
           </div>
         ) : null}
       </section>

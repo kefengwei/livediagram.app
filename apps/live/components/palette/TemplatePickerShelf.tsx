@@ -148,11 +148,17 @@ export function TemplatePickerShelf({
   ];
 
   const moreHeading = (
-    <h3 className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('templatepickershelf.explore-more-categories')}</h3>
+    <h3 className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+      {t('templatepickershelf.explore-more-categories')}
+    </h3>
   );
   const moreSummary = (
     <p className="text-[11px] text-slate-500 dark:text-slate-400">
-      {folded.length}{t('templatepickershelf.more-categories')}{foldedCount}{t('templatepickershelf.more-templates')}</p>
+      {folded.length}
+      {t('templatepickershelf.more-categories')}
+      {foldedCount}
+      {t('templatepickershelf.more-templates')}
+    </p>
   );
 
   return (
@@ -279,7 +285,9 @@ function ExpandToggle({
   onToggle: () => void;
 }) {
   const { t } = useTranslation();
-  const label = expanded ? t('templatepickershelf.show-fewer-templates') : t('templatepickershelf.show-all-templates');
+  const label = expanded
+    ? t('templatepickershelf.show-fewer-templates')
+    : t('templatepickershelf.show-all-templates');
   return (
     <Tooltip label={label}>
       <button

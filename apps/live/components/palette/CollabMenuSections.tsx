@@ -73,7 +73,11 @@ export function EstimateMenuSection({
   const { t } = useTranslation();
   const current = target?.estimateScale ?? DEFAULT_ESTIMATE_SCALE;
   return (
-    <MenuAccordionSection title={t('collabmenusections.scale')} icon={<ToolsMenuGlyph />} {...sectionProps('estimate')}>
+    <MenuAccordionSection
+      title={t('collabmenusections.scale')}
+      icon={<ToolsMenuGlyph />}
+      {...sectionProps('estimate')}
+    >
       <div className="flex flex-col gap-1 px-2 py-1.5">
         {ESTIMATE_SCALES.map((scale) => (
           <button
@@ -97,7 +101,9 @@ export function EstimateMenuSection({
             </span>
           </button>
         ))}
-        <p className="mt-0.5 text-[10px] leading-snug text-slate-500 dark:text-slate-400">{t('collabmenusections.changing-the-scale-keeps-answers-already')}</p>
+        <p className="mt-0.5 text-[10px] leading-snug text-slate-500 dark:text-slate-400">
+          {t('collabmenusections.changing-the-scale-keeps-answers-already')}
+        </p>
       </div>
     </MenuAccordionSection>
   );
@@ -134,7 +140,11 @@ export function AgendaMenuSection({
   };
 
   return (
-    <MenuAccordionSection title={t('collabmenusections.segments')} icon={<ToolsMenuGlyph />} {...sectionProps('agenda')}>
+    <MenuAccordionSection
+      title={t('collabmenusections.segments')}
+      icon={<ToolsMenuGlyph />}
+      {...sectionProps('agenda')}
+    >
       <div className="px-2 py-1.5">
         <div className="flex flex-col gap-1">
           {rows.map((item, i) => (
@@ -194,7 +204,9 @@ export function AgendaMenuSection({
           disabled={rows.length >= AGENDA_MAX_ITEMS}
           onClick={() => onSetItems([...rows, { label: '', minutes: AGENDA_DEFAULT_MINUTES }])}
           className={MENU_ADD_ROW_BUTTON}
-        >{t('collabmenusections.add-segment')}</button>
+        >
+          {t('collabmenusections.add-segment')}
+        </button>
       </div>
     </MenuAccordionSection>
   );
@@ -222,7 +234,11 @@ export function DecisionMenuSection({
   const [rows, setRows] = useFollowingDraft<string[]>(drivers);
 
   return (
-    <MenuAccordionSection title={t('collabmenusections.decision')} icon={<ToolsMenuGlyph />} {...sectionProps('decision')}>
+    <MenuAccordionSection
+      title={t('collabmenusections.decision')}
+      icon={<ToolsMenuGlyph />}
+      {...sectionProps('decision')}
+    >
       <div className="flex flex-col gap-2 px-2 py-1.5">
         <div>
           <span className={labelClass}>{t('collabmenusections.status')}</span>
@@ -257,7 +273,9 @@ export function DecisionMenuSection({
           </div>
         </div>
         <div>
-          <label className={labelClass} htmlFor="lvd-decision-date">{t('collabmenusections.date')}</label>
+          <label className={labelClass} htmlFor="lvd-decision-date">
+            {t('collabmenusections.date')}
+          </label>
           <DateInput
             id="lvd-decision-date"
             unstyled
@@ -299,7 +317,9 @@ export function DecisionMenuSection({
             disabled={rows.length >= DECISION_MAX_DRIVERS}
             onClick={() => onSetDrivers([...rows, ''])}
             className={MENU_ADD_ROW_BUTTON}
-          >{t('collabmenusections.add-driver')}</button>
+          >
+            {t('collabmenusections.add-driver')}
+          </button>
         </div>
       </div>
     </MenuAccordionSection>
@@ -322,7 +342,11 @@ export function ChairMenuSection({
   const { t } = useTranslation();
   const facing = target?.chairFacing ?? DEFAULT_CHAIR_FACING;
   return (
-    <MenuAccordionSection title={t('collabmenusections.chair')} icon={<ToolsMenuGlyph />} {...sectionProps('chair')}>
+    <MenuAccordionSection
+      title={t('collabmenusections.chair')}
+      icon={<ToolsMenuGlyph />}
+      {...sectionProps('chair')}
+    >
       {/* Tiles rather than a list: the arrow IS the answer here, which is the
           same test the palette applies to its own categories (docs/specs/010-palette/palette-top-level-categories.md). */}
       <MenuTileGrid cols={4}>
@@ -340,7 +364,9 @@ export function ChairMenuSection({
           />
         ))}
       </MenuTileGrid>
-      <p className="px-2 pb-1.5 pt-1 text-[10px] leading-snug text-slate-500 dark:text-slate-400">{t('collabmenusections.which-way-somebody-sitting-here-faces')}</p>
+      <p className="px-2 pb-1.5 pt-1 text-[10px] leading-snug text-slate-500 dark:text-slate-400">
+        {t('collabmenusections.which-way-somebody-sitting-here-faces')}
+      </p>
     </MenuAccordionSection>
   );
 }

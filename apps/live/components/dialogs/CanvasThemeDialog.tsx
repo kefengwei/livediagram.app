@@ -13,7 +13,6 @@
 // New-document picker respectively. Follows the standard modal contract
 // (Portal + backdrop + Escape) used by SettingsDialog.
 
-
 import { lucideGrid3x3 } from '@livediagram/icons/lucide';
 import { useRef } from 'react';
 import type { BackgroundPattern } from '@livediagram/document';
@@ -96,8 +95,7 @@ export function CanvasThemeDialog({
   onClose,
 }: CanvasThemeDialogProps) {
   const { t } = useTranslation();
-  
-  
+
   // Mount-open modal: silence the canvas shortcut/paste listeners
   // behind it (see lib/modal-guard).
   useModalGuard(true);
@@ -143,7 +141,9 @@ export function CanvasThemeDialog({
               {/* "Appearance" is the VIEWER's own light / dark chrome now
                   (docs/specs/007-editor/live-app.md), so this dialog — which is the tab's look, shared
                   with everyone — takes the name of the section that opens it. */}
-              <h2 className="text-sm font-semibold text-slate-800 dark:text-slate-100">{t('canvasthemedialog.tab-look-feel')}</h2>
+              <h2 className="text-sm font-semibold text-slate-800 dark:text-slate-100">
+                {t('canvasthemedialog.tab-look-feel')}
+              </h2>
               {/* Help sits with the close button, where the other editor
                   dialogs keep their window controls, not beside the title. */}
               <div className="flex items-center gap-1">
@@ -168,17 +168,23 @@ export function CanvasThemeDialog({
                 active={tab === 'theme'}
                 onClick={() => onTabChange('theme')}
                 icon={<ThemeTabIcon />}
-              >{t('canvasthemedialog.theme')}</TabButton>
+              >
+                {t('canvasthemedialog.theme')}
+              </TabButton>
               <TabButton
                 active={tab === 'canvas'}
                 onClick={() => onTabChange('canvas')}
                 icon={<BackgroundTabIcon />}
-              >{t('canvasthemedialog.canvas')}</TabButton>
+              >
+                {t('canvasthemedialog.canvas')}
+              </TabButton>
               <TabButton
                 active={tab === 'font'}
                 onClick={() => onTabChange('font')}
                 icon={<FontTabIcon />}
-              >{t('canvasthemedialog.font')}</TabButton>
+              >
+                {t('canvasthemedialog.font')}
+              </TabButton>
             </div>
           </div>
 
@@ -231,7 +237,9 @@ export function CanvasThemeDialog({
                       onClick={onResetElementsToTheme}
                       className="inline-flex items-center justify-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-slate-700 transition hover:border-brand-300 hover:bg-brand-50/40 hover:text-brand-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/15 dark:hover:text-brand-200"
                     >
-                      <ResetIcon />{t('canvasthemedialog.reset-elements-to-theme')}</button>
+                      <ResetIcon />
+                      {t('canvasthemedialog.reset-elements-to-theme')}
+                    </button>
                   </div>
                 }
               />
@@ -260,16 +268,22 @@ function FontTab({
   onApplyFontToAll: () => void;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
-        <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{t('canvasthemedialog.tab-font')}</span>
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          {t('canvasthemedialog.tab-font')}
+        </span>
         <FontSelect value={font} ariaLabel="Tab font" onChange={onSetFont} />
-        <p className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">{t('canvasthemedialog.the-default-for-every-text-element')}</p>
+        <p className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+          {t('canvasthemedialog.the-default-for-every-text-element')}
+        </p>
       </div>
       <div className="flex flex-col gap-1.5">
-        <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{t('canvasthemedialog.default-size-for-new-elements')}</span>
+        <span className="text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          {t('canvasthemedialog.default-size-for-new-elements')}
+        </span>
         <div className="grid grid-cols-4 gap-2">
           {(
             [
@@ -291,14 +305,18 @@ function FontTab({
             </SizeButton>
           ))}
         </div>
-        <p className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">{t('canvasthemedialog.seeded-onto-each-element-you-add')}</p>
+        <p className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+          {t('canvasthemedialog.seeded-onto-each-element-you-add')}
+        </p>
       </div>
       <div className="border-t border-slate-100 pt-3 dark:border-slate-800">
         <button
           type="button"
           onClick={onApplyFontToAll}
           className="inline-flex items-center justify-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-slate-700 transition hover:border-brand-300 hover:bg-brand-50/40 hover:text-brand-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/15 dark:hover:text-brand-200"
-        >{t('canvasthemedialog.apply-to-all-elements')}</button>
+        >
+          {t('canvasthemedialog.apply-to-all-elements')}
+        </button>
       </div>
     </div>
   );
@@ -315,7 +333,6 @@ function TabButton({
   icon: React.ReactNode;
   children: React.ReactNode;
 }) {
-  
   return (
     <button
       type="button"

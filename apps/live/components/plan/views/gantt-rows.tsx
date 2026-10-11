@@ -52,7 +52,6 @@ export function GanttStatusPill({
   // The names column is too narrow for the name: a dot, named in a tooltip.
   narrow: boolean;
 }) {
-  
   const colour = PHASE_COLOURS[status.phase];
   if (narrow)
     return (
@@ -106,7 +105,6 @@ export function GanttNameRow({
   // While this row is dragged: how far it has travelled (chart px).
   lift?: number | undefined;
 }) {
-  
   const kids = row.total ? `${row.done}/${row.total}` : '';
   const own = itemColourOf(row.item);
   const lifted = lift !== undefined;
@@ -163,7 +161,7 @@ export function GanttRowGrip({
   onGripDown: GanttRowReorderProps['onGripDown'];
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <Tooltip label={t('gantt-rows.drag-to-reorder')}>
       <span

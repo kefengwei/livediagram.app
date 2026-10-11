@@ -128,8 +128,12 @@ export function LaserPanel({
             onPick={(id) => onChange('effect', id)}
           />
         </div>
-        <p className="px-1 pt-1.5 text-[10px] leading-snug text-slate-400">{t('laserpanel.everyone-in-the-room-sees-your')}{' '}
-          {laserStrokeWidth(config)}{t('laserpanel.px-fading-over')}{(laserLifetimeMs(config) / 1000).toFixed(1)}{t('laserpanel.s')}</p>
+        <p className="px-1 pt-1.5 text-[10px] leading-snug text-slate-400">
+          {t('laserpanel.everyone-in-the-room-sees-your')} {laserStrokeWidth(config)}
+          {t('laserpanel.px-fading-over')}
+          {(laserLifetimeMs(config) / 1000).toFixed(1)}
+          {t('laserpanel.s')}
+        </p>
       </div>
     </ModePanel>
   );

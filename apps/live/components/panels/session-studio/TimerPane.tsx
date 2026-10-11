@@ -142,7 +142,11 @@ function LiveTimer({
         </div>
       ) : null}
       <div className="flex items-end justify-center gap-6">
-        <TransportButton label={t('timerpane.reset')} icon={<RestartGlyph />} onClick={onResetTimer} />
+        <TransportButton
+          label={t('timerpane.reset')}
+          icon={<RestartGlyph />}
+          onClick={onResetTimer}
+        />
         {done ? (
           <TransportButton
             primary
@@ -151,13 +155,25 @@ function LiveTimer({
             onClick={() => onStartTimer('countdown', timer.durationMs)}
           />
         ) : timer.running ? (
-          <TransportButton primary label={t('timerpane.pause')} icon={<PauseGlyph />} onClick={onPauseTimer} />
+          <TransportButton
+            primary
+            label={t('timerpane.pause')}
+            icon={<PauseGlyph />}
+            onClick={onPauseTimer}
+          />
         ) : (
-          <TransportButton primary label={t('timerpane.resume')} icon={<PlayGlyph />} onClick={onResumeTimer} />
+          <TransportButton
+            primary
+            label={t('timerpane.resume')}
+            icon={<PlayGlyph />}
+            onClick={onResumeTimer}
+          />
         )}
         <TransportButton label={t('timerpane.end')} icon={<StopGlyph />} onClick={onClearTimer} />
       </div>
-      <p className="text-center text-[10px] leading-snug text-slate-400">{t('timerpane.a-tab-runs-one-timer-end')}</p>
+      <p className="text-center text-[10px] leading-snug text-slate-400">
+        {t('timerpane.a-tab-runs-one-timer-end')}
+      </p>
     </div>
   );
 }

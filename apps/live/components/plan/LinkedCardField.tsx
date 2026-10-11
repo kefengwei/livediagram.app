@@ -266,7 +266,9 @@ export function LinkedCardField({
               );
             })}
             {options.length === 1 && query ? (
-              <li className="px-2 py-1.5 text-[12px] text-slate-500 dark:text-slate-400">{t('linkedcardfield.no-cards-match')}</li>
+              <li className="px-2 py-1.5 text-[12px] text-slate-500 dark:text-slate-400">
+                {t('linkedcardfield.no-cards-match')}
+              </li>
             ) : null}
           </ul>
         </div>

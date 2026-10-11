@@ -166,7 +166,9 @@ export function SheetFindBar() {
               setAt(k);
               actions.goTo({ r1: rest[k]!.r, c1: rest[k]!.c, r2: rest[k]!.r, c2: rest[k]!.c });
             }}
-          >{t('sheetfindbar.replace')}</button>
+          >
+            {t('sheetfindbar.replace')}
+          </button>
           <Button
             variant="primary"
             size="xs"
@@ -176,7 +178,9 @@ export function SheetFindBar() {
               if (r.count) c.write({ kind: 'cells', cells: r.cells }, 'Replace');
               c.notify(`Replaced ${r.count} cell${r.count === 1 ? '' : 's'}`);
             }}
-          >{t('sheetfindbar.replace-all')}</Button>
+          >
+            {t('sheetfindbar.replace-all')}
+          </Button>
         </div>
       ) : null}
       <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1" style={{ color: c.palette.muted }}>

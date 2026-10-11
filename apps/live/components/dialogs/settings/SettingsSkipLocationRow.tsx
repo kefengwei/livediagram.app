@@ -33,7 +33,8 @@ export function SettingsSkipLocationRow({
             </span>
             <span className="text-xs text-slate-600 dark:text-slate-300">
               {step ? (
-                <>{t('settingsskiplocationrow.new-documents-are-saved-in')}{' '}
+                <>
+                  {t('settingsskiplocationrow.new-documents-are-saved-in')}{' '}
                   <span className="font-semibold text-slate-800 dark:text-slate-100">
                     {step.placeName}
                   </span>
@@ -48,7 +49,9 @@ export function SettingsSkipLocationRow({
               type="button"
               className={PLACEMENT_ROW_BUTTON}
               onClick={() => onChange(turnOffSkipLocationStep(settings))}
-            >{t('settingsskiplocationrow.turn-off')}</button>
+            >
+              {t('settingsskiplocationrow.turn-off')}
+            </button>
           ) : null}
         </div>
       )}

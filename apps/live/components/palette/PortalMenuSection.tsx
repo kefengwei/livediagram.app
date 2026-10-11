@@ -76,9 +76,15 @@ export function PortalMenuSection({
   };
 
   return (
-    <MenuAccordionSection title={t('portalmenusection.portal')} icon={<ToolsMenuGlyph />} {...sectionProps}>
+    <MenuAccordionSection
+      title={t('portalmenusection.portal')}
+      icon={<ToolsMenuGlyph />}
+      {...sectionProps}
+    >
       <div className="px-3 pt-1">
-        <label className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('portalmenusection.name')}<input
+        <label className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
+          {t('portalmenusection.name')}
+          <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             onBlur={commitName}
@@ -95,7 +101,9 @@ export function PortalMenuSection({
           />
         </label>
       </div>
-      <p className="px-3 pt-2 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('portalmenusection.leads-to')}</p>
+      <p className="px-3 pt-2 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+        {t('portalmenusection.leads-to')}
+      </p>
       <MenuTileGrid cols={2}>
         {candidates.map((candidate) => (
           <MenuTile
@@ -112,7 +120,11 @@ export function PortalMenuSection({
         ))}
         {/* Always offered, and the only option when this is the first portal in
             the document: the far end usually doesn't exist yet. */}
-        <MenuTile icon={<PlusGlyph />} label={t('portalmenusection.create-portal')} onClick={onCreateLinkedPortal} />
+        <MenuTile
+          icon={<PlusGlyph />}
+          label={t('portalmenusection.create-portal')}
+          onClick={onCreateLinkedPortal}
+        />
       </MenuTileGrid>
     </MenuAccordionSection>
   );

@@ -1,6 +1,5 @@
 'use client';
 
-
 import { track } from '@/lib/telemetry';
 import type { ExplorerViewMode } from './useExplorerViewMode';
 import { HoverCard, Glyph } from '@livediagram/ui';
@@ -17,7 +16,7 @@ export function ViewToggle({
   onChange: (mode: ExplorerViewMode) => void;
 }) {
   const { t } = useTranslation();
-  
+
   // Track only real switches (docs/specs/017-telemetry/telemetry.md): clicking the already-active
   // side changes nothing, so it isn't a signal worth counting.
   const choose = (next: ExplorerViewMode) => {
@@ -65,7 +64,6 @@ function ToggleButton({
   description: string;
   children: React.ReactNode;
 }) {
-  
   return (
     <HoverCard title={label} description={description}>
       <button

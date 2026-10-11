@@ -1,4 +1,3 @@
-
 import { type TextAlignX, type TextAlignY } from '@livediagram/document';
 import { AlignIcon } from '@/components/palette/palette-icons';
 import { onMouseHover } from '@/components/primitives/hover-preview';
@@ -36,8 +35,6 @@ export function SizeButton({
   label?: string;
   children: React.ReactNode;
 }) {
-  
-  
   // Stretches to fill its parent grid cell so the row reads as four
   // equal-width controls rather than four shrink-to-fit pills floating
   // at the start of the row.
@@ -75,7 +72,6 @@ export function PatternButton({
   label: string;
   children: React.ReactNode;
 }) {
-  
   // w-full so every button fills its grid cell — the active/hover box
   // is then a uniform width regardless of how long the label is.
   const base =
@@ -136,7 +132,7 @@ export function AlignmentGrid({
   onPreviewEnd?: () => void;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <div className="grid grid-cols-3 gap-1">
       {ALIGN_GRID.map(({ x, y }) => {
@@ -284,7 +280,6 @@ export function ToggleSwitch({
   // repeating them here announced one control as two.
   presentational?: boolean;
 }) {
-  
   const trackClass = checked
     ? 'relative inline-flex h-5 w-9 shrink-0 items-center rounded-full bg-brand-500 transition'
     : 'relative inline-flex h-5 w-9 shrink-0 items-center rounded-full bg-slate-300 transition dark:bg-slate-600';

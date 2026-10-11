@@ -40,7 +40,7 @@ export const en = {
 ## Rules for new work
 
 - **No user-visible string is written inline in a component.** It is added to the English table and read through `useTranslation()`.
-- A string that is *data* rather than interface — a document name, an element's label, a comment, a template's own copy — is **never** translated by this system. It belongs to the person who wrote it.
+- A string that is _data_ rather than interface — a document name, an element's label, a comment, a template's own copy — is **never** translated by this system. It belongs to the person who wrote it.
 - Placeholders and examples in tests keep reading English: tests assert against the `en` table, so a translation can never turn a test red.
 - `aria-label`, `title`, tooltips and error copy are user-visible strings like any other.
 

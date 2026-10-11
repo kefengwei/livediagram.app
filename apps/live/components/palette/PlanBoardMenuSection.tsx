@@ -50,8 +50,7 @@ export function PlanBoardSettings({
   onClose?: (() => void) | undefined;
 }) {
   const { t } = useTranslation();
-  
-  
+
   const board = useBoard(element);
   const plan = usePlan();
   const [title, setTitle] = useState(board?.setup.title ?? '');
@@ -88,7 +87,9 @@ export function PlanBoardSettings({
               plan?.openBoardSetup(element.id);
             }}
           >
-            <PlanIcon size={14} />{t('planboardmenusection.setup-board')}</Button>
+            <PlanIcon size={14} />
+            {t('planboardmenusection.setup-board')}
+          </Button>
         )}
       </div>
     </MenuGroup>
@@ -115,7 +116,7 @@ function PlanBoardSetupSection(props: {
 // "Swimlanes by a field"), in one grid: a board has one grouping.
 export function PlanSwimlaneSettings({ element }: { element: ShapeElement }) {
   const { t } = useTranslation();
-  
+
   const board = useBoard(element);
   const plan = usePlan();
   if (!board) return null;
@@ -147,7 +148,7 @@ export function PlanSwimlaneSettings({ element }: { element: ShapeElement }) {
 // holds every type it archives).
 export function PlanSupportedCardsSettings({ element }: { element: ShapeElement }) {
   const { t } = useTranslation();
-  
+
   const board = useBoard(element);
   const plan = usePlan();
   if (!board || !plan?.types || board.setup.archive) return null;
@@ -155,7 +156,10 @@ export function PlanSupportedCardsSettings({ element }: { element: ShapeElement 
   // What the board shows and takes now (every type when its named ones were all deleted).
   const allowed = boardAddTypes(setup, plan.types).map((x) => x.id);
   return (
-    <MenuGroup title={t('planboardmenusection.card-types')} hint="The card types this board shows and lets you add.">
+    <MenuGroup
+      title={t('planboardmenusection.card-types')}
+      hint="The card types this board shows and lets you add."
+    >
       <CardTypeOptions
         types={plan.types}
         selected={allowed}
@@ -173,7 +177,7 @@ export function PlanSupportedCardsSettings({ element }: { element: ShapeElement 
 // The Card Layout section: the card size (what a card shows at each size is its type's Display).
 export function PlanCardLayoutSettings({ element }: { element: ShapeElement }) {
   const { t } = useTranslation();
-  
+
   const board = useBoard(element);
   if (!board) return null;
   const { setup, set } = board;
@@ -277,7 +281,7 @@ export function PlanBoardMenuSections({
   onClose?: (() => void) | undefined;
 }) {
   const { t } = useTranslation();
-  
+
   if (!useBoard(element)) return null;
   return (
     // One surface of settings, so a flyout row the menu keeps collapsible, never promoted inline.
@@ -308,7 +312,6 @@ export function BoardSettingsSection({
   onToggle: () => void;
   children: ReactNode;
 }) {
-  
   return (
     <section className="border-b border-slate-100 last:border-b-0 dark:border-slate-800">
       <button

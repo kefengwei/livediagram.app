@@ -92,7 +92,10 @@ export function BoxEditControls({
               </Tooltip>
             );
           })}
-          <HoverCard title={t('boxeditcontrols.delete-this-box')} description={t('boxeditcontrols.shortcut-del')}>
+          <HoverCard
+            title={t('boxeditcontrols.delete-this-box')}
+            description={t('boxeditcontrols.shortcut-del')}
+          >
             <GlyphDisc
               size={20}
               as="button"

@@ -5,7 +5,6 @@
 // latest author's colour. The whole body is one button that jumps to the
 // element; the check is its own button beside it (buttons don't nest).
 
-
 import { useState, type CSSProperties, type ReactNode } from 'react';
 import {
   CheckIcon,
@@ -47,8 +46,6 @@ function RowShell({
   onClick: () => void;
   label: string;
 }) {
-  
-  
   return (
     <li
       className="animate-slide-row-in stagger-enter"
@@ -89,7 +86,7 @@ export function ActionRowItem({
   onToggleDone?: (done: boolean) => void;
 }) {
   const { t } = useTranslation();
-  
+
   const now = useRelativeNow();
   const [pressed, setPressed] = useState(false);
   const done = row.status === 'done';
@@ -145,7 +142,9 @@ export function ActionRowItem({
       {row.mine ? (
         <span
           className={`mt-px shrink-0 rounded-full bg-brand-500 px-1.5 py-0.5 text-[9px] font-semibold text-white ${SOLID_BRAND_DARK}`}
-        >{t('collaboraterows.you')}</span>
+        >
+          {t('collaboraterows.you')}
+        </span>
       ) : (
         <HoverCard title={row.assigneeName} description={t('collaboraterows.assignee')}>
           <GlyphDisc
@@ -170,7 +169,7 @@ export function CommentRowItem({
   onClick: () => void;
 }) {
   const { t } = useTranslation();
-  
+
   const now = useRelativeNow();
   const color = row.latestAuthorColor;
   return (

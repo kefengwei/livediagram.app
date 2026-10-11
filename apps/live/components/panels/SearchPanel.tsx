@@ -327,22 +327,30 @@ export function SearchPanel({
                           <LocalOnlyPill asLabel />
                         ) : null}
                         {item.kind === 'element' ? (
-                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">{t('searchpanel.on')}{item.tabName}
+                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">
+                            {t('searchpanel.on')}
+                            {item.tabName}
                           </span>
                         ) : null}
                         {/* Which Settings category it lives in: "Theme" alone
                             does not say where picking it will land you, and
                             two settings can read alike out of context. */}
                         {item.kind === 'setting' ? (
-                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">{t('searchpanel.in')}{item.categoryLabel}
+                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">
+                            {t('searchpanel.in')}
+                            {item.categoryLabel}
                           </span>
                         ) : null}
                         {(item.kind === 'folder' || item.kind === 'document') && item.team ? (
-                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">{t('searchpanel.in-2')}{item.team.name}
+                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">
+                            {t('searchpanel.in-2')}
+                            {item.team.name}
                           </span>
                         ) : null}
                         {item.kind === 'tab' && item.isCurrent ? (
-                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">{t('searchpanel.current')}</span>
+                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">
+                            {t('searchpanel.current')}
+                          </span>
                         ) : null}
                       </button>
                     );

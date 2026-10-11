@@ -74,7 +74,9 @@ export function SlashMenu({
         }}
       >
         {items.length === 0 ? (
-          <p className="px-3 py-2 text-xs text-slate-500 dark:text-slate-400">{t('slashmenu.no-blocks-match')}</p>
+          <p className="px-3 py-2 text-xs text-slate-500 dark:text-slate-400">
+            {t('slashmenu.no-blocks-match')}
+          </p>
         ) : (
           groups.map((group) => (
             <div key={`${group.name}-${group.entries[0]!.i}`} role="group" aria-label={group.name}>

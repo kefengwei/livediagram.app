@@ -179,7 +179,9 @@ export function ShareDialog({
           className="flex flex-col gap-2 border-t border-slate-100 pt-5 dark:border-slate-800"
           aria-labelledby="share-passes-heading"
         >
-          <p id="share-passes-heading" className={`${SECTION_LABEL} flex items-center gap-1.5`}>{t('sharedialog.passes')}{activeLinks.length > 0 ? <CountBadge count={activeLinks.length} /> : null}
+          <p id="share-passes-heading" className={`${SECTION_LABEL} flex items-center gap-1.5`}>
+            {t('sharedialog.passes')}
+            {activeLinks.length > 0 ? <CountBadge count={activeLinks.length} /> : null}
           </p>
           {activeLinks.length === 0 ? (
             <p className="rounded-xl border-2 border-dashed border-slate-200 px-4 py-5 text-center text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
@@ -221,7 +223,9 @@ export function ShareDialog({
             something in it, so owners who never use expiry never see it. */}
         {inactiveLinks.length > 0 ? (
           <section className="flex flex-col gap-2" aria-labelledby="share-expired-heading">
-            <p id="share-expired-heading" className={`${SECTION_LABEL} flex items-center gap-1.5`}>{t('sharedialog.expired')}<CountBadge count={inactiveLinks.length} />
+            <p id="share-expired-heading" className={`${SECTION_LABEL} flex items-center gap-1.5`}>
+              {t('sharedialog.expired')}
+              <CountBadge count={inactiveLinks.length} />
             </p>
             <ul className="-mx-0.5 -mt-0.5 -mb-2 flex flex-col">
               {inactiveLinks.map((link) => (
@@ -253,7 +257,9 @@ export function ShareDialog({
         {nameLocked ? null : (
           <ShareIdentity participant={participant} name={name} onChange={setName} />
         )}
-        <Button variant="secondary" size="xs" onClick={close}>{t('sharedialog.done')}</Button>
+        <Button variant="secondary" size="xs" onClick={close}>
+          {t('sharedialog.done')}
+        </Button>
       </DialogFooter>
     </Dialog>
   );

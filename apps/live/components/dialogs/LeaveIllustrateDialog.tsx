@@ -24,7 +24,9 @@ export function LeaveIllustrateDialog({ leave }: { leave: LeaveIllustrate }) {
         <h2
           id="leave-illustrate-title"
           className="text-lg font-semibold text-slate-900 dark:text-slate-50"
-        >{t('leaveillustratedialog.turn-articles-into-pages')}</h2>
+        >
+          {t('leaveillustratedialog.turn-articles-into-pages')}
+        </h2>
         <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
           {mode} mode does not show the writing on article pages. Turn each article page into a Page
           you can keep writing in on the canvas, or keep them as articles to come back to in
@@ -32,9 +34,15 @@ export function LeaveIllustrateDialog({ leave }: { leave: LeaveIllustrate }) {
         </p>
       </div>
       <DialogFooter>
-        <Button variant="secondary" onClick={leave.cancel}>{t('leaveillustratedialog.cancel')}</Button>
-        <Button variant="secondary" onClick={leave.keep}>{t('leaveillustratedialog.keep-as-articles')}</Button>
-        <Button ref={convertRef} variant="primary" onClick={leave.convert}>{t('leaveillustratedialog.turn-into-pages')}</Button>
+        <Button variant="secondary" onClick={leave.cancel}>
+          {t('leaveillustratedialog.cancel')}
+        </Button>
+        <Button variant="secondary" onClick={leave.keep}>
+          {t('leaveillustratedialog.keep-as-articles')}
+        </Button>
+        <Button ref={convertRef} variant="primary" onClick={leave.convert}>
+          {t('leaveillustratedialog.turn-into-pages')}
+        </Button>
       </DialogFooter>
     </Dialog>
   );

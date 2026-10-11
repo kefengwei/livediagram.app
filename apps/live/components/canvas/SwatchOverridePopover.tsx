@@ -105,7 +105,9 @@ export function SwatchOverridePopover({
       style={{ left: 0, top: 0, visibility: 'hidden' }}
       className="pointer-events-auto fixed z-[var(--z-toolbar)] flex w-64 flex-col gap-2 rounded-lg border border-slate-200 bg-white p-2.5 text-slate-700 shadow-lg shadow-slate-900/5 motion-safe:animate-fade-in dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:shadow-slate-950/40"
     >
-      <span className="select-none text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('swatchoverridepopover.custom-colour')}</span>
+      <span className="select-none text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        {t('swatchoverridepopover.custom-colour')}
+      </span>
       {/* The one custom colour editor (docs/specs/004-interface-design/colour-picker.md "Picking a
           colour of your own"): Use saves the colour into the swatch and closes. */}
       <CustomColourEditor
@@ -125,7 +127,9 @@ export function SwatchOverridePopover({
               close();
             }}
             className="h-7 rounded-md px-2 text-xs font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:text-slate-200 dark:hover:bg-slate-800"
-          >{t('swatchoverridepopover.clear-override')}</button>
+          >
+            {t('swatchoverridepopover.clear-override')}
+          </button>
         ) : (
           // Nothing to clear yet: say what the swatch is instead of a dead button.
           <span className="px-1 text-[11px] text-slate-500 dark:text-slate-400">{themeNote}</span>

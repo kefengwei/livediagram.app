@@ -20,11 +20,25 @@ export function GanttScaleControls({
   const { t } = useTranslation();
   return (
     <>
-      <ViewStepButton label={t('ganttscalecontrols.today')} onPress={timeline.today} palette={palette}>{t('ganttscalecontrols.today-2')}</ViewStepButton>
-      <ViewStepButton label={t('ganttscalecontrols.earlier')} onPress={() => timeline.step(-1)} palette={palette}>
+      <ViewStepButton
+        label={t('ganttscalecontrols.today')}
+        onPress={timeline.today}
+        palette={palette}
+      >
+        {t('ganttscalecontrols.today-2')}
+      </ViewStepButton>
+      <ViewStepButton
+        label={t('ganttscalecontrols.earlier')}
+        onPress={() => timeline.step(-1)}
+        palette={palette}
+      >
         <ChevronLeftIcon size={14} />
       </ViewStepButton>
-      <ViewStepButton label={t('ganttscalecontrols.later')} onPress={() => timeline.step(1)} palette={palette}>
+      <ViewStepButton
+        label={t('ganttscalecontrols.later')}
+        onPress={() => timeline.step(1)}
+        palette={palette}
+      >
         <ChevronRightIcon size={14} />
       </ViewStepButton>
       <span

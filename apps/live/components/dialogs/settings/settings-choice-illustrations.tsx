@@ -1,4 +1,3 @@
-
 import type { ReactNode } from 'react';
 import { useTranslation, type MessageKey } from '@/lib/i18n';
 import { GAP, H, REM_PER_UNIT, StateFrame, W, pickable } from './settings-illustration-kit';
@@ -88,7 +87,12 @@ export const CHOICE_ILLUSTRATIONS: Record<ChoiceIllustrationId, ChoiceDrawing> =
         captionKey: 'settings.appearance.light',
         art: <ModeWindow dark={false} />,
       },
-      { id: 'dark', caption: 'Dark', captionKey: 'settings.appearance.dark', art: <ModeWindow dark /> },
+      {
+        id: 'dark',
+        caption: 'Dark',
+        captionKey: 'settings.appearance.dark',
+        art: <ModeWindow dark />,
+      },
       { id: 'system', caption: 'System', captionKey: 'settings.appearance.system', art: SystemArt },
     ],
     label:

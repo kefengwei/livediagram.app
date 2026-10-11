@@ -83,8 +83,12 @@ function Device() {
           <a
             href={`/sign-in/?redirect_url=${encodeURIComponent(back)}`}
             className={`inline-flex ${OAUTH_PRIMARY}`}
-          >{t('page.sign-in-2')}</a>
-          <button type="button" onClick={() => void cancel()} className={SECONDARY}>{t('page.cancel-3')}</button>
+          >
+            {t('page.sign-in-2')}
+          </a>
+          <button type="button" onClick={() => void cancel()} className={SECONDARY}>
+            {t('page.cancel-3')}
+          </button>
         </div>
       </OauthShell>
     );
@@ -131,7 +135,9 @@ function Device() {
     case 'checking':
       return (
         <OauthShell>
-          <p className="text-sm text-slate-500 dark:text-slate-400">{t('page.checking-this-code')}</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {t('page.checking-this-code')}
+          </p>
         </OauthShell>
       );
     case 'unknown':
@@ -144,7 +150,9 @@ function Device() {
               type="button"
               onClick={() => setStep({ kind: 'enter' })}
               className={OAUTH_PRIMARY}
-            >{t('page.try-again')}</button>
+            >
+              {t('page.try-again')}
+            </button>
           </div>
         </OauthShell>
       );
@@ -152,7 +160,10 @@ function Device() {
       const { userCode, clientName, working, failed } = step;
       return (
         <OauthShell>
-          <h1 className={HEADING}>{t('page.connect-2')}{clientName}</h1>
+          <h1 className={HEADING}>
+            {t('page.connect-2')}
+            {clientName}
+          </h1>
           <p className={BODY}>
             <span className="font-medium text-slate-700 dark:text-slate-200">{clientName}</span>{' '}
             wants to access your livediagram documents on your behalf. Approving creates an API
@@ -165,13 +176,23 @@ function Device() {
             className="mt-4 flex w-full cursor-pointer items-start justify-between gap-3 rounded-lg border border-slate-200 px-3 py-2.5 text-left text-sm dark:border-slate-700"
           >
             <span className="min-w-0 text-slate-600 dark:text-slate-300">
-              <span className="font-medium text-slate-800 dark:text-slate-100">{t('page.read-only-access-3')}</span>{t('page.let-it-find-and-view-your-2')}</span>
+              <span className="font-medium text-slate-800 dark:text-slate-100">
+                {t('page.read-only-access-3')}
+              </span>
+              {t('page.let-it-find-and-view-your-2')}
+            </span>
             <span className="mt-0.5 shrink-0">
-              <ToggleSwitch presentational checked={readOnly} label={t('page.read-only-access-4')} />
+              <ToggleSwitch
+                presentational
+                checked={readOnly}
+                label={t('page.read-only-access-4')}
+              />
             </span>
           </button>
           {failed ? (
-            <p role="alert" className="mt-3 text-xs text-rose-600 dark:text-rose-400">{t('page.something-went-wrong-please-try-again-2')}</p>
+            <p role="alert" className="mt-3 text-xs text-rose-600 dark:text-rose-400">
+              {t('page.something-went-wrong-please-try-again-2')}
+            </p>
           ) : null}
           <div className="mt-5 flex items-center gap-2">
             <button
@@ -182,7 +203,9 @@ function Device() {
             >
               {working ? 'Connecting…' : 'Connect'}
             </button>
-            <button type="button" onClick={() => void cancel()} className={SECONDARY}>{t('page.cancel-4')}</button>
+            <button type="button" onClick={() => void cancel()} className={SECONDARY}>
+              {t('page.cancel-4')}
+            </button>
           </div>
         </OauthShell>
       );
@@ -201,7 +224,9 @@ function Device() {
             <label
               htmlFor="device-code"
               className="text-sm font-medium text-slate-700 dark:text-slate-200"
-            >{t('page.code-shown-in-your-terminal')}</label>
+            >
+              {t('page.code-shown-in-your-terminal')}
+            </label>
             <input
               id="device-code"
               value={typed}
@@ -213,9 +238,13 @@ function Device() {
               placeholder={t('page.xxxx-xxxx')}
               className="rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-base tracking-widest text-slate-900 uppercase focus-visible:outline-2 focus-visible:outline-brand-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
             />
-            <p className="text-xs text-slate-500 dark:text-slate-400">{t('page.only-enter-a-code-shown-by')}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              {t('page.only-enter-a-code-shown-by')}
+            </p>
             <div>
-              <button type="submit" className={OAUTH_PRIMARY}>{t('page.continue')}</button>
+              <button type="submit" className={OAUTH_PRIMARY}>
+                {t('page.continue')}
+              </button>
             </div>
           </form>
         </OauthShell>

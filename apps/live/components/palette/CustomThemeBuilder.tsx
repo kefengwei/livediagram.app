@@ -154,7 +154,11 @@ export function CustomThemeBuilder({
       {/* Inline (in the theme browse): the shared BackBar returns. In a
           modal host (Explorer) the dialog owns the header, so no bar. */}
       {variant === 'inline' ? (
-        <BackBar label={t('customthemebuilder.back')} current={isEdit ? t('customthemebuilder.edit-theme') : t('customthemebuilder.new-theme')} onClick={onCancel} />
+        <BackBar
+          label={t('customthemebuilder.back')}
+          current={isEdit ? t('customthemebuilder.edit-theme') : t('customthemebuilder.new-theme')}
+          onClick={onCancel}
+        />
       ) : null}
 
       {/* Live preview — the in-progress theme as a real diagram scene,
@@ -162,7 +166,9 @@ export function CustomThemeBuilder({
       <div className="relative">
         <ThemeSwatch theme={previewTheme} heightClass="h-24" realPattern />
         <span className="inline-flex items-center pointer-events-none absolute right-2 top-2 rounded-md bg-slate-900/70 px-2 py-0.5 text-[10px] font-semibold text-white shadow-sm">
-          <span className="text-optical-line text-optical-caps [--optical-tracking:0.025em]">{t('customthemebuilder.illustration')}</span>
+          <span className="text-optical-line text-optical-caps [--optical-tracking:0.025em]">
+            {t('customthemebuilder.illustration')}
+          </span>
         </span>
       </div>
 
@@ -178,7 +184,9 @@ export function CustomThemeBuilder({
             type="button"
             onClick={() => setCopied(null)}
             className="font-medium underline-offset-2 hover:underline"
-          >{t('customthemebuilder.cancel')}</button>
+          >
+            {t('customthemebuilder.cancel')}
+          </button>
         </div>
       ) : null}
 
@@ -230,8 +238,14 @@ export function CustomThemeBuilder({
         </div>
       </div>
 
-      <ExpandRow label={t('customthemebuilder.pattern')} open={patternOpen} onToggle={() => setPatternOpen((o) => !o)}>
-        <p className="mb-2 text-[11px] leading-snug text-slate-500 dark:text-slate-300">{t('customthemebuilder.the-pattern-tints-automatically-from-your')}</p>
+      <ExpandRow
+        label={t('customthemebuilder.pattern')}
+        open={patternOpen}
+        onToggle={() => setPatternOpen((o) => !o)}
+      >
+        <p className="mb-2 text-[11px] leading-snug text-slate-500 dark:text-slate-300">
+          {t('customthemebuilder.the-pattern-tints-automatically-from-your')}
+        </p>
         <FieldLabel className="mb-1">{t('customthemebuilder.style')}</FieldLabel>
         <div className="grid grid-cols-4 gap-1 sm:grid-cols-7">
           {PATTERNS.filter((p) => !isAnimatedPattern(p.id)).map((p) => (
@@ -302,14 +316,20 @@ export function CustomThemeBuilder({
           type="button"
           onClick={onCancel}
           className="rounded-md px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-        >{t('customthemebuilder.cancel-2')}</button>
+        >
+          {t('customthemebuilder.cancel-2')}
+        </button>
         <Button
           variant="primary"
           size="xs"
           disabled={saving}
           onClick={() => onSave({ name: name.trim() || 'My theme', definition: def })}
         >
-          {saving ? 'Saving…' : isEdit ? t('customthemebuilder.save-changes') : t('customthemebuilder.save-theme')}
+          {saving
+            ? 'Saving…'
+            : isEdit
+              ? t('customthemebuilder.save-changes')
+              : t('customthemebuilder.save-theme')}
         </Button>
       </div>
     </div>

@@ -115,7 +115,11 @@ export function PresentationElementPopover({
       ) : null}
 
       {comments > 0 ? (
-        <Section title={comments === 1 ? t('presentationelementpopover.1-comment') : `${comments} comments`}>
+        <Section
+          title={
+            comments === 1 ? t('presentationelementpopover.1-comment') : `${comments} comments`
+          }
+        >
           {/* No handlers: no composer, no resolve, no delete. */}
           <div className="max-h-64 overflow-y-auto text-slate-700 dark:text-slate-200">
             <CommentBubbles

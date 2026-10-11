@@ -1,4 +1,3 @@
-
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation, type MessageKey } from '@/lib/i18n';
 import { ChevronDownIcon, HoverCard, Portal } from '@livediagram/ui';
@@ -298,9 +297,7 @@ export function PaletteDropdown({
     >
       {triggerLeading}
       {selected?.icon ? <span className={ICON_WRAP}>{selected.icon}</span> : null}
-      {iconOnly ? null : (
-            <span className="truncate">{selected ? labelOf(selected) : null}</span>
-          )}
+      {iconOnly ? null : <span className="truncate">{selected ? labelOf(selected) : null}</span>}
       <ChevronDownIcon className="shrink-0" />
     </button>
   );

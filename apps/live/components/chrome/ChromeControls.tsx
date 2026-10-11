@@ -42,8 +42,16 @@ export function ChromeControls({
   return (
     <>
       {onOpenSearch ? (
-        <HoverCard title={t('chromecontrols.search')} description={t('chromecontrols.find-documents-folders-tabs-and-elements')}>
-          <button type="button" onClick={onOpenSearch} aria-label={t('chromecontrols.search-2')} className={BTN}>
+        <HoverCard
+          title={t('chromecontrols.search')}
+          description={t('chromecontrols.find-documents-folders-tabs-and-elements')}
+        >
+          <button
+            type="button"
+            onClick={onOpenSearch}
+            aria-label={t('chromecontrols.search-2')}
+            className={BTN}
+          >
             <SearchGlyph />
             <ChromeLabel show={labelled}>{t('chromecontrols.search-3')}</ChromeLabel>
           </button>

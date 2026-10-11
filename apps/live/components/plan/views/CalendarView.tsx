@@ -58,7 +58,13 @@ export function CalendarView({ plan, items, palette, fontFamily, height }: PlanV
       aside={
         <>
           {offset !== 0 ? (
-            <ViewStepButton label={t('calendarview.today')} onPress={() => setOffset(0)} palette={palette}>{t('calendarview.today-2')}</ViewStepButton>
+            <ViewStepButton
+              label={t('calendarview.today')}
+              onPress={() => setOffset(0)}
+              palette={palette}
+            >
+              {t('calendarview.today-2')}
+            </ViewStepButton>
           ) : null}
           <ViewStepButton
             label={t('calendarview.previous-month')}
@@ -108,7 +114,9 @@ export function CalendarView({ plan, items, palette, fontFamily, height }: PlanV
           <span
             className="pointer-events-none absolute inset-x-0 bottom-2 text-center text-[11px]"
             style={{ color: palette.muted }}
-          >{t('calendarview.nothing-due-this-month')}</span>
+          >
+            {t('calendarview.nothing-due-this-month')}
+          </span>
         ) : null}
       </div>
     </ViewFrame>
@@ -177,7 +185,9 @@ function DayCell({
         ))}
         {more > 0 ? (
           <span className="shrink-0 px-0.5 text-[10px]" style={{ color: palette.muted }}>
-            +{more}{t('calendarview.more')}</span>
+            +{more}
+            {t('calendarview.more')}
+          </span>
         ) : null}
       </div>
     </div>

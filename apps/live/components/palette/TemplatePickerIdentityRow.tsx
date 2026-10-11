@@ -37,7 +37,9 @@ export function TemplatePickerIdentityRow({
         <label
           htmlFor="welcome-name"
           className="block text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400"
-        >{t('templatepickeridentityrow.your-name')}</label>
+        >
+          {t('templatepickeridentityrow.your-name')}
+        </label>
         <input
           id="welcome-name"
           value={name}
@@ -57,7 +59,10 @@ export function TemplatePickerIdentityRow({
         />
       </div>
       {nameLocked ? null : (
-        <HoverCard title={t('templatepickeridentityrow.shuffle-name')} description={t('templatepickeridentityrow.pick-a-different-random-name')}>
+        <HoverCard
+          title={t('templatepickeridentityrow.shuffle-name')}
+          description={t('templatepickeridentityrow.pick-a-different-random-name')}
+        >
           <button
             type="button"
             onClick={() => onChangeName(randomName())}

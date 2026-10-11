@@ -7,7 +7,6 @@
 // status keeps one width per phase (Layout stability, "reserve per phase, not
 // per message"). Syncing is automatic, so there is no Sync now.
 
-
 import { useEffect, useRef, useState } from 'react';
 import { lucideCloud, lucideTriangleAlert } from '@livediagram/icons/lucide';
 import { Button, StableLabel, lucideGlyph } from '@livediagram/ui';
@@ -53,8 +52,6 @@ function StatusText({
   options: DriveStatusText[];
   current: DriveStatusText;
 }) {
-  
-  
   const all = options.some((o) => o.text === current.text) ? options : [...options, current];
   return (
     <span data-drive-status className="grid shrink-0 text-xs tabular-nums">
@@ -104,7 +101,7 @@ export function driveFolderUrl(folderId: string): string {
 
 export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
   const { t } = useTranslation();
-  
+
   const drive = useDriveMirror();
   const { status, connecting } = drive;
   const now = useSinceNow(status.lastSyncedAt);
@@ -149,7 +146,11 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
           act: drive.connect,
         };
       case 'resume':
-        return { label: t('googledrivesyncrow.resume'), held: busy === 'resume', act: run('resume', drive.resume) };
+        return {
+          label: t('googledrivesyncrow.resume'),
+          held: busy === 'resume',
+          act: run('resume', drive.resume),
+        };
       default:
         return null;
     }
@@ -161,7 +162,9 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
   // known (our own server says so before any call to Google).
   const folderLink =
     phase === 'connected' && status.rootName && status.rootFolderId ? (
-      <>{t('googledrivesyncrow.your-documents-are-synced-to')}<a
+      <>
+        {t('googledrivesyncrow.your-documents-are-synced-to')}
+        <a
           href={driveFolderUrl(status.rootFolderId)}
           target="_blank"
           rel="noopener noreferrer"
@@ -170,7 +173,9 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
         >
           {status.rootName}
           <ArrowOutIcon />
-        </a>{t('googledrivesyncrow.in-google-drive')}</>
+        </a>
+        {t('googledrivesyncrow.in-google-drive')}
+      </>
     ) : undefined;
 
   return (
@@ -208,7 +213,9 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
                     onClick={() => {
                       if (!connecting) void drive.connect();
                     }}
-                  >{t('googledrivesyncrow.connect')}</Button>
+                  >
+                    {t('googledrivesyncrow.connect')}
+                  </Button>
                 </span>
               ) : (
                 <span data-drive-disconnect>
@@ -218,7 +225,9 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
                     size="sm"
                     disabled={busy !== null}
                     onClick={run('disconnect', drive.disconnect)}
-                  >{t('googledrivesyncrow.disconnect')}</Button>
+                  >
+                    {t('googledrivesyncrow.disconnect')}
+                  </Button>
                 </span>
               )}
             </span>
@@ -245,7 +254,9 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
                   size="sm"
                   disabled={busy !== null}
                   onClick={run('adopt', () => drive.adopt(notice))}
-                >{t('googledrivesyncrow.show-folder')}</Button>
+                >
+                  {t('googledrivesyncrow.show-folder')}
+                </Button>
               ) : null}
               {problemAction ? (
                 <Button

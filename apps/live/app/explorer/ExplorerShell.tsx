@@ -195,7 +195,9 @@ function ShellChrome({ children }: { children: ReactNode }) {
             />
             <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85%] animate-slide-in-left flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 shadow-xl dark:border-slate-700 dark:bg-slate-800">
               <div className="mb-1 flex items-center justify-between pl-1">
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('explorershell.sections-2')}</span>
+                <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                  {t('explorershell.sections-2')}
+                </span>
                 <button
                   type="button"
                   onClick={() => setMobileNavOpen(false)}

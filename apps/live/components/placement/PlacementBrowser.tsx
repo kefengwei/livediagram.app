@@ -364,7 +364,11 @@ export function PlacementBrowser({
           <NewFolderTile
             layout={layout}
             enterIndex={children.length + 1}
-            label={newFolderParent ? t('placementbrowser.new-subfolder') : t('placementbrowser.new-folder')}
+            label={
+              newFolderParent
+                ? t('placementbrowser.new-subfolder')
+                : t('placementbrowser.new-folder')
+            }
             sub={newFolderParent ? `In ${newFolderParent.name}` : t('placementbrowser.create-here')}
             onCreate={async (name) => {
               const created = await onCreateFolder(name, newFolderParent?.id ?? null, teamId);

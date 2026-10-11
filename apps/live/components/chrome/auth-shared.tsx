@@ -97,8 +97,15 @@ export function AuthDisabledNotice() {
   const { t } = useTranslation();
   return (
     <AuthCard subtitle="Sign-in isn't enabled on this deployment" error="">
-      <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">{t('auth-shared.this-livediagram-instance-is-running-in')}<strong>guest-only</strong>{t('auth-shared.mode-the-canvas-works-without-an')}{' '}
-        <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs dark:bg-slate-800 dark:text-slate-200">{t('auth-shared.next-public-clerk-publishable-key')}</code>{' '}{t('auth-shared.at-build-time-and-redeploy')}</p>
+      <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+        {t('auth-shared.this-livediagram-instance-is-running-in')}
+        <strong>guest-only</strong>
+        {t('auth-shared.mode-the-canvas-works-without-an')}{' '}
+        <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs dark:bg-slate-800 dark:text-slate-200">
+          {t('auth-shared.next-public-clerk-publishable-key')}
+        </code>{' '}
+        {t('auth-shared.at-build-time-and-redeploy')}
+      </p>
       <div className="mt-6 flex justify-center">
         <a href="/" className={buttonClassName({ size: 'md', className: 'shadow-sm' })}>
           <ButtonContent>{t('auth-shared.continue-as-guest')}</ButtonContent>
@@ -129,7 +136,11 @@ function CodeInputRow({
 }) {
   const { t } = useTranslation();
   return (
-    <div className="flex justify-center gap-2" role="group" aria-label={t('auth-shared.verification-code')}>
+    <div
+      className="flex justify-center gap-2"
+      role="group"
+      aria-label={t('auth-shared.verification-code')}
+    >
       {[0, 1, 2, 3, 4, 5].map((i) => (
         <input
           key={i}
@@ -213,7 +224,8 @@ export function EmailCodeStep({
   const { t } = useTranslation();
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <p className="text-sm text-slate-600 dark:text-slate-400">{t('auth-shared.we-sent-a-verification-code-to')}{' '}
+      <p className="text-sm text-slate-600 dark:text-slate-400">
+        {t('auth-shared.we-sent-a-verification-code-to')}{' '}
         <strong className="text-slate-900 dark:text-slate-100">{email}</strong>. Enter it below.
       </p>
       <CodeInputRow
@@ -240,12 +252,16 @@ export function EmailCodeStep({
           onClick={onResend}
           disabled={loading}
           className="text-slate-600 hover:text-slate-900 disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-100"
-        >{t('auth-shared.resend-code')}</button>
+        >
+          {t('auth-shared.resend-code')}
+        </button>
         <button
           type="button"
           onClick={onBack}
           className="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
-        >{t('auth-shared.back')}</button>
+        >
+          {t('auth-shared.back')}
+        </button>
       </div>
     </form>
   );
@@ -284,7 +300,9 @@ export function AuthEmailField({
       <label
         htmlFor="email"
         className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-      >{t('auth-shared.email')}</label>
+      >
+        {t('auth-shared.email')}
+      </label>
       <TextInput
         id="email"
         type="email"
@@ -350,7 +368,9 @@ export function OrDivider() {
       <div className="relative flex justify-center text-xs uppercase tracking-wide">
         {/* The chip's fill must match the AuthCard surface so it reads as a
             gap in the rule, not a floating box. */}
-        <span className="bg-white px-2 text-slate-400 dark:bg-slate-900 dark:text-slate-400">{t('auth-shared.or')}</span>
+        <span className="bg-white px-2 text-slate-400 dark:bg-slate-900 dark:text-slate-400">
+          {t('auth-shared.or')}
+        </span>
       </div>
     </div>
   );

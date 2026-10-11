@@ -84,10 +84,16 @@ export function ElementContentSections({
           {...sectionProps('text')}
         >
           {target.type === 'table' ? (
-            <p className="px-3 pt-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('elementcontentsections.applies-to-every-cell')}</p>
+            <p className="px-3 pt-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+              {t('elementcontentsections.applies-to-every-cell')}
+            </p>
           ) : null}
           <div className="flex gap-1 px-2 py-1.5">
-            <TextToggle active={!!target.textBold} label={t('elementcontentsections.bold')} onClick={props.onToggleTextBold}>
+            <TextToggle
+              active={!!target.textBold}
+              label={t('elementcontentsections.bold')}
+              onClick={props.onToggleTextBold}
+            >
               <BoldIcon />
             </TextToggle>
             <TextToggle
@@ -112,7 +118,9 @@ export function ElementContentSections({
               <StrikethroughIcon />
             </TextToggle>
           </div>
-          <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('elementcontentsections.size')}</p>
+          <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+            {t('elementcontentsections.size')}
+          </p>
           <TextSizeTiles
             current={target.textSize ?? 'sm'}
             onSet={props.onSetTextSize}
@@ -148,7 +156,11 @@ export function ElementContentSections({
       ) : null}
       {/* Image — pick / change / clear the bitmap (docs/specs/009-elements/images.md). */}
       {target.type === 'image' ? (
-        <MenuAccordionSection title={t('elementcontentsections.image')} icon={<ImageGlyph />} {...sectionProps('image')}>
+        <MenuAccordionSection
+          title={t('elementcontentsections.image')}
+          icon={<ImageGlyph />}
+          {...sectionProps('image')}
+        >
           {hasImage ? (
             <MenuTileGrid cols={2}>
               <MenuTile
@@ -198,7 +210,11 @@ export function ElementContentSections({
       ) : null}
       {/* Table — header row / column + zebra. */}
       {target.type === 'table' ? (
-        <MenuAccordionSection title={t('elementcontentsections.table')} icon={<TableGlyph />} {...sectionProps('table')}>
+        <MenuAccordionSection
+          title={t('elementcontentsections.table')}
+          icon={<TableGlyph />}
+          {...sectionProps('table')}
+        >
           <MenuToggleRow
             label={t('elementcontentsections.header-row')}
             description={t('elementcontentsections.style-the-first-row-as-a')}
@@ -225,7 +241,11 @@ export function ElementContentSections({
           a video's YouTube URL (docs/specs/009-elements/youtube-video.md). Both keep their URL in `link`, so
           both use this one section rather than a second URL editor. */}
       {target.type === 'link-card' || target.type === 'video' ? (
-        <MenuAccordionSection title={t('elementcontentsections.link')} icon={<LinkMenuIcon />} {...sectionProps('link')}>
+        <MenuAccordionSection
+          title={t('elementcontentsections.link')}
+          icon={<LinkMenuIcon />}
+          {...sectionProps('link')}
+        >
           {hasLink ? (
             <MenuTileGrid cols={2}>
               <MenuTile
@@ -275,7 +295,11 @@ export function ElementContentSections({
           <MenuTileGrid cols={2}>
             <MenuTile
               icon={<ActionMenuIcon />}
-              label={target.action ? t('elementcontentsections.view-action') : t('elementcontentsections.assign-action')}
+              label={
+                target.action
+                  ? t('elementcontentsections.view-action')
+                  : t('elementcontentsections.assign-action')
+              }
               onClick={() => {
                 props.onAssignAction(target.id);
                 onClose();
@@ -307,7 +331,11 @@ export function ElementContentSections({
             <MenuTileGrid cols={2}>
               <MenuTile
                 icon={<LinkMenuIcon />}
-                label={target.link ? t('elementcontentsections.edit-link') : t('elementcontentsections.add-link')}
+                label={
+                  target.link
+                    ? t('elementcontentsections.edit-link')
+                    : t('elementcontentsections.add-link')
+                }
                 onClick={() => {
                   props.onLinkElement(target.id);
                   onClose();
@@ -315,7 +343,11 @@ export function ElementContentSections({
               />
               <MenuTile
                 icon={<NoteMenuIcon />}
-                label={target.note ? t('elementcontentsections.edit-note') : t('elementcontentsections.add-note')}
+                label={
+                  target.note
+                    ? t('elementcontentsections.edit-note')
+                    : t('elementcontentsections.add-note')
+                }
                 onClick={() => {
                   props.onOpenNote(target.id);
                   onClose();
@@ -326,7 +358,11 @@ export function ElementContentSections({
             <div className="px-2 py-1.5">
               <MenuTile
                 icon={<NoteMenuIcon />}
-                label={target.note ? t('elementcontentsections.edit-note-2') : t('elementcontentsections.add-note-2')}
+                label={
+                  target.note
+                    ? t('elementcontentsections.edit-note-2')
+                    : t('elementcontentsections.add-note-2')
+                }
                 onClick={() => {
                   props.onOpenNote(target.id);
                   onClose();

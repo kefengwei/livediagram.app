@@ -85,7 +85,9 @@ export function LockedElementMenu({
             id={`${noteId}-label`}
             aria-hidden
             className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400"
-          >{t('lockedelementmenu.in-use')}</p>
+          >
+            {t('lockedelementmenu.in-use')}
+          </p>
           {holders.map((holder) => (
             <button
               key={holder.id}
@@ -105,10 +107,16 @@ export function LockedElementMenu({
               />
               {/* The name is the point: "free it" without saying whose hold you
                 are breaking is an action you cannot judge before taking. */}
-              <span className="truncate">{t('lockedelementmenu.release')}{holder.name}{t('lockedelementmenu.s-hold')}</span>
+              <span className="truncate">
+                {t('lockedelementmenu.release')}
+                {holder.name}
+                {t('lockedelementmenu.s-hold')}
+              </span>
             </button>
           ))}
-          <p id={noteId} aria-hidden className="px-3 pt-1 text-[10px] leading-snug text-slate-400">{t('lockedelementmenu.they-keep-their-work-it-just')}</p>
+          <p id={noteId} aria-hidden className="px-3 pt-1 text-[10px] leading-snug text-slate-400">
+            {t('lockedelementmenu.they-keep-their-work-it-just')}
+          </p>
         </div>
       </MenuTreeContext.Provider>
     </Portal>

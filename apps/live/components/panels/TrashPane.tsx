@@ -31,10 +31,16 @@ export function TrashPane({ trash }: { trash: TrashController }) {
 
   return (
     <div className="flex flex-col gap-5">
-      <InfoNote>{t('trashpane.deleted-documents-wait-here-for')}{TRASH_RETENTION_DAYS}{t('trashpane.days-then-they-are-removed-for')}</InfoNote>
+      <InfoNote>
+        {t('trashpane.deleted-documents-wait-here-for')}
+        {TRASH_RETENTION_DAYS}
+        {t('trashpane.days-then-they-are-removed-for')}
+      </InfoNote>
 
       {groups === null ? (
-        <p className="text-sm text-slate-400" role="status">{t('trashpane.loading')}</p>
+        <p className="text-sm text-slate-400" role="status">
+          {t('trashpane.loading')}
+        </p>
       ) : groups.length === 0 ? (
         <EmptyState
           icon={<TrashIcon size={18} />}
@@ -53,14 +59,18 @@ export function TrashPane({ trash }: { trash: TrashController }) {
                   {group.title}
                 </h2>
                 {group.scope.kind === 'local' ? (
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{t('trashpane.offline-documents-kept-only-in-this')}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    {t('trashpane.offline-documents-kept-only-in-this')}
+                  </p>
                 ) : null}
               </div>
               <button
                 type="button"
                 onClick={(e) => setConfirming({ kind: 'empty', group, anchor: e.currentTarget })}
                 className="shrink-0 rounded-md px-2.5 py-1 text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-              >{t('trashpane.empty-trash')}</button>
+              >
+                {t('trashpane.empty-trash')}
+              </button>
             </header>
             <ul className="divide-y divide-slate-100 dark:divide-slate-700/60">
               {group.rows.map((row) => (
@@ -86,7 +96,9 @@ export function TrashPane({ trash }: { trash: TrashController }) {
                       size="xs"
                       aria-label={`Restore ${row.name || t('trashpane.untitled-document-2')}`}
                       onClick={() => void trash.restore(row.id, group)}
-                    >{t('trashpane.restore')}</Button>
+                    >
+                      {t('trashpane.restore')}
+                    </Button>
                     <button
                       type="button"
                       aria-label={`Delete ${row.name || t('trashpane.untitled-document-3')} permanently`}
@@ -100,7 +112,9 @@ export function TrashPane({ trash }: { trash: TrashController }) {
                         })
                       }
                       className="rounded-md px-2.5 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-                    >{t('trashpane.delete-permanently')}</button>
+                    >
+                      {t('trashpane.delete-permanently')}
+                    </button>
                   </div>
                 </li>
               ))}
@@ -117,7 +131,11 @@ export function TrashPane({ trash }: { trash: TrashController }) {
               ? `Delete "${confirming.name}" for good? This cannot be undone.`
               : emptyMessage(confirming.group)
           }
-          confirmLabel={confirming.kind === 'purge' ? t('trashpane.delete-permanently-2') : t('trashpane.empty-trash-2')}
+          confirmLabel={
+            confirming.kind === 'purge'
+              ? t('trashpane.delete-permanently-2')
+              : t('trashpane.empty-trash-2')
+          }
           onConfirm={() => {
             if (confirming.kind === 'purge') {
               void trash.purge(confirming.id, confirming.group);

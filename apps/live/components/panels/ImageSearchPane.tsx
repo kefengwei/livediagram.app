@@ -43,7 +43,9 @@ export function ImageSearchPane({
           search.submit(draft);
         }}
       >
-        <label htmlFor="image-search-query" className="sr-only">{t('imagesearchpane.search-images')}</label>
+        <label htmlFor="image-search-query" className="sr-only">
+          {t('imagesearchpane.search-images')}
+        </label>
         <TextInput
           id="image-search-query"
           type="search"
@@ -53,7 +55,9 @@ export function ImageSearchPane({
           placeholder={t('imagesearchpane.search-openly-licensed-images')}
           className="min-w-0 flex-1"
         />
-        <Button type="submit" size="sm" disabled={loading}>{t('imagesearchpane.search')}</Button>
+        <Button type="submit" size="sm" disabled={loading}>
+          {t('imagesearchpane.search')}
+        </Button>
       </form>
 
       <div aria-live="polite" className="text-xs text-slate-500 dark:text-slate-400">
@@ -64,7 +68,11 @@ export function ImageSearchPane({
         ) : search.status === 'error' && search.error ? (
           <p className={ERROR_BOX}>{SEARCH_ERROR_COPY[search.error]}</p>
         ) : search.status === 'ready' && search.results.length === 0 ? (
-          <p>{t('imagesearchpane.no-images-match')}{search.query}{t('imagesearchpane.try-a-broader-word')}</p>
+          <p>
+            {t('imagesearchpane.no-images-match')}
+            {search.query}
+            {t('imagesearchpane.try-a-broader-word')}
+          </p>
         ) : null}
       </div>
 
@@ -96,16 +104,21 @@ export function ImageSearchPane({
           className="self-center"
           disabled={loading}
           onClick={search.loadMore}
-        >{t('imagesearchpane.load-more')}</Button>
+        >
+          {t('imagesearchpane.load-more')}
+        </Button>
       ) : null}
 
-      <p className="text-[11px] text-slate-500 dark:text-slate-400">{t('imagesearchpane.images-from')}{' '}
+      <p className="text-[11px] text-slate-500 dark:text-slate-400">
+        {t('imagesearchpane.images-from')}{' '}
         <a
           href="https://openverse.org"
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-slate-700 dark:hover:text-slate-200"
-        >{t('imagesearchpane.openverse')}</a>
+        >
+          {t('imagesearchpane.openverse')}
+        </a>
       </p>
     </div>
   );

@@ -1,6 +1,5 @@
 'use client';
 
-
 import { useCallback, useRef, useState, type CSSProperties } from 'react';
 import { lucidePanelsTopLeft, lucideSettings } from '@livediagram/icons/lucide';
 import { FirstPageChoice } from './FirstPageChoice';
@@ -95,8 +94,7 @@ export function IllustratePages({
   bare?: boolean;
 }) {
   const { t } = useTranslation();
-  
-  
+
   const { pages, focusPage } = view;
   const articles = view.articles ?? null;
   // An article page's style (a hover in its Style tab previews one).
@@ -476,7 +474,6 @@ function PageCog({
   onToggle: () => void;
   cogRef: (el: HTMLButtonElement | null) => void;
 }) {
-  
   return (
     <div
       className="pointer-events-auto"
@@ -508,7 +505,7 @@ function PageCog({
 // room in the title bar; on a phone, or when the page is small on screen, just the icon.
 function LayoutInvite({ wide, onOpen }: { wide: boolean; onOpen: () => void }) {
   const { t } = useTranslation();
-  
+
   return (
     <div
       className="pointer-events-auto"
@@ -524,7 +521,9 @@ function LayoutInvite({ wide, onOpen }: { wide: boolean; onOpen: () => void }) {
         >
           <LayoutIcon />
           {wide ? (
-            <span className="hidden whitespace-nowrap sm:inline">{t('illustratepages.start-from-a-layout-3')}</span>
+            <span className="hidden whitespace-nowrap sm:inline">
+              {t('illustratepages.start-from-a-layout-3')}
+            </span>
           ) : null}
         </button>
       </Tooltip>

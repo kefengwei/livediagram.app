@@ -61,7 +61,9 @@ export function MetricView({
         {label}
       </span>
       {plan?.status === 'loading' ? (
-        <span className="text-[12px]" style={{ color: palette.muted }}>{t('metricview.loading-cards')}</span>
+        <span className="text-[12px]" style={{ color: palette.muted }}>
+          {t('metricview.loading-cards')}
+        </span>
       ) : (
         // A press on the widget's own buttons stays with it in Plan mode; elsewhere it moves the element.
         <div

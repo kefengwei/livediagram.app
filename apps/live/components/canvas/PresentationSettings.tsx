@@ -11,7 +11,6 @@
 // Device-local (lib/presentation-config): how YOU drive a deck on THIS
 // machine, not a property of the document.
 
-
 import { HoverCard } from '@livediagram/ui';
 import { useTranslation } from '@/lib/i18n';
 import {
@@ -24,7 +23,6 @@ import {
 
 /** A labelled band of settings. */
 function Group({ title, children }: { title: string; children: React.ReactNode }) {
-  
   return (
     <>
       <span className="px-2 pb-0.5 pt-1.5 text-[10px] font-semibold uppercase tracking-wide text-white/40">
@@ -45,7 +43,6 @@ function Segmented<T extends string | number>({
   value: T;
   onPick: (id: T) => void;
 }) {
-  
   return (
     <div className="flex gap-1 px-1">
       {options.map((o) => (
@@ -121,7 +118,7 @@ export function PresentationSettings({
   onChange: (patch: Partial<PresentationConfig>) => void;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <div
       role="dialog"
@@ -156,7 +153,10 @@ export function PresentationSettings({
           options={AUTO_ADVANCE_CHOICES.map((c) => ({
             id: c.seconds,
             label: c.label,
-            hint: c.seconds === 0 ? t('presentationsettings.only-move-when-you-say-so') : `Advance every ${c.seconds}s`,
+            hint:
+              c.seconds === 0
+                ? t('presentationsettings.only-move-when-you-say-so')
+                : `Advance every ${c.seconds}s`,
           }))}
           value={config.autoAdvanceSeconds}
           onPick={(seconds) => onChange({ autoAdvanceSeconds: seconds })}

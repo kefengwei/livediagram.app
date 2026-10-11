@@ -104,9 +104,13 @@ export function DecisionFace({
         <span
           className="text-[9.5px] font-bold uppercase tracking-[0.08em]"
           style={{ color: ink, opacity: 0.85 }}
-        >{t('decisionface.because')}</span>
+        >
+          {t('decisionface.because')}
+        </span>
         {drivers.length === 0 ? (
-          <p className="text-[11px] leading-snug" style={{ color: textColor, opacity: 0.5 }}>{t('decisionface.add-what-drove-this-from-the')}</p>
+          <p className="text-[11px] leading-snug" style={{ color: textColor, opacity: 0.5 }}>
+            {t('decisionface.add-what-drove-this-from-the')}
+          </p>
         ) : (
           <ul className="flex flex-col gap-1.5">
             {drivers.map((driver, i) => (

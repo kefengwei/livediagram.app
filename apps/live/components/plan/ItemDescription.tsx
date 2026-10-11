@@ -86,7 +86,9 @@ export function ItemDescription({
         onClick={() => setEditing(true)}
         className="group -mx-3 flex w-[calc(100%+1.5rem)] cursor-text items-center gap-2 rounded-lg px-3 py-2 text-left text-[13px] text-slate-400 transition hover:bg-slate-50 hover:text-slate-600 dark:hover:bg-slate-800/50 dark:hover:text-slate-300"
       >
-        <PencilIcon size={14} />{t('itemdescription.add-a-description')}</button>
+        <PencilIcon size={14} />
+        {t('itemdescription.add-a-description')}
+      </button>
     );
   }
 
@@ -110,7 +112,9 @@ export function ItemDescription({
           aria-label={t('itemdescription.edit-the-description')}
           className="absolute right-2 top-2 flex items-center gap-1 rounded-md bg-white px-1.5 py-0.5 text-[11px] font-medium text-slate-500 opacity-0 shadow-sm transition focus-visible:opacity-100 group-hover:opacity-100 max-sm:opacity-100 dark:bg-slate-900 dark:text-slate-400"
         >
-          <PencilIcon size={11} />{t('itemdescription.edit')}</button>
+          <PencilIcon size={11} />
+          {t('itemdescription.edit')}
+        </button>
       </div>
     );
   }
@@ -149,7 +153,11 @@ export function ItemDescription({
       />
       <div className="mt-1.5 flex items-center justify-between gap-2 px-1 text-[11px] text-slate-500 dark:text-slate-400">
         <span className="max-sm:hidden">
-          <kbd className="font-sans">{t('itemdescription.b')}</kbd>{t('itemdescription.bold')}<kbd className="font-sans">{t('itemdescription.i')}</kbd>{t('itemdescription.italic-esc-to-finish')}</span>
+          <kbd className="font-sans">{t('itemdescription.b')}</kbd>
+          {t('itemdescription.bold')}
+          <kbd className="font-sans">{t('itemdescription.i')}</kbd>
+          {t('itemdescription.italic-esc-to-finish')}
+        </span>
         <span aria-live="polite" className="ml-auto">
           {status === 'saving' ? 'Saving…' : status === 'saved' ? 'Saved' : ''}
         </span>

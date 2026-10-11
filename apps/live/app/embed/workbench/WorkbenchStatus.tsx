@@ -42,7 +42,9 @@ export function WorkbenchStatus({ phase }: { phase: WorkbenchStatusPhase }) {
     case 'unbound':
       return (
         <StatusShell>
-          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">{t('workbenchstatus.this-view-opens-only-inside')}<code className="font-mono">{phase.origin}</code>.
+          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
+            {t('workbenchstatus.this-view-opens-only-inside')}
+            <code className="font-mono">{phase.origin}</code>.
           </h1>
         </StatusShell>
       );

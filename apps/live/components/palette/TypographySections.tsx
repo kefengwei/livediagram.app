@@ -80,7 +80,9 @@ export function LegendTextSize(props: Omit<Parameters<typeof TextSizeTiles>[0], 
   const { t } = useTranslation();
   return (
     <>
-      <p className="px-3 pt-2 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('typographysections.text-size')}</p>
+      <p className="px-3 pt-2 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+        {t('typographysections.text-size')}
+      </p>
       <TextSizeTiles {...props} withScale={false} />
     </>
   );
@@ -131,7 +133,11 @@ export function TypographySections({
       : {};
   return (
     <>
-      <MenuAccordionSection title={t('typographysections.font')} icon={<FontGlyph />} {...sectionProps('font')}>
+      <MenuAccordionSection
+        title={t('typographysections.font')}
+        icon={<FontGlyph />}
+        {...sectionProps('font')}
+      >
         <MenuTileGrid cols={2}>
           {FONTS.map((f) => (
             // No "Aa" swatch — the tile IS the font name rendered in its own
@@ -147,7 +153,11 @@ export function TypographySections({
           ))}
         </MenuTileGrid>
       </MenuAccordionSection>
-      <MenuAccordionSection title={t('typographysections.size')} icon={<DotsIcon count={2} />} {...sectionProps('size')}>
+      <MenuAccordionSection
+        title={t('typographysections.size')}
+        icon={<DotsIcon count={2} />}
+        {...sectionProps('size')}
+      >
         <TextSizeTiles
           current={currentSize}
           onSet={onSetSize}

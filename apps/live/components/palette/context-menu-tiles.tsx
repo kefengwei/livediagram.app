@@ -7,7 +7,6 @@
 // live here; the Progress picker stays in EditorContextMenu (it pairs with the
 // local MenuToggleRow) but reuses TileLabel + SpeedTiles from this module.
 
-
 import { useState, type ReactNode } from 'react';
 import {
   ANIMATION_SPEEDS,
@@ -71,7 +70,6 @@ export function SpeedTiles({
   value: AnimationSpeed;
   onSet: (v: AnimationSpeed) => void;
 }) {
-  
   return (
     <div className="grid grid-cols-4 gap-1 px-2 pb-1.5">
       {ANIMATION_SPEEDS.map((s) => (
@@ -99,7 +97,7 @@ export function SpeedAndRepeatRows({
   onSetRepeat: (v: boolean) => void;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <>
       <SpeedTiles value={speed} onSet={onSetSpeed} />
@@ -148,7 +146,6 @@ export function FlowTiles({
   onPreview?: (v: ArrowFlow | null) => void;
   onPreviewEnd?: () => void;
 }) {
-  
   useRevertOnUnmount(onPreviewEnd ?? NOOP);
   const { showSpeed, handleSet } = useSpeedRowGate(flow, onSet);
   return (
@@ -205,7 +202,6 @@ export function IconAnimationTiles({
   onPreview?: (v: IconAnimation | null) => void;
   onPreviewEnd?: () => void;
 }) {
-  
   useRevertOnUnmount(onPreviewEnd ?? NOOP);
   const { showSpeed, handleSet } = useSpeedRowGate(animation, onSet);
   return (
@@ -302,7 +298,6 @@ export function LegendPositionTiles({
   onSetOff: () => void;
   onSetPosition: (pos: ChartLegendPosition) => void;
 }) {
-  
   const isActive = (p: LegendPlacement) => (p === 'off' ? !show : show && position === p);
   return (
     <div className="grid grid-cols-5 gap-1 px-2 py-1.5">

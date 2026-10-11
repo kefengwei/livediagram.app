@@ -43,7 +43,9 @@ export function EntityView({
       />
       <div className="flex min-h-0 flex-1 flex-col gap-[3px] overflow-hidden px-2 py-1.5">
         {fields.length === 0 ? (
-          <span className="text-[10px] italic opacity-40" style={{ color: textColor }}>{t('entityview.no-fields-yet')}</span>
+          <span className="text-[10px] italic opacity-40" style={{ color: textColor }}>
+            {t('entityview.no-fields-yet')}
+          </span>
         ) : (
           fields.map((f, i) => <Row key={i} field={f} color={textColor} />)
         )}

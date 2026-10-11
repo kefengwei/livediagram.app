@@ -239,7 +239,11 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
           </>
         ) : null}
         {esNote ? null : (
-          <MenuAccordionSection title={t('editorcontextmenu.layer')} icon={<LayersGlyph />} {...sectionProps('layer')}>
+          <MenuAccordionSection
+            title={t('editorcontextmenu.layer')}
+            icon={<LayersGlyph />}
+            {...sectionProps('layer')}
+          >
             {/* Layer order tweaks keep the menu open so you can nudge
               front/back a few times in a row. */}
             <MenuTileGrid cols={2}>
@@ -282,7 +286,11 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
             notes) have no size to edit — offering the boxes would advertise
             a resize the drag paths deliberately ignore. */}
         {boxed && !isFixedSizeElement(target) ? (
-          <MenuAccordionSection title={t('editorcontextmenu.size')} icon={<SizeMenuIcon />} {...sectionProps('size')}>
+          <MenuAccordionSection
+            title={t('editorcontextmenu.size')}
+            icon={<SizeMenuIcon />}
+            {...sectionProps('size')}
+          >
             <SizeSection
               width={(target as { width: number }).width}
               height={(target as { height: number }).height}
@@ -299,7 +307,11 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
         ) : null}
         {/* Shape — morph to another common kind, preserving size + colour. */}
         {morphable ? (
-          <MenuAccordionSection title={t('editorcontextmenu.shape')} icon={<SquareMenuIcon />} {...sectionProps('shape')}>
+          <MenuAccordionSection
+            title={t('editorcontextmenu.shape')}
+            icon={<SquareMenuIcon />}
+            {...sectionProps('shape')}
+          >
             <div className="grid grid-cols-4 gap-1 px-2 py-1.5">
               {COMMON_SHAPES.map((kind) => (
                 <SizeButton
@@ -376,7 +388,11 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
             ArrowLine/PointerControls). */}
         {target.type === 'arrow' ? (
           <>
-            <MenuAccordionSection title={t('editorcontextmenu.line')} icon={<LineGlyph />} {...sectionProps('line')}>
+            <MenuAccordionSection
+              title={t('editorcontextmenu.line')}
+              icon={<LineGlyph />}
+              {...sectionProps('line')}
+            >
               <div className="px-3 py-1.5">
                 <ArrowLineControls
                   thickness={arrowThicknessOf(target)}

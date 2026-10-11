@@ -69,7 +69,11 @@ export function ExportPagePicker({
         </div>
         {pages.length > 1 ? (
           <Select
-            aria-label={scope === 'one' ? t('exportpagepicker.page-to-export') : t('exportpagepicker.page-to-preview')}
+            aria-label={
+              scope === 'one'
+                ? t('exportpagepicker.page-to-export')
+                : t('exportpagepicker.page-to-preview')
+            }
             size="sm"
             className="min-w-0 flex-1"
             value={page.index}

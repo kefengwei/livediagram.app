@@ -144,10 +144,16 @@ export function SheetSettingsPanel({
   const sized = layout.colWidth !== undefined || layout.rowHeight !== undefined;
   return (
     <>
-      <BoardSettingsSection title={t('sheetsettingspanel.sheet-setup')} icon={<DataGlyph />} {...section('data')}>
+      <BoardSettingsSection
+        title={t('sheetsettingspanel.sheet-setup')}
+        icon={<DataGlyph />}
+        {...section('data')}
+      >
         <Body>
           <label className="flex flex-col gap-1.5">
-            <span className="px-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">{t('sheetsettingspanel.title')}</span>
+            <span className="px-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">
+              {t('sheetsettingspanel.title')}
+            </span>
             <TextInput
               disabled={!c.canEdit}
               aria-label={t('sheetsettingspanel.title-2')}
@@ -167,9 +173,15 @@ export function SheetSettingsPanel({
               aria-label={t('sheetsettingspanel.clear-sheet')}
               className="rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
             >
-              <p>{t('sheetsettingspanel.start')}{c.sheet.title}{t('sheetsettingspanel.over-every-cell-format-and-setting')}</p>
+              <p>
+                {t('sheetsettingspanel.start')}
+                {c.sheet.title}
+                {t('sheetsettingspanel.over-every-cell-format-and-setting')}
+              </p>
               <div className="mt-2.5 flex justify-end gap-2">
-                <Button variant="ghost" size="xs" onClick={() => setConfirmClear(false)}>{t('sheetsettingspanel.cancel')}</Button>
+                <Button variant="ghost" size="xs" onClick={() => setConfirmClear(false)}>
+                  {t('sheetsettingspanel.cancel')}
+                </Button>
                 <Button
                   variant="primary"
                   size="xs"
@@ -178,7 +190,9 @@ export function SheetSettingsPanel({
                     actions.clearSheet();
                     onClose();
                   }}
-                >{t('sheetsettingspanel.clear')}</Button>
+                >
+                  {t('sheetsettingspanel.clear')}
+                </Button>
               </div>
             </div>
           ) : (
@@ -226,7 +240,11 @@ export function SheetSettingsPanel({
       </BoardSettingsSection>
       {c.canEdit ? (
         <>
-          <BoardSettingsSection title={t('sheetsettingspanel.sheet-options')} icon={<ViewGlyph />} {...section('view')}>
+          <BoardSettingsSection
+            title={t('sheetsettingspanel.sheet-options')}
+            icon={<ViewGlyph />}
+            {...section('view')}
+          >
             <Body>
               <SettingsRow
                 row={row('grid', 'Gridlines', 'The lines between the cells, for everyone.')}
@@ -244,14 +262,24 @@ export function SheetSettingsPanel({
               />
               {plan && elementId ? (
                 <div className="flex flex-col gap-1.5">
-                  <span className="px-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">{t('sheetsettingspanel.fill-tab')}</span>
+                  <span className="px-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">
+                    {t('sheetsettingspanel.fill-tab')}
+                  </span>
                   <OptionRows
                     kind="single"
                     label={t('sheetsettingspanel.fill-tab-2')}
                     selected={filled ? 'fill' : 'canvas'}
                     rows={[
-                      { id: 'canvas', label: t('sheetsettingspanel.on-canvas'), icon: <FillTabArt fill={false} /> },
-                      { id: 'fill', label: t('sheetsettingspanel.fill-tab-3'), icon: <FillTabArt fill /> },
+                      {
+                        id: 'canvas',
+                        label: t('sheetsettingspanel.on-canvas'),
+                        icon: <FillTabArt fill={false} />,
+                      },
+                      {
+                        id: 'fill',
+                        label: t('sheetsettingspanel.fill-tab-3'),
+                        icon: <FillTabArt fill />,
+                      },
                     ]}
                     onPick={(id) => void setFill(id === 'fill')}
                   />
@@ -262,7 +290,11 @@ export function SheetSettingsPanel({
               ) : null}
             </Body>
           </BoardSettingsSection>
-          <BoardSettingsSection title={t('sheetsettingspanel.cells')} icon={<SizeGlyph />} {...section('sizes')}>
+          <BoardSettingsSection
+            title={t('sheetsettingspanel.cells')}
+            icon={<SizeGlyph />}
+            {...section('sizes')}
+          >
             <Body>
               <div className="flex flex-col gap-2">
                 <SettingsRowShell
@@ -308,7 +340,9 @@ export function SheetSettingsPanel({
                   onClick={() => actions.setOptions({ colWidth: null, rowHeight: null })}
                   className="flex items-center gap-1.5 self-start rounded-md px-2 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
                 >
-                  <ResetGlyph />{t('sheetsettingspanel.reset-to-default')}</button>
+                  <ResetGlyph />
+                  {t('sheetsettingspanel.reset-to-default')}
+                </button>
               ) : null}
             </Body>
           </BoardSettingsSection>
@@ -316,7 +350,11 @@ export function SheetSettingsPanel({
       ) : null}
       {/* Freeze changes the sheet: someone who may only view does not see it. */}
       {c.canEdit ? (
-        <BoardSettingsSection title={t('sheetsettingspanel.freeze')} icon={<FreezeGlyph />} {...section('freeze')}>
+        <BoardSettingsSection
+          title={t('sheetsettingspanel.freeze')}
+          icon={<FreezeGlyph />}
+          {...section('freeze')}
+        >
           <Body>
             <div className="flex flex-col gap-2">
               <SettingsRowShell
@@ -351,10 +389,16 @@ export function SheetSettingsPanel({
           </Body>
         </BoardSettingsSection>
       ) : null}
-      <BoardSettingsSection title={t('sheetsettingspanel.calculations')} icon={<SigmaIcon />} {...section('calc')}>
+      <BoardSettingsSection
+        title={t('sheetsettingspanel.calculations')}
+        icon={<SigmaIcon />}
+        {...section('calc')}
+      >
         <Body>
           <div className="flex flex-col gap-1.5">
-            <span className="px-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">{t('sheetsettingspanel.totals')}</span>
+            <span className="px-0.5 text-xs font-medium text-slate-600 dark:text-slate-300">
+              {t('sheetsettingspanel.totals')}
+            </span>
             <OptionRows
               kind="multiple"
               label={t('sheetsettingspanel.totals-2')}
@@ -367,11 +411,17 @@ export function SheetSettingsPanel({
                 disabled: pick.length === 1 && pick.includes(stat),
               }))}
             />
-            <p className="px-0.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">{t('sheetsettingspanel.shown-under-a-selection-of-numbers')}</p>
+            <p className="px-0.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+              {t('sheetsettingspanel.shown-under-a-selection-of-numbers')}
+            </p>
           </div>
         </Body>
       </BoardSettingsSection>
-      <BoardSettingsSection title={t('sheetsettingspanel.named-ranges')} icon={<NamesGlyph />} {...section('names')}>
+      <BoardSettingsSection
+        title={t('sheetsettingspanel.named-ranges')}
+        icon={<NamesGlyph />}
+        {...section('names')}
+      >
         <Body>
           <SheetNamedRanges actions={actions} onClose={onClose} />
         </Body>

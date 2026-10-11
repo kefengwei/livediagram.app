@@ -151,7 +151,9 @@ export function PollComposerBody({
               ? `${question.length}/${POLL_QUESTION_MAX}`
               : undefined
           }
-        >{t('pollpane.question')}</StudioLabel>
+        >
+          {t('pollpane.question')}
+        </StudioLabel>
         <textarea
           value={question}
           rows={2}
@@ -225,14 +227,18 @@ export function PollComposerBody({
               type="button"
               onClick={() => addOption(true)}
               className="ml-6 self-start rounded-md px-1.5 py-0.5 text-[11px] font-semibold text-brand-600 transition hover:bg-brand-50 dark:text-brand-300 dark:hover:bg-brand-500/15"
-            >{t('pollpane.add-answer')}</button>
+            >
+              {t('pollpane.add-answer')}
+            </button>
           ) : null}
         </div>
       ) : null}
       <StudioButton variant="primary" onClick={start} disabled={missing !== null}>
         {missing ?? t('pollpane.ask-everyone')}
       </StudioButton>
-      <p className="text-center text-[10px] leading-snug text-slate-400">{t('pollpane.everyone-here-is-asked-view-only')}</p>
+      <p className="text-center text-[10px] leading-snug text-slate-400">
+        {t('pollpane.everyone-here-is-asked-view-only')}
+      </p>
     </div>
   );
 }
@@ -245,7 +251,9 @@ function RosterPreview({ options }: { options: string[] }) {
   const { t } = useTranslation();
   if (options.length === 0) {
     return (
-      <p className="rounded-lg bg-slate-50 px-2.5 py-2 text-[11px] text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">{t('pollpane.nobody-else-is-here-yet-share')}</p>
+      <p className="rounded-lg bg-slate-50 px-2.5 py-2 text-[11px] text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">
+        {t('pollpane.nobody-else-is-here-yet-share')}
+      </p>
     );
   }
   return (
@@ -272,7 +280,9 @@ function RunningPoll({ poll }: { poll: LivePoll }) {
     <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50/60 p-3 dark:border-emerald-500/30 dark:bg-emerald-500/10">
         <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" aria-hidden />{t('pollpane.asking-now')}{POLL_STYLE_LABEL[poll.style]}
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" aria-hidden />
+          {t('pollpane.asking-now')}
+          {POLL_STYLE_LABEL[poll.style]}
         </span>
         <span className="text-[13px] font-semibold leading-snug text-slate-800 dark:text-slate-100">
           {poll.question}

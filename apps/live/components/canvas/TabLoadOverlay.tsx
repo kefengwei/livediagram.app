@@ -60,7 +60,9 @@ export function TabLoadOverlay({
           <circle cx="16" cy="16" r="12" strokeOpacity="0.18" />
           <path d="M28 16a12 12 0 0 0-12-12" />
         </Glyph>
-        <p className="text-sm font-medium text-slate-600 dark:text-slate-400">{t('tabloadoverlay.loading-tab')}</p>
+        <p className="text-sm font-medium text-slate-600 dark:text-slate-400">
+          {t('tabloadoverlay.loading-tab')}
+        </p>
       </div>
     </div>
   );

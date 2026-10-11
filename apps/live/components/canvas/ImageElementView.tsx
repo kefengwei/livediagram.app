@@ -95,7 +95,9 @@ function ImageElementViewImpl({
         style={radiusStyle}
       >
         <ImageIcon />
-        <span className="text-[10px] font-medium">{t('imageelementview.double-click-to-upload')}</span>
+        <span className="text-[10px] font-medium">
+          {t('imageelementview.double-click-to-upload')}
+        </span>
       </div>
     );
   }

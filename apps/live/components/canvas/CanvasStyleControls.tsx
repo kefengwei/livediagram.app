@@ -110,7 +110,9 @@ export function CanvasStyleControls({
 
   return (
     <>
-      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-300">{t('canvasstylecontrols.pattern')}</p>
+      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-300">
+        {t('canvasstylecontrols.pattern')}
+      </p>
       <PatternGrid
         patterns={visibleStatic}
         gridClass={patternGridClass}
@@ -118,21 +120,38 @@ export function CanvasStyleControls({
         onPick={onSetBackgroundPattern}
       />
       {!showAllPatterns && staticList.hasMore && !staticList.showAll ? (
-        <ShowMoreButton label={t('canvasstylecontrols.show-more-patterns')} onClick={staticList.reveal} />
+        <ShowMoreButton
+          label={t('canvasstylecontrols.show-more-patterns')}
+          onClick={staticList.reveal}
+        />
       ) : null}
-      <p className="mt-3 border-t border-slate-100 pt-3 text-[10px] font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">{t('canvasstylecontrols.animated')}</p>
+      <p className="mt-3 border-t border-slate-100 pt-3 text-[10px] font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">
+        {t('canvasstylecontrols.animated')}
+      </p>
       <PatternGrid
         patterns={ANIMATED_PATTERNS}
         gridClass={patternGridClass}
         active={backgroundPattern}
         onPick={onSetBackgroundPattern}
       />
-      <p className="mt-3 border-t border-slate-100 pt-3 text-[10px] font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">{t('canvasstylecontrols.colours')}</p>
+      <p className="mt-3 border-t border-slate-100 pt-3 text-[10px] font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">
+        {t('canvasstylecontrols.colours')}
+      </p>
       <div className="mt-1 flex items-stretch gap-1">
-        <HoverCard title={t('canvasstylecontrols.canvas-colour')} description={t('canvasstylecontrols.the-colour-of-the-canvas-background')}>
-          <ColorSwatch label={t('canvasstylecontrols.canvas')} value={backgroundColor} onChange={onSetBackgroundColor} />
+        <HoverCard
+          title={t('canvasstylecontrols.canvas-colour')}
+          description={t('canvasstylecontrols.the-colour-of-the-canvas-background')}
+        >
+          <ColorSwatch
+            label={t('canvasstylecontrols.canvas')}
+            value={backgroundColor}
+            onChange={onSetBackgroundColor}
+          />
         </HoverCard>
-        <HoverCard title={t('canvasstylecontrols.pattern-colour')} description={t('canvasstylecontrols.the-colour-of-the-grid-dots')}>
+        <HoverCard
+          title={t('canvasstylecontrols.pattern-colour')}
+          description={t('canvasstylecontrols.the-colour-of-the-grid-dots')}
+        >
           <ColorSwatch
             label={t('canvasstylecontrols.pattern-2')}
             value={patternColor}
@@ -143,7 +162,9 @@ export function CanvasStyleControls({
       </div>
       <div className="mt-3 flex flex-col gap-1 border-t border-slate-100 pt-3 dark:border-slate-800">
         <div className="flex items-center justify-between">
-          <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('canvasstylecontrols.opacity')}</p>
+          <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
+            {t('canvasstylecontrols.opacity')}
+          </p>
           <span className="text-[10px] font-medium text-slate-500 dark:text-slate-300">
             {Math.round(backgroundOpacity * 100)}%
           </span>
@@ -160,7 +181,9 @@ export function CanvasStyleControls({
       </div>
       <div className="mt-3 flex flex-col gap-1">
         <div className="flex items-center justify-between">
-          <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('canvasstylecontrols.size')}</p>
+          <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
+            {t('canvasstylecontrols.size')}
+          </p>
           <span className="text-[10px] font-medium text-slate-500 dark:text-slate-300">
             {Math.round(backgroundPatternScale * 100)}%
           </span>
@@ -181,7 +204,9 @@ export function CanvasStyleControls({
       {isAnimatedPattern(backgroundPattern) ? (
         <div className="mt-3 flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('canvasstylecontrols.speed')}</p>
+            <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
+              {t('canvasstylecontrols.speed')}
+            </p>
             <span className="text-[10px] font-medium text-slate-500 dark:text-slate-300">
               {Math.round(backgroundAnimationSpeed * 100)}%
             </span>

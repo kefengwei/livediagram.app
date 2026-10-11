@@ -67,7 +67,12 @@ export function IdeaBoxFace({
 
   const menu =
     onClear || onOpenSettings ? (
-      <ElementEllipsisMenu kind="command" label={t('ideaboxface.idea-box-options')} color={textColor} align="left">
+      <ElementEllipsisMenu
+        kind="command"
+        label={t('ideaboxface.idea-box-options')}
+        color={textColor}
+        align="left"
+      >
         {(close) => (
           <>
             {onClear ? (
@@ -76,7 +81,9 @@ export function IdeaBoxFace({
                   onClear();
                   close();
                 }}
-              >{t('ideaboxface.empty-the-box')}{cards.length ? <CountBadge count={cards.length} /> : null}
+              >
+                {t('ideaboxface.empty-the-box')}
+                {cards.length ? <CountBadge count={cards.length} /> : null}
               </ElementMenuItem>
             ) : null}
             {onOpenSettings ? (
@@ -119,17 +126,19 @@ export function IdeaBoxFace({
         }
       >
         {!open && onReveal && cards.length > 0 ? (
-          <AccentBar onPress={onReveal} icon={<EyeGlyph />} count={cards.length}>{t('ideaboxface.open-the-box')}</AccentBar>
+          <AccentBar onPress={onReveal} icon={<EyeGlyph />} count={cards.length}>
+            {t('ideaboxface.open-the-box')}
+          </AccentBar>
         ) : null}
         {open && onScatter && cards.length > 0 ? (
-          <AccentBar onPress={onScatter} icon={<ScatterGlyph />}>{t('ideaboxface.scatter-to-sticky-notes')}</AccentBar>
+          <AccentBar onPress={onScatter} icon={<ScatterGlyph />}>
+            {t('ideaboxface.scatter-to-sticky-notes')}
+          </AccentBar>
         ) : null}
 
         {cards.length === 0 ? (
           <EmptyRows textColor={textColor} title={t('ideaboxface.nothing-in-the-box-yet')}>
-            {onAddIdea
-              ? t('ideaboxface.be-the-first-to-add-an')
-              : undefined}
+            {onAddIdea ? t('ideaboxface.be-the-first-to-add-an') : undefined}
           </EmptyRows>
         ) : open ? (
           <ul className="flex flex-col gap-1.5">
@@ -161,6 +170,8 @@ function AnonymousBadge() {
       className="pointer-events-auto inline-flex items-center gap-1 rounded-full py-0.5 pl-1 pr-2 text-[10px] font-semibold"
       style={{ color: QA_ACCENT_INK, backgroundColor: tint(QA_ACCENT, 0.14) }}
     >
-      <MaskGlyph size={11} />{t('ideaboxface.anonymous')}</span>
+      <MaskGlyph size={11} />
+      {t('ideaboxface.anonymous')}
+    </span>
   );
 }

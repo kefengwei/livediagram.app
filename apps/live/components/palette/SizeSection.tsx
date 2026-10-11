@@ -74,7 +74,9 @@ function SizeField({
           }}
           className="w-full rounded-md border border-slate-200 bg-white py-1 pl-2 pr-7 text-xs tabular-nums text-slate-700 outline-none transition focus:border-brand-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
         />
-        <span className="pointer-events-none absolute right-2 text-[10px] text-slate-400">{t('sizesection.px')}</span>
+        <span className="pointer-events-none absolute right-2 text-[10px] text-slate-400">
+          {t('sizesection.px')}
+        </span>
       </span>
     </label>
   );
@@ -106,8 +108,16 @@ export function SizeSection({
       <div className="flex items-end gap-2 px-3 py-2">
         {/* One dimension at a time, deliberately: passing only the edited key
             lets the setter carry the other one when the aspect lock is on. */}
-        <SizeField label={t('sizesection.width')} value={width} onCommit={(n) => onSetSize({ width: n })} />
-        <SizeField label={t('sizesection.height')} value={height} onCommit={(n) => onSetSize({ height: n })} />
+        <SizeField
+          label={t('sizesection.width')}
+          value={width}
+          onCommit={(n) => onSetSize({ width: n })}
+        />
+        <SizeField
+          label={t('sizesection.height')}
+          value={height}
+          onCommit={(n) => onSetSize({ height: n })}
+        />
       </div>
       <MenuToggleRow
         label={t('sizesection.lock-aspect-ratio')}
@@ -117,7 +127,10 @@ export function SizeSection({
       />
       {showReset ? (
         <div className="px-2 pb-1.5 pt-0.5">
-          <MenuActionButton label={t('sizesection.reset-aspect-ratio')} onClick={onResetAspectRatio} />
+          <MenuActionButton
+            label={t('sizesection.reset-aspect-ratio')}
+            onClick={onResetAspectRatio}
+          />
         </div>
       ) : null}
     </>

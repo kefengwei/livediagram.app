@@ -26,7 +26,11 @@ export function TimerPresetChips({
 }) {
   const { t } = useTranslation();
   return (
-    <div className="grid grid-cols-6 gap-1" role="group" aria-label={t('timerpresetchips.preset-lengths')}>
+    <div
+      className="grid grid-cols-6 gap-1"
+      role="group"
+      aria-label={t('timerpresetchips.preset-lengths')}
+    >
       {PRESETS.map((m) => (
         <button
           key={m}

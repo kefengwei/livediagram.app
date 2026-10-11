@@ -1,4 +1,3 @@
-
 import type { ReactNode } from 'react';
 
 // The selectable tile the palette's pickers are built from: a preview area

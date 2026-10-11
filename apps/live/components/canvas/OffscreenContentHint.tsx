@@ -20,9 +20,15 @@ export function OffscreenContentHint({ onBringBack }: OffscreenContentHintProps)
       onPointerDown={(e) => e.stopPropagation()}
       className="pointer-events-auto absolute bottom-full right-0 mb-2 flex w-56 animate-pop-in flex-col gap-1.5 rounded-lg border border-slate-200 bg-white p-3 text-left shadow-lg shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900 dark:shadow-slate-950/40"
     >
-      <p className="text-xs font-semibold text-slate-700 dark:text-slate-100">{t('offscreencontenthint.nothing-s-in-view')}</p>
-      <p className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">{t('offscreencontenthint.everything-on-this-tab-has-scrolled')}</p>
-      <Button size="xs" onClick={onBringBack} className="mt-0.5">{t('offscreencontenthint.bring-it-back-into-view')}</Button>
+      <p className="text-xs font-semibold text-slate-700 dark:text-slate-100">
+        {t('offscreencontenthint.nothing-s-in-view')}
+      </p>
+      <p className="text-[11px] leading-snug text-slate-500 dark:text-slate-400">
+        {t('offscreencontenthint.everything-on-this-tab-has-scrolled')}
+      </p>
+      <Button size="xs" onClick={onBringBack} className="mt-0.5">
+        {t('offscreencontenthint.bring-it-back-into-view')}
+      </Button>
       {/* Caret pointing down toward the zoom dock / Fit button below. */}
       <div className="absolute -bottom-1.5 right-6 h-3 w-3 rotate-45 border-b border-r border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900" />
     </div>

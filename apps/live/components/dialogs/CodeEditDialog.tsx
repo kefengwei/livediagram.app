@@ -73,7 +73,9 @@ export function CodeEditDialog({
           className="w-full resize-y rounded-lg border border-slate-200 bg-slate-900 p-3 font-mono text-xs leading-4 text-slate-200 outline-none focus:border-brand-400 dark:border-slate-700"
         />
         <div className="flex items-center justify-between gap-3">
-          <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">{t('codeeditdialog.language')}<select
+          <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+            {t('codeeditdialog.language')}
+            <select
               value={lang}
               onChange={(e) => setLang(e.target.value as CodeLanguage)}
               className="rounded-md border border-slate-200 bg-white px-2 py-1.5 text-sm text-slate-700 outline-none focus:border-brand-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
@@ -86,7 +88,9 @@ export function CodeEditDialog({
             </select>
           </label>
           <div className="flex items-center gap-2">
-            <Button variant="secondary" onClick={onClose}>{t('codeeditdialog.cancel')}</Button>
+            <Button variant="secondary" onClick={onClose}>
+              {t('codeeditdialog.cancel')}
+            </Button>
             <Button onClick={save}>{t('codeeditdialog.save')}</Button>
           </div>
         </div>

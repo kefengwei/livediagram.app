@@ -37,7 +37,7 @@ describe('interpolate', () => {
 });
 
 describe('lookup', () => {
-  it('prefers the reader\'s language', () => {
+  it("prefers the reader's language", () => {
     expect(lookup('header.share.label', zh, en)).toBe('分享');
   });
 

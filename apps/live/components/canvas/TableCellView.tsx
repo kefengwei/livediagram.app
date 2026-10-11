@@ -304,7 +304,10 @@ export function TableCellView({
           Clicking it follows the link (works in view + edit
           sessions) without selecting / editing the cell. */}
       {cs?.link && !isEditingCell ? (
-        <HoverCard title={t('tablecellview.follow-link')} description={describeLink(cs.link, tabSummaries)}>
+        <HoverCard
+          title={t('tablecellview.follow-link')}
+          description={describeLink(cs.link, tabSummaries)}
+        >
           <button
             type="button"
             onPointerDown={(e) => e.stopPropagation()}

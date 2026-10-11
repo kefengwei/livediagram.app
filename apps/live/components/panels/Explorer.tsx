@@ -201,7 +201,9 @@ function ExplorerImpl({
       <div className="flex flex-col gap-2 px-2.5 pb-2.5 pt-1">
         {(current ?? currentTeam ?? currentShared) ? (
           <div className="flex flex-col gap-1 rounded-xl bg-slate-50 p-2 ring-1 ring-slate-200/60 dark:bg-slate-800/50 dark:ring-slate-700/60">
-            <p className="px-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-white">{t('explorer.current-document')}</p>
+            <p className="px-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-white">
+              {t('explorer.current-document')}
+            </p>
             <ul className="flex flex-col gap-0.5 overflow-hidden">
               {current ? (
                 <DocumentRowShell exiting={exitingDocumentIds.has(current.id)}>

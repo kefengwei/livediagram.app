@@ -48,7 +48,11 @@ export function BoardSceneNotice({
         className="pointer-events-auto w-full max-w-[360px] rounded-lg border border-slate-200 bg-white p-3 text-slate-900 shadow-lg shadow-slate-900/5 motion-safe:animate-fade-in dark:border-slate-800 dark:bg-slate-900 dark:text-slate-100 dark:shadow-slate-950/40"
       >
         {notice.kind === 'progress' ? (
-          <p className="text-sm">{t('boardscenenotice.pasting-images')}{notice.done}{t('boardscenenotice.of')}{notice.total}…
+          <p className="text-sm">
+            {t('boardscenenotice.pasting-images')}
+            {notice.done}
+            {t('boardscenenotice.of')}
+            {notice.total}…
           </p>
         ) : (
           <div className="flex items-start gap-3">
@@ -84,7 +88,9 @@ export function BoardSceneNotice({
               onClick={onClose}
               data-testid="board-scene-notice-close"
               className="shrink-0 rounded-md px-2 py-1 text-xs font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:text-slate-200 dark:hover:bg-slate-800"
-            >{t('boardscenenotice.close')}</button>
+            >
+              {t('boardscenenotice.close')}
+            </button>
           </div>
         )}
       </div>

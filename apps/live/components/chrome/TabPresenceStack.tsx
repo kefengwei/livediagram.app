@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { MOTION_MS } from '@livediagram/tailwind-config/motion';
 import type { Participant } from '@/lib/identity';

@@ -47,9 +47,13 @@ export function CommunityPublishedConfirmation({
         <span className="flex h-16 w-16 animate-fade-in items-center justify-center rounded-full bg-brand-50 text-brand-500 dark:bg-brand-500/15 dark:text-brand-300">
           <SparklesIcon />
         </span>
-        <h2 id={titleId} className="text-lg font-semibold text-slate-900 dark:text-slate-50">{t('communitypublishedconfirmation.shared-to-the-community')}</h2>
+        <h2 id={titleId} className="text-lg font-semibold text-slate-900 dark:text-slate-50">
+          {t('communitypublishedconfirmation.shared-to-the-community')}
+        </h2>
         <p className="max-w-sm text-sm text-slate-600 dark:text-slate-300">
-          <span className="font-medium text-slate-800 dark:text-slate-100">{title}</span>{t('communitypublishedconfirmation.is-live-anyone-can-find-it')}</p>
+          <span className="font-medium text-slate-800 dark:text-slate-100">{title}</span>
+          {t('communitypublishedconfirmation.is-live-anyone-can-find-it')}
+        </p>
       </div>
       <DialogFooter>
         <Button variant="secondary" size="xs" onClick={copyLink}>
@@ -62,8 +66,12 @@ export function CommunityPublishedConfirmation({
           rel="noopener"
           className={buttonClassName({ variant: 'secondary', size: 'xs' })}
         >
-          <OpenIcon />{t('communitypublishedconfirmation.view-post')}</a>
-        <Button size="xs" onClick={onDone} autoFocus>{t('communitypublishedconfirmation.done')}</Button>
+          <OpenIcon />
+          {t('communitypublishedconfirmation.view-post')}
+        </a>
+        <Button size="xs" onClick={onDone} autoFocus>
+          {t('communitypublishedconfirmation.done')}
+        </Button>
       </DialogFooter>
     </>
   );

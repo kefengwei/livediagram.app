@@ -55,20 +55,26 @@ export function SetupTypesStep({
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between gap-2">
-        <p className="text-[13px]" style={{ color: palette.muted }}>{t('setup-board-steps.which-cards-belong-on-this-board')}</p>
+        <p className="text-[13px]" style={{ color: palette.muted }}>
+          {t('setup-board-steps.which-cards-belong-on-this-board')}
+        </p>
         <div className="flex shrink-0 gap-1">
           <button
             type="button"
             className={LINK}
             disabled={all}
             onClick={() => onChange(types.map((t) => t.id))}
-          >{t('setup-board-steps.select-all')}</button>
+          >
+            {t('setup-board-steps.select-all')}
+          </button>
           <button
             type="button"
             className={LINK}
             disabled={chosen.length === 0}
             onClick={() => onChange([])}
-          >{t('setup-board-steps.clear')}</button>
+          >
+            {t('setup-board-steps.clear')}
+          </button>
         </div>
       </div>
       <OptionRows
@@ -152,11 +158,15 @@ export function SetupColumnsStep({
   };
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-[13px]" style={{ color: palette.muted }}>{t('setup-board-steps.the-stages-your-cards-move-through')}</p>
+      <p className="text-[13px]" style={{ color: palette.muted }}>
+        {t('setup-board-steps.the-stages-your-cards-move-through')}
+      </p>
 
       {/* The columns so far, as the board will show them. */}
       <div className="flex flex-col gap-1.5">
-        <p className={`${HEADING} flex items-center gap-1.5`} style={{ color: palette.muted }}>{t('setup-board-steps.columns')}<CountBadge size="sm" background="#64748b26" color="#64748b">
+        <p className={`${HEADING} flex items-center gap-1.5`} style={{ color: palette.muted }}>
+          {t('setup-board-steps.columns')}
+          <CountBadge size="sm" background="#64748b26" color="#64748b">
             {chosen.length}
           </CountBadge>
         </p>
@@ -164,14 +174,18 @@ export function SetupColumnsStep({
           <p
             className="rounded-xl border-2 border-dashed px-3 py-4 text-center text-[12px]"
             style={{ borderColor: palette.cardBorder, color: palette.muted }}
-          >{t('setup-board-steps.no-columns-yet-add-one-below')}</p>
+          >
+            {t('setup-board-steps.no-columns-yet-add-one-below')}
+          </p>
         ) : (
           <SetupColumnList chosen={chosen} palette={palette} onChange={onChange} />
         )}
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor={inputId} className={HEADING} style={{ color: palette.muted }}>{t('setup-board-steps.add-a-new-state')}</label>
+        <label htmlFor={inputId} className={HEADING} style={{ color: palette.muted }}>
+          {t('setup-board-steps.add-a-new-state')}
+        </label>
         <div className="flex gap-2">
           <input
             id={inputId}
@@ -200,7 +214,9 @@ export function SetupColumnsStep({
             className={ADD_BUTTON}
             style={boardVars(palette)}
           >
-            <PlusIcon size={12} />{t('setup-board-steps.add')}</button>
+            <PlusIcon size={12} />
+            {t('setup-board-steps.add')}
+          </button>
         </div>
         <p className="min-h-4 text-[12px]" style={{ color: palette.muted }}>
           {full
@@ -216,7 +232,9 @@ export function SetupColumnsStep({
       {existing.length > 0 ? (
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
-            <p className={HEADING} style={{ color: palette.muted }}>{t('setup-board-steps.use-an-existing-state')}</p>
+            <p className={HEADING} style={{ color: palette.muted }}>
+              {t('setup-board-steps.use-an-existing-state')}
+            </p>
             {existing.length > 1 ? (
               <button
                 type="button"
@@ -234,7 +252,9 @@ export function SetupColumnsStep({
                     ].slice(0, max),
                   )
                 }
-              >{t('setup-board-steps.add-all')}</button>
+              >
+                {t('setup-board-steps.add-all')}
+              </button>
             ) : null}
           </div>
           {/* A row per state, as the column picker shows it: its colour, its name, the boards that use it and its

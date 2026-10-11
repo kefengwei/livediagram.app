@@ -7,7 +7,6 @@
 // one extra, selected tile after the set's own so it can be seen and replaced, and is gone for
 // good once anything else is picked.
 
-
 import { useState } from 'react';
 import {
   ANIMATION_SET_VALUES,

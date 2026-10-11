@@ -100,7 +100,9 @@ export function PollPromptSheet({
 
         <div className="flex flex-col gap-3 p-4">
           <div className="flex flex-col gap-1">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-300">{t('pollpromptsheet.quick-poll')}</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-300">
+              {t('pollpromptsheet.quick-poll')}
+            </span>
             <h2 className="text-base font-semibold leading-snug text-slate-800 dark:text-slate-100">
               {poll.question}
             </h2>
@@ -124,7 +126,9 @@ export function PollPromptSheet({
                 disabled={text.trim().length === 0}
                 onClick={() => onAnswer(text.trim())}
                 className={`w-full rounded-lg bg-brand-500 px-3 py-2 text-sm font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-40 ${SOLID_BRAND_DARK_CONTROL}`}
-              >{t('pollpromptsheet.send-answer')}</button>
+              >
+                {t('pollpromptsheet.send-answer')}
+              </button>
             </div>
           ) : (
             <div
@@ -148,12 +152,16 @@ export function PollPromptSheet({
           )}
 
           <div className="flex items-center justify-between gap-2 border-t border-slate-100 pt-2 dark:border-slate-800">
-            <span className="text-[10px] leading-snug text-slate-400">{t('pollpromptsheet.answers-aren-t-shown-against-names')}</span>
+            <span className="text-[10px] leading-snug text-slate-400">
+              {t('pollpromptsheet.answers-aren-t-shown-against-names')}
+            </span>
             <button
               type="button"
               onClick={() => onAnswer(null)}
               className="rounded-md px-2 py-1 text-[11px] font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-            >{t('pollpromptsheet.skip')}</button>
+            >
+              {t('pollpromptsheet.skip')}
+            </button>
           </div>
         </div>
       </div>

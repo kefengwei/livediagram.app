@@ -194,14 +194,18 @@ function GalleryCard({
       </div>
       <div className="mt-1">
         {usage.length === 0 ? (
-          <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400">{t('gallerypane.not-used')}</span>
+          <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+            {t('gallerypane.not-used')}
+          </span>
         ) : (
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
             className="inline-flex items-center gap-1 rounded-full bg-brand-50 px-2 py-0.5 text-[10px] font-medium text-brand-700 transition hover:bg-brand-100 dark:bg-brand-500/15 dark:text-brand-300 dark:hover:bg-brand-500/25"
             aria-expanded={open}
-          >{t('gallerypane.used-in')}{usage.length} {usage.length === 1 ? 'document' : 'documents'}
+          >
+            {t('gallerypane.used-in')}
+            {usage.length} {usage.length === 1 ? 'document' : 'documents'}
           </button>
         )}
       </div>

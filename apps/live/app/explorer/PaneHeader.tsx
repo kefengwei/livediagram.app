@@ -159,7 +159,9 @@ export function PaneHeader({
                 aria-expanded={createOpen}
                 className="shadow-sm"
               >
-                <PlusIcon />{t('paneheader.create')}<CaretDownIcon />
+                <PlusIcon />
+                {t('paneheader.create')}
+                <CaretDownIcon />
               </Button>
             ) : null}
             {showViewToggle ? <ViewToggle mode={viewMode!} onChange={onSetViewMode!} /> : null}

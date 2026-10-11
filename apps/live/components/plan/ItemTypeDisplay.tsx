@@ -378,14 +378,22 @@ export function ItemTypeDisplay({
                   : 'border-transparent'
             }`}
           >
-            <h4 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('itemtypedisplay.available-fields-2')}</h4>
+            <h4 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              {t('itemtypedisplay.available-fields-2')}
+            </h4>
             {draggingPlaced ? (
-              <p className="py-1 text-[12px] font-medium text-brand-700 dark:text-brand-300">{t('itemtypedisplay.drop-to-take-it-off-the')}</p>
+              <p className="py-1 text-[12px] font-medium text-brand-700 dark:text-brand-300">
+                {t('itemtypedisplay.drop-to-take-it-off-the')}
+              </p>
             ) : available.length === 0 ? (
-              <p className="text-[12px] text-slate-500 dark:text-slate-400">{t('itemtypedisplay.every-field-this-type-has-is')}</p>
+              <p className="text-[12px] text-slate-500 dark:text-slate-400">
+                {t('itemtypedisplay.every-field-this-type-has-is')}
+              </p>
             ) : (
               <>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">{t('itemtypedisplay.drag-one-onto-the-card-or')}</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                  {t('itemtypedisplay.drag-one-onto-the-card-or')}
+                </p>
                 <ul className="flex flex-wrap gap-1.5">
                   {available.map((f) => (
                     <li key={f}>
@@ -424,7 +432,9 @@ export function ItemTypeDisplay({
                   const { [size]: _drop, ...rest } = display;
                   onChange(rest);
                 }}
-              >{t('itemtypedisplay.reset-to-default')}</Button>
+              >
+                {t('itemtypedisplay.reset-to-default')}
+              </Button>
             </div>
           ) : null}
         </div>

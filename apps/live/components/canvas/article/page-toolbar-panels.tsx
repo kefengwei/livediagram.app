@@ -334,7 +334,11 @@ export function MorePanel({
 }) {
   const { t } = useTranslation();
   return (
-    <div role="menu" aria-label={t('page-toolbar-panels.more-formatting')} className="flex flex-col">
+    <div
+      role="menu"
+      aria-label={t('page-toolbar-panels.more-formatting')}
+      className="flex flex-col"
+    >
       <Row
         label={t('page-toolbar-panels.strikethrough')}
         icon={<PanelIcons.strike />}
@@ -368,7 +372,11 @@ export function MorePanel({
         keys="Mod-\\"
         onPick={() => onAction('clear')}
       />
-      <Row label={t('page-toolbar-panels.article-style')} icon={<PanelIcons.style />} onPick={() => onAction('style')} />
+      <Row
+        label={t('page-toolbar-panels.article-style')}
+        icon={<PanelIcons.style />}
+        onPick={() => onAction('style')}
+      />
     </div>
   );
 }
@@ -390,10 +398,26 @@ export function InsertPanel({
       <Row label={t('page-toolbar-panels.table')} onPick={() => onObject('table')} />
       <Row label={t('page-toolbar-panels.chart')} onPick={() => onObject('chart')} />
       <Rule />
-      <Row label={t('page-toolbar-panels.divider')} icon={<PanelIcons.divider />} onPick={() => onBlock('divider')} />
-      <Row label={t('page-toolbar-panels.page-break')} icon={<PanelIcons.pageBreak />} onPick={() => onBlock('pageBreak')} />
-      <Row label={t('page-toolbar-panels.quote')} icon={<PanelIcons.quote />} onPick={() => onBlock('quote')} />
-      <Row label={t('page-toolbar-panels.code')} icon={<PanelIcons.codeBlock />} onPick={() => onBlock('code')} />
+      <Row
+        label={t('page-toolbar-panels.divider')}
+        icon={<PanelIcons.divider />}
+        onPick={() => onBlock('divider')}
+      />
+      <Row
+        label={t('page-toolbar-panels.page-break')}
+        icon={<PanelIcons.pageBreak />}
+        onPick={() => onBlock('pageBreak')}
+      />
+      <Row
+        label={t('page-toolbar-panels.quote')}
+        icon={<PanelIcons.quote />}
+        onPick={() => onBlock('quote')}
+      />
+      <Row
+        label={t('page-toolbar-panels.code')}
+        icon={<PanelIcons.codeBlock />}
+        onPick={() => onBlock('code')}
+      />
     </div>
   );
 }

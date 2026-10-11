@@ -63,7 +63,6 @@ export function BorderGrid({
   cols: 3 | 4 | 5;
   children: ReactNode;
 }) {
-  
   const colClass = cols === 5 ? 'grid-cols-5' : cols === 4 ? 'grid-cols-4' : 'grid-cols-3';
   return (
     <div className="mb-1.5 last:mb-0">
@@ -102,7 +101,7 @@ export function MarkerTiles({
   onPreviewEnd?: () => void;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <>
       <div className="grid grid-cols-3 gap-1 px-2 py-1.5">
@@ -134,7 +133,9 @@ export function MarkerTiles({
         }
         aria-hidden={marker ? undefined : true}
       >
-        <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('context-menu-rows.size')}</p>
+        <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+          {t('context-menu-rows.size')}
+        </p>
         <TextSizeTiles
           current={size}
           onSet={onSetSize}
@@ -159,7 +160,7 @@ export function OpacityRow({
   onChange: (opacity: number) => void;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <PercentSliderRow
       label={t('context-menu-rows.opacity')}
@@ -181,7 +182,6 @@ export function TextToggle({
   onClick: () => void;
   children: ReactNode;
 }) {
-  
   return (
     <button
       type="button"

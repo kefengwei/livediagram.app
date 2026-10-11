@@ -83,7 +83,12 @@ export function PlanCardMenu({
     >
       <ContextMenu position={at} label={t('plancardmenu.card-menu')} onClose={onClose}>
         <MenuHeader title={title} />
-        <MenuActionRow plain label={t('plancardmenu.open')} icon={<PencilIcon />} onClick={act(onOpen)} />
+        <MenuActionRow
+          plain
+          label={t('plancardmenu.open')}
+          icon={<PencilIcon />}
+          onClick={act(onOpen)}
+        />
         {canEdit ? (
           <>
             <MenuActionRow
@@ -142,7 +147,12 @@ export function PlanCardMenu({
               icon={<PlanBoardTileArt preset="archive" size={16} />}
               onClick={act(onArchive)}
             />
-            <MenuActionRow plain label={t('plancardmenu.trash')} icon={<TrashIcon />} onClick={act(onTrash)} />
+            <MenuActionRow
+              plain
+              label={t('plancardmenu.trash')}
+              icon={<TrashIcon />}
+              onClick={act(onTrash)}
+            />
           </>
         ) : null}
       </ContextMenu>

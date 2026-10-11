@@ -137,8 +137,12 @@ export function TeamInviteJoin() {
           We&apos;ll bring you right back here.
         </Body>
         <div className="mt-5 flex flex-col gap-2">
-          <PrimaryLink href={`/sign-in/?redirect_url=${back}`}>{t('teaminvitejoin.sign-in-to-join')}</PrimaryLink>
-          <SecondaryLink href={`/get-started/?redirect_url=${back}`}>{t('teaminvitejoin.create-an-account')}</SecondaryLink>
+          <PrimaryLink href={`/sign-in/?redirect_url=${back}`}>
+            {t('teaminvitejoin.sign-in-to-join')}
+          </PrimaryLink>
+          <SecondaryLink href={`/get-started/?redirect_url=${back}`}>
+            {t('teaminvitejoin.create-an-account')}
+          </SecondaryLink>
         </div>
       </Card>
     );

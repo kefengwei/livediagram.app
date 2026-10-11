@@ -134,7 +134,9 @@ export function AvatarWalker({
               onStand();
             }}
             className="pointer-events-auto absolute left-1/2 top-full -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-full bg-slate-900/85 px-2 py-0.5 text-[10px] font-medium text-white shadow-sm"
-          >{t('avatarwalker.stand')}</button>
+          >
+            {t('avatarwalker.stand')}
+          </button>
         ) : null}
       </div>
     </>

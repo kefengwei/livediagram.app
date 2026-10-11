@@ -4,7 +4,6 @@
 // TemplatePicker so the same card renders in the open shelf's carousel
 // and the flat search results without the JSX being copy-pasted.
 
-
 import { EDITOR_MODE_ICONS } from '@livediagram/ui';
 import type { TemplateDescriptor, TemplateKind } from '@livediagram/templates';
 import { templateEditorMode } from '@livediagram/templates';

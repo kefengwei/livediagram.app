@@ -36,7 +36,9 @@ export function TimelineEmptyState() {
       <Link
         href="/new"
         className={`inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-500 ${SOLID_BRAND_DARK_CONTROL}`}
-      >{t('timelineemptystate.new-document')}</Link>
+      >
+        {t('timelineemptystate.new-document')}
+      </Link>
     </EmptyState>
   );
 }

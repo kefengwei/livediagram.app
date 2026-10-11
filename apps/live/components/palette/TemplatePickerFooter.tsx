@@ -46,10 +46,16 @@ export function TemplatePickerFooter({
         two modes share the row below. */}
       {isIdentity ? (
         <DialogFooter>
-          <p className="mr-auto text-[11px] text-slate-500 dark:text-slate-400">{t('templatepickerfooter.other-participants-will-see-this-name')}</p>
-          <Button variant="secondary" size="xs" onClick={onSkip}>{t('templatepickerfooter.cancel')}</Button>
+          <p className="mr-auto text-[11px] text-slate-500 dark:text-slate-400">
+            {t('templatepickerfooter.other-participants-will-see-this-name')}
+          </p>
+          <Button variant="secondary" size="xs" onClick={onSkip}>
+            {t('templatepickerfooter.cancel')}
+          </Button>
           <Button size="xs" onClick={onCommit} className="gap-1.5 px-4 shadow-sm">
-            <SparkleIcon />{t('templatepickerfooter.join')}</Button>
+            <SparkleIcon />
+            {t('templatepickerfooter.join')}
+          </Button>
         </DialogFooter>
       ) : (
         <div className="border-t border-slate-100 dark:border-slate-800">
@@ -65,7 +71,9 @@ export function TemplatePickerFooter({
                   onClick={onOpenExisting}
                   className="mr-auto inline-flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
                 >
-                  <FolderOpenIcon />{t('templatepickerfooter.open-existing-document')}</button>
+                  <FolderOpenIcon />
+                  {t('templatepickerfooter.open-existing-document')}
+                </button>
               ) : null
             ) : (
               <Button
@@ -75,7 +83,9 @@ export function TemplatePickerFooter({
                 // rounded-lg + py-2 keep the wizard footer's taller rhythm;
                 // overrides append after the size scale, so they win.
                 className="mr-auto rounded-lg py-2"
-              >{t('templatepickerfooter.cancel-2')}</Button>
+              >
+                {t('templatepickerfooter.cancel-2')}
+              </Button>
             )}
             {/* Right cluster: (welcome only) Skip, then the primary Next /
             commit action. Going BACK to the template step is driven by
@@ -92,7 +102,9 @@ export function TemplatePickerFooter({
                 onClick={skipToDefaults}
                 disabled={busy}
                 className="rounded-lg py-2"
-              >{t('templatepickerfooter.skip')}</Button>
+              >
+                {t('templatepickerfooter.skip')}
+              </Button>
             ) : null}
             {/* Advance vs commit. The welcome wizard's template step moves on
             to Location (Next), where Create commits; with no Location step
@@ -103,7 +115,9 @@ export function TemplatePickerFooter({
                 size="xs"
                 onClick={() => goToStep('settings')}
                 className="gap-1.5 rounded-lg px-4 py-2 shadow-sm"
-              >{t('templatepickerfooter.next')}<ArrowRightIcon />
+              >
+                {t('templatepickerfooter.next')}
+                <ArrowRightIcon />
               </Button>
             ) : (
               <Button

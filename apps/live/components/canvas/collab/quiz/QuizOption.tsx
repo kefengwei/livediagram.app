@@ -130,7 +130,9 @@ export function QuizOption({
             color: right ? QUIZ_CORRECT_GREEN : surface,
             backgroundColor: right ? '#ffffff' : textColor,
           }}
-        >{t('quizoption.you')}</span>
+        >
+          {t('quizoption.you')}
+        </span>
       ) : null}
     </button>
   );

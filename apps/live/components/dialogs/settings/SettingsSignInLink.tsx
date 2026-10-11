@@ -19,7 +19,9 @@ export function SettingsSignInLink() {
       <a
         href={signInHref}
         className="font-medium text-brand-600 underline-offset-2 hover:underline dark:text-brand-400"
-      >{t('settingssigninlink.sign-in')}</a>
+      >
+        {t('settingssigninlink.sign-in')}
+      </a>
     </>
   );
 }

@@ -56,7 +56,11 @@ export function PlanFillTabSetting({
         className="mx-3 my-1.5"
         selected={on ? 'fill' : 'canvas'}
         rows={[
-          { id: 'canvas', label: t('planfilltabsetting.on-canvas'), icon: <FillTabArt fill={false} /> },
+          {
+            id: 'canvas',
+            label: t('planfilltabsetting.on-canvas'),
+            icon: <FillTabArt fill={false} />,
+          },
           { id: 'fill', label: t('planfilltabsetting.fill-tab-3'), icon: <FillTabArt fill /> },
         ]}
         onPick={(id) => (id === 'fill' ? void turnOn() : turnOff())}

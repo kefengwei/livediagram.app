@@ -56,7 +56,9 @@ export function ShareOfflineGate({
           </Glyph>
         </span>
         <div className="flex flex-col gap-1.5">
-          <p className="text-sm font-medium text-slate-800 dark:text-slate-100">{t('shareofflinegate.sync-it-to-your-account-to')}</p>
+          <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
+            {t('shareofflinegate.sync-it-to-your-account-to')}
+          </p>
           <p className="mx-auto max-w-sm text-xs leading-relaxed text-slate-500 dark:text-slate-400">
             Share links, real-time collaboration, and the live image all need the document to live
             on our servers. Syncing uploads this document to your account and keeps working on it
@@ -69,7 +71,9 @@ export function ShareOfflineGate({
       </div>
 
       <DialogFooter>
-        <Button variant="secondary" size="xs" onClick={onClose} disabled={busy}>{t('shareofflinegate.cancel')}</Button>
+        <Button variant="secondary" size="xs" onClick={onClose} disabled={busy}>
+          {t('shareofflinegate.cancel')}
+        </Button>
       </DialogFooter>
     </Dialog>
   );

@@ -76,7 +76,9 @@ export function FunctionAssist({
           >
             <span className="font-semibold">{name}</span>
             <span className="ml-2" style={{ color: c.palette.muted }}>
-              {input.matches!.ranges.has(name) ? t('sheetcelleditor.named-range') : FUNCTION_DOCS[name]?.summary}
+              {input.matches!.ranges.has(name)
+                ? t('sheetcelleditor.named-range')
+                : FUNCTION_DOCS[name]?.summary}
             </span>
           </li>
         ))}

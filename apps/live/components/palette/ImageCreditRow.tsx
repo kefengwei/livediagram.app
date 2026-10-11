@@ -14,9 +14,13 @@ export function ImageCreditRow({ credit }: { credit: ImageCredit }) {
       <p className="font-medium text-slate-700 dark:text-slate-200">{t('imagecreditrow.credit')}</p>
       <p className="mt-0.5 break-words text-slate-600 dark:text-slate-300">{credit.text}</p>
       <p className="mt-1 flex gap-3">
-        <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer" className={LINK}>{t('imagecreditrow.source')}</a>
+        <a href={credit.sourceUrl} target="_blank" rel="noopener noreferrer" className={LINK}>
+          {t('imagecreditrow.source')}
+        </a>
         {credit.licenseUrl ? (
-          <a href={credit.licenseUrl} target="_blank" rel="noopener noreferrer" className={LINK}>{t('imagecreditrow.licence')}</a>
+          <a href={credit.licenseUrl} target="_blank" rel="noopener noreferrer" className={LINK}>
+            {t('imagecreditrow.licence')}
+          </a>
         ) : null}
       </p>
     </div>

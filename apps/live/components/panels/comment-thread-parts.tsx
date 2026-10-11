@@ -59,17 +59,23 @@ export function CommentResolveToggle({
         onClick={onResolve}
         className="inline-flex cursor-pointer items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
       >
-        <CheckIcon size={12} />{t('comment-thread-parts.resolve')}</button>
+        <CheckIcon size={12} />
+        {t('comment-thread-parts.resolve')}
+      </button>
     );
   return (
     <span className="inline-flex items-center gap-1.5">
       <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-medium text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300">
-        <CheckIcon size={11} />{t('comment-thread-parts.resolved')}</span>
+        <CheckIcon size={11} />
+        {t('comment-thread-parts.resolved')}
+      </span>
       <button
         type="button"
         onClick={onUnresolve}
         className="cursor-pointer rounded-md px-2 py-0.5 text-[11px] font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-      >{t('comment-thread-parts.reopen')}</button>
+      >
+        {t('comment-thread-parts.reopen')}
+      </button>
     </span>
   );
 }
@@ -98,7 +104,9 @@ export function CommentThreadList({
     return (
       <p
         className={`${density === 'comfortable' ? 'py-1 text-[13px]' : 'px-3 py-3 text-xs'} text-slate-500 dark:text-slate-400`}
-      >{t('comment-thread-parts.no-comments-yet-start-the-conversation')}</p>
+      >
+        {t('comment-thread-parts.no-comments-yet-start-the-conversation')}
+      </p>
     );
   return (
     <ul className={className}>
@@ -220,7 +228,9 @@ export function CommentComposer({
             disabled={!draft.trim()}
             // Keeps the compact density: overrides append after the size scale, so they win.
             className="px-3 py-1 text-[11px]"
-          >{t('comment-thread-parts.comment')}</Button>
+          >
+            {t('comment-thread-parts.comment')}
+          </Button>
         </div>
       </div>
     </footer>

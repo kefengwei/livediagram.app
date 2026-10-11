@@ -46,7 +46,9 @@ export function PaletteMyShapesTab({ onInsert }: { onInsert: (item: ShapeLibrary
         />
       </div>
       {sections.length === 0 ? (
-        <p className="px-1 py-2 text-center text-[11px] text-slate-500 dark:text-slate-400">{t('palettemyshapestab.no-shapes-match')}</p>
+        <p className="px-1 py-2 text-center text-[11px] text-slate-500 dark:text-slate-400">
+          {t('palettemyshapestab.no-shapes-match')}
+        </p>
       ) : (
         <div className="flex max-h-80 flex-col gap-3 overflow-y-auto overflow-x-hidden">
           {sections.map(({ library, shapes }) => {

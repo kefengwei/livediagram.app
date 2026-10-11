@@ -102,12 +102,17 @@ export function TopCenterChrome({
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/80" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
             </span>
-            <span className="max-w-[12rem] truncate">{t('topcenterchrome.following')}{followingName}</span>
+            <span className="max-w-[12rem] truncate">
+              {t('topcenterchrome.following')}
+              {followingName}
+            </span>
             <button
               type="button"
               onClick={onStopFollowing}
               className="cursor-pointer rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-semibold transition hover:bg-white/30"
-            >{t('topcenterchrome.stop')}</button>
+            >
+              {t('topcenterchrome.stop')}
+            </button>
           </TopCenterBanner>
         </TopCenterRow>
       ) : null}

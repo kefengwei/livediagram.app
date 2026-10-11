@@ -1,6 +1,5 @@
 'use client';
 
-
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { SettingsIcon } from '@/components/chrome/tab-bar-icons';
 import { ResetPositionGlyph } from '@/components/primitives/ResetPositionGlyph';
@@ -36,8 +35,6 @@ export function SettingsPopover({
   width: number;
   children: (close: () => void) => ReactNode;
 }) {
-  
-  
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -147,7 +144,7 @@ export function SettingsPopoverResetRow({
   onClose: () => void;
 }) {
   const { t } = useTranslation();
-  
+
   return (
     <>
       <div className="my-1 h-px bg-slate-100 dark:bg-slate-800" />
@@ -164,7 +161,9 @@ export function SettingsPopoverResetRow({
         <span className="flex flex-col">
           <span>{t('settingspopover.reset-position')}</span>
           <span className="text-[10px] font-normal leading-snug text-slate-400">
-            {resettable ? t('settingspopover.snap-back-to-the-default-corner') : t('settingspopover.already-at-the-default-corner')}
+            {resettable
+              ? t('settingspopover.snap-back-to-the-default-corner')
+              : t('settingspopover.already-at-the-default-corner')}
           </span>
         </span>
       </button>

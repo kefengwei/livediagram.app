@@ -87,7 +87,11 @@ export function KindChips({
 }) {
   const { t } = useTranslation();
   return (
-    <div role="group" aria-label={t('collaboratecontrols.filter-by-kind')} className="flex items-center gap-1">
+    <div
+      role="group"
+      aria-label={t('collaboratecontrols.filter-by-kind')}
+      className="flex items-center gap-1"
+    >
       {KINDS.map((k) => {
         const active = k.id === value;
         const chip = (

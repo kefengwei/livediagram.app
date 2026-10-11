@@ -1,4 +1,3 @@
-
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Button, clampIntoRange, Portal } from '@livediagram/ui';
 import { VIEWPORT_EDGE_MARGIN as EDGE } from '@/lib/clamp-to-viewport';

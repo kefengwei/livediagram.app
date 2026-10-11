@@ -122,7 +122,10 @@ export function NoteFormatToolbar({
             ))
           : null}
         {TOOLBAR_DIVIDER}
-        <HoverCard title={t('noteformattoolbar.link')} description={t('noteformattoolbar.point-the-selected-text-at-a')}>
+        <HoverCard
+          title={t('noteformattoolbar.link')}
+          description={t('noteformattoolbar.point-the-selected-text-at-a')}
+        >
           <button
             type="button"
             aria-label={t('noteformattoolbar.link-2')}
@@ -216,14 +219,18 @@ function NoteLinkField({
         onMouseDown={noFocusSteal}
         onClick={apply}
         className={`rounded-md bg-brand-600 px-2 py-1 text-xs font-medium text-white transition hover:bg-brand-700 ${SOLID_BRAND_DARK_CONTROL}`}
-      >{t('noteformattoolbar.apply')}</button>
+      >
+        {t('noteformattoolbar.apply')}
+      </button>
       {initial ? (
         <button
           type="button"
           onMouseDown={noFocusSteal}
           onClick={() => onApply(null)}
           className="rounded-md px-2 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-        >{t('noteformattoolbar.remove')}</button>
+        >
+          {t('noteformattoolbar.remove')}
+        </button>
       ) : null}
     </div>
   );

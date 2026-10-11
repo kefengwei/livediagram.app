@@ -71,8 +71,12 @@ export function RecentDocumentsCard({
       <div className="flex items-center gap-2 rounded-t-2xl border-b border-slate-100 bg-gradient-to-r from-brand-50 to-transparent px-4 py-3 dark:border-slate-800 dark:from-brand-500/10">
         <ClockIcon />
         <div className="flex flex-col">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-700 dark:text-brand-300">{t('recentdocumentscard.jump-back-in')}</span>
-          <span className="text-[10px] text-slate-400">{t('recentdocumentscard.your-recent-documents')}</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-700 dark:text-brand-300">
+            {t('recentdocumentscard.jump-back-in')}
+          </span>
+          <span className="text-[10px] text-slate-400">
+            {t('recentdocumentscard.your-recent-documents')}
+          </span>
         </div>
       </div>
       <ul className="flex flex-col p-1.5">
@@ -104,7 +108,9 @@ export function RecentDocumentsCard({
       <a
         href="/explorer"
         className="group flex items-center justify-center gap-1.5 rounded-b-2xl border-t border-slate-100 px-4 py-2.5 text-[11px] font-medium text-slate-500 transition hover:bg-brand-50 hover:text-brand-700 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-brand-500/10 dark:hover:text-brand-200"
-      >{t('recentdocumentscard.open-explorer')}<ChevronRight />
+      >
+        {t('recentdocumentscard.open-explorer')}
+        <ChevronRight />
       </a>
     </div>
   );

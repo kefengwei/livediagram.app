@@ -33,7 +33,8 @@ export function CommunityBar({
     >
       <p className="flex min-w-0 flex-1 items-center gap-2 text-slate-700 dark:text-slate-200">
         <CommunityAuthorBadge author={community.author} size={22} showName={false} />
-        <span className="truncate">{t('communitybar.shared-to-the-community-by')}{' '}
+        <span className="truncate">
+          {t('communitybar.shared-to-the-community-by')}{' '}
           <span className="font-medium text-slate-900 dark:text-slate-50">
             {community.author.name}
           </span>
@@ -44,13 +45,17 @@ export function CommunityBar({
           href={communityPostPath(community.postId)}
           className={buttonClassName({ variant: 'secondary', size: 'xs' })}
         >
-          <BackIcon />{t('communitybar.back-to-community')}</a>
+          <BackIcon />
+          {t('communitybar.back-to-community')}
+        </a>
         {community.ownDocumentId ? (
           <a
             href={documentPath(community.ownDocumentId)}
             className={buttonClassName({ size: 'xs' })}
           >
-            <EditIcon />{t('communitybar.edit-your-document')}</a>
+            <EditIcon />
+            {t('communitybar.edit-your-document')}
+          </a>
         ) : (
           <Button size="xs" onClick={onMakeCopy} disabled={copying}>
             <CopyIcon />

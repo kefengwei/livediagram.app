@@ -35,7 +35,9 @@ export function ExpiredSharePass({
     >
       <div className="flex items-center gap-2">
         <span className="inline-flex shrink-0 -rotate-3 items-center rounded border-2 border-rose-400 px-1.5 py-0.5 text-[10px] font-bold text-rose-600 dark:border-rose-500/70 dark:text-rose-300">
-          <span className="text-optical-line text-optical-caps uppercase tracking-widest">{t('expiredsharepass.expired')}</span>
+          <span className="text-optical-line text-optical-caps uppercase tracking-widest">
+            {t('expiredsharepass.expired')}
+          </span>
         </span>
         <input
           readOnly

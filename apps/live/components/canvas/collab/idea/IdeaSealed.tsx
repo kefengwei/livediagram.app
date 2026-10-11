@@ -50,7 +50,9 @@ export function IdeaSealed({ count, textColor }: { count: number; textColor: str
       <span className="text-[11px] font-semibold" style={{ color: textColor }}>
         {count === 1 ? 'idea sealed' : 'ideas sealed'}
       </span>
-      <span className="text-[10.5px] leading-snug" style={{ color: textColor, opacity: 0.55 }}>{t('ideasealed.hidden-from-everyone-until-the-box')}</span>
+      <span className="text-[10.5px] leading-snug" style={{ color: textColor, opacity: 0.55 }}>
+        {t('ideasealed.hidden-from-everyone-until-the-box')}
+      </span>
     </div>
   );
 }

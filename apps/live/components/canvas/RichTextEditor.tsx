@@ -286,7 +286,9 @@ export function RichTextEditor({
             placeBelow ? 'top-full mt-1' : 'bottom-full mb-1'
           }`}
         >
-          <span className="text-optical-line text-optical-caps">{t('richtexteditor.selected-text')}</span>
+          <span className="text-optical-line text-optical-caps">
+            {t('richtexteditor.selected-text')}
+          </span>
         </span>
         <RichTextToolbar
           active={active}

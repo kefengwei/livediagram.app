@@ -30,7 +30,9 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="9"
             fontWeight="600"
             fill="rgb(71 85 105)"
-          >{t('export-format-icons.md')}</text>
+          >
+            {t('export-format-icons.md')}
+          </text>
         </svg>
       );
     case 'mermaid':
@@ -54,7 +56,9 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="9"
             fontWeight="600"
             fill="rgb(71 85 105)"
-          >{t('export-format-icons.mmd')}</text>
+          >
+            {t('export-format-icons.mmd')}
+          </text>
         </svg>
       );
     case 'excalidraw':
@@ -78,7 +82,9 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="8"
             fontWeight="600"
             fill="rgb(71 85 105)"
-          >{t('export-format-icons.excali')}</text>
+          >
+            {t('export-format-icons.excali')}
+          </text>
         </svg>
       );
     case 'logo-kit':
@@ -117,7 +123,9 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="7"
             fontWeight="700"
             fill="rgb(190 18 60)"
-          >{t('export-format-icons.pdf')}</text>
+          >
+            {t('export-format-icons.pdf')}
+          </text>
         </svg>
       );
     case 'png':
@@ -158,7 +166,9 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="9"
             fontWeight="600"
             fill="rgb(21 128 61)"
-          >{t('export-format-icons.svg')}</text>
+          >
+            {t('export-format-icons.svg')}
+          </text>
         </svg>
       );
     case 'file':
@@ -182,7 +192,9 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="9"
             fontWeight="600"
             fill="rgb(71 85 105)"
-          >{t('export-format-icons.json')}</text>
+          >
+            {t('export-format-icons.json')}
+          </text>
         </svg>
       );
   }

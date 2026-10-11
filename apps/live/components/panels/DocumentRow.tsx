@@ -128,7 +128,9 @@ export function DocumentRow({
               ? 'truncate text-[10px] font-normal text-brand-700/80 dark:text-brand-200/80'
               : 'truncate text-[10px] text-slate-400 dark:text-white'
           }
-        >{t('documentrow.updated')}{relative}
+        >
+          {t('documentrow.updated')}
+          {relative}
         </span>
       </span>
     </>

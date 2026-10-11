@@ -221,7 +221,9 @@ export function PlanBoardView({
           borderColor: palette.border,
           color: palette.muted,
         }}
-      >{t('planboardview.this-board-s-set-up-can')}</div>
+      >
+        {t('planboardview.this-board-s-set-up-can')}
+      </div>
     );
   }
 
@@ -559,7 +561,11 @@ export function PlanBoardView({
                               <AddCardButton
                                 palette={palette}
                                 types={cellTypes}
-                                label={firstEmpty ? t('planboardview.add-your-first-card') : t('planboardview.add-card')}
+                                label={
+                                  firstEmpty
+                                    ? t('planboardview.add-your-first-card')
+                                    : t('planboardview.add-card')
+                                }
                                 open={isAdding}
                                 onClosed={closeAdding}
                                 onCreateType={createType}

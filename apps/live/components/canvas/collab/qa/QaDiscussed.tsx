@@ -39,7 +39,10 @@ export function QaDiscussed({
         >
           <CheckGlyph size={9} />
         </span>
-        <span className="uppercase tracking-[0.08em]">{t('qadiscussed.discussed')}{notes.length}</span>
+        <span className="uppercase tracking-[0.08em]">
+          {t('qadiscussed.discussed')}
+          {notes.length}
+        </span>
         <span className="h-px flex-1" style={{ backgroundColor: tint(textColor, 0.12) }} />
         <ChevronGlyph open={open} />
       </button>

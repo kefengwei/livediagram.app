@@ -16,7 +16,6 @@
 //     scales and sinks. Hover is desktop-only — a touch device has no hover, and
 //     a sticky :hover after a tap reads as a stuck button.
 
-
 import { useTranslation } from '@/lib/i18n';
 import { SELECTION_MODE_LABEL, type SelectionMode } from '@livediagram/document';
 import { keycapEdge } from '@/components/canvas/paper-kit';

@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 // A box that eases its own height toward the measured content height so

@@ -26,7 +26,11 @@ export function WizardSkipLocationCheckbox({
         checked={checked}
         onChange={onChange}
         className="text-sm text-slate-600 dark:text-slate-300"
-      >{t('wizardskiplocation.always-save-new-documents-in')}<span className={PLACE}>{placeName}</span>{t('wizardskiplocation.and-skip-this-step')}</SwitchRow>
+      >
+        {t('wizardskiplocation.always-save-new-documents-in')}
+        <span className={PLACE}>{placeName}</span>
+        {t('wizardskiplocation.and-skip-this-step')}
+      </SwitchRow>
     </div>
   );
 }
@@ -45,13 +49,17 @@ export function WizardSavingIn({
       role="note"
       className="flex min-w-0 flex-wrap items-center gap-x-1.5 px-6 pt-3 text-xs text-slate-600 dark:text-slate-300"
     >
-      <span className="min-w-0 truncate">{t('wizardskiplocation.saving-in')}<span className={PLACE}>{placeName}</span>
+      <span className="min-w-0 truncate">
+        {t('wizardskiplocation.saving-in')}
+        <span className={PLACE}>{placeName}</span>
       </span>
       <button
         type="button"
         onClick={onChange}
         className="rounded font-semibold text-brand-700 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-brand-600 dark:text-brand-300 dark:focus-visible:outline-brand-400"
-      >{t('wizardskiplocation.change')}</button>
+      >
+        {t('wizardskiplocation.change')}
+      </button>
     </p>
   );
 }

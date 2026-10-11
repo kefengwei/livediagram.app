@@ -89,7 +89,10 @@ export function ToolbarExplorerButton({
       {open ? (
         button
       ) : (
-        <HoverCard title={t('toolbarexplorerbutton.explorer-2')} description={t('toolbarexplorerbutton.your-documents-folders-and-teams')}>
+        <HoverCard
+          title={t('toolbarexplorerbutton.explorer-2')}
+          description={t('toolbarexplorerbutton.your-documents-folders-and-teams')}
+        >
           {button}
         </HoverCard>
       )}

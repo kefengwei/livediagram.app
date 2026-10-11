@@ -71,8 +71,12 @@ export function SignInBanner({
           </span>
 
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold sm:text-base">{t('signinbanner.sign-in-to-keep-your-work')}</p>
-            <p className="mt-0.5 text-xs text-white/85 sm:text-sm">{t('signinbanner.free-account-your-documents-sync-across')}</p>
+            <p className="text-sm font-semibold sm:text-base">
+              {t('signinbanner.sign-in-to-keep-your-work')}
+            </p>
+            <p className="mt-0.5 text-xs text-white/85 sm:text-sm">
+              {t('signinbanner.free-account-your-documents-sync-across')}
+            </p>
           </div>
 
           <div className="flex shrink-0 items-center gap-2">
@@ -83,13 +87,17 @@ export function SignInBanner({
                 setReasonsOpen(true);
               }}
               className="rounded-lg border border-white/40 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/15"
-            >{t('signinbanner.learn-more')}</button>
+            >
+              {t('signinbanner.learn-more')}
+            </button>
             <Link
               href={signInHref}
               onClick={trackSignIn}
               className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-brand-700 shadow-sm transition hover:bg-brand-50 dark:text-brand-700"
             >
-              <SignInIcon size={14} />{t('signinbanner.sign-in')}</Link>
+              <SignInIcon size={14} />
+              {t('signinbanner.sign-in')}
+            </Link>
             <button
               type="button"
               onClick={() => {

@@ -217,7 +217,11 @@ export function LayerRowMenu({
               />
             </MenuTileGrid>
           </MenuAccordionSection>
-          <MenuAccordionSection title={t('layerrowmenu.merge')} icon={<MergeGlyph />} {...sectionProps('merge')}>
+          <MenuAccordionSection
+            title={t('layerrowmenu.merge')}
+            icon={<MergeGlyph />}
+            {...sectionProps('merge')}
+          >
             <MenuTileGrid cols={2}>
               <MenuTile
                 icon={<LayerUpIcon />}

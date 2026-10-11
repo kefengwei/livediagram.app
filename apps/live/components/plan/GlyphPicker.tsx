@@ -37,8 +37,6 @@ export function GlyphPicker({
   // Drawn inside another field (the type editor's Name): just the glyph and a chevron, no border and no name.
   inline?: boolean;
 }) {
-  
-  
   const [open, setOpen] = useState(false);
   // Held in state so the popover anchors on its first render.
   const [trigger, setTrigger] = useState<HTMLButtonElement | null>(null);
@@ -109,7 +107,7 @@ export function GlyphGrid({
   onPick: (glyph: string) => void;
 }) {
   const { t } = useTranslation();
-  
+
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState(() => categoryOf(value));
   const searchId = useId();
@@ -165,7 +163,9 @@ export function GlyphGrid({
         className="grid max-h-[8.5rem] grid-cols-[repeat(auto-fill,2rem)] content-start justify-between gap-0.5 overflow-y-auto overscroll-contain"
       >
         {glyphs.length === 0 ? (
-          <p className="col-span-full px-1 py-3 text-[12px] text-slate-500 dark:text-slate-400">{t('glyphpicker.no-glyphs-match')}{query.trim()}”.
+          <p className="col-span-full px-1 py-3 text-[12px] text-slate-500 dark:text-slate-400">
+            {t('glyphpicker.no-glyphs-match')}
+            {query.trim()}”.
           </p>
         ) : (
           glyphs.map((g) => {

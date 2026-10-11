@@ -2,7 +2,6 @@
 // accent with a check, which pops when pressed; once you are done it turns
 // quiet and reads "I'm not done", the same press to take it back.
 
-
 import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { usePressWithoutDrag } from '@/hooks/ui/usePressWithoutDrag';

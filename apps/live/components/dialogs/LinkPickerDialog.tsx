@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button, TextInput, Glyph, DialogCloseButton, DialogHeader } from '@livediagram/ui';
 import { Dialog } from '@/components/dialogs/Dialog';
@@ -77,7 +76,7 @@ export function LinkPickerDialog({
   onClose,
 }: LinkPickerDialogProps) {
   const { t } = useTranslation();
-  
+
   // A caller-requested mode wins; otherwise open on the existing link's mode,
   // else External URL.
   const [mode, setMode] = useState<Mode>(
@@ -117,11 +116,7 @@ export function LinkPickerDialog({
     <Dialog open onClose={onClose} ariaLabel={title} size="lg" className="max-h-[90vh]">
       <DialogHeader
         title={title}
-        subtitle={
-          urlOnly
-            ? urlOnly.subtitle
-            : t('linkpickerdialog.jump-to-a-tab-open-another')
-        }
+        subtitle={urlOnly ? urlOnly.subtitle : t('linkpickerdialog.jump-to-a-tab-open-another')}
       >
         {/* A URL-restricted picker is an embed's link dialog (docs/specs/009-elements/embed-providers.md), so
             it points at the embed article rather than the generic links one:
@@ -181,7 +176,9 @@ export function LinkPickerDialog({
           recentDocuments.length === 0 ? (
             <div className="flex flex-col items-center gap-1 py-10 text-center">
               <DocumentGlyph muted />
-              <p className="text-xs text-slate-400 dark:text-slate-400">{t('linkpickerdialog.no-other-documents-yet')}</p>
+              <p className="text-xs text-slate-400 dark:text-slate-400">
+                {t('linkpickerdialog.no-other-documents-yet')}
+              </p>
             </div>
           ) : (
             <ul className="flex flex-col gap-1">
@@ -238,7 +235,9 @@ export function LinkPickerDialog({
               onClick={saveUrl}
               disabled={!typed || !!urlError}
               className="mt-1 self-start shadow-sm"
-            >{t('linkpickerdialog.save-link')}</Button>
+            >
+              {t('linkpickerdialog.save-link')}
+            </Button>
           </div>
         )}
       </div>
@@ -249,7 +248,9 @@ export function LinkPickerDialog({
             type="button"
             onClick={() => commit(null)}
             className="rounded-md px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-800 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-          >{t('linkpickerdialog.remove-link')}</button>
+          >
+            {t('linkpickerdialog.remove-link')}
+          </button>
         </DialogFooter>
       ) : null}
     </Dialog>
@@ -267,7 +268,6 @@ function RowButton({
   onClick: () => void;
   children: React.ReactNode;
 }) {
-  
   return (
     <button
       type="button"
@@ -303,7 +303,6 @@ function TabGlyph() {
 }
 
 function DocumentGlyph({ muted }: { muted?: boolean }) {
-  
   return (
     <Glyph
       size={muted ? 28 : 14}

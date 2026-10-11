@@ -179,7 +179,10 @@ export function LensField({
                   <span className="text-optical-centre">
                     <span className="sr-only">{t('lensfield.filter')}</span>
                     {pill.label}
-                    <span className="sr-only">{t('lensfield.not-applied-2')}{pill.note}</span>
+                    <span className="sr-only">
+                      {t('lensfield.not-applied-2')}
+                      {pill.note}
+                    </span>
                   </span>
                 </HoverCard>
               ) : (
@@ -258,7 +261,9 @@ export function LensField({
                   </span>
                 ) : null}
                 {s.matchesNothing ? (
-                  <span className="ml-auto shrink-0 text-xs text-amber-800 dark:text-amber-200">{t('lensfield.no-matches')}</span>
+                  <span className="ml-auto shrink-0 text-xs text-amber-800 dark:text-amber-200">
+                    {t('lensfield.no-matches')}
+                  </span>
                 ) : null}
               </div>
             ))

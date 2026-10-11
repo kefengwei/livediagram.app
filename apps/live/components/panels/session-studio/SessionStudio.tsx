@@ -47,7 +47,9 @@ export function SessionStudio({
           including ones added later. */}
       {blocked ? (
         <p className="rounded-md bg-slate-100 px-2.5 py-2 text-[12px] leading-snug text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-          <span className="font-semibold">{session.facilitatedBy}</span>{t('sessionstudio.is-facilitating-this-session-ask-them')}</p>
+          <span className="font-semibold">{session.facilitatedBy}</span>
+          {t('sessionstudio.is-facilitating-this-session-ask-them')}
+        </p>
       ) : null}
       <StudioSwitcher
         tools={STUDIO_TOOLS}

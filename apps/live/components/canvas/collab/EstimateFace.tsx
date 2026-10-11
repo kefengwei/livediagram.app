@@ -72,10 +72,14 @@ export function EstimateFace({
                 onPress={() => onSetRevealed(true)}
                 icon={<EyeGlyph />}
                 count={responses.length}
-              >{t('estimateface.reveal')}</AccentBar>
+              >
+                {t('estimateface.reveal')}
+              </AccentBar>
             ) : null}
             {revealed && onClear ? (
-              <AccentBar onPress={onClear} icon={<ReopenGlyph />}>{t('estimateface.new-round')}</AccentBar>
+              <AccentBar onPress={onClear} icon={<ReopenGlyph />}>
+                {t('estimateface.new-round')}
+              </AccentBar>
             ) : null}
           </>
         }

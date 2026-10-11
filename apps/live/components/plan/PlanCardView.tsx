@@ -58,7 +58,9 @@ export function PlanCardView({
                   e.stopPropagation();
                   plan.removeCard(element.id);
                 }}
-              >{t('plancardview.remove-card')}</button>
+              >
+                {t('plancardview.remove-card')}
+              </button>
             ) : null}
           </>
         )}

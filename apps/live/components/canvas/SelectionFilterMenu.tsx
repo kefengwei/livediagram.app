@@ -78,7 +78,10 @@ export function SelectionFilterMenu({ selectedElements, onFilter }: SelectionFil
 
   return (
     <>
-      <HoverCard title={t('selectionfiltermenu.filter-selection')} description={t('selectionfiltermenu.keep-only-one-kind-of-element')}>
+      <HoverCard
+        title={t('selectionfiltermenu.filter-selection')}
+        description={t('selectionfiltermenu.keep-only-one-kind-of-element')}
+      >
         <button
           ref={setAnchor}
           type="button"

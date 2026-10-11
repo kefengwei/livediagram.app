@@ -103,7 +103,9 @@ export function CommunitySection({
       {state === 'guest' ? (
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className={NOTE}>{t('communitysection.sign-in-to-share-your-document')}</p>
-          <a href={signInHref} className={buttonClassName({ variant: 'secondary', size: 'xs' })}>{t('communitysection.sign-in-to-share')}</a>
+          <a href={signInHref} className={buttonClassName({ variant: 'secondary', size: 'xs' })}>
+            {t('communitysection.sign-in-to-share')}
+          </a>
         </div>
       ) : null}
 
@@ -123,11 +125,19 @@ export function CommunitySection({
 
       {state === 'unpublished' ? (
         <div className="flex flex-col gap-2">
-          <p className={NOTE}>{t('communitysection.the-community-is')}<strong className="font-semibold">{t('communitysection.public')}</strong>{t('communitysection.anyone-with-or-without-an-account')}</p>
+          <p className={NOTE}>
+            {t('communitysection.the-community-is')}
+            <strong className="font-semibold">{t('communitysection.public')}</strong>
+            {t('communitysection.anyone-with-or-without-an-account')}
+          </p>
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="xs" data-focus="share" onClick={onPublish} disabled={sharePasswordSet}>{t('communitysection.share-to-community')}</Button>
+            <Button size="xs" data-focus="share" onClick={onPublish} disabled={sharePasswordSet}>
+              {t('communitysection.share-to-community')}
+            </Button>
             {sharePasswordSet ? (
-              <span className="text-xs text-slate-500 dark:text-slate-400">{t('communitysection.remove-the-share-password-to-share')}</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                {t('communitysection.remove-the-share-password-to-share')}
+              </span>
             ) : null}
           </div>
         </div>
@@ -143,28 +153,33 @@ export function CommunitySection({
               {communityCategoryLabel(post.category)} ·{' '}
               <span className="tabular-nums">
                 <span aria-hidden>♥</span>
-                <span className="sr-only">{t('communitysection.likes')}</span> {post.likeCount}{t('communitysection.copied')}{post.copyCount}{' '}
-                {communityPlural(post.copyCount, 'time', 'times')}
+                <span className="sr-only">{t('communitysection.likes')}</span> {post.likeCount}
+                {t('communitysection.copied')}
+                {post.copyCount} {communityPlural(post.copyCount, 'time', 'times')}
               </span>
             </p>
             {state === 'hidden' ? (
               <p className="mt-1 text-xs text-amber-800 dark:text-amber-200">
-                <span className="font-medium">{t('communitysection.hidden-after-reports')}</span> Several people reported
-                it, so it was taken out of the Community for good. Only you can see it, and it can
-                no longer be changed or removed.
+                <span className="font-medium">{t('communitysection.hidden-after-reports')}</span>{' '}
+                Several people reported it, so it was taken out of the Community for good. Only you
+                can see it, and it can no longer be changed or removed.
               </p>
             ) : null}
           </div>
           {confirming ? (
             <div className="flex flex-wrap items-center gap-2 border-t border-slate-100 pt-2 dark:border-slate-800">
-              <p className="flex-1 text-xs text-slate-600 dark:text-slate-300">{t('communitysection.remove-it-from-the-community-its')}</p>
+              <p className="flex-1 text-xs text-slate-600 dark:text-slate-300">
+                {t('communitysection.remove-it-from-the-community-its')}
+              </p>
               <Button
                 variant="secondary"
                 size="xs"
                 data-focus="confirm"
                 onClick={() => ask(false, 'actions')}
                 disabled={removing}
-              >{t('communitysection.keep-it')}</Button>
+              >
+                {t('communitysection.keep-it')}
+              </Button>
               <Button variant="primary" size="xs" onClick={remove} disabled={removing}>
                 {removing ? 'Removing' : 'Remove'}
               </Button>
@@ -177,14 +192,20 @@ export function CommunitySection({
                 rel="noopener"
                 className={buttonClassName({ variant: 'secondary', size: 'xs' })}
               >
-                <OpenIcon />{t('communitysection.view-post')}</a>
-              <Button variant="secondary" size="xs" onClick={onEdit}>{t('communitysection.edit-listing')}</Button>
+                <OpenIcon />
+                {t('communitysection.view-post')}
+              </a>
+              <Button variant="secondary" size="xs" onClick={onEdit}>
+                {t('communitysection.edit-listing')}
+              </Button>
               <Button
                 variant="secondary"
                 size="xs"
                 data-focus="actions"
                 onClick={() => ask(true, 'confirm')}
-              >{t('communitysection.remove-from-community')}</Button>
+              >
+                {t('communitysection.remove-from-community')}
+              </Button>
             </div>
           )}
         </div>

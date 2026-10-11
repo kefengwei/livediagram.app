@@ -261,7 +261,11 @@ export function MindOutlineRows({
 
   return (
     <>
-      <div role="toolbar" aria-label={t('mindoutlinerows.outline')} className="flex flex-wrap items-center gap-0.5">
+      <div
+        role="toolbar"
+        aria-label={t('mindoutlinerows.outline')}
+        className="flex flex-wrap items-center gap-0.5"
+      >
         <MindOutlineToolButton
           label={t('mindoutlinerows.bold')}
           shortcut="⌘B"

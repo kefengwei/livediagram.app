@@ -43,7 +43,9 @@ export function EmptyCanvasBanner({
         </span>
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium text-slate-800 dark:text-slate-100">
-            {tabName}{t('emptycanvasbanner.is-empty')}</p>
+            {tabName}
+            {t('emptycanvasbanner.is-empty')}
+          </p>
           <p className="mt-0.5 truncate text-xs text-slate-500 phone:hidden dark:text-slate-400">
             {readOnly
               ? t('emptycanvasbanner.nothing-here-yet-the-owner-can')

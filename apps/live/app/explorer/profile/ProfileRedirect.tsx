@@ -18,8 +18,11 @@ export function ProfileRedirect() {
 
   return (
     <main className="flex min-h-dvh items-center justify-center px-6">
-      <p className="text-sm text-slate-500 dark:text-slate-400">{t('profileredirect.taking-you-to-your-notification-settings')}{' '}
-        <a href={TARGET} className="font-medium text-blue-600 dark:text-blue-400">{t('profileredirect.continue')}</a>
+      <p className="text-sm text-slate-500 dark:text-slate-400">
+        {t('profileredirect.taking-you-to-your-notification-settings')}{' '}
+        <a href={TARGET} className="font-medium text-blue-600 dark:text-blue-400">
+          {t('profileredirect.continue')}
+        </a>
       </p>
     </main>
   );

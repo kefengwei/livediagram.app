@@ -59,7 +59,9 @@ export function AddPagePopover({
       onKeyDown={(e) => moveBetweenKindCards(e, cards.current)}
       className={mobile ? 'flex flex-col gap-2 px-4 pb-3' : 'flex flex-col gap-2 p-3'}
     >
-      <p className="px-0.5 text-xs font-semibold text-slate-500 dark:text-slate-400">{t('addpagepopover.add-a-page-2')}</p>
+      <p className="px-0.5 text-xs font-semibold text-slate-500 dark:text-slate-400">
+        {t('addpagepopover.add-a-page-2')}
+      </p>
       <div className="grid grid-cols-2 gap-2">
         {PAGE_KINDS.map((k, i) => (
           <PageKindCard

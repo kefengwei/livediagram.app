@@ -51,7 +51,11 @@ export function PlanViewMenuSection({
   const shown = plan.types.filter((t) => viewShownTypes(view, settings, plan.types).includes(t.id));
   const grouping = view === 'workload' ? breakdownGroupingOf(settings) : null;
   return (
-    <MenuFlyoutSection title={t('planviewmenusection.view')} icon={<PlanIcon size={16} />} {...flyoutProps}>
+    <MenuFlyoutSection
+      title={t('planviewmenusection.view')}
+      icon={<PlanIcon size={16} />}
+      {...flyoutProps}
+    >
       <MenuAccordionSection
         title={t('planviewmenusection.card-types')}
         icon={<PlanIcon size={16} />}
@@ -155,8 +159,15 @@ const NEED_LABELS: Record<string, string> = {
 // Which card types the view charts, and why some are missing: the view reads fields a type must offer.
 function ViewTypesNote({ needs }: { needs: readonly string[] }) {
   const { t } = useTranslation();
-  if (needs.length === 0) return <InfoNote>{t('planviewmenusection.the-card-types-this-view-charts')}</InfoNote>;
+  if (needs.length === 0)
+    return <InfoNote>{t('planviewmenusection.the-card-types-this-view-charts')}</InfoNote>;
   const names = needs.map((f) => NEED_LABELS[f] ?? f);
   const list = names.length === 1 ? `a ${names[0]} field` : `${names.join(' and ')} fields`;
-  return <InfoNote>{t('planviewmenusection.the-card-types-this-view-charts-2')}{list}{t('planviewmenusection.are-listed')}</InfoNote>;
+  return (
+    <InfoNote>
+      {t('planviewmenusection.the-card-types-this-view-charts-2')}
+      {list}
+      {t('planviewmenusection.are-listed')}
+    </InfoNote>
+  );
 }

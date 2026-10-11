@@ -76,7 +76,9 @@ export function TrashSegment(props: {
     <span data-plan-trash className="relative flex">
       <ClusterPopoverSegment
         label={
-          count ? `Open the Trash, ${count} ${count === 1 ? 'card' : 'cards'}` : t('trashclusterbutton.open-the-trash')
+          count
+            ? `Open the Trash, ${count} ${count === 1 ? 'card' : 'cards'}`
+            : t('trashclusterbutton.open-the-trash')
         }
         hoverTitle="Trash"
         hoverDescription="Drag a card here to put it out of the way; open it to restore cards or delete them for good."

@@ -488,7 +488,9 @@ export function SlideDeckPanel({
         {notesSlide && !isReadOnly ? (
           <label className="flex flex-col gap-1">
             <span className="flex items-center justify-between px-0.5">
-              <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-400">{t('slidedeckpanel.notes')}{slideName(notesSlide, deck.slides.indexOf(notesSlide))}
+              <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-400">
+                {t('slidedeckpanel.notes')}
+                {slideName(notesSlide, deck.slides.indexOf(notesSlide))}
               </span>
               <button
                 type="button"
@@ -497,7 +499,9 @@ export function SlideDeckPanel({
                   notesTracked.current = null;
                 }}
                 className="cursor-pointer text-[10px] font-medium text-slate-400 transition hover:text-slate-700 dark:hover:text-slate-200"
-              >{t('slidedeckpanel.done')}</button>
+              >
+                {t('slidedeckpanel.done')}
+              </button>
             </span>
             {/* The SLIDE's notes: what you mean to say over it. Not the
                 elements' own note field, which is about a thing rather than
@@ -535,7 +539,9 @@ export function SlideDeckPanel({
                 aria-label={`Minutes budgeted for ${slideName(notesSlide, deck.slides.indexOf(notesSlide))}`}
                 className="w-14 rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[11px] tabular-nums text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-brand-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
               />
-              <span className="text-[10px] text-slate-400">{t('slidedeckpanel.min-shown-in-the-hud-if')}</span>
+              <span className="text-[10px] text-slate-400">
+                {t('slidedeckpanel.min-shown-in-the-hud-if')}
+              </span>
             </span>
           </label>
         ) : null}

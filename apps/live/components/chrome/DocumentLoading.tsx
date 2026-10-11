@@ -105,14 +105,22 @@ export function DocumentLoading({ stage = 'opening' }: { stage?: DocumentLoading
         </div>
 
         {!online ? (
-          <p className="ldl-enter mt-6 text-xs text-slate-500 dark:text-slate-400">{t('documentloading.you-re-offline-waiting-for-the')}</p>
+          <p className="ldl-enter mt-6 text-xs text-slate-500 dark:text-slate-400">
+            {t('documentloading.you-re-offline-waiting-for-the')}
+          </p>
         ) : healing ? (
-          <p className="ldl-enter mt-6 text-xs text-slate-500 dark:text-slate-400">{t('documentloading.still-working-on-it-trying-a')}</p>
+          <p className="ldl-enter mt-6 text-xs text-slate-500 dark:text-slate-400">
+            {t('documentloading.still-working-on-it-trying-a')}
+          </p>
         ) : slow ? (
           <div className="ldl-enter mt-6 flex flex-col items-center gap-2">
-            <p className="text-xs text-slate-500 dark:text-slate-400">{t('documentloading.this-is-taking-longer-than-usual')}</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              {t('documentloading.this-is-taking-longer-than-usual')}
+            </p>
             <Button variant="secondary" size="xs" onClick={() => window.location.reload()}>
-              <RefreshIcon size={13} />{t('documentloading.refresh')}</Button>
+              <RefreshIcon size={13} />
+              {t('documentloading.refresh')}
+            </Button>
           </div>
         ) : null}
       </div>

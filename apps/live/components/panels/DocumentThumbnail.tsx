@@ -1,6 +1,5 @@
 'use client';
 
-
 import { useEffect, useRef, useState } from 'react';
 import { MOTION_MS } from '@livediagram/tailwind-config/motion';
 import {
@@ -72,8 +71,6 @@ export function DocumentThumbnail({
   // passes a larger box (e.g. a full-width 16:9 area).
   className?: string;
 }) {
-  
-  
   const ref = useRef<HTMLSpanElement>(null);
   const [visible, setVisible] = useState(false);
   // The latest outcome counts only for the inputs it was fetched for: anything else (a new version
@@ -249,7 +246,7 @@ function OfflineIllustration() {
 // components/ surfaces).
 function BlankCanvasIllustration() {
   const { t } = useTranslation();
-  
+
   return (
     <span className="flex h-full flex-col items-center justify-center gap-2 p-1">
       <svg
@@ -274,7 +271,9 @@ function BlankCanvasIllustration() {
       </svg>
       {/* Container-queried: only where the box is wide enough to hold
           the words without crowding the sketch (a card, not a row). */}
-      <span className="hidden text-[11px] font-medium text-slate-400 @min-[140px]:block">{t('documentthumbnail.nothing-drawn-yet')}</span>
+      <span className="hidden text-[11px] font-medium text-slate-400 @min-[140px]:block">
+        {t('documentthumbnail.nothing-drawn-yet')}
+      </span>
     </span>
   );
 }

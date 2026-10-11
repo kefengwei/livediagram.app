@@ -7,7 +7,6 @@
 // watching the bars move as people answer IS the reading, and it shows a
 // dissenter they are not alone before they have to say so out loud.
 
-
 import { useTranslation } from '@/lib/i18n';
 import {
   TEMPERATURE_VALUES,

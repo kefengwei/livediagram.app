@@ -114,7 +114,11 @@ export function MoveToFolderDialog({
     >
       <div className="flex items-start justify-between gap-3 border-b border-slate-100 px-5 pb-3 pt-5 dark:border-slate-800">
         <div className="min-w-0">
-          <h2 className="truncate text-base font-semibold text-slate-900 dark:text-slate-100">{t('movetofolderdialog.move')}{subjectName}{t('movetofolderdialog.')}</h2>
+          <h2 className="truncate text-base font-semibold text-slate-900 dark:text-slate-100">
+            {t('movetofolderdialog.move')}
+            {subjectName}
+            {t('movetofolderdialog.')}
+          </h2>
           <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
             {subjectKind === 'folder'
               ? t('movetofolderdialog.pick-the-folder-it-should-live')
@@ -147,8 +151,12 @@ export function MoveToFolderDialog({
       </div>
 
       <div className="flex items-center justify-end gap-2 border-t border-slate-100 px-5 py-3 dark:border-slate-800">
-        <Button variant="secondary" size="sm" onClick={onClose}>{t('movetofolderdialog.cancel')}</Button>
-        <Button size="sm" disabled={placement === current} onClick={() => commit(placement)}>{t('movetofolderdialog.move-here')}</Button>
+        <Button variant="secondary" size="sm" onClick={onClose}>
+          {t('movetofolderdialog.cancel')}
+        </Button>
+        <Button size="sm" disabled={placement === current} onClick={() => commit(placement)}>
+          {t('movetofolderdialog.move-here')}
+        </Button>
       </div>
     </Dialog>
   );

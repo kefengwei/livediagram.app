@@ -58,7 +58,9 @@ export function MoodMeter({
       ) : (
         <p className="flex items-baseline gap-2 leading-none" style={{ color: textColor }}>
           <span className="text-[22px] font-bold tabular-nums">{average.toFixed(1)}</span>
-          <span className="ml-auto text-[10.5px] opacity-55">{t('moodmeter.from')}{count} {count === 1 ? 'person' : 'people'}
+          <span className="ml-auto text-[10.5px] opacity-55">
+            {t('moodmeter.from')}
+            {count} {count === 1 ? 'person' : 'people'}
           </span>
         </p>
       )}

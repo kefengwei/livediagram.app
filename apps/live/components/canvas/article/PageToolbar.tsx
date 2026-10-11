@@ -366,7 +366,13 @@ export function PageToolbar({
         </Button>
       </div>
       {open === 'style' ? (
-        <ToolbarPopover anchor="style" menu onClose={close} label={t('pagetoolbar.text-style')} width={210}>
+        <ToolbarPopover
+          anchor="style"
+          menu
+          onClose={close}
+          label={t('pagetoolbar.text-style')}
+          width={210}
+        >
           <StylePanel
             selection={selection}
             onStyle={(style) => choose(() => run(setBlockStyle(style), 'block'))}
@@ -374,7 +380,13 @@ export function PageToolbar({
         </ToolbarPopover>
       ) : null}
       {open === 'list' ? (
-        <ToolbarPopover anchor="list" menu onClose={close} label={t('pagetoolbar.lists-2')} width={230}>
+        <ToolbarPopover
+          anchor="list"
+          menu
+          onClose={close}
+          label={t('pagetoolbar.lists-2')}
+          width={230}
+        >
           <ListPanel
             selection={selection}
             onList={(list) => choose(() => run(toggleList(list), 'block'))}
@@ -383,7 +395,13 @@ export function PageToolbar({
         </ToolbarPopover>
       ) : null}
       {open === 'align' ? (
-        <ToolbarPopover anchor="align" menu onClose={close} label={t('pagetoolbar.alignment-2')} width={210}>
+        <ToolbarPopover
+          anchor="align"
+          menu
+          onClose={close}
+          label={t('pagetoolbar.alignment-2')}
+          width={210}
+        >
           <AlignPanel
             selection={selection}
             onAlign={(align) => choose(() => run(setAlign(align)))}
@@ -421,7 +439,13 @@ export function PageToolbar({
         </ToolbarPopover>
       ) : null}
       {open === 'insert' ? (
-        <ToolbarPopover anchor="insert" menu onClose={close} label={t('pagetoolbar.insert-2')} width={200}>
+        <ToolbarPopover
+          anchor="insert"
+          menu
+          onClose={close}
+          label={t('pagetoolbar.insert-2')}
+          width={200}
+        >
           <InsertPanel
             onObject={(what) => choose(() => onInsert?.(handle.flow, what))}
             onBlock={(what) => choose(() => insertBlock(what))}
@@ -429,7 +453,13 @@ export function PageToolbar({
         </ToolbarPopover>
       ) : null}
       {open === 'more' ? (
-        <ToolbarPopover anchor="more" menu onClose={close} label={t('pagetoolbar.more-formatting-2')} width={220}>
+        <ToolbarPopover
+          anchor="more"
+          menu
+          onClose={close}
+          label={t('pagetoolbar.more-formatting-2')}
+          width={220}
+        >
           <MorePanel selection={selection} onAction={(a) => choose(() => more(a))} />
         </ToolbarPopover>
       ) : null}

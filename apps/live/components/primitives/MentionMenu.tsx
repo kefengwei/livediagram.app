@@ -34,7 +34,11 @@ export function MentionMenu({
       {hint ? (
         <p className="px-2 py-1.5 text-[11px] text-slate-500 dark:text-slate-400">{hint}</p>
       ) : (
-        <ul role="listbox" aria-label={t('mentionmenu.mention-a-teammate')} className="flex flex-col gap-0.5">
+        <ul
+          role="listbox"
+          aria-label={t('mentionmenu.mention-a-teammate')}
+          className="flex flex-col gap-0.5"
+        >
           {items.map((c, i) => (
             <li
               key={c.memberId}
@@ -66,7 +70,9 @@ export function MentionMenu({
                 </span>
               </span>
               {c.pending ? (
-                <Chip className="bg-amber-100 px-1.5 text-[9px] font-semibold text-amber-800 dark:bg-amber-500/15 dark:text-amber-300">{t('mentionmenu.invited')}</Chip>
+                <Chip className="bg-amber-100 px-1.5 text-[9px] font-semibold text-amber-800 dark:bg-amber-500/15 dark:text-amber-300">
+                  {t('mentionmenu.invited')}
+                </Chip>
               ) : null}
             </li>
           ))}

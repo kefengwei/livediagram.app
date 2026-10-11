@@ -128,7 +128,9 @@ export function PieDataEditor({
         type="button"
         onClick={() => onChange([...rows, { label: `Item ${rows.length + 1}`, value: 10 }])}
         className="mt-1.5 inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 transition hover:border-brand-300 hover:bg-brand-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/15"
-      >{t('context-menu-data-editors.add-slice')}</button>
+      >
+        {t('context-menu-data-editors.add-slice')}
+      </button>
     </div>
   );
 }
@@ -191,7 +193,9 @@ export function LegendDataEditor({
         // No colour on the new row, so it takes the next one from the ramp.
         onClick={() => onChange([...rows, { label: `Item ${rows.length + 1}` }])}
         className="mt-1.5 inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 transition hover:border-brand-300 hover:bg-brand-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/15"
-      >{t('context-menu-data-editors.add-row')}</button>
+      >
+        {t('context-menu-data-editors.add-row')}
+      </button>
     </div>
   );
 }
@@ -230,7 +234,9 @@ export function LineDataSummary({
         type="button"
         onClick={onEdit}
         className="mt-1.5 inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 transition hover:border-brand-300 hover:bg-brand-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/15"
-      >{t('context-menu-data-editors.edit-data')}</button>
+      >
+        {t('context-menu-data-editors.edit-data')}
+      </button>
     </div>
   );
 }
@@ -241,8 +247,12 @@ export function LinkedChartData({ onUnlink }: { onUnlink: () => void }) {
   const { t } = useTranslation();
   return (
     <div className="px-2 py-1.5">
-      <p className="text-[11px] leading-snug text-slate-600 dark:text-slate-300">{t('context-menu-data-editors.drawn-live-from-a-sheet-s')}</p>
-      <Button variant="secondary" size="xs" className="mt-1.5 w-full" onClick={onUnlink}>{t('context-menu-data-editors.unlink-from-sheet')}</Button>
+      <p className="text-[11px] leading-snug text-slate-600 dark:text-slate-300">
+        {t('context-menu-data-editors.drawn-live-from-a-sheet-s')}
+      </p>
+      <Button variant="secondary" size="xs" className="mt-1.5 w-full" onClick={onUnlink}>
+        {t('context-menu-data-editors.unlink-from-sheet')}
+      </Button>
     </div>
   );
 }
@@ -309,7 +319,9 @@ export function EntityFieldsEditor({
         disabled={rows.length >= ENTITY_MAX_FIELDS}
         onClick={() => onChange([...rows, { name: '' }])}
         className={MENU_ADD_ROW_BUTTON}
-      >{t('context-menu-data-editors.add-field')}</button>
+      >
+        {t('context-menu-data-editors.add-field')}
+      </button>
     </div>
   );
 }
@@ -370,7 +382,9 @@ export function ChecklistRowsEditor({
         disabled={rows.length >= CHECKLIST_MAX_ITEMS}
         onClick={() => onChange([...rows, { text: '', done: false }])}
         className={MENU_ADD_ROW_BUTTON}
-      >{t('context-menu-data-editors.add-row-2')}</button>
+      >
+        {t('context-menu-data-editors.add-row-2')}
+      </button>
     </div>
   );
 }
@@ -407,9 +421,15 @@ export function CodeSummary({
         type="button"
         onClick={onEdit}
         className="mt-1.5 inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 transition hover:border-brand-300 hover:bg-brand-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/15"
-      >{t('context-menu-data-editors.edit-code')}</button>
+      >
+        {t('context-menu-data-editors.edit-code')}
+      </button>
       <div className="-mx-2 mt-1">
-        <MenuToggleRow label={t('context-menu-data-editors.wrap-long-lines')} checked={wrap} onToggle={() => onSetWrap(!wrap)} />
+        <MenuToggleRow
+          label={t('context-menu-data-editors.wrap-long-lines')}
+          checked={wrap}
+          onToggle={() => onSetWrap(!wrap)}
+        />
       </div>
     </div>
   );
@@ -503,7 +523,10 @@ export function MindFlowTiles({
       </div>
       {onEditOutline ? (
         <div className="px-2 pb-1.5">
-          <MenuActionButton label={t('context-menu-data-editors.edit-outline')} onClick={onEditOutline} />
+          <MenuActionButton
+            label={t('context-menu-data-editors.edit-outline')}
+            onClick={onEditOutline}
+          />
         </div>
       ) : null}
     </>

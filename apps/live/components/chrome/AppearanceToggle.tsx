@@ -1,4 +1,3 @@
-
 import type { MouseEvent } from 'react';
 import {
   AppearanceIcon,

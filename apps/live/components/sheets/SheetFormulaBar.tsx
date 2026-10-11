@@ -124,7 +124,9 @@ export function SheetFormulaBar({
         className="ml-1.5 flex h-7 w-8 shrink-0 items-center justify-center border-l font-serif text-[13px] italic"
         style={{ color: c.palette.muted, borderColor: c.palette.cardBorder }}
         aria-hidden
-      >{t('sheetformulabar.fx')}</span>
+      >
+        {t('sheetformulabar.fx')}
+      </span>
       <div className="relative min-w-0 flex-1">
         {editing?.origin === 'bar' ? (
           <>

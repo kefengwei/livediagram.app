@@ -25,7 +25,9 @@ export function EditCardsStripButton() {
         }}
         className={`flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-md px-2.5 text-[12px] font-medium transition focus-visible:outline-2 focus-visible:outline-brand-600 ${TOOLBAR_CONTROL_REST}`}
       >
-        <PencilIcon />{t('editcardsstripbutton.edit-cards-3')}</button>
+        <PencilIcon />
+        {t('editcardsstripbutton.edit-cards-3')}
+      </button>
     </HoverCard>
   );
 }

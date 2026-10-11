@@ -53,7 +53,9 @@ export function LaserColourRow({
         }}
         className="flex w-full cursor-pointer items-center justify-between gap-2 py-1.5 text-left"
       >
-        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{t('lasercolourrow.colour')}</span>
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+          {t('lasercolourrow.colour')}
+        </span>
         <span className="flex items-center gap-1.5">
           <span className="flex items-center gap-1.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
             <SwatchChip colour={laserColour(config, selfColour, appearance)} small />
@@ -67,7 +69,9 @@ export function LaserColourRow({
           anchor={trigger}
           label={t('lasercolourrow.laser-colour')}
           value={config.colour}
-          leading={[{ id: LASER_PRESENCE, colour: selfColour, label: t('lasercolourrow.your-colour') }]}
+          leading={[
+            { id: LASER_PRESENCE, colour: selfColour, label: t('lasercolourrow.your-colour') },
+          ]}
           standard={[standardGroup('strong', appearance, 'name')]}
           yours={yours}
           onClose={() => setOpen(false)}

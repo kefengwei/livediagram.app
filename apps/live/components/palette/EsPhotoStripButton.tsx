@@ -17,7 +17,8 @@ export function EsPhotoStripButton({ controls }: { controls: EsBoardControls | u
     <HoverCard
       title={t('esphotostripbutton.add-from-photo')}
       description={
-        (disabled && controls.photoDisabledReason) || t('esphotostripbutton.read-the-stickies-off-a-photo')
+        (disabled && controls.photoDisabledReason) ||
+        t('esphotostripbutton.read-the-stickies-off-a-photo')
       }
     >
       <button

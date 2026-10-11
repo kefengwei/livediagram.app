@@ -1,4 +1,3 @@
-
 import { memo, useRef, useState } from 'react';
 import { useZoneClip, zoneClipPolygon } from '@/lib/article/zone-clip-store';
 import { PhotoDraftRing, PhotoMatchedBadge } from '@/components/canvas/photo-badges';

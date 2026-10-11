@@ -30,7 +30,10 @@ export function DocumentHistoryDialog({
   const { t } = useTranslation();
   return (
     <Dialog open={open} onClose={onClose} size="2xl" ariaLabel="Document history">
-      <DialogHeader title={t('documenthistorydialog.history')} subtitle={documentName ?? undefined} />
+      <DialogHeader
+        title={t('documenthistorydialog.history')}
+        subtitle={documentName ?? undefined}
+      />
       <div className="max-h-[60vh] overflow-y-auto px-6 py-4">
         {/* Keyed on the id so switching rows remounts rather than
             showing the previous document's feed while the new one loads. */}

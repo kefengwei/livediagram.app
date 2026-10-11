@@ -118,7 +118,9 @@ export function QuizEditDialog({
             </label>
             <fieldset>
               <legend className={labelClass}>{t('quizeditdialog.answers')}</legend>
-              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{t('quizeditdialog.pick-the-right-one-nobody-else')}</p>
+              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
+                {t('quizeditdialog.pick-the-right-one-nobody-else')}
+              </p>
               <div className="mt-2 flex flex-col gap-1.5">
                 {rows.map((row, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -148,7 +150,9 @@ export function QuizEditDialog({
                         className="accent-green-600"
                         checked={correct === i}
                         onChange={() => setCorrect(i)}
-                      />{t('quizeditdialog.correct')}</label>
+                      />
+                      {t('quizeditdialog.correct')}
+                    </label>
                     <button
                       type="button"
                       aria-label={`Remove answer ${quizOptionLetter(i)}`}
@@ -167,7 +171,9 @@ export function QuizEditDialog({
                 className="mt-2"
                 disabled={rows.length >= QUIZ_MAX_OPTIONS}
                 onClick={() => setRows((r) => [...r, ''])}
-              >{t('quizeditdialog.add-answer')}</Button>
+              >
+                {t('quizeditdialog.add-answer')}
+              </Button>
             </fieldset>
             <label className="block">
               <span className={labelClass}>{t('quizeditdialog.time-limit')}</span>
@@ -185,8 +191,12 @@ export function QuizEditDialog({
             </label>
           </div>
           <DialogFooter>
-            <Button variant="secondary" size="sm" onClick={onClose}>{t('quizeditdialog.cancel')}</Button>
-            <Button type="submit" size="sm" disabled={!canSave}>{t('quizeditdialog.save')}</Button>
+            <Button variant="secondary" size="sm" onClick={onClose}>
+              {t('quizeditdialog.cancel')}
+            </Button>
+            <Button type="submit" size="sm" disabled={!canSave}>
+              {t('quizeditdialog.save')}
+            </Button>
           </DialogFooter>
         </form>
       </div>

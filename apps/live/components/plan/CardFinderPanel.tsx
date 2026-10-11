@@ -203,7 +203,11 @@ function CardFinderBody({
               );
             })}
             {found.length > CARD_FINDER_ROWS_MAX ? (
-              <li className="px-2 py-2 text-center text-[11px] text-slate-500 dark:text-slate-400">{t('cardfinderpanel.showing')}{CARD_FINDER_ROWS_MAX}{t('cardfinderpanel.of')}{found.length}. Search to narrow them down.
+              <li className="px-2 py-2 text-center text-[11px] text-slate-500 dark:text-slate-400">
+                {t('cardfinderpanel.showing')}
+                {CARD_FINDER_ROWS_MAX}
+                {t('cardfinderpanel.of')}
+                {found.length}. Search to narrow them down.
               </li>
             ) : null}
           </ul>

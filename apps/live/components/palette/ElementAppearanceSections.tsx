@@ -188,7 +188,11 @@ export function ElementAppearanceSections({
             multi-selection menu, which still stacks them inline), all
             starting closed. ── */}
       {showStyle ? (
-        <MenuFlyoutSection title={t('elementappearancesections.style')} icon={<StyleMenuGlyph />} {...flyoutProps('style')}>
+        <MenuFlyoutSection
+          title={t('elementappearancesections.style')}
+          icon={<StyleMenuGlyph />}
+          {...flyoutProps('style')}
+        >
           {/* Which Presets grid this element gets: shape looks, a sticky's
               pad of note colours, a code block's colour scheme, or an arrow's
               line looks. See PresetSections. */}
@@ -289,8 +293,14 @@ export function ElementAppearanceSections({
       {hasInlineIcon ? (
         <>
           <MenuGroupSeparator />
-          <MenuAccordionSection title={t('elementappearancesections.icon-2')} icon={<IconCategoryGlyph />} {...sectionProps('icon')}>
-            <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('elementappearancesections.icon-position')}</p>
+          <MenuAccordionSection
+            title={t('elementappearancesections.icon-2')}
+            icon={<IconCategoryGlyph />}
+            {...sectionProps('icon')}
+          >
+            <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
+              {t('elementappearancesections.icon-position')}
+            </p>
             <IconPositionGrid
               current={(target as { iconPosition?: string }).iconPosition ?? 'left'}
               onPick={(pos) =>
@@ -334,7 +344,11 @@ export function ElementAppearanceSections({
             in the host menu behind the flyout. Sits in the style band
             (no separator of its own), beside Style + Animation. ── */}
       {showMarkers || showAlignment ? (
-        <MenuFlyoutSection title={t('elementappearancesections.text')} icon={<TextGlyph />} {...flyoutProps('text')}>
+        <MenuFlyoutSection
+          title={t('elementappearancesections.text')}
+          icon={<TextGlyph />}
+          {...flyoutProps('text')}
+        >
           {/* Typography — Font / Size / Padding, shared with the rich-text
               toolbar's overflow menu. Applies to the element's whole label. */}
           {showAlignment ? (

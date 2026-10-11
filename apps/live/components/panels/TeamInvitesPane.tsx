@@ -67,8 +67,12 @@ export function TeamInvitesPane({
               type="button"
               onClick={() => onDecline(invite)}
               className="shrink-0 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-            >{t('teaminvitespane.decline')}</button>
-            <Button size="xs" onClick={() => onAccept(invite)} className="shrink-0 shadow-sm">{t('teaminvitespane.accept')}</Button>
+            >
+              {t('teaminvitespane.decline')}
+            </button>
+            <Button size="xs" onClick={() => onAccept(invite)} className="shrink-0 shadow-sm">
+              {t('teaminvitespane.accept')}
+            </Button>
           </li>
         );
       })}

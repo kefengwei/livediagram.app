@@ -50,7 +50,9 @@ export function SettingsTokensRow({ row }: { row: SettingsTokensRowSpec }) {
                 <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100">
                   {row.label}
                 </span>
-                <span className="block text-xs text-slate-500 dark:text-slate-400">{t('settingstokensrow.sign-in-to-create-api-tokens')}<SettingsSignInLink />
+                <span className="block text-xs text-slate-500 dark:text-slate-400">
+                  {t('settingstokensrow.sign-in-to-create-api-tokens')}
+                  <SettingsSignInLink />
                 </span>
               </span>
             </div>
@@ -75,8 +77,13 @@ export function SettingsTokensRow({ row }: { row: SettingsTokensRowSpec }) {
                 />
               ) : null}
               {firstRun ? (
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">{t('settingstokensrow.connecting-claude-or-another-ai-tool')}{' '}
-                  <HelpArticleLink article="connectAiTool" variant="text" label={t('settingstokensrow.read-the-guide')} />
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                  {t('settingstokensrow.connecting-claude-or-another-ai-tool')}{' '}
+                  <HelpArticleLink
+                    article="connectAiTool"
+                    variant="text"
+                    label={t('settingstokensrow.read-the-guide')}
+                  />
                 </p>
               ) : (
                 <SettingsTokenList

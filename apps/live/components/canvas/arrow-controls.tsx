@@ -132,7 +132,11 @@ export function ArrowLineControls({
             {(
               [
                 ['straight', 'Straight', t('arrow-controls.plain-straight-line-the-default')],
-                ['curved', 'Curved', t('arrow-controls.smooth-bezier-curve-bowing-perpendicular-to')],
+                [
+                  'curved',
+                  'Curved',
+                  t('arrow-controls.smooth-bezier-curve-bowing-perpendicular-to'),
+                ],
                 ['angled', 'Angled', 'Axis-aligned L-connector with a single right-angle bend.'],
               ] as [ArrowStyle, string, string][]
             ).map(([id, label, desc]) => (
@@ -174,10 +178,18 @@ export function ArrowLineControls({
             className="flex w-full items-center justify-between gap-2 rounded-md px-1 py-1 text-left transition hover:bg-slate-50 dark:hover:bg-slate-800/60"
           >
             <span className="flex flex-col">
-              <span className="text-[11px] text-slate-600 dark:text-slate-300">{t('arrow-controls.pass-behind-boxes')}</span>
-              <span className="text-[10px] leading-snug text-slate-400">{t('arrow-controls.break-the-line-where-it-crosses')}</span>
+              <span className="text-[11px] text-slate-600 dark:text-slate-300">
+                {t('arrow-controls.pass-behind-boxes')}
+              </span>
+              <span className="text-[10px] leading-snug text-slate-400">
+                {t('arrow-controls.break-the-line-where-it-crosses')}
+              </span>
             </span>
-            <ToggleSwitch checked={routeBehind} label={t('arrow-controls.pass-behind-boxes-2')} presentational />
+            <ToggleSwitch
+              checked={routeBehind}
+              label={t('arrow-controls.pass-behind-boxes-2')}
+              presentational
+            />
           </button>
         </>
       ) : null}
@@ -188,10 +200,18 @@ export function ArrowLineControls({
           className="flex w-full items-center justify-between gap-2 rounded-md px-1 py-1 text-left transition hover:bg-slate-50 dark:hover:bg-slate-800/60"
         >
           <span className="flex flex-col">
-            <span className="text-[11px] text-slate-600 dark:text-slate-300">{t('arrow-controls.start-at-exact-anchor')}</span>
-            <span className="text-[10px] leading-snug text-slate-400">{t('arrow-controls.start-where-you-connected-it-not')}</span>
+            <span className="text-[11px] text-slate-600 dark:text-slate-300">
+              {t('arrow-controls.start-at-exact-anchor')}
+            </span>
+            <span className="text-[10px] leading-snug text-slate-400">
+              {t('arrow-controls.start-where-you-connected-it-not')}
+            </span>
           </span>
-          <ToggleSwitch checked={exactStart} label={t('arrow-controls.start-at-exact-anchor-2')} presentational />
+          <ToggleSwitch
+            checked={exactStart}
+            label={t('arrow-controls.start-at-exact-anchor-2')}
+            presentational
+          />
         </button>
       ) : null}
     </>
@@ -222,9 +242,21 @@ export function ArrowPointerControls({
         {(
           [
             ['from', t('arrow-controls.start-only'), 'Arrowhead on the left / starting end only.'],
-            ['to', t('arrow-controls.end-only'), 'Arrowhead on the right / ending end only (the default).'],
-            ['both', t('arrow-controls.both-ends'), t('arrow-controls.arrowheads-on-both-ends-a-two')],
-            ['none', t('arrow-controls.no-pointers'), 'No arrowhead on either end: a plain connector / line.'],
+            [
+              'to',
+              t('arrow-controls.end-only'),
+              'Arrowhead on the right / ending end only (the default).',
+            ],
+            [
+              'both',
+              t('arrow-controls.both-ends'),
+              t('arrow-controls.arrowheads-on-both-ends-a-two'),
+            ],
+            [
+              'none',
+              t('arrow-controls.no-pointers'),
+              'No arrowhead on either end: a plain connector / line.',
+            ],
           ] as [ArrowEnds, string, string][]
         ).map(([id, label, desc]) => (
           <HoverCard key={id} title={label} description={desc}>

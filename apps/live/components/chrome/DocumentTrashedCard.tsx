@@ -46,7 +46,9 @@ export function DocumentTrashedCard({
             : t('documenttrashedcard.it-is-no-longer-available-if')}
         </p>
         {failed ? (
-          <p className="mt-3 text-xs text-rose-600 dark:text-rose-400" role="status">{t('documenttrashedcard.could-not-restore-it-please-try')}</p>
+          <p className="mt-3 text-xs text-rose-600 dark:text-rose-400" role="status">
+            {t('documenttrashedcard.could-not-restore-it-please-try')}
+          </p>
         ) : null}
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
           {restorable ? (
@@ -66,7 +68,9 @@ export function DocumentTrashedCard({
               {restoring ? 'Restoring…' : 'Restore'}
             </Button>
           ) : null}
-          <a href="/explorer" className={buttonClassName({ variant: 'secondary', size: 'md' })}>{t('documenttrashedcard.go-to-explorer')}</a>
+          <a href="/explorer" className={buttonClassName({ variant: 'secondary', size: 'md' })}>
+            {t('documenttrashedcard.go-to-explorer')}
+          </a>
         </div>
       </div>
     </div>

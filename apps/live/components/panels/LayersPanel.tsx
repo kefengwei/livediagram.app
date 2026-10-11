@@ -276,13 +276,18 @@ export function LayersPanel({
             </HoverCard>
           </div>
           <div className="flex gap-1.5">
-            <HoverCard title={t('layerspanel.add-layer')} description={t('layerspanel.insert-a-new-layer-above-the')}>
+            <HoverCard
+              title={t('layerspanel.add-layer')}
+              description={t('layerspanel.insert-a-new-layer-above-the')}
+            >
               <button
                 type="button"
                 onClick={onAddLayer}
                 className="flex items-center justify-center gap-1 rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
               >
-                <PlusIcon />{t('layerspanel.add')}</button>
+                <PlusIcon />
+                {t('layerspanel.add')}
+              </button>
             </HoverCard>
             <HoverCard
               title={t('layerspanel.delete-layer')}

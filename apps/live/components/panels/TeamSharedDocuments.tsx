@@ -121,7 +121,10 @@ export function TeamSharedDocuments({
     if (!lensed || d.folderId === currentFolderId) return null;
     const folderId = d.folderId;
     if (folderId === null)
-      return { label: t('teamshareddocuments.team-documents'), onOpen: () => setSpot({ kind: 'root' }) };
+      return {
+        label: t('teamshareddocuments.team-documents'),
+        onOpen: () => setSpot({ kind: 'root' }),
+      };
     const folder = lib.folders.find((f) => f.id === folderId);
     return folder
       ? { label: folder.name, onOpen: () => setSpot({ kind: 'folder', id: folder.id }) }
@@ -129,7 +132,10 @@ export function TeamSharedDocuments({
   };
 
   const crumbs: { label: string; onClick?: () => void }[] = (() => {
-    const root = { label: t('teamshareddocuments.team-documents-2'), onClick: () => setSpot({ kind: 'root' }) };
+    const root = {
+      label: t('teamshareddocuments.team-documents-2'),
+      onClick: () => setSpot({ kind: 'root' }),
+    };
     if (spot.kind === 'root') return [{ label: t('teamshareddocuments.team-documents-3') }];
     const chain = lib.breadcrumb(spot.id);
     return [

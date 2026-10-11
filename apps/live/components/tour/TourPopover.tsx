@@ -229,13 +229,17 @@ export function TourPopover({
           <>
             <div className="flex items-center justify-between gap-2">
               <span className="text-[10px] font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-300">
-                {stepNumber}{t('tourpopover.of')}{stepCount}
+                {stepNumber}
+                {t('tourpopover.of')}
+                {stepCount}
               </span>
               <button
                 type="button"
                 onClick={onSkip}
                 className="text-[11px] font-medium text-slate-400 transition hover:text-slate-600 dark:hover:text-slate-300"
-              >{t('tourpopover.skip-tour')}</button>
+              >
+                {t('tourpopover.skip-tour')}
+              </button>
             </div>
             <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-50">{title}</h3>
             <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">{body}</p>
@@ -257,11 +261,15 @@ export function TourPopover({
                     type="button"
                     onClick={onBack}
                     className="rounded-md px-2 py-1 text-xs font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-                  >{t('tourpopover.back')}</button>
+                  >
+                    {t('tourpopover.back')}
+                  </button>
                 ) : null}
                 {/* The outro card always follows the counted steps, so a
                     counted step never ends the tour — no 'Done' state. */}
-                <Button size="xs" onClick={onNext}>{t('tourpopover.next')}</Button>
+                <Button size="xs" onClick={onNext}>
+                  {t('tourpopover.next')}
+                </Button>
               </div>
             </div>
           </>

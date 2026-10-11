@@ -135,7 +135,9 @@ export function SheetSetupStyle({
   return (
     <div className="flex flex-col gap-4">
       <section className="flex flex-col gap-1.5" aria-labelledby="setup-sheet-look">
-        <h3 id="setup-sheet-look" className={HEADING} style={{ color: palette.muted }}>{t('sheetsetupstyle.look')}</h3>
+        <h3 id="setup-sheet-look" className={HEADING} style={{ color: palette.muted }}>
+          {t('sheetsetupstyle.look')}
+        </h3>
         <OptionRows
           kind="single"
           label={t('sheetsetupstyle.look-2')}
@@ -158,7 +160,9 @@ export function SheetSetupStyle({
         />
       </section>
       <section className="flex flex-col gap-1.5" aria-labelledby="setup-sheet-size">
-        <h3 id="setup-sheet-size" className={HEADING} style={{ color: palette.muted }}>{t('sheetsetupstyle.cell-size')}</h3>
+        <h3 id="setup-sheet-size" className={HEADING} style={{ color: palette.muted }}>
+          {t('sheetsetupstyle.cell-size')}
+        </h3>
         <OptionRows
           kind="single"
           label={t('sheetsetupstyle.cell-size-2')}
@@ -171,8 +175,12 @@ export function SheetSetupStyle({
       {hasRows ? (
         <div className="flex flex-col gap-2 border-t pt-4" style={{ borderColor: palette.border }}>
           <SwitchRow checked={freeze} onChange={onFreeze} className="cursor-pointer">
-            <span className="block text-[13px] font-semibold" style={{ color: palette.text }}>{t('sheetsetupstyle.freeze-header-row')}</span>
-            <span className="block text-[12px]" style={{ color: palette.muted }}>{t('sheetsetupstyle.the-first-row-stays-put-while')}</span>
+            <span className="block text-[13px] font-semibold" style={{ color: palette.text }}>
+              {t('sheetsetupstyle.freeze-header-row')}
+            </span>
+            <span className="block text-[12px]" style={{ color: palette.muted }}>
+              {t('sheetsetupstyle.the-first-row-stays-put-while')}
+            </span>
           </SwitchRow>
         </div>
       ) : null}

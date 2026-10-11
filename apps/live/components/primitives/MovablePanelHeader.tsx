@@ -92,7 +92,10 @@ export function MovablePanelHeader({
           // see beginDrag above), so a reset-position affordance has
           // nothing to reset. The button reappears on `sm:` and up
           // where dragging the title row pans the panel.
-          <HoverCard title={t('movablepanelheader.reset-position')} description={t('movablepanelheader.snap-back-to-the-default-corner')}>
+          <HoverCard
+            title={t('movablepanelheader.reset-position')}
+            description={t('movablepanelheader.snap-back-to-the-default-corner')}
+          >
             <button
               type="button"
               onPointerDown={(e) => e.stopPropagation()}
@@ -114,7 +117,9 @@ export function MovablePanelHeader({
                 : `Collapse ${title.toLowerCase()}`
             }
             description={
-              effectiveCollapsed ? t('movablepanelheader.show-the-panel-body') : t('movablepanelheader.hide-the-panel-body-keep-the')
+              effectiveCollapsed
+                ? t('movablepanelheader.show-the-panel-body')
+                : t('movablepanelheader.hide-the-panel-body-keep-the')
             }
           >
             <button

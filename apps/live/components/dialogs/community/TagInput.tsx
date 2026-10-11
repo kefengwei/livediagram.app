@@ -91,7 +91,11 @@ export function TagInput({
         invalid={rejected !== null || !!error}
         id={inputId}
         placeholder={
-          full ? t('taginput.that-is-all-five') : tags.length ? t('taginput.add-another') : t('taginput.e-g-aws-onboarding')
+          full
+            ? t('taginput.that-is-all-five')
+            : tags.length
+              ? t('taginput.add-another')
+              : t('taginput.e-g-aws-onboarding')
         }
         ariaLabel="Tags"
         ariaDescribedBy={error ? `${errorId} ${hintId}` : hintId}
@@ -110,7 +114,9 @@ export function TagInput({
       <FieldError id={errorId} message={error} />
       {offered.length > 0 && !full ? (
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-xs text-slate-500 dark:text-slate-400">{t('taginput.popular')}</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400">
+            {t('taginput.popular')}
+          </span>
           {offered.map((tag) => (
             <button
               key={tag}

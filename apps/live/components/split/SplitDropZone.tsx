@@ -108,7 +108,9 @@ export function SplitDropZone({
           style={{ opacity: 0.55 + progress * 0.45 }}
         >
           <SideBySideIcon size={14} />
-          {openWidth ? t('splitdropzone.drop-to-show-here') : t('splitdropzone.drop-to-open-side-by-side')}
+          {openWidth
+            ? t('splitdropzone.drop-to-show-here')
+            : t('splitdropzone.drop-to-open-side-by-side')}
         </div>
       ) : (
         <div
@@ -125,7 +127,9 @@ export function SplitDropZone({
           <div className="relative min-h-0 flex-1 opacity-90">
             <SplitTabPreview tab={dragged} loaded={loadedTabIds.has(dragged.id)} />
             <div className="absolute inset-0 flex items-end justify-center pb-6">
-              <span className="rounded-full bg-brand-600 px-3 py-1 text-xs font-semibold text-white shadow-lg dark:bg-brand-600">{t('splitdropzone.release-to-open')}</span>
+              <span className="rounded-full bg-brand-600 px-3 py-1 text-xs font-semibold text-white shadow-lg dark:bg-brand-600">
+                {t('splitdropzone.release-to-open')}
+              </span>
             </div>
           </div>
         </div>
