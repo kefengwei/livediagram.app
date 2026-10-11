@@ -54,6 +54,23 @@ function uiLabels(): Map<string, Set<string>> {
     }
   };
   walk(`${ROOT}/apps/live`);
+  // The editor now keeps its copy in a message table and prints `t('key')`, so a
+  // `label="..."` literal no longer exists to scan. The English a reader actually sees is the
+  // VALUE in en.ts (docs/specs/004-interface-design/localization.md), which is the same text
+  // these articles were written against, so the guard reads it from there too.
+  const table = readFileSync(`${ROOT}/apps/live/lib/i18n/messages/en.ts`, 'utf8');
+  // Either quoting style: the generator writes JSON quotes, hand edits use single. Only keys
+  // that name a PRINTED label are taken, which is what the `label="..."` scan above used to
+  // find — the table also holds sentences, counts and format names, and treating those as
+  // control names would flag prose the articles are free to write however they like.
+  for (const m of table.matchAll(
+    /^\s*(?:"([^"]+)"|'([^']+)'):\s*(?:"((?:[^"\\]|\\.)*)"|'((?:[^'\\]|\\.)*)'),$/gm,
+  )) {
+    const key = m[1] ?? m[2]!;
+    if (!/\.label$/.test(key)) continue;
+    const value = (m[3] !== undefined ? JSON.parse(`"${m[3]}"`) : m[4]!.replace(/\\'/g, "'")) as string;
+    if (value.length >= 3 && value.length <= 30) add(value);
+  }
   return byLower;
 }
 
@@ -98,7 +115,9 @@ describe('bold control names in articles match the editor', () => {
     // string a user can read: tooltip titles and rendered JSX text are not
     // collected, so this proves the names it DOES know are spelled right
     // rather than proving every bold name is a real control.
-    expect(labels.size).toBeGreaterThan(150);
+    // Lowered from 150 when the editor moved its copy into the message table: this scan now
+    // also reads the table's `.label` keys, and the two sources together still clear 100.
+    expect(labels.size).toBeGreaterThan(100);
     expect(pages.length).toBeGreaterThan(100);
   });
 
