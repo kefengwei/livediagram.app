@@ -16,6 +16,7 @@
 // local Dismiss, which hides their own panel without ending anything —
 // the escape hatch if the host disconnects mid-poll.
 
+import { useTranslation } from '@/lib/i18n';
 import { tallyPoll, type LivePoll, type PollTallyRow } from '@livediagram/api-schema';
 import { MovablePanel } from '@/components/primitives/MovablePanel';
 import type { MovablePanelPlacementProps } from '@/components/primitives/MovablePanel.types';
@@ -43,12 +44,13 @@ export function PollPanel({
   onKeepResults?: () => void;
   onDismiss: () => void;
 } & MovablePanelPlacementProps) {
+  const { t } = useTranslation();
   const { rows, textAnswers, answered, skipped } = tallyPoll(poll, answers);
 
   return (
     <MovablePanel
       helpArticle="sessionPolls"
-      title="Poll"
+      title={t('pollpanel.poll')}
       position={position}
       defaultCorner="top-right-stacked"
       width="w-auto sm:w-64"
@@ -64,7 +66,7 @@ export function PollPanel({
         <div className="flex flex-col gap-1.5">
           {poll.style === 'text' ? (
             textAnswers.length === 0 ? (
-              <p className="text-[11px] italic text-slate-400">No answers yet.</p>
+              <p className="text-[11px] italic text-slate-400">{t('pollpanel.no-answers-yet')}</p>
             ) : (
               <ul className="flex max-h-40 flex-col gap-1 overflow-y-auto">
                 {textAnswers.map((text, i) => (
@@ -83,8 +85,7 @@ export function PollPanel({
         </div>
 
         <p className="text-[10px] text-slate-400">
-          {answered} answered &middot; {skipped} skipped
-        </p>
+          {answered}{t('pollpanel.answered')}{skipped}{t('pollpanel.skipped')}</p>
 
         {/* Two rows, not three side-by-side buttons. Three in a ~230px panel
             wrap to different line counts, and a row of buttons at three
@@ -101,26 +102,22 @@ export function PollPanel({
               {onKeepResults ? (
                 <HoverCard
                   block
-                  title="Keep Results"
-                  description="Drop a chart of the results so far onto the canvas. The poll keeps running."
+                  title={t('pollpanel.keep-results')}
+                  description={t('pollpanel.drop-a-chart-of-the-results')}
                 >
                   <button
                     type="button"
                     onClick={onKeepResults}
                     className={`flex h-7 w-full items-center justify-center rounded-md bg-brand-500 px-2 text-[11px] font-semibold text-white transition hover:bg-brand-600 ${SOLID_BRAND_DARK_CONTROL}`}
-                  >
-                    Keep Results
-                  </button>
+                  >{t('pollpanel.keep-results-2')}</button>
                 </HoverCard>
               ) : null}
-              <HoverCard block title="End Poll" description="End the poll for everyone.">
+              <HoverCard block title={t('pollpanel.end-poll')} description={t('pollpanel.end-the-poll-for-everyone')}>
                 <button
                   type="button"
                   onClick={onEnd}
                   className="flex h-7 w-full items-center justify-center rounded-md border border-slate-200 px-2 text-[11px] font-medium text-slate-600 transition hover:border-brand-300 hover:text-brand-700 dark:border-slate-700 dark:text-slate-300"
-                >
-                  End Poll
-                </button>
+                >{t('pollpanel.end-poll-2')}</button>
               </HoverCard>
             </>
           ) : (
@@ -128,9 +125,7 @@ export function PollPanel({
               type="button"
               onClick={onDismiss}
               className="flex h-7 w-full items-center justify-center rounded-md border border-slate-200 px-2 text-[11px] font-medium text-slate-600 transition hover:border-brand-300 hover:text-brand-700 dark:border-slate-700 dark:text-slate-300"
-            >
-              Dismiss
-            </button>
+            >{t('pollpanel.dismiss')}</button>
           )}
         </div>
       </div>

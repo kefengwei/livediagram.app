@@ -3,6 +3,7 @@
 // The parts the Plan element menus share (docs/specs/026-plan/plan-board.md "The board set-up", plan-views.md
 // "Swimlanes"): a flyout group under a heading, the Swimlanes tile grid a board and a Gantt chart both set, and
 // the card type tiles a board's Card Types and a Gantt chart's Card Types both press.
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import {
   CARD_SIZES,
@@ -97,6 +98,7 @@ export function SwimlaneOptions({
   // A built-in grouping (no field), or a field's id with `field`.
   onPick: (by: SwimlaneBy, field?: string) => void;
 }) {
+  const { t } = useTranslation();
   // The fields the shown types offer, and the one in use (from every type) when they no longer offer it.
   const lanes = laneFieldsOf(types);
   if (by === 'field' && field && !lanes.some((f) => f.id === field)) {
@@ -115,7 +117,7 @@ export function SwimlaneOptions({
   return (
     <OptionRows
       kind="single"
-      label="Group Rows By"
+      label={t('plan-menu-parts.group-rows-by')}
       palette={palette}
       className={palette ? '' : 'mx-3 my-1.5'}
       selected={by === 'field' && field ? `${FIELD}${field}` : by}
@@ -152,10 +154,11 @@ export function CardTypeOptions({
   allowNone?: boolean;
   onChange: (next: string[]) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <OptionRows
       kind="multiple"
-      label="Card Types"
+      label={t('plan-menu-parts.card-types')}
       className="mx-3 my-1.5"
       selected={selected}
       rows={types.map((t) => ({
@@ -213,10 +216,11 @@ export function CardSizeOptions({
   palette?: PlanPalette;
   onPick: (size: CardSize) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <OptionRows
       kind="single"
-      label="Card Size"
+      label={t('plan-menu-parts.card-size')}
       palette={palette}
       className={palette ? '' : 'mx-3 my-1.5'}
       selected={size ?? 'detailed'}

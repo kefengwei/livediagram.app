@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import type { PendingDraw } from '@/lib/draw-mode';
 import { PaletteTileGrid, type PaletteTileActions } from './PaletteTileGrid';
 import { PaletteToolRows } from './PaletteToolRows';
@@ -140,6 +141,7 @@ export const BEHAVIOUR_GROUPS: TileGroupDef[] = [
 ];
 
 export function PaletteBehaviourTab({ pendingDraw, actions, tiles }: TabProps) {
+  const { t } = useTranslation();
   // Every tile is in a group. The comment pin used to sit loose above them,
   // on the reasoning that it is the one you reach for outside a facilitated
   // session and a group of one would be a click in front of the tab's
@@ -155,7 +157,7 @@ export function PaletteBehaviourTab({ pendingDraw, actions, tiles }: TabProps) {
       actions={actions}
       pendingDraw={pendingDraw}
       searchInput={{
-        placeholder: 'Search collaboration',
+        placeholder: t('palette-create-tabs.search-collaboration'),
         ariaLabel: 'Search collaborate elements',
         clearAriaLabel: 'Clear collaborate search',
         clearDescription: 'Clear the collaborate element search query.',
@@ -170,6 +172,7 @@ export function PaletteBehaviourTab({ pendingDraw, actions, tiles }: TabProps) {
 // picture frames look near-identical at 18px, and "an uploaded picture" vs "a
 // picture cropped to a circle" is the whole difference.
 export function PaletteMediaTab({ pendingDraw, actions, tiles: media }: TabProps) {
+  const { t } = useTranslation();
   // The embed providers collapse behind one row (docs/specs/009-elements/embed-providers.md); Media's own two
   // elements stay on top where they were.
   return (
@@ -182,7 +185,7 @@ export function PaletteMediaTab({ pendingDraw, actions, tiles: media }: TabProps
       {/* A layout that leaves the whole group out leaves its row out too. */}
       {media.some((t) => t.tileGroup === 'embed') ? (
         <PaletteTileGroup
-          title="Embed"
+          title={t('palette-create-tabs.embed')}
           blurb="Load a page on the canvas"
           icon={<EmbedGroupIcon />}
           tiles={media.filter((t) => t.tileGroup === 'embed')}
@@ -199,6 +202,7 @@ export function PaletteMediaTab({ pendingDraw, actions, tiles: media }: TabProps
 // are six of the eleven tiles here and were crowding out the diagram content
 // that moved in beside them (docs/specs/010-palette/palette-top-level-categories.md).
 export function PaletteComponentsTab({ pendingDraw, actions, tiles: components }: TabProps) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-0.5">
       <PaletteToolRows
@@ -209,7 +213,7 @@ export function PaletteComponentsTab({ pendingDraw, actions, tiles: components }
       {/* A layout that leaves the whole group out leaves its row out too. */}
       {components.some((t) => t.tileGroup === 'web') ? (
         <PaletteTileGroup
-          title="Web Elements"
+          title={t('palette-create-tabs.web-elements')}
           blurb="Themed page sections"
           icon={<WebGroupIcon />}
           tiles={components.filter((t) => t.tileGroup === 'web')}

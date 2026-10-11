@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import {
   arrowheadShapeOf,
   arrowheadSizeOf,
@@ -80,6 +81,7 @@ export function MultiSelectionContextMenu({
   onClose,
   anchorBottom,
 }: MultiSelectionContextMenuProps) {
+  const { t } = useTranslation();
   const scaffold = useContextMenuScaffold(props);
   const { sectionProps, flyoutProps, colorProps, textColorHandlers } = scaffold;
   const surface = useCanvasSurface();
@@ -92,7 +94,7 @@ export function MultiSelectionContextMenu({
   return (
     <ContextMenu
       position={position}
-      label="Selection menu"
+      label={t('multiselectioncontextmenu.selection-menu')}
       onClose={onClose}
       flush
       anchorBottom={anchorBottom}
@@ -202,7 +204,7 @@ export function MultiSelectionContextMenu({
             {/* ── Style band (docs/specs/008-canvas/canvas-and-palette.md): Presets + Colours + Border behind one
                   "Style" flyout row, matching the single-element menu. ── */}
             {showStyleFlyout ? (
-              <MenuFlyoutSection title="Style" icon={<StyleMenuGlyph />} {...flyoutProps('style')}>
+              <MenuFlyoutSection title={t('multiselectioncontextmenu.style')} icon={<StyleMenuGlyph />} {...flyoutProps('style')}>
                 {presetShapeSrc ? (
                   <ShapePresetsSection
                     shape={presetShapeSrc.shape}
@@ -217,7 +219,7 @@ export function MultiSelectionContextMenu({
                     onClose={onClose}
                     // Mixed selection shows both preset sections — disambiguate
                     // by kind, same as the Animation sections below.
-                    title={presetShapeSrc && arrowSrc ? 'Shape Presets' : 'Presets'}
+                    title={presetShapeSrc && arrowSrc ? t('multiselectioncontextmenu.shape-presets') : 'Presets'}
                   />
                 ) : null}
                 {arrowSrc ? (
@@ -230,7 +232,7 @@ export function MultiSelectionContextMenu({
                     props={props}
                     accordion={sectionProps('m-arrow-presets')}
                     onClose={onClose}
-                    title={presetShapeSrc && arrowSrc ? 'Arrow Presets' : 'Presets'}
+                    title={presetShapeSrc && arrowSrc ? t('multiselectioncontextmenu.arrow-presets') : 'Presets'}
                   />
                 ) : null}
                 <MultiStyleSections
@@ -275,7 +277,7 @@ export function MultiSelectionContextMenu({
                   one "Text" flyout, matching the single-element menu. Sits in
                   the style band (no separator) like its single counterpart. ── */}
             {showTextFlyout ? (
-              <MenuFlyoutSection title="Text" icon={<TextGlyph />} {...flyoutProps('text')}>
+              <MenuFlyoutSection title={t('multiselectioncontextmenu.text')} icon={<TextGlyph />} {...flyoutProps('text')}>
                 {alignSrc ? (
                   <TypographySections
                     currentFont={(alignSrc as { font?: string }).font ?? null}
@@ -297,7 +299,7 @@ export function MultiSelectionContextMenu({
                 {/* Alignment — the text toolbar's 3x3 grid, selection-wide. */}
                 {alignSrc ? (
                   <MenuAccordionSection
-                    title="Alignment"
+                    title={t('multiselectioncontextmenu.alignment')}
                     icon={
                       <AlignLinesIcon
                         dir={(alignSrc as { textAlignX?: TextAlignX }).textAlignX ?? 'center'}
@@ -320,7 +322,7 @@ export function MultiSelectionContextMenu({
                       selection. */}
                 {markerSrc ? (
                   <MenuAccordionSection
-                    title="Markers"
+                    title={t('multiselectioncontextmenu.markers')}
                     icon={<MarkersMenuGlyph />}
                     {...sectionProps('m-markers')}
                   >
@@ -343,7 +345,7 @@ export function MultiSelectionContextMenu({
             ) : null}
             {arrowSrc ? (
               <>
-                <MenuAccordionSection title="Line" icon={<LineGlyph />} {...sectionProps('m-line')}>
+                <MenuAccordionSection title={t('multiselectioncontextmenu.line')} icon={<LineGlyph />} {...sectionProps('m-line')}>
                   <div className="px-3 py-1.5">
                     <ArrowLineControls
                       thickness={arrowThicknessOf(arrowSrc)}
@@ -363,7 +365,7 @@ export function MultiSelectionContextMenu({
                   </div>
                 </MenuAccordionSection>
                 <MenuAccordionSection
-                  title="Pointer"
+                  title={t('multiselectioncontextmenu.pointer')}
                   icon={<PointerGlyph />}
                   {...sectionProps('m-pointer')}
                 >
@@ -384,45 +386,41 @@ export function MultiSelectionContextMenu({
                   every cell of the selection's tables, mirroring the single
                   menu's content Text section. */}
             {contentTextSrc ? (
-              <MenuAccordionSection title="Text" icon={<TextGlyph />} {...sectionProps('m-text')}>
+              <MenuAccordionSection title={t('multiselectioncontextmenu.text-2')} icon={<TextGlyph />} {...sectionProps('m-text')}>
                 {contentTextSrc.type === 'table' ? (
-                  <p className="px-3 pt-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-                    Applies to every cell.
-                  </p>
+                  <p className="px-3 pt-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('multiselectioncontextmenu.applies-to-every-cell')}</p>
                 ) : null}
                 <div className="flex gap-1 px-2 py-1.5">
                   <TextToggle
                     active={!!contentTextSrc.textBold}
-                    label="Bold"
+                    label={t('multiselectioncontextmenu.bold')}
                     onClick={props.onToggleTextBold}
                   >
                     <BoldIcon />
                   </TextToggle>
                   <TextToggle
                     active={!!contentTextSrc.textItalic}
-                    label="Italic"
+                    label={t('multiselectioncontextmenu.italic')}
                     onClick={props.onToggleTextItalic}
                   >
                     <ItalicIcon />
                   </TextToggle>
                   <TextToggle
                     active={!!contentTextSrc.textUnderline}
-                    label="Underline"
+                    label={t('multiselectioncontextmenu.underline')}
                     onClick={props.onToggleTextUnderline}
                   >
                     <UnderlineIcon />
                   </TextToggle>
                   <TextToggle
                     active={!!contentTextSrc.textStrikethrough}
-                    label="Strikethrough"
+                    label={t('multiselectioncontextmenu.strikethrough')}
                     onClick={props.onToggleTextStrikethrough}
                   >
                     <StrikethroughIcon />
                   </TextToggle>
                 </div>
-                <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-                  Size
-                </p>
+                <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('multiselectioncontextmenu.size')}</p>
                 <TextSizeTiles
                   current={contentTextSrc.textSize ?? 'sm'}
                   onSet={props.onSetTextSize}
@@ -431,7 +429,7 @@ export function MultiSelectionContextMenu({
                 />
                 <ContextMenuDivider />
                 <ColourRow
-                  label="Colour"
+                  label={t('multiselectioncontextmenu.colour')}
                   icon={<TextColourIcon />}
                   value={shownColour(contentTextSrc, 'text', surface, '#0f172a')}
                   ink={inkSwatch(contentTextSrc, 'text', surface)}
@@ -446,27 +444,27 @@ export function MultiSelectionContextMenu({
                   selection-wide). */}
             {tableSrc ? (
               <MenuAccordionSection
-                title="Table"
+                title={t('multiselectioncontextmenu.table')}
                 icon={<TableGlyph />}
                 {...sectionProps('m-table')}
               >
                 <MenuToggleRow
-                  label="Header row"
-                  description="Style the first row as a header."
+                  label={t('multiselectioncontextmenu.header-row')}
+                  description={t('multiselectioncontextmenu.style-the-first-row-as-a')}
                   checked={tableSrc.headerRow ?? false}
                   onToggle={props.onToggleTableHeaderRow}
                 />
                 <ContextMenuDivider />
                 <MenuToggleRow
-                  label="Header column"
-                  description="Style the first column as a header."
+                  label={t('multiselectioncontextmenu.header-column')}
+                  description={t('multiselectioncontextmenu.style-the-first-column-as-a')}
                   checked={tableSrc.headerColumn ?? false}
                   onToggle={props.onToggleTableHeaderColumn}
                 />
                 <ContextMenuDivider />
                 <MenuToggleRow
-                  label="Zebra striping"
-                  description="Tint alternate body rows."
+                  label={t('multiselectioncontextmenu.zebra-striping')}
+                  description={t('multiselectioncontextmenu.tint-alternate-body-rows')}
                   checked={tableSrc.zebra ?? false}
                   onToggle={props.onToggleTableZebra}
                 />

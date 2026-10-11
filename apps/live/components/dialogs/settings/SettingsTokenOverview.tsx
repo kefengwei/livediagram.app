@@ -4,6 +4,7 @@
 // what tokens are for, how many of the ten slots are taken, and the way to
 // make another. The meter is one pip per slot so "how close am I to the cap"
 // reads at a glance instead of from a sentence.
+import { useTranslation } from '@/lib/i18n';
 import { Button } from '@livediagram/ui';
 import { PlusIcon } from '@/components/primitives/explorer-icons';
 import { TokensGlyph } from './settings-icons';
@@ -23,6 +24,7 @@ export function SettingsTokenOverview({
   composing: boolean;
   onNew: () => void;
 }) {
+  const { t } = useTranslation();
   // No tokens yet: the composer below is the one thing to do, so the header
   // offers no second way to it and no meter reading "0 of 10".
   const firstRun = count === 0;
@@ -43,12 +45,8 @@ export function SettingsTokenOverview({
           {TokensGlyph}
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100">
-            API Tokens
-          </span>
-          <span className="block text-xs leading-relaxed text-slate-500 dark:text-slate-400">
-            Let your scripts and AI tools work with your documents, signed in as you.
-          </span>
+          <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100">{t('settingstokenoverview.api-tokens')}</span>
+          <span className="block text-xs leading-relaxed text-slate-500 dark:text-slate-400">{t('settingstokenoverview.let-your-scripts-and-ai-tools')}</span>
         </span>
         {composing || firstRun ? null : (
           // Visibly just "New" beside the API Tokens title; the accessible
@@ -57,12 +55,10 @@ export function SettingsTokenOverview({
             size="xs"
             onClick={onNew}
             disabled={count === null || atCap}
-            aria-label="New token"
+            aria-label={t('settingstokenoverview.new-token')}
             className="shrink-0"
           >
-            <PlusIcon />
-            New
-          </Button>
+            <PlusIcon />{t('settingstokenoverview.new')}</Button>
         )}
       </div>
 
@@ -70,7 +66,7 @@ export function SettingsTokenOverview({
         <div className="flex items-center gap-3">
           <div
             role="meter"
-            aria-label="Token slots used"
+            aria-label={t('settingstokenoverview.token-slots-used')}
             aria-valuemin={0}
             aria-valuemax={max}
             aria-valuenow={count}
@@ -87,15 +83,13 @@ export function SettingsTokenOverview({
             ))}
           </div>
           <span className="shrink-0 text-[11px] tabular-nums text-slate-500 dark:text-slate-400">
-            <span className="font-semibold text-slate-700 dark:text-slate-200">{count}</span> of{' '}
+            <span className="font-semibold text-slate-700 dark:text-slate-200">{count}</span>{t('settingstokenoverview.of')}{' '}
             {max}
           </span>
         </div>
       )}
       {atCap ? (
-        <p className="text-[11px] text-rose-600 dark:text-rose-400">
-          Every slot is taken. Revoke a token to make room for a new one.
-        </p>
+        <p className="text-[11px] text-rose-600 dark:text-rose-400">{t('settingstokenoverview.every-slot-is-taken-revoke-a')}</p>
       ) : null}
     </div>
   );

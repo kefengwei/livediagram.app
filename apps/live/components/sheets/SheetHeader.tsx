@@ -4,6 +4,7 @@
 // Plan mode, as a board's: up to 60 characters, unique on the tab), the Sheet Settings cog
 // (SheetSettingsPanel) and Maximise Sheet.
 // The header is where the element is moved from: presses on it reach the canvas, except on its controls.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { SHEET_TITLE_MAX } from '@livediagram/sheets';
 import { MaximisePlanButton } from '@/components/plan/MaximisedPlanLayer';
@@ -33,6 +34,7 @@ export function SheetHeader({
   actions: SheetActions;
   onImportCsv: () => void;
 }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const filled = useFillsTab(elementId);
   const [renaming, setRenaming] = useState(false);
@@ -65,7 +67,7 @@ export function SheetHeader({
         <input
           autoFocus
           data-keeps-escape
-          aria-label="Sheet title"
+          aria-label={t('sheetheader.sheet-title')}
           maxLength={SHEET_TITLE_MAX}
           value={draft}
           onPointerDown={stop}
@@ -108,7 +110,7 @@ export function SheetHeader({
           )}
           {/* The cog last, at the header's far right. */}
           <SettingsCog
-            label="Sheet Settings"
+            label={t('sheetheader.sheet-settings')}
             palette={c.palette}
             onOpen={() => track('Sheet', 'Opened', 'Settings')}
           >

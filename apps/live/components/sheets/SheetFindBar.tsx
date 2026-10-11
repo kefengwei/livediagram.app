@@ -3,6 +3,7 @@
 // Find and Replace (docs/specs/029-sheets/sheet.md "Find"): a small bar on the sheet's top right; matches counted and
 // stepped through with Enter and Shift+Enter, in values (and, asked, in inputs), Match Case and Match Entire Cell;
 // Replace and Replace All in inputs only. Escape closes it.
+import { useTranslation } from '@/lib/i18n';
 import { Button, Tooltip } from '@livediagram/ui';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { findMatches, replaceAll, type FindOptions } from '@livediagram/sheets';
@@ -15,6 +16,7 @@ const stop = (e: { stopPropagation: () => void }) => e.stopPropagation();
 const FIND_HIGHLIGHTS_MAX = 2_000;
 
 export function SheetFindBar() {
+  const { t } = useTranslation();
   const c = useSheetController();
   const actions = useSheetActions();
   const [query, setQuery] = useState('');
@@ -66,7 +68,7 @@ export function SheetFindBar() {
     <div
       role="search"
       data-keeps-escape
-      aria-label="Find in sheet"
+      aria-label={t('sheetfindbar.find-in-sheet')}
       className="absolute right-2 z-30 w-80 rounded-lg border p-2 text-[12px] shadow-lg"
       style={{
         top: HEADER_PX + 6,
@@ -83,8 +85,8 @@ export function SheetFindBar() {
       <div className="flex items-center gap-1.5">
         <input
           ref={input}
-          aria-label="Find"
-          placeholder="Find"
+          aria-label={t('sheetfindbar.find')}
+          placeholder={t('sheetfindbar.find-2')}
           className={`${field} min-w-0 flex-1`}
           style={{ borderColor: c.palette.border }}
           value={query}
@@ -100,33 +102,33 @@ export function SheetFindBar() {
           {query
             ? matches.length
               ? `${at === null ? 0 : at + 1} of ${matches.length}`
-              : 'No matches'
+              : t('sheetfindbar.no-matches')
             : ''}
         </span>
-        <Tooltip label="Previous Match">
+        <Tooltip label={t('sheetfindbar.previous-match')}>
           <button
             type="button"
-            aria-label="Previous Match"
+            aria-label={t('sheetfindbar.previous-match-2')}
             className="h-7 w-6 cursor-pointer rounded hover:bg-black/5"
             onClick={() => step(-1)}
           >
             ↑
           </button>
         </Tooltip>
-        <Tooltip label="Next Match">
+        <Tooltip label={t('sheetfindbar.next-match')}>
           <button
             type="button"
-            aria-label="Next Match"
+            aria-label={t('sheetfindbar.next-match-2')}
             className="h-7 w-6 cursor-pointer rounded hover:bg-black/5"
             onClick={() => step(1)}
           >
             ↓
           </button>
         </Tooltip>
-        <Tooltip label="Close Find">
+        <Tooltip label={t('sheetfindbar.close-find')}>
           <button
             type="button"
-            aria-label="Close Find"
+            aria-label={t('sheetfindbar.close-find-2')}
             className="h-7 w-6 cursor-pointer rounded hover:bg-black/5"
             onClick={close}
           >
@@ -137,8 +139,8 @@ export function SheetFindBar() {
       {replace ? (
         <div className="mt-1.5 flex items-center gap-1.5">
           <input
-            aria-label="Replace with"
-            placeholder="Replace with"
+            aria-label={t('sheetfindbar.replace-with')}
+            placeholder={t('sheetfindbar.replace-with-2')}
             className={`${field} min-w-0 flex-1`}
             style={{ borderColor: c.palette.border }}
             value={by}
@@ -164,9 +166,7 @@ export function SheetFindBar() {
               setAt(k);
               actions.goTo({ r1: rest[k]!.r, c1: rest[k]!.c, r2: rest[k]!.r, c2: rest[k]!.c });
             }}
-          >
-            Replace
-          </button>
+          >{t('sheetfindbar.replace')}</button>
           <Button
             variant="primary"
             size="xs"
@@ -176,9 +176,7 @@ export function SheetFindBar() {
               if (r.count) c.write({ kind: 'cells', cells: r.cells }, 'Replace');
               c.notify(`Replaced ${r.count} cell${r.count === 1 ? '' : 's'}`);
             }}
-          >
-            Replace All
-          </Button>
+          >{t('sheetfindbar.replace-all')}</Button>
         </div>
       ) : null}
       <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1" style={{ color: c.palette.muted }}>

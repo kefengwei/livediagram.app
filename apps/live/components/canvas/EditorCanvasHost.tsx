@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 import { pastePointer } from '@/lib/canvas-pointer';
 import { dropThenDisarm } from '@/lib/palette-drop';
@@ -34,6 +35,7 @@ import { useStableCollab } from '@/components/canvas/element-layer-props';
 // props consume (the quick-connect arrow starter, the memoised Explorer
 // list props, the owner-badge resolution).
 export function EditorCanvasHost() {
+  const { t } = useTranslation();
   const {
     activeTab,
     scrollIntoView,
@@ -494,7 +496,7 @@ export function EditorCanvasHost() {
       ? {
           onImportPhoto: openPhotoImport,
           photoDisabled: photoImportBlocked,
-          photoDisabledReason: photoDraft.draftOpen ? 'Finish the current draft first' : undefined,
+          photoDisabledReason: photoDraft.draftOpen ? t('editorcanvashost.finish-the-current-draft-first') : undefined,
         }
       : {}),
   });

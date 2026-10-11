@@ -5,6 +5,7 @@
 // tile in its own tone over its name and what it means, the current one tinted and marked Current; Local only
 // stands apart under a divider, the deliberate opt-out. Shown on the pill's hover or focus, for the eye only (the
 // pill carries the current state's words for assistive technology).
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import { CheckIcon, lucideGlyph } from '@livediagram/ui';
 import { lucideGlobe, lucideLink, lucideLock, lucideUsers } from '@livediagram/icons/lucide';
@@ -49,6 +50,7 @@ const LOOK: Record<ShareState, { icon: ReactNode; tile: string; current: string 
 };
 
 function Row({ state, current }: { state: ShareState; current: boolean }) {
+  const { t } = useTranslation();
   const m = SHARE_STATE_META[state];
   const look = LOOK[state];
   return (
@@ -66,23 +68,22 @@ function Row({ state, current }: { state: ShareState; current: boolean }) {
       </span>
       <span className="min-w-0 flex-1">
         <span className="block text-[12.5px] font-semibold leading-tight text-slate-800 dark:text-slate-100">
-          {m.label}
+          {t(m.labelKey)}
         </span>
         <span className="mt-0.5 block text-[11.5px] leading-snug text-slate-500 dark:text-slate-400">
-          {m.description}
+          {t(m.descriptionKey)}
         </span>
       </span>
       {current ? (
         <span className="flex shrink-0 items-center gap-1 self-start pt-0.5 text-[10.5px] font-semibold text-slate-600 dark:text-slate-300">
-          <CheckIcon size={11} />
-          Current
-        </span>
+          <CheckIcon size={11} />{t('visibilitylegend.current')}</span>
       ) : null}
     </li>
   );
 }
 
 export function VisibilityLegend({ current }: { current: ShareState }) {
+  const { t } = useTranslation();
   return (
     <div
       aria-hidden
@@ -90,12 +91,8 @@ export function VisibilityLegend({ current }: { current: ShareState }) {
       className="absolute left-1/2 top-full z-10 mt-2 w-[21rem] max-w-[calc(100vw-2rem)] -translate-x-1/2 animate-fade-in rounded-xl border border-slate-200 bg-white p-2 text-left shadow-xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/40"
     >
       <div className="px-2 pb-2 pt-1">
-        <p className="text-[13px] font-semibold text-slate-900 dark:text-slate-50">
-          Who Can See This
-        </p>
-        <p className="text-[11.5px] text-slate-500 dark:text-slate-400">
-          From just you to everyone, as you share it.
-        </p>
+        <p className="text-[13px] font-semibold text-slate-900 dark:text-slate-50">{t('visibilitylegend.who-can-see-this')}</p>
+        <p className="text-[11.5px] text-slate-500 dark:text-slate-400">{t('visibilitylegend.from-just-you-to-everyone-as')}</p>
       </div>
       <ol className="relative flex flex-col gap-0.5">
         {/* The rail: from the first tile's middle to the last's, the audience widening down it. */}

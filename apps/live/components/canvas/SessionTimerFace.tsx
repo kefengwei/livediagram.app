@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { DialTicks } from '@/components/canvas/paper-kit';
 
 import { formatTimerClock, timerDone, type TabTimer } from '@livediagram/document';
@@ -63,6 +64,7 @@ export function SessionTimerFace({
   /** The way out of the presets to the element's full menu (docs/specs/008-canvas/canvas-and-palette.md). */
   onOpenSettings?: () => void;
 }) {
+  const { t } = useTranslation();
   // The clock advances 4x a second while running, exactly as the chrome pill's does. A paused or absent
   // timer is static, so nothing spins.
   const running = timer?.running === true;
@@ -88,7 +90,7 @@ export function SessionTimerFace({
       }}
     >
       {onSetMinutes ? (
-        <ElementEllipsisMenu label="Timer options" kind="control">
+        <ElementEllipsisMenu label={t('sessiontimerface.timer-options')} kind="control">
           {(close) => (
             <>
               {/* The Studio's own timer UI, not a second design of it
@@ -130,9 +132,7 @@ export function SessionTimerFace({
           {/* Idle: the same kicker and clock, showing the configured length,
               with one control. Reading identically to a running timer is the
               point — the element does not change shape when it starts. */}
-          <span className="select-none text-[10px] font-medium uppercase tracking-wide opacity-70">
-            Timer
-          </span>
+          <span className="select-none text-[10px] font-medium uppercase tracking-wide opacity-70">{t('sessiontimerface.timer')}</span>
           <span className="select-none text-sm font-semibold tabular-nums">
             {formatTimerClock(durationMs)}
           </span>
@@ -140,7 +140,7 @@ export function SessionTimerFace({
             <div className="flex items-center gap-0.5" onPointerDownCapture={swallow}>
               <button
                 type="button"
-                aria-label="Start timer"
+                aria-label={t('sessiontimerface.start-timer')}
                 onClick={onStart}
                 className={`pointer-events-auto ${TIMER_BUTTON_CLASS}`}
               >

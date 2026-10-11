@@ -3,6 +3,7 @@
 // The item panel's field editors (docs/specs/026-plan/plan-board.md "Working on a board"), one per field
 // kind: text that saves on a pause in typing, and pickers that save at once. Each calls `onSave` with
 // the field's new value, or `undefined` to clear it.
+
 import { ChipField } from '@/components/primitives/ChipField';
 import {
   CheckIcon,
@@ -67,6 +68,8 @@ export function DebouncedText({
   // An accessible name when no label element names it.
   label?: string;
 }) {
+  
+  
   const [draft, setDraft] = useState(value);
   const wrapRef = useRef<HTMLTextAreaElement>(null);
   useAutoHeight(wrapRef, draft, { lines: wrapLines ?? 1 });
@@ -188,6 +191,8 @@ export function PersonPicker({
   disabled: boolean;
   onSave: Save;
 }) {
+  const { t } = useTranslation();
+  
   const current = isItemPerson(value) ? value : null;
   const options =
     current && !people.some((p) => p.id === current.id) ? [current, ...people] : people;
@@ -203,7 +208,7 @@ export function PersonPicker({
         onSave(p ? { ...p } : undefined);
       }}
     >
-      <option value="">No one</option>
+      <option value="">{t('item-field-editors.no-one')}</option>
       {options.map((p) => (
         <option key={p.id} value={p.id}>
           {p.name}
@@ -224,6 +229,8 @@ export function PriorityPicker({
   disabled: boolean;
   onSave: Save;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <Select
       id={id}
@@ -233,7 +240,7 @@ export function PriorityPicker({
       value={typeof value === 'string' ? value : ''}
       onChange={(e) => onSave(e.target.value || undefined)}
     >
-      <option value="">None</option>
+      <option value="">{t('item-field-editors.none')}</option>
       {PRIORITIES.map((p) => (
         <option key={p} value={p}>
           {PRIORITY_LABELS[p]}
@@ -246,6 +253,7 @@ export function PriorityPicker({
 // A label's colour: one of the Plan swatches, the same for the same label everywhere (label-colour.ts).
 export { labelColour } from './label-colour';
 import { labelColour } from './label-colour';
+import { useTranslation } from '@/lib/i18n';
 
 export function LabelsEditor({
   id,
@@ -261,6 +269,8 @@ export function LabelsEditor({
   suggestions?: readonly string[];
   onSave: Save;
 }) {
+  const { t } = useTranslation();
+  
   const labels = Array.isArray(value)
     ? value.filter((l): l is string => typeof l === 'string')
     : [];
@@ -307,7 +317,7 @@ export function LabelsEditor({
       onRemove={remove}
       readOnly={disabled}
       emptyText="None"
-      placeholder={labels.length ? 'Add…' : 'Add a label'}
+      placeholder={labels.length ? 'Add…' : t('item-field-editors.add-a-label')}
       list={offered.length ? `${id}-labels` : undefined}
     >
       {!disabled && offered.length ? (
@@ -334,6 +344,8 @@ export function EstimateSelect({
   disabled: boolean;
   onSave: Save;
 }) {
+  const { t } = useTranslation();
+  
   const current = typeof value === 'number' ? value : undefined;
   const sizes: number[] = [...ESTIMATE_POINTS];
   if (current !== undefined && !sizes.includes(current))
@@ -353,7 +365,7 @@ export function EstimateSelect({
       value={current === undefined ? '' : String(current)}
       onChange={(e) => onSave(e.target.value === '' ? undefined : Number(e.target.value))}
     >
-      <option value="">None</option>
+      <option value="">{t('item-field-editors.none-2')}</option>
       {sizes.map((s) => (
         <option key={s} value={String(s)}>
           {s}
@@ -397,6 +409,8 @@ export function ChecklistEditor({
   disabled: boolean;
   onSave: Save;
 }) {
+  const { t } = useTranslation();
+  
   const rows: Row[] = Array.isArray(value)
     ? value.flatMap((r) =>
         r && typeof r === 'object' && !Array.isArray(r) && typeof r.text === 'string'
@@ -421,7 +435,7 @@ export function ChecklistEditor({
             />
           </span>
           <span className="text-[12px] tabular-nums text-slate-500 dark:text-slate-400">
-            {done} of {rows.length}
+            {done}{t('item-field-editors.of')}{rows.length}
           </span>
         </div>
       ) : null}
@@ -485,7 +499,7 @@ export function ChecklistEditor({
       </ul>
       {disabled ? (
         rows.length === 0 ? (
-          <span className="text-[13px] text-slate-500 dark:text-slate-400">No steps</span>
+          <span className="text-[13px] text-slate-500 dark:text-slate-400">{t('item-field-editors.no-steps')}</span>
         ) : null
       ) : (
         <label className="-mx-1.5 flex items-center gap-2.5 rounded-md px-1.5 py-1 text-slate-500 focus-within:bg-slate-50 dark:text-slate-400 dark:focus-within:bg-slate-800/60">
@@ -494,8 +508,8 @@ export function ChecklistEditor({
           </span>
           <input
             value={draft}
-            placeholder="Add a step"
-            aria-label="Add a step"
+            placeholder={t('item-field-editors.add-a-step')}
+            aria-label={t('item-field-editors.add-a-step-2')}
             className="min-w-0 flex-1 bg-transparent px-1 py-0.5 text-[13px] text-slate-800 outline-none placeholder:text-slate-500 dark:text-slate-100 dark:placeholder:text-slate-400"
             onChange={(e) => setDraft(e.target.value)}
             onKeyDown={(e) => {

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { Button, SOLID_BRAND_DARK, PictureDisc } from '@livediagram/ui';
@@ -26,9 +27,10 @@ const IDENTITY_AVATAR_PX = 44;
 // Identity, read from Clerk. Never written here: names and emails are managed
 // in Clerk itself, so this is a card, not a form.
 export function SettingsIdentityRow({ row }: { row: SettingsIdentityRowSpec }) {
+  const { t } = useTranslation();
   const { authLoaded, isSignedIn, user } = useDeferredAuth();
   const signedIn = Boolean(authLoaded && isSignedIn && user);
-  const name = user?.fullName ?? user?.username ?? user?.email ?? 'Your account';
+  const name = user?.fullName ?? user?.username ?? user?.email ?? t('settingsaccountrows.your-account');
   const joined = user?.createdAt
     ? user.createdAt.toLocaleDateString(undefined, {
         year: 'numeric',
@@ -62,7 +64,7 @@ export function SettingsIdentityRow({ row }: { row: SettingsIdentityRowSpec }) {
                   </span>
                 ) : null}
                 {joined ? (
-                  <span className="mt-0.5 block text-[11px] text-slate-400">Joined {joined}</span>
+                  <span className="mt-0.5 block text-[11px] text-slate-400">{t('settingsaccountrows.joined')}{joined}</span>
                 ) : null}
               </span>
             </>
@@ -71,9 +73,7 @@ export function SettingsIdentityRow({ row }: { row: SettingsIdentityRowSpec }) {
               <span className="block text-sm font-medium text-slate-800 dark:text-slate-100">
                 {row.label}
               </span>
-              <span className="block text-xs text-slate-500 dark:text-slate-400">
-                You are working as a guest. Sign in to keep your documents across devices.
-                <SettingsSignInLink />
+              <span className="block text-xs text-slate-500 dark:text-slate-400">{t('settingsaccountrows.you-are-working-as-a-guest')}<SettingsSignInLink />
               </span>
             </span>
           )}
@@ -95,6 +95,7 @@ export const DELETE_ACCOUNT_GUEST =
   'Only available once you are signed in: a guest browser has no verified account to delete.';
 
 export function SettingsDeleteAccountRow({ row }: { row: SettingsDeleteAccountRowSpec }) {
+  const { t } = useTranslation();
   const { authLoaded, isSignedIn, user, signOut } = useDeferredAuth();
   const signedIn = Boolean(authLoaded && isSignedIn && user);
   const [open, setOpen] = useState(false);
@@ -103,6 +104,9 @@ export function SettingsDeleteAccountRow({ row }: { row: SettingsDeleteAccountRo
   const described = {
     ...row,
     description: signedIn ? DELETE_ACCOUNT_SIGNED_IN : DELETE_ACCOUNT_GUEST,
+    // Cleared on purpose: this row's description depends on who is signed in, and
+    // SettingsRowShell prefers a key, so the catalogue's would win over this variant.
+    descriptionKey: undefined,
   };
 
   return (
@@ -119,9 +123,7 @@ export function SettingsDeleteAccountRow({ row }: { row: SettingsDeleteAccountRo
               size="sm"
               onClick={() => setOpen(true)}
               className="shrink-0"
-            >
-              Delete Account
-            </Button>
+            >{t('settingsaccountrows.delete-account')}</Button>
           ) : (
             // A guest is offered the way in, beside the label.
             <span className="shrink-0 text-xs text-slate-500 dark:text-slate-400">

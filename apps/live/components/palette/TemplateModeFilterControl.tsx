@@ -3,15 +3,17 @@
 // The template step's mode filter (docs/specs/007-editor/templates-by-mode.md "The mode filter"):
 // the shared ModeFilterMenu (@livediagram/ui, also the marketing gallery's) fed Everything and
 // every offered mode, each with its glyph (the mode switch's) and how many templates it holds.
+import { useTranslation } from '@/lib/i18n';
 import { editorModeLabel } from '@livediagram/document';
 import { EDITOR_MODE_ICONS, EverythingIcon, ModeFilterMenu } from '@livediagram/ui';
 import type { TemplateModeFilter } from './useTemplateModeFilter';
 
 export function TemplateModeFilterControl({ filter }: { filter: TemplateModeFilter }) {
+  const { t } = useTranslation();
   const { choice, options, choose, counts } = filter;
   return (
     <ModeFilterMenu
-      label="Show templates for"
+      label={t('templatemodefiltercontrol.show-templates-for')}
       value={choice}
       onChange={choose}
       options={options.map((c) => ({

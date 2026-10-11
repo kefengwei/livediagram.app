@@ -13,6 +13,7 @@
 // tiles. A menu that looked like this one used to and nothing else in the app
 // is a menu people have to learn twice.
 
+import { useTranslation } from '@/lib/i18n';
 import { DuplicateIcon, PencilIcon, TrashIcon } from '@/components/primitives/explorer-icons';
 import { useState } from 'react';
 import { EllipsisTriggerButton } from '@/components/primitives/EllipsisTriggerButton';
@@ -61,6 +62,7 @@ export function SlideRowMenu({
   onDuplicate: () => void;
   onDelete: (anchor: HTMLElement | null) => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [section, setSection] = useState<string | null>(null);
   // The menu button, held in state so the menu anchors on its first render.
@@ -74,8 +76,8 @@ export function SlideRowMenu({
   // something to refuse politely, it is something that cannot be expressed.
   const canEditMembership = onSameTab && selectionCount > 0;
   const membershipWhy = !onSameTab
-    ? 'Switch to this slide’s own tab to change what is on it.'
-    : 'Select elements on the canvas to add them to this slide.';
+    ? t('sliderowmenu.switch-to-this-slide-s-own')
+    : t('sliderowmenu.select-elements-on-the-canvas-to');
 
   return (
     <>
@@ -100,8 +102,8 @@ export function SlideRowMenu({
           <MenuToolbar>
             <MenuToolButton
               icon={<PencilIcon />}
-              label="Rename"
-              description="Rename this slide."
+              label={t('sliderowmenu.rename')}
+              description={t('sliderowmenu.rename-this-slide')}
               onClick={() => {
                 close();
                 onRename();
@@ -109,8 +111,8 @@ export function SlideRowMenu({
             />
             <MenuToolButton
               icon={<NoteMenuIcon />}
-              label={slide.notes ? 'Edit notes' : 'Add notes'}
-              description="What you'll say over this slide."
+              label={slide.notes ? t('sliderowmenu.edit-notes') : t('sliderowmenu.add-notes')}
+              description={t('sliderowmenu.what-you-ll-say-over-this')}
               active={!!slide.notes}
               onClick={() => {
                 close();
@@ -119,8 +121,8 @@ export function SlideRowMenu({
             />
             <MenuToolButton
               icon={<DuplicateIcon />}
-              label="Duplicate"
-              description="A copy of this slide, straight after it."
+              label={t('sliderowmenu.duplicate')}
+              description={t('sliderowmenu.a-copy-of-this-slide-straight')}
               onClick={() => {
                 close();
                 onDuplicate();
@@ -129,13 +131,13 @@ export function SlideRowMenu({
             <div className="ml-auto">
               <MenuToolButton
                 icon={<TrashIcon />}
-                label="Delete"
+                label={t('sliderowmenu.delete')}
                 description={
                   slide.pageId
-                    ? 'Remove this slide from the deck. The page stays.'
+                    ? t('sliderowmenu.remove-this-slide-from-the-deck')
                     : slide.elementIds.length === 1
-                      ? 'Remove this slide from the deck. The element stays on the canvas.'
-                      : 'Remove this slide from the deck. The elements stay on the canvas.'
+                      ? t('sliderowmenu.remove-this-slide-from-the-deck-2')
+                      : t('sliderowmenu.remove-this-slide-from-the-deck-3')
                 }
                 onClick={() => {
                   // Hand the menu button up as the anchor so the panel can
@@ -152,7 +154,7 @@ export function SlideRowMenu({
               slide is whatever is on its page, so it has no selection to edit. */}
           {slide.pageId ? null : (
             <MenuAccordionSection
-              title="Selection"
+              title={t('sliderowmenu.selection')}
               icon={<SelectionIcon />}
               open={section === 'selection'}
               onToggle={() => setSection((s) => (s === 'selection' ? null : 'selection'))}
@@ -166,7 +168,7 @@ export function SlideRowMenu({
                   {canEditMembership
                     ? `Put what you have selected on this slide, or take it off. It holds ${
                         slide.elementIds.length === 1
-                          ? '1 element'
+                          ? t('sliderowmenu.1-element')
                           : `${slide.elementIds.length} elements`
                       } now.`
                     : membershipWhy}
@@ -185,7 +187,7 @@ export function SlideRowMenu({
                   />
                   <MenuTile
                     icon={<MinusIcon />}
-                    label="Remove"
+                    label={t('sliderowmenu.remove')}
                     disabled={!canEditMembership}
                     onClick={() => {
                       close();
@@ -197,7 +199,7 @@ export function SlideRowMenu({
             </MenuAccordionSection>
           )}
           <MenuAccordionSection
-            title="Visibility"
+            title={t('sliderowmenu.visibility')}
             icon={slide.hidden ? <EyeOffIcon /> : <EyeIcon />}
             open={section === 'visibility'}
             onToggle={() => setSection((s) => (s === 'visibility' ? null : 'visibility'))}
@@ -208,8 +210,8 @@ export function SlideRowMenu({
                   a question you may not get, a section you cut for time. */}
               <p className="px-1 pb-1.5 text-[10px] leading-snug text-slate-500 dark:text-slate-400">
                 {slide.hidden
-                  ? 'This slide is skipped when you present. It still lives in the deck.'
-                  : 'Keep the slide, leave it out of the run. Nothing is deleted.'}
+                  ? t('sliderowmenu.this-slide-is-skipped-when-you')
+                  : t('sliderowmenu.keep-the-slide-leave-it-out')}
               </p>
               <MenuTileGrid cols={2}>
                 <MenuTile

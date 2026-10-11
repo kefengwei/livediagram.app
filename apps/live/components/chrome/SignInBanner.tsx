@@ -9,6 +9,7 @@
 // owns the modal-open state. The host passes `onDismiss` so the
 // dismissal is persisted (useDismissibleBanner) in one place.
 
+import { useTranslation } from '@/lib/i18n';
 import dynamic from 'next/dynamic';
 import { CloseIcon, SparkleIcon } from '@livediagram/ui';
 import { SignInIcon } from '@/components/chrome/AuthControls';
@@ -48,6 +49,7 @@ export function SignInBanner({
   onDismiss: () => void;
   placementClassName?: string;
 }) {
+  const { t } = useTranslation();
   const [reasonsOpen, setReasonsOpen] = useState(false);
   const editor = surface === 'Editor';
   const trackSignIn = () =>
@@ -69,11 +71,8 @@ export function SignInBanner({
           </span>
 
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold sm:text-base">Sign in to keep your work safe</p>
-            <p className="mt-0.5 text-xs text-white/85 sm:text-sm">
-              Free account. Your documents sync across devices, survive a cache clear or browser
-              restart, and carry your real name.
-            </p>
+            <p className="text-sm font-semibold sm:text-base">{t('signinbanner.sign-in-to-keep-your-work')}</p>
+            <p className="mt-0.5 text-xs text-white/85 sm:text-sm">{t('signinbanner.free-account-your-documents-sync-across')}</p>
           </div>
 
           <div className="flex shrink-0 items-center gap-2">
@@ -84,24 +83,20 @@ export function SignInBanner({
                 setReasonsOpen(true);
               }}
               className="rounded-lg border border-white/40 px-3 py-2 text-sm font-medium text-white transition hover:bg-white/15"
-            >
-              Learn more
-            </button>
+            >{t('signinbanner.learn-more')}</button>
             <Link
               href={signInHref}
               onClick={trackSignIn}
               className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-white px-4 py-2 text-sm font-semibold text-brand-700 shadow-sm transition hover:bg-brand-50 dark:text-brand-700"
             >
-              <SignInIcon size={14} />
-              Sign in
-            </Link>
+              <SignInIcon size={14} />{t('signinbanner.sign-in')}</Link>
             <button
               type="button"
               onClick={() => {
                 track('UI', 'Closed', editor ? 'SignInBannerEditor' : 'SignInBannerExplorer');
                 onDismiss();
               }}
-              aria-label="Dismiss"
+              aria-label={t('signinbanner.dismiss')}
               className="flex h-8 w-8 items-center justify-center rounded-full text-white/80 transition hover:bg-white/15 hover:text-white"
             >
               <CloseIcon size={16} />

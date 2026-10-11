@@ -1,3 +1,5 @@
+
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { useClickOutside, useEscape } from '@livediagram/ui';
 import { shufflePinned } from '@/lib/shuffle';
@@ -73,6 +75,7 @@ export function TemplatePicker({
   onCreateFolder,
   onCreateTeam,
 }: TemplatePickerProps) {
+  const { t } = useTranslation();
   // Mount-open overlay: silence the canvas shortcut/paste listeners
   // behind it (see lib/modal-guard). Harmless on /new, where no canvas
   // listeners exist.
@@ -332,7 +335,7 @@ export function TemplatePicker({
         ref={cardRef}
         role="dialog"
         aria-modal="true"
-        aria-label={isIdentity ? 'Confirm your name' : 'Start a new document'}
+        aria-label={isIdentity ? t('templatepicker.confirm-your-name') : t('templatepicker.start-a-new-document')}
         className={`pointer-events-auto flex h-full w-full animate-fly-up-in flex-col bg-white dark:bg-slate-900 sm:h-auto sm:max-h-[90vh] ${isIdentity ? 'sm:w-[26rem]' : 'sm:w-[44rem]'} sm:max-w-[92%] sm:rounded-xl sm:border sm:border-slate-200 sm:shadow-2xl sm:shadow-slate-900/10 dark:sm:border-slate-800 dark:sm:shadow-black/40`}
       >
         <TemplatePickerHeader

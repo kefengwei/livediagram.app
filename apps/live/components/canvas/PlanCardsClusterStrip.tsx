@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { PlanCardsIcon, SearchIcon } from '@livediagram/ui';
 import { ClusterPopoverSegment, ClusterStrip } from './ClusterPopoverButton';
 import { TrashDropTarget, TrashSegment, usePlanCardDragging } from './TrashClusterButton';
@@ -31,6 +32,7 @@ export function PlanCardsClusterStrip({
   // New Card: its panel's state and toggle, for an editor. Absent, the strip has none.
   newCard?: { open: boolean; onToggle: (button: HTMLElement) => void } | undefined;
 }) {
+  const { t } = useTranslation();
   const dragging = usePlanCardDragging();
   const canEdit = !!usePlan()?.canEdit;
   return (
@@ -50,7 +52,7 @@ export function PlanCardsClusterStrip({
         <ClusterPopoverSegment
           // A divider when a button sits to its left (the Trash, or an editor's New Card).
           divided={(!!trash && !dragging) || (!!newCard && canEdit)}
-          label="Find a Card"
+          label={t('plancardsclusterstrip.find-a-card')}
           hoverTitle="Cards"
           hoverDescription="Every card in this document: search them, find the ones on no board, and open any of them."
           icon={<SearchIcon size={18} />}
@@ -59,7 +61,7 @@ export function PlanCardsClusterStrip({
         />
         <ClusterPopoverSegment
           divided
-          label="Open Card Types"
+          label={t('plancardsclusterstrip.open-card-types')}
           hoverTitle="Card Types"
           hoverDescription="The kinds of card this document's boards hold, and the fields each one has."
           icon={<PlanCardsIcon size={18} />}

@@ -4,6 +4,7 @@
 // picker (docs/specs/004-interface-design/colour-picker.md) with the strong standard colours by
 // name, each in its version for the board, Custom colours from the document, and + with the
 // hard-to-see warning. Ink is the pen's null colour.
+import { useTranslation } from '@/lib/i18n';
 import { INK_PEN_COLOUR, type Appearance, type PenColour } from '@livediagram/document';
 import { ColourPicker as Picker } from '@/components/colour/ColourPicker';
 import { standardGroup } from '@/components/colour/colour-options';
@@ -19,10 +20,11 @@ export function ColourPicker({
   board: Appearance;
   onPick: (colour: PenColour | null) => void;
 }) {
+  const { t } = useTranslation();
   const yours = useDocumentColours();
   return (
     <Picker
-      label="Marker colour"
+      label={t('colourpicker.marker-colour')}
       value={value ?? INK_PEN_COLOUR}
       standard={[standardGroup('strong', board, 'name')]}
       yours={yours}

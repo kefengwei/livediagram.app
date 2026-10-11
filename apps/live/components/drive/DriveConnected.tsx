@@ -6,6 +6,7 @@
 // stores the sealed refresh token; then the user goes back to where they
 // connected from, and the mirror starts on that page.
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { apiDriveConnect } from '@/lib/api-client';
 import { useClerkApiBootstrap } from '@/hooks/persistence/useClerkApiBootstrap';
@@ -67,6 +68,7 @@ async function redeem(query: NonNullable<Query>, ownerId: string): Promise<Phase
 }
 
 export function DriveConnected() {
+  const { t } = useTranslation();
   const { authLoaded, isSignedIn, clerkUserId } = useClerkApiBootstrap();
   const query = useSyncExternalStore(noSubscription, readQuery, beforeHydration);
   const [phase, setPhase] = useState<Phase>('working');
@@ -81,42 +83,36 @@ export function DriveConnected() {
   if (authLoaded && !isSignedIn) {
     return (
       <LandingCard>
-        <Heading>Sign in to connect Google Drive</Heading>
-        <Body>Google Drive connects to your livediagram account.</Body>
-        <PrimaryLink href="/sign-in/">Sign in</PrimaryLink>
+        <Heading>{t('driveconnected.sign-in-to-connect-google-drive')}</Heading>
+        <Body>{t('driveconnected.google-drive-connects-to-your-livediagram')}</Body>
+        <PrimaryLink href="/sign-in/">{t('driveconnected.sign-in')}</PrimaryLink>
       </LandingCard>
     );
   }
   if (phase === 'denied') {
     return (
       <LandingCard>
-        <Heading>Google Drive wasn&apos;t connected</Heading>
-        <Body>
-          Nothing changed. You can connect it any time from Settings, Account, Cloud Sync.
-        </Body>
-        <PrimaryLink href="/explorer?settings=account&section=cloud-sync">Back</PrimaryLink>
+        <Heading>{t('driveconnected.google-drive-wasn-t-connected')}</Heading>
+        <Body>{t('driveconnected.nothing-changed-you-can-connect-it')}</Body>
+        <PrimaryLink href="/explorer?settings=account&section=cloud-sync">{t('driveconnected.back')}</PrimaryLink>
       </LandingCard>
     );
   }
   if (phase === 'invalid' || phase === 'failed') {
     return (
       <LandingCard>
-        <Heading>Google Drive couldn&apos;t be connected</Heading>
+        <Heading>{t('driveconnected.google-drive-couldn-t-be-connected')}</Heading>
         <Body>
           {phase === 'invalid'
-            ? 'This connection was not started from this browser, or it took too long.'
-            : 'Google did not accept the connection.'}{' '}
-          Try again from Settings, Account, Cloud Sync.
-        </Body>
-        <PrimaryLink href="/explorer?settings=account&section=cloud-sync">
-          Back to Cloud Sync
-        </PrimaryLink>
+            ? t('driveconnected.this-connection-was-not-started-from')
+            : t('driveconnected.google-did-not-accept-the-connection')}{' '}{t('driveconnected.try-again-from-settings-account-cloud')}</Body>
+        <PrimaryLink href="/explorer?settings=account&section=cloud-sync">{t('driveconnected.back-to-cloud-sync')}</PrimaryLink>
       </LandingCard>
     );
   }
   return (
     <LandingCard>
-      <Body>Connecting Google Drive…</Body>
+      <Body>{t('driveconnected.connecting-google-drive')}</Body>
     </LandingCard>
   );
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { initialsOf } from '@/lib/identity';
 import { sessionsEnabled } from '@/lib/clerk-config';
 import { SOLID_BRAND_DARK, GlyphDisc } from '@livediagram/ui';
@@ -57,6 +58,7 @@ export function AssigneePicker({
   moveFailed: boolean;
   onMoveToTeam?: (teamId: string) => void;
 }) {
+  const { t } = useTranslation();
   const row = (m: PickableMember, isSelf: boolean) => {
     // Key by membership row when there is one (stable for invited
     // members, whose userId can be null); the Myself row keys by userId.
@@ -91,15 +93,11 @@ export function AssigneePicker({
           </span>
           {m.pending ? (
             // Same amber badge the team pane uses for pending invites.
-            <span className="shrink-0 rounded-full bg-amber-100 px-1.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-200">
-              Invited
-            </span>
+            <span className="shrink-0 rounded-full bg-amber-100 px-1.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-200">{t('assignactionassigneepicker.invited')}</span>
           ) : null}
         </span>
         {selected ? (
-          <span className="shrink-0 text-xs font-medium text-brand-600 dark:text-brand-400">
-            Selected
-          </span>
+          <span className="shrink-0 text-xs font-medium text-brand-600 dark:text-brand-400">{t('assignactionassigneepicker.selected')}</span>
         ) : null}
       </button>
     );
@@ -107,7 +105,7 @@ export function AssigneePicker({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <span className="text-xs font-medium text-slate-700 dark:text-slate-200">Assignee</span>
+      <span className="text-xs font-medium text-slate-700 dark:text-slate-200">{t('assignactionassigneepicker.assignee')}</span>
       <div className="max-h-52 overflow-y-auto rounded-lg border border-slate-200 dark:border-slate-700">
         {selfRow ? row(selfRow, true) : null}
         {grouped.map(([teamId, group]) => (
@@ -119,20 +117,14 @@ export function AssigneePicker({
           </div>
         ))}
         {signedIn && memberOfDocumentTeam && members === null ? (
-          <p className="px-3 py-2 text-center text-xs text-slate-400 dark:text-slate-400">
-            Loading teammates…
-          </p>
+          <p className="px-3 py-2 text-center text-xs text-slate-400 dark:text-slate-400">{t('assignactionassigneepicker.loading-teammates')}</p>
         ) : null}
       </div>
       {/* Teammate nudges: sign in (guests), join a team (signed-in
           with none), or invite (teams with no other joined member). */}
       {!signedIn && sessionsEnabled ? (
         <p className="rounded-lg border border-dashed border-slate-300 px-3 py-2.5 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
-          <a href={signInHref} className="font-medium text-brand-600 underline dark:text-brand-400">
-            Sign in
-          </a>{' '}
-          and join a team to assign actions to teammates.
-        </p>
+          <a href={signInHref} className="font-medium text-brand-600 underline dark:text-brand-400">{t('assignactionassigneepicker.sign-in')}</a>{' '}{t('assignactionassigneepicker.and-join-a-team-to-assign')}</p>
       ) : signedIn && documentTeamId === null ? (
         // Personal document: teammates couldn't open it to complete the
         // action. With teams to offer, fix it INLINE — one click files
@@ -141,7 +133,7 @@ export function AssigneePicker({
         <div className="flex flex-col gap-1.5 rounded-lg border border-dashed border-slate-300 px-3 py-2.5 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400">
           {teams.length > 0 && onMoveToTeam ? (
             <>
-              <p>Move this document into a team library to assign teammates:</p>
+              <p>{t('assignactionassigneepicker.move-this-document-into-a-team')}</p>
               <div className="flex flex-wrap gap-1.5">
                 {teams.map((t) => (
                   <button
@@ -156,30 +148,21 @@ export function AssigneePicker({
                 ))}
               </div>
               {moveFailed ? (
-                <p className="text-rose-600 dark:text-rose-400">
-                  Couldn&apos;t move the document. Check your connection and try again.
-                </p>
+                <p className="text-rose-600 dark:text-rose-400">{t('assignactionassigneepicker.couldn-t-move-the-document-check')}</p>
               ) : null}
             </>
           ) : (
-            <p>
-              Actions assign to the document&apos;s team.{' '}
+            <p>{t('assignactionassigneepicker.actions-assign-to-the-document-s')}{' '}
               <a
                 href="/explorer/team"
                 className="font-medium text-brand-600 underline dark:text-brand-400"
-              >
-                Create or join a team
-              </a>{' '}
-              and move it into that library to assign teammates.
-            </p>
+              >{t('assignactionassigneepicker.create-or-join-a-team')}</a>{' '}{t('assignactionassigneepicker.and-move-it-into-that-library')}</p>
           )}
         </div>
       ) : signedIn && !memberOfDocumentTeam ? (
         // Share-link editor on someone else's team document: they can
         // edit, but only the team's members are assignable.
-        <p className="px-1 text-xs text-slate-400">
-          Only members of this document&apos;s team can be assigned actions.
-        </p>
+        <p className="px-1 text-xs text-slate-400">{t('assignactionassigneepicker.only-members-of-this-document-s')}</p>
       ) : signedIn && members !== null && members.length === 0 ? (
         <p className="px-1 text-xs text-slate-400">
           No other members in this team yet. Invite teammates from the team page and they become

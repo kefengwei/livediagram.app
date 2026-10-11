@@ -3,6 +3,7 @@
 // The item panel header's breadcrumb (docs/specs/026-plan/plan-board.md "Breadcrumb", "The header reads part by
 // part"): the cards opened before this one from inside the panel, nearest last, each a link back. Earlier ones past
 // what fits fold into a "…" button whose menu lists them. Draws nothing for a trail of one card.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { itemTitle, typeIn, type Item, type ItemTypeDef } from '@livediagram/items';
 import { ChevronLeftIcon, ChevronRightIcon, Tooltip } from '@livediagram/ui';
@@ -48,9 +49,10 @@ function FoldedCrumbs({
   types: readonly ItemTypeDef[];
   onBack: (itemId: string) => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [button, setButton] = useState<HTMLButtonElement | null>(null);
-  const label = folded.length === 1 ? '1 earlier card' : `${folded.length} earlier cards`;
+  const label = folded.length === 1 ? t('itemtrailcrumbs.1-earlier-card') : `${folded.length} earlier cards`;
   return (
     <>
       <Tooltip label={label}>
@@ -98,6 +100,7 @@ export function ItemTrailCrumbs({
   mobile: boolean;
   onBack: (itemId: string) => void;
 }) {
+  const { t } = useTranslation();
   const earlier = trail.slice(0, -1);
   if (earlier.length === 0) return null;
   const { folded, crumbs } = visibleTrail(
@@ -105,7 +108,7 @@ export function ItemTrailCrumbs({
     mobile ? ITEM_TRAIL_SHOWN_PHONE : ITEM_TRAIL_SHOWN,
   );
   return (
-    <nav aria-label="Card trail" className="flex min-w-0 shrink items-center">
+    <nav aria-label={t('itemtrailcrumbs.card-trail')} className="flex min-w-0 shrink items-center">
       <ol className="flex min-w-0 items-center">
         {folded > 0 ? (
           <li className="flex shrink-0 items-center">

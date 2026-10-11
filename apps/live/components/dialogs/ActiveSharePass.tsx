@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { ConfirmPopover } from '@/components/primitives/ConfirmPopover';
 import { TrashIcon } from '@/components/primitives/explorer-icons';
@@ -82,6 +83,7 @@ export function ActiveSharePass({
   // single-tab document, where there is nothing to choose between.
   onRescope: ((code: string, tabId: string | null) => void) | null;
 }) {
+  const { t } = useTranslation();
   // A scoped link's live image is always its own tab: the server picks it,
   // so the URL carries no `?tab=` and the picker has nothing to offer.
   const scoped = link.tabId !== null;
@@ -108,11 +110,11 @@ export function ActiveSharePass({
           aria-label={`${link.role === 'edit' ? 'Edit' : 'View'} pass link`}
           className="min-w-0 flex-1 truncate rounded-lg border border-slate-200 bg-slate-50 py-1.5 pr-10 pl-2.5 font-mono text-[11px] text-slate-700 outline-none focus:border-brand-400 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-300"
         />
-        <Tooltip label={copied ? 'Copied' : 'Copy link'}>
+        <Tooltip label={copied ? 'Copied' : t('activesharepass.copy-link')}>
           <button
             type="button"
             onClick={() => onCopy(link.code)}
-            aria-label={copied ? 'Copied' : 'Copy link'}
+            aria-label={copied ? 'Copied' : t('activesharepass.copy-link-2')}
             className={`absolute top-1/2 right-1 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-md transition ${
               copied
                 ? 'text-emerald-600 dark:text-emerald-400'
@@ -130,10 +132,10 @@ export function ActiveSharePass({
             document every pass opens every tab, so saying so is noise. */}
         {onRescope ? (
           <span className="inline-flex items-center gap-1.5">
-            <span className={metaLabel}>Opens</span>
+            <span className={metaLabel}>{t('activesharepass.opens')}</span>
             <HoverCard
-              title="Tabs"
-              description="Which tabs this pass opens. Changing it takes effect at once: anyone using it reloads into the new choice."
+              title={t('activesharepass.tabs')}
+              description={t('activesharepass.which-tabs-this-pass-opens-changing')}
             >
               <Select
                 size="sm"
@@ -150,10 +152,10 @@ export function ActiveSharePass({
           </span>
         ) : null}
         <span className="inline-flex items-center gap-1.5">
-          <span className={metaLabel}>Valid</span>
+          <span className={metaLabel}>{t('activesharepass.valid')}</span>
           {link.expiresAt !== null ? (
             <HoverCard
-              title="Expiring pass"
+              title={t('activesharepass.expiring-pass')}
               description={`Issued with a ${
                 link.expiry === 'never' ? '' : EXPIRY_LABELS[link.expiry]
               } lifetime. When it runs out the link stops working and moves to Expired, where you can extend it.`}
@@ -169,9 +171,7 @@ export function ActiveSharePass({
         </span>
         {sharePasswordSet ? (
           <span className="inline-flex items-center gap-1 font-medium text-emerald-700 dark:text-emerald-300">
-            <LockIcon size={11} />
-            Password
-          </span>
+            <LockIcon size={11} />{t('activesharepass.password')}</span>
         ) : null}
       </div>
 
@@ -181,23 +181,23 @@ export function ActiveSharePass({
             <iframe> snippet. Embeds honour the link's role, so the hover card
             says which one this pass hands out. */}
         <ShareCopyMenu
-          label="Embed"
+          label={t('activesharepass.embed')}
           hoverCardTitle="Embed"
           hoverCardDescription={`Copy an embed of this document as a URL or an <iframe> snippet for wikis, Notion, and docs. ${
             link.role === 'edit'
-              ? 'This edit pass embeds an editable canvas.'
-              : 'This view pass embeds a read-only canvas.'
+              ? t('activesharepass.this-edit-pass-embeds-an-editable')
+              : t('activesharepass.this-view-pass-embeds-a-read')
           }`}
           trackType="EmbedCode"
           items={[
             {
-              label: 'Copy embed URL',
+              label: t('activesharepass.copy-embed-url'),
               icon: <LinkIcon />,
               text: embedUrlFor(origin, link.code),
               what: 'embed URL',
             },
             {
-              label: 'Copy iframe',
+              label: t('activesharepass.copy-iframe'),
               icon: <CodeGlyph />,
               text: buildEmbedSnippet(origin, link.code),
               what: 'iframe',
@@ -210,7 +210,7 @@ export function ActiveSharePass({
             and offering it here would mislead. */}
         {sharePasswordSet ? null : (
           <ShareCopyMenu
-            label="Live image"
+            label={t('activesharepass.live-image')}
             hoverCardTitle="Live image"
             hoverCardDescription="An <img>-able SVG URL that re-renders this document, so an embed in a README, wiki, or doc stays up to date."
             trackType="LiveImage"
@@ -219,9 +219,7 @@ export function ActiveSharePass({
               // when there's more than one tab. Selecting the first tab
               // clears back to the cached default (null → no `?tab=`).
               tabs.length > 1 && !scoped ? (
-                <label className="flex items-center gap-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">
-                  Tab
-                  <Select
+                <label className="flex items-center gap-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">{t('activesharepass.tab')}<Select
                     size="sm"
                     value={liveImageTabId ?? firstTabId ?? ''}
                     onChange={(e) => {
@@ -243,19 +241,19 @@ export function ActiveSharePass({
             }
             items={[
               {
-                label: 'Copy image URL',
+                label: t('activesharepass.copy-image-url'),
                 icon: <ImageGlyph />,
                 text: liveImageUrlFor(origin, link.code, imageTabParam),
                 what: 'image URL',
               },
               {
-                label: 'Copy Markdown',
+                label: t('activesharepass.copy-markdown'),
                 icon: <MarkdownGlyph />,
                 text: liveImageMarkdown(origin, link.code, imageTabParam),
                 what: 'Markdown',
               },
               {
-                label: 'Copy HTML',
+                label: t('activesharepass.copy-html'),
                 icon: <CodeGlyph />,
                 text: liveImageHtml(origin, link.code, imageTabParam),
                 what: 'HTML',
@@ -265,14 +263,14 @@ export function ActiveSharePass({
         )}
         <span className="flex-1" />
         <HoverCard
-          title="Revoke link"
-          description="The URL stops working immediately for everyone holding it."
+          title={t('activesharepass.revoke-link')}
+          description={t('activesharepass.the-url-stops-working-immediately-for')}
         >
           <button
             type="button"
             onClick={(e) => setRevokeAnchor(e.currentTarget)}
             disabled={busy}
-            aria-label="Revoke link"
+            aria-label={t('activesharepass.revoke-link-2')}
             aria-expanded={revokeAnchor !== null}
             className="rounded-md p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 disabled:opacity-50 dark:hover:bg-slate-800 dark:hover:text-slate-200"
           >

@@ -13,6 +13,7 @@
 // inline version used). The page owns the open/closed state + the
 // handlers; this component only decides which items to show.
 
+import { useTranslation } from '@/lib/i18n';
 import {
   DEFAULT_ICON_SIZE,
   defaultPadding,
@@ -102,6 +103,7 @@ export function ElementAppearanceSections({
   arrowheadColorHandlers,
   strokeColorHandlers,
 }: ElementAppearanceSectionsProps) {
+  const { t } = useTranslation();
   const boxed = isBoxed(target);
   const isIcon = target.type === 'shape' && target.shape === 'icon';
   // Border controls apply only where a wrapper border actually renders
@@ -186,7 +188,7 @@ export function ElementAppearanceSections({
             multi-selection menu, which still stacks them inline), all
             starting closed. ── */}
       {showStyle ? (
-        <MenuFlyoutSection title="Style" icon={<StyleMenuGlyph />} {...flyoutProps('style')}>
+        <MenuFlyoutSection title={t('elementappearancesections.style')} icon={<StyleMenuGlyph />} {...flyoutProps('style')}>
           {/* Which Presets grid this element gets: shape looks, a sticky's
               pad of note colours, a code block's colour scheme, or an arrow's
               line looks. See PresetSections. */}
@@ -248,7 +250,7 @@ export function ElementAppearanceSections({
         <>
           <MenuGroupSeparator />
           <MenuAccordionSection
-            title="Icon"
+            title={t('elementappearancesections.icon')}
             icon={<IconCategoryGlyph />}
             {...sectionProps('icon-size')}
           >
@@ -266,7 +268,7 @@ export function ElementAppearanceSections({
         <>
           <MenuGroupSeparator />
           <MenuAccordionSection
-            title="Weight"
+            title={t('elementappearancesections.weight')}
             icon={<IconCategoryGlyph />}
             {...sectionProps('icon-weight')}
           >
@@ -287,10 +289,8 @@ export function ElementAppearanceSections({
       {hasInlineIcon ? (
         <>
           <MenuGroupSeparator />
-          <MenuAccordionSection title="Icon" icon={<IconCategoryGlyph />} {...sectionProps('icon')}>
-            <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-              Icon position
-            </p>
+          <MenuAccordionSection title={t('elementappearancesections.icon-2')} icon={<IconCategoryGlyph />} {...sectionProps('icon')}>
+            <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('elementappearancesections.icon-position')}</p>
             <IconPositionGrid
               current={(target as { iconPosition?: string }).iconPosition ?? 'left'}
               onPick={(pos) =>
@@ -313,7 +313,7 @@ export function ElementAppearanceSections({
             <div className="px-2 py-1.5">
               <MenuTile
                 icon={<RemoveIconGlyph />}
-                label="Remove icon"
+                label={t('elementappearancesections.remove-icon')}
                 onClick={() => {
                   props.onRemoveIcon(target.id);
                   onClose();
@@ -334,7 +334,7 @@ export function ElementAppearanceSections({
             in the host menu behind the flyout. Sits in the style band
             (no separator of its own), beside Style + Animation. ── */}
       {showMarkers || showAlignment ? (
-        <MenuFlyoutSection title="Text" icon={<TextGlyph />} {...flyoutProps('text')}>
+        <MenuFlyoutSection title={t('elementappearancesections.text')} icon={<TextGlyph />} {...flyoutProps('text')}>
           {/* Typography — Font / Size / Padding, shared with the rich-text
               toolbar's overflow menu. Applies to the element's whole label. */}
           {showAlignment ? (
@@ -369,7 +369,7 @@ export function ElementAppearanceSections({
           {/* Alignment — the text toolbar's 3×3 grid, here too for discovery. */}
           {showAlignment ? (
             <MenuAccordionSection
-              title="Alignment"
+              title={t('elementappearancesections.alignment')}
               icon={
                 <AlignLinesIcon
                   dir={(target as { textAlignX?: TextAlignX }).textAlignX ?? 'center'}
@@ -390,8 +390,8 @@ export function ElementAppearanceSections({
                   (docs/specs/009-elements/lane.md "Upright titles"); a band always reads across. */}
               {shapeTarget?.shape === 'lane' && !isLaneBand(laneEdgeOfElement(shapeTarget)) ? (
                 <MenuToggleRow
-                  label="Upright title"
-                  description="Read bottom to top in a thin strip"
+                  label={t('elementappearancesections.upright-title')}
+                  description={t('elementappearancesections.read-bottom-to-top-in-a')}
                   checked={shapeTarget.titleOrientation === 'upright'}
                   onToggle={() =>
                     props.onSetLaneUprightTitle(shapeTarget.titleOrientation !== 'upright')
@@ -402,7 +402,7 @@ export function ElementAppearanceSections({
           ) : null}
           {showMarkers ? (
             <MenuAccordionSection
-              title="Markers"
+              title={t('elementappearancesections.markers')}
               icon={<MarkersMenuGlyph />}
               {...sectionProps('markers')}
             >

@@ -2,6 +2,7 @@
 
 // The toolbar's menus (docs/specs/029-sheets/sheet.md "Toolbar", "Formatting", "Freeze"): icon-left rows in the shared
 // PortalMenu, the colour ones with the shared colour row (theme swatches, your colours, a custom colour).
+import { useTranslation } from '@/lib/i18n';
 import { BORDER_LINES, SheetBordersPicker, type BorderLine } from './SheetBordersPicker';
 import { useState } from 'react';
 import {
@@ -83,6 +84,7 @@ export function SheetToolbarMenu({
   onOpen: (kind: ToolbarMenuKind, anchor: HTMLElement) => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const { swatches } = useColourPalette();
   const [mergeAsk, setMergeAsk] = useState<'all' | 'across' | null>(null);
@@ -111,7 +113,7 @@ export function SheetToolbarMenu({
         anchor={anchor}
         onClose={onClose}
         surface="control"
-        label={text ? 'Text Colour' : 'Fill Colour'}
+        label={text ? t('sheettoolbarmenus.text-colour') : t('sheettoolbarmenus.fill-colour')}
       >
         <ColourRow
           label={text ? 'Text' : 'Fill'}
@@ -217,19 +219,19 @@ export function SheetToolbarMenu({
           <>
             <MenuActionRow
               plain
-              label="Merge All"
+              label={t('sheettoolbarmenus.merge-all')}
               icon={<MergeIcon />}
               onClick={() => merge('all')}
             />
             <MenuActionRow
               plain
-              label="Merge Across"
+              label={t('sheettoolbarmenus.merge-across')}
               icon={<MergeIcon />}
               onClick={() => merge('across')}
             />
             <MenuActionRow
               plain
-              label="Unmerge"
+              label={t('sheettoolbarmenus.unmerge')}
               icon={<MergeIcon />}
               onClick={act(() => actions.unmerge())}
             />
@@ -251,19 +253,19 @@ export function SheetToolbarMenu({
         <>
           <MenuActionRow
             plain
-            label="Sort Sheet A to Z"
+            label={t('sheettoolbarmenus.sort-sheet-a-to-z')}
             icon={<SortIcon />}
             onClick={act(() => actions.sortColumn(true))}
           />
           <MenuActionRow
             plain
-            label="Sort Sheet Z to A"
+            label={t('sheettoolbarmenus.sort-sheet-z-to-a')}
             icon={<SortIcon />}
             onClick={act(() => actions.sortColumn(false))}
           />
           <MenuActionRow
             plain
-            label="Custom Sort…"
+            label={t('sheettoolbarmenus.custom-sort')}
             icon={<SortIcon />}
             onClick={act(() => c.setMenu({ kind: 'sort' }))}
           />

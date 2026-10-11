@@ -5,6 +5,7 @@
 // Its name, then two tabs: Page (size, orientation, background; every hover over a background
 // previews on the page itself) and Layouts; then the page's actions. It closes on an outside press, Escape, or the canvas
 // panning or zooming under it (it would no longer sit by its cog).
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { PAGE_NAME_MAX, type LaidOutPage, type PageBackground } from '@livediagram/document';
 import {
@@ -68,6 +69,7 @@ export function IllustratePagePanel({
   onLayoutPreview: (layout: PageLayoutId | null) => void;
   onClose: (restoreFocus: boolean) => void;
 }) {
+  const { t } = useTranslation();
   const panel = useRef<HTMLDivElement>(null);
   const mobile = useIsMobileViewport();
   // A tab a page of this kind lacks (Layouts on an article page) opens as Page.
@@ -168,15 +170,15 @@ export function IllustratePagePanel({
           className="mx-3 mt-2 rounded-md bg-amber-50 px-2.5 py-1.5 text-xs text-amber-900 dark:bg-amber-500/15 dark:text-amber-100"
         >
           {selfLocked
-            ? 'This page is locked. Unlock it beside the cog to change it.'
-            : "A page of this article is locked. Unlock it to change the article's pages."}
+            ? t('illustratepagepanel.this-page-is-locked-unlock-it')
+            : t('illustratepagepanel.a-page-of-this-article-is')}
         </p>
       ) : null}
       <div inert={selfLocked} className={selfLocked ? 'opacity-50' : undefined}>
         <NameField
           key={page.id}
           name={page.name ?? ''}
-          placeholder={count > 1 ? placeLabel : 'Untitled page'}
+          placeholder={count > 1 ? placeLabel : t('illustratepagepanel.untitled-page')}
           onRename={(name) => edit.rename(page.id, name)}
         />
       </div>
@@ -282,6 +284,7 @@ function PanelTabs({
   kind: 'article' | 'other';
   onTab: (t: PagePanelTab) => void;
 }) {
+  const { t } = useTranslation();
   const tabs: [PagePanelTab, string][] =
     kind === 'article'
       ? [
@@ -297,7 +300,7 @@ function PanelTabs({
     <div className="px-3 pt-2">
       <div
         role="group"
-        aria-label="Page panel section"
+        aria-label={t('illustratepagepanel.page-panel-section')}
         className={`relative grid ${tabs.length === 3 ? 'grid-cols-3' : 'grid-cols-2'} rounded-lg p-0.5 ${SEGMENT_TRACK}`}
       >
         <SegmentSlider
@@ -336,6 +339,7 @@ function NameField({
   placeholder: string;
   onRename: (name: string) => void;
 }) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState(name);
   // A rename from elsewhere (undo, a collaborator) replaces the field's text.
   const [shown, setShown] = useState(name);
@@ -359,7 +363,7 @@ function NameField({
         value={draft}
         maxLength={PAGE_NAME_MAX}
         placeholder={placeholder}
-        aria-label="Page name"
+        aria-label={t('illustratepagepanel.page-name')}
         onChange={(e) => setDraft(e.target.value)}
         onBlur={commit}
         onKeyDown={(e) => {
@@ -410,13 +414,14 @@ function PageActions({
   edit: IllustratePageEdits;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const { duplicatePage, removePage } = edit;
   const noun = page.flow ? 'article' : page.kind === 'slide' ? 'slide' : 'page';
   return (
     <div className="mt-1 flex gap-1 border-t border-slate-100 px-2 pt-1.5 dark:border-slate-800">
       {page.size === 'fit' && (
         <ActionButton
-          label="Split Into Pages"
+          label={t('illustratepagepanel.split-into-pages')}
           onClick={!locked ? () => edit.splitPage(page.id) : undefined}
         >
           <SplitPagesIcon className="h-4 w-4" />

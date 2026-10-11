@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState, type ReactNode } from 'react';
 import { BackBar } from '@/components/primitives/BackBar';
 import { Button } from '@livediagram/ui';
@@ -39,6 +40,7 @@ export function TextImportPanel({
   onDone: (outcome: DoneOutcome) => void;
   onBack: () => void;
 }) {
+  const { t } = useTranslation();
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -70,7 +72,7 @@ export function TextImportPanel({
           style), the same control the New Document wizard's location step
           uses — not a small text link buried in the footer beside the
           commit button, where the way back sat next to the way forward. */}
-      <BackBar label="All formats" current={formatTitle} onClick={onBack} disabled={busy} />
+      <BackBar label={t('textimportpanel.all-formats')} current={formatTitle} onClick={onBack} disabled={busy} />
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -89,8 +91,7 @@ export function TextImportPanel({
             the button so the buttons never move while it counts. */}
         <div aria-live="polite" className="min-w-0">
           {busy && progress && progress.total > 0 ? (
-            <p className="text-xs text-slate-600 tabular-nums dark:text-slate-300">
-              Importing images {progress.done} of {progress.total}…
+            <p className="text-xs text-slate-600 tabular-nums dark:text-slate-300">{t('textimportpanel.importing-images')}{progress.done}{t('textimportpanel.of')}{progress.total}…
             </p>
           ) : (
             note
@@ -102,9 +103,7 @@ export function TextImportPanel({
             onClick={() => void run(onImportFile)}
             disabled={busy}
             className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 transition enabled:hover:border-brand-300 enabled:hover:bg-brand-50/40 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:enabled:hover:border-brand-500/60"
-          >
-            Import a file instead
-          </button>
+          >{t('textimportpanel.import-a-file-instead')}</button>
           <Button
             variant="primary"
             size="md"

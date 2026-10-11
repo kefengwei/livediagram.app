@@ -4,6 +4,7 @@
 // per-range RichLabel. renderLabel (the dispatcher the element views
 // call) stays in element-labels.tsx and picks between them.
 
+
 import { useLayoutEffect, useRef, useState } from 'react';
 import { renderUnits } from './animated-words';
 import type { TextAnimView } from './useTextAnimation';

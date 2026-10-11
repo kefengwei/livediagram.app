@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { PAGE_HEADING_MAX, type ShapeElement } from '@livediagram/document';
 import { InlineTextLine } from '@/components/canvas/InlineTextLine';
 import { useCanvasZoom } from '@/components/canvas/CanvasZoomContext';
@@ -33,6 +34,7 @@ export function PageMasthead({
   onSetHeading: (elementId: string, field: 'pageTitle' | 'pageSubtitle', value: string) => void;
   fontFamily: string | undefined;
 }) {
+  const { t } = useTranslation();
   const zoom = useCanvasZoom();
   // The page's Text animation runs through its heading too (docs/specs/028-animation/element-animations.md):
   // the title and subtitle count as one label, the subtitle carrying on where the title ends.
@@ -60,7 +62,7 @@ export function PageMasthead({
     >
       <InlineTextLine
         value={element.pageTitle ?? ''}
-        placeholder="Title"
+        placeholder={t('pagemasthead.title')}
         editable={!readOnly}
         onCommit={(next) => onSetHeading(element.id, 'pageTitle', next)}
         zoom={zoom}
@@ -71,7 +73,7 @@ export function PageMasthead({
       />
       <InlineTextLine
         value={element.pageSubtitle ?? ''}
-        placeholder="Subtitle"
+        placeholder={t('pagemasthead.subtitle')}
         editable={!readOnly}
         onCommit={(next) => onSetHeading(element.id, 'pageSubtitle', next)}
         zoom={zoom}

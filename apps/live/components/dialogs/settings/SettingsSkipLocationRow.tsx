@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { readSkipLocationStep, turnOffSkipLocationStep } from '@/lib/skip-location-step';
 import type { UserPreferences } from '@/lib/user-preferences';
 import { SettingsRowShell } from './SettingsRowShell';
@@ -19,6 +20,7 @@ export function SettingsSkipLocationRow({
   settings: UserPreferences;
   onChange: (next: UserPreferences) => void;
 }) {
+  const { t } = useTranslation();
   const step = readSkipLocationStep(settings);
   return (
     <SettingsRowShell
@@ -31,8 +33,7 @@ export function SettingsSkipLocationRow({
             </span>
             <span className="text-xs text-slate-600 dark:text-slate-300">
               {step ? (
-                <>
-                  New documents are saved in{' '}
+                <>{t('settingsskiplocationrow.new-documents-are-saved-in')}{' '}
                   <span className="font-semibold text-slate-800 dark:text-slate-100">
                     {step.placeName}
                   </span>
@@ -47,9 +48,7 @@ export function SettingsSkipLocationRow({
               type="button"
               className={PLACEMENT_ROW_BUTTON}
               onClick={() => onChange(turnOffSkipLocationStep(settings))}
-            >
-              Turn Off
-            </button>
+            >{t('settingsskiplocationrow.turn-off')}</button>
           ) : null}
         </div>
       )}

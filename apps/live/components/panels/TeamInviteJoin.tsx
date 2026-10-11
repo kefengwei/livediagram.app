@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import type { TeamInviteLinkInfo } from '@livediagram/api-schema';
 import { Button, buttonClassName, ButtonContent } from '@livediagram/ui';
@@ -33,6 +34,7 @@ const beforeHydration = (): string | null | undefined => undefined;
 const teamHref = (teamId: string) => `/explorer/team?id=${encodeURIComponent(teamId)}`;
 
 export function TeamInviteJoin() {
+  const { t } = useTranslation();
   const { authLoaded, isSignedIn, clerkUserId } = useClerkApiBootstrap();
   // The token is undefined while prerendering and hydrating (the server snapshot), so the static
   // export and the first client render agree — no hydration mismatch — and read from the URL after.
@@ -91,9 +93,9 @@ export function TeamInviteJoin() {
   if (!sessionsEnabled) {
     return (
       <Card>
-        <Heading>Teams aren&apos;t enabled here</Heading>
-        <Body>This deployment runs without accounts, so it has no teams to join.</Body>
-        <PrimaryLink href="/new">Go to the editor</PrimaryLink>
+        <Heading>{t('teaminvitejoin.teams-aren-t-enabled-here')}</Heading>
+        <Body>{t('teaminvitejoin.this-deployment-runs-without-accounts-so')}</Body>
+        <PrimaryLink href="/new">{t('teaminvitejoin.go-to-the-editor')}</PrimaryLink>
       </Card>
     );
   }
@@ -101,7 +103,7 @@ export function TeamInviteJoin() {
   if (!authLoaded || resolved === 'loading') {
     return (
       <Card>
-        <Body>Loading the invite…</Body>
+        <Body>{t('teaminvitejoin.loading-the-invite')}</Body>
       </Card>
     );
   }
@@ -109,9 +111,9 @@ export function TeamInviteJoin() {
   if (resolved === 'invalid') {
     return (
       <Card>
-        <Heading>This invite link isn&apos;t valid</Heading>
-        <Body>It may have been turned off or expired. Ask a team admin for a fresh link.</Body>
-        <PrimaryLink href="/explorer">Back to your documents</PrimaryLink>
+        <Heading>{t('teaminvitejoin.this-invite-link-isn-t-valid')}</Heading>
+        <Body>{t('teaminvitejoin.it-may-have-been-turned-off')}</Body>
+        <PrimaryLink href="/explorer">{t('teaminvitejoin.back-to-your-documents')}</PrimaryLink>
       </Card>
     );
   }
@@ -127,7 +129,7 @@ export function TeamInviteJoin() {
     const back = encodeURIComponent(`/join?token=${encodeURIComponent(token!)}`);
     return (
       <Card>
-        <Eyebrow>You&apos;re invited to join</Eyebrow>
+        <Eyebrow>{t('teaminvitejoin.you-re-invited-to-join')}</Eyebrow>
         <Heading>{team.name}</Heading>
         <Body>{orgLine}</Body>
         <Body>
@@ -135,10 +137,8 @@ export function TeamInviteJoin() {
           We&apos;ll bring you right back here.
         </Body>
         <div className="mt-5 flex flex-col gap-2">
-          <PrimaryLink href={`/sign-in/?redirect_url=${back}`}>Sign in to join</PrimaryLink>
-          <SecondaryLink href={`/get-started/?redirect_url=${back}`}>
-            Create an account
-          </SecondaryLink>
+          <PrimaryLink href={`/sign-in/?redirect_url=${back}`}>{t('teaminvitejoin.sign-in-to-join')}</PrimaryLink>
+          <SecondaryLink href={`/get-started/?redirect_url=${back}`}>{t('teaminvitejoin.create-an-account')}</SecondaryLink>
         </div>
       </Card>
     );
@@ -147,10 +147,10 @@ export function TeamInviteJoin() {
   if (alreadyMember) {
     return (
       <Card>
-        <Eyebrow>You&apos;re already a member of</Eyebrow>
+        <Eyebrow>{t('teaminvitejoin.you-re-already-a-member-of')}</Eyebrow>
         <Heading>{team.name}</Heading>
         <Body>{orgLine}</Body>
-        <PrimaryLink href={teamHref(team.id)}>Open team</PrimaryLink>
+        <PrimaryLink href={teamHref(team.id)}>{t('teaminvitejoin.open-team')}</PrimaryLink>
       </Card>
     );
   }
@@ -158,7 +158,7 @@ export function TeamInviteJoin() {
   // Signed in, not yet a member: Join / Decline.
   return (
     <Card>
-      <Eyebrow>You&apos;re invited to join</Eyebrow>
+      <Eyebrow>{t('teaminvitejoin.you-re-invited-to-join-2')}</Eyebrow>
       <Heading>{team.name}</Heading>
       <Body>{orgLine}</Body>
       {joinError ? (
@@ -169,7 +169,7 @@ export function TeamInviteJoin() {
           {joining ? 'Joining…' : 'Join'}
         </Button>
         <a href="/explorer" className={buttonClassName({ variant: 'secondary', size: 'md' })}>
-          <ButtonContent>Decline</ButtonContent>
+          <ButtonContent>{t('teaminvitejoin.decline')}</ButtonContent>
         </a>
       </div>
     </Card>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import type { PointerEvent } from 'react';
 import { EVENT_STORMING_NOTES } from '@livediagram/document';
 import { HoverCard, Tooltip, GlyphDisc } from '@livediagram/ui';
@@ -42,6 +43,7 @@ export function BoxEditControls({
   onKind: (kind: string) => void;
   onDelete: () => void;
 }) {
+  const { t } = useTranslation();
   const unzoom = `scale(${1 / zoom})`;
   return (
     <>
@@ -57,7 +59,7 @@ export function BoxEditControls({
       ))}
       <div
         role="toolbar"
-        aria-label="Correct this box"
+        aria-label={t('boxeditcontrols.correct-this-box')}
         onPointerDown={stop}
         className="pointer-events-auto absolute bottom-full left-0 z-30 flex items-center gap-1 whitespace-nowrap pb-2"
         style={{ transform: unzoom, transformOrigin: 'bottom left' }}
@@ -90,12 +92,12 @@ export function BoxEditControls({
               </Tooltip>
             );
           })}
-          <HoverCard title="Delete this box" description="Shortcut: Del">
+          <HoverCard title={t('boxeditcontrols.delete-this-box')} description={t('boxeditcontrols.shortcut-del')}>
             <GlyphDisc
               size={20}
               as="button"
               type="button"
-              aria-label="Delete this box"
+              aria-label={t('boxeditcontrols.delete-this-box-2')}
               onClick={onDelete}
               className="ml-1 text-sm text-white hover:bg-white/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white"
             >

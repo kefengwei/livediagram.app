@@ -5,6 +5,7 @@
 // is in the Trash. Someone who may restore it gets Restore right here; a
 // share-link visitor only learns that it was deleted. Same card shape as
 // ApiErrorPage, so it drops into the same status chrome.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Button, TrashIcon, buttonClassName } from '@livediagram/ui';
 import type { TrashedDocument } from '@livediagram/api-schema';
@@ -17,6 +18,7 @@ export function DocumentTrashedCard({
   restorable: TrashedDocument | null;
   onRestore: () => Promise<void>;
 }) {
+  const { t } = useTranslation();
   const [restoring, setRestoring] = useState(false);
   const [failed, setFailed] = useState(false);
   // One clock per mount keeps render pure.
@@ -41,12 +43,10 @@ export function DocumentTrashedCard({
         <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
           {restorable
             ? `${trashedCardLead(restorable, now)} Restore it to put it back where it was.`
-            : 'It is no longer available. If it is restored, this link works again.'}
+            : t('documenttrashedcard.it-is-no-longer-available-if')}
         </p>
         {failed ? (
-          <p className="mt-3 text-xs text-rose-600 dark:text-rose-400" role="status">
-            Could not restore it. Please try again.
-          </p>
+          <p className="mt-3 text-xs text-rose-600 dark:text-rose-400" role="status">{t('documenttrashedcard.could-not-restore-it-please-try')}</p>
         ) : null}
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
           {restorable ? (
@@ -66,9 +66,7 @@ export function DocumentTrashedCard({
               {restoring ? 'Restoring…' : 'Restore'}
             </Button>
           ) : null}
-          <a href="/explorer" className={buttonClassName({ variant: 'secondary', size: 'md' })}>
-            Go to Explorer
-          </a>
+          <a href="/explorer" className={buttonClassName({ variant: 'secondary', size: 'md' })}>{t('documenttrashedcard.go-to-explorer')}</a>
         </div>
       </div>
     </div>

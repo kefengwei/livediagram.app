@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { allDone, doneSplit, isDone, type ShapeElement } from '@livediagram/document';
 
 import { participantKey, type Participant } from '@/lib/identity';
@@ -62,6 +63,7 @@ export function DoneCheckFace({
   /** The way out of the round controls to the element's full menu (docs/specs/008-canvas/canvas-and-palette.md). */
   onOpenSettings?: () => void;
 }) {
+  const { t } = useTranslation();
   const keys = participants.map(participantKey);
   const { done, waiting } = doneSplit(element.responses, keys);
   const mine = isDone(element.responses, selfKey);
@@ -71,7 +73,7 @@ export function DoneCheckFace({
     <CollabAccentScope element={element} textColor={textColor} surface={surface}>
       <CollabPanel
         element={element}
-        title={label.trim() || 'Everyone done?'}
+        title={label.trim() || t('donecheckface.everyone-done')}
         textColor={textColor}
         aside={keys.length ? `${done.length}/${keys.length}` : undefined}
         // The flash is the card's payoff: the facilitator does not have to
@@ -81,7 +83,7 @@ export function DoneCheckFace({
         headerExtra={
           <ElementEllipsisMenu
             kind="command"
-            label="Done check options"
+            label={t('donecheckface.done-check-options')}
             color={textColor}
             align="left"
           >
@@ -93,9 +95,7 @@ export function DoneCheckFace({
                       onToggleMine();
                       close();
                     }}
-                  >
-                    Clear my mark
-                  </ElementMenuItem>
+                  >{t('donecheckface.clear-my-mark')}</ElementMenuItem>
                 ) : null}
                 {onResetAll ? (
                   <ElementMenuItem
@@ -103,9 +103,7 @@ export function DoneCheckFace({
                       onResetAll();
                       close();
                     }}
-                  >
-                    Reset everyone
-                  </ElementMenuItem>
+                  >{t('donecheckface.reset-everyone')}</ElementMenuItem>
                 ) : null}
                 {onOpenSettings ? (
                   <ElementMenuSettingsRow
@@ -126,26 +124,22 @@ export function DoneCheckFace({
         }
       >
         {keys.length === 0 ? (
-          <EmptyRows textColor={textColor} title="Nobody here yet" rows={0}>
-            Share the document and the card fills itself in.
-          </EmptyRows>
+          <EmptyRows textColor={textColor} title={t('donecheckface.nobody-here-yet')} rows={0}>{t('donecheckface.share-the-document-and-the-card')}</EmptyRows>
         ) : (
           <div className="flex min-h-0 flex-1 items-center gap-4">
             <DoneRing done={done.length} total={keys.length} textColor={textColor} />
             <div className="flex min-w-0 flex-1 flex-col gap-2.5">
               {everyone ? (
-                <p className="text-[13px] font-bold text-emerald-600 dark:text-emerald-400">
-                  Everyone&apos;s done!
-                </p>
+                <p className="text-[13px] font-bold text-emerald-600 dark:text-emerald-400">{t('donecheckface.everyone-s-done')}</p>
               ) : null}
               <DoneRoster
-                title="Done"
+                title={t('donecheckface.done')}
                 keys={done}
                 participants={participants}
                 textColor={textColor}
               />
               <DoneRoster
-                title="Waiting"
+                title={t('donecheckface.waiting')}
                 keys={waiting}
                 participants={participants}
                 textColor={textColor}

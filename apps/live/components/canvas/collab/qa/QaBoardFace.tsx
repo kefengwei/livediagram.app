@@ -6,6 +6,7 @@
 // wears "Most wanted" and every row carries a heat bar against it, and the
 // note being discussed lifts into a lit card with a breathing live dot.
 
+import { useTranslation } from '@/lib/i18n';
 import { CountBadge } from '@livediagram/ui';
 import { useEffect, useState } from 'react';
 import { qaView, qaVoterId, type QaNote, type ShapeElement } from '@livediagram/document';
@@ -71,6 +72,7 @@ export function QaBoardFace({
   actions: QaFaceActions;
   onOpenSettings?: () => void;
 }) {
+  const { t } = useTranslation();
   const notes: QaNote[] = element.qaNotes ?? [];
   const { discussing, queue, done } = qaView(notes);
   const voterId = useSelfVoterId(selfOwnerId, element.id);
@@ -87,7 +89,7 @@ export function QaBoardFace({
 
   const menu =
     actions.clear || onOpenSettings ? (
-      <ElementEllipsisMenu kind="command" label="Q&A board options" color={textColor} align="left">
+      <ElementEllipsisMenu kind="command" label={t('qaboardface.q-a-board-options')} color={textColor} align="left">
         {(close) => (
           <>
             {discussing && actions.discuss ? (
@@ -96,9 +98,7 @@ export function QaBoardFace({
                   actions.discuss!(null);
                   close();
                 }}
-              >
-                Clear the spotlight
-              </ElementMenuItem>
+              >{t('qaboardface.clear-the-spotlight')}</ElementMenuItem>
             ) : null}
             {actions.clear ? (
               <ElementMenuItem
@@ -106,9 +106,7 @@ export function QaBoardFace({
                   actions.clear!();
                   close();
                 }}
-              >
-                Empty the board
-                {total ? <CountBadge count={total} /> : null}
+              >{t('qaboardface.empty-the-board')}{total ? <CountBadge count={total} /> : null}
               </ElementMenuItem>
             ) : null}
             {onOpenSettings ? (
@@ -161,15 +159,13 @@ export function QaBoardFace({
             onReturn={actions.discuss ? () => actions.discuss!(null) : undefined}
           />
         ) : running && queue.length > 0 ? (
-          <AccentBar onPress={() => actions.discuss!(queue[0]!.id)} icon={<DiscussGlyph />}>
-            Discuss the top note
-          </AccentBar>
+          <AccentBar onPress={() => actions.discuss!(queue[0]!.id)} icon={<DiscussGlyph />}>{t('qaboardface.discuss-the-top-note')}</AccentBar>
         ) : null}
 
         {queue.length === 0 && !discussing && done.length === 0 ? (
-          <EmptyRows textColor={textColor} title="No notes yet">
+          <EmptyRows textColor={textColor} title={t('qaboardface.no-notes-yet')}>
             {actions.add
-              ? 'Be the first to add one. Upvote the notes you want to talk about and they rise to the top.'
+              ? t('qaboardface.be-the-first-to-add-one')
               : undefined}
           </EmptyRows>
         ) : (
@@ -197,9 +193,7 @@ export function QaBoardFace({
               />
             ))}
             {queue.length === 0 && discussing ? (
-              <li className="px-1 py-1 text-[11px] opacity-50" style={{ color: textColor }}>
-                Nothing else queued. New notes land here.
-              </li>
+              <li className="px-1 py-1 text-[11px] opacity-50" style={{ color: textColor }}>{t('qaboardface.nothing-else-queued-new-notes-land')}</li>
             ) : null}
           </ul>
         )}

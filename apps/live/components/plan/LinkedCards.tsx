@@ -4,6 +4,7 @@
 // that links here ("Linked as Owner"; a Project's "Linked as Parent" lists the cards under it), each row opening
 // that card in the panel, with a button to make a new one already linked. The host computes
 // the groups (linkedCardsOf in packages/items), so this only draws them.
+import { useTranslation } from '@/lib/i18n';
 import { useId, useState } from 'react';
 import {
   isArchived,
@@ -43,6 +44,7 @@ export function FilteredCards({
   // The section's name, for the filters' accessible names.
   label: string;
 }) {
+  const { t } = useTranslation();
   const [typeId, setTypeId] = useState(ALL);
   const [status, setStatus] = useState(ALL);
   const typeIds = [...new Set(cards.map((c) => c.type))];
@@ -54,7 +56,7 @@ export function FilteredCards({
       (status === ALL || (namedStatus(c, statusNames) ?? NO_STATUS) === status),
   );
   const filtering = typeId !== ALL || status !== ALL;
-  const statusName = (s: string) => (s === NO_STATUS ? 'No status' : (statusNames.get(s) ?? s));
+  const statusName = (s: string) => (s === NO_STATUS ? t('linkedcards.no-status') : (statusNames.get(s) ?? s));
   return (
     <div className="flex flex-col gap-1.5">
       {filterable ? (
@@ -67,7 +69,7 @@ export function FilteredCards({
               value={typeId}
               onChange={(e) => setTypeId(e.target.value)}
             >
-              <option value={ALL}>All card types</option>
+              <option value={ALL}>{t('linkedcards.all-card-types')}</option>
               {typeIds.map((id) => (
                 <option key={id} value={id}>
                   {typeIn(types, id).label}
@@ -83,7 +85,7 @@ export function FilteredCards({
               value={status}
               onChange={(e) => setStatus(e.target.value)}
             >
-              <option value={ALL}>All states</option>
+              <option value={ALL}>{t('linkedcards.all-states')}</option>
               {statuses.map((s) => (
                 <option key={s} value={s}>
                   {statusName(s)}
@@ -93,24 +95,20 @@ export function FilteredCards({
           ) : null}
           {filtering ? (
             <span className="text-[11px] tabular-nums text-slate-500 dark:text-slate-400">
-              {shown.length} of {cards.length}
+              {shown.length}{t('linkedcards.of')}{cards.length}
             </span>
           ) : null}
         </div>
       ) : null}
       {shown.length === 0 ? (
-        <p className="flex items-center gap-2 text-[13px] text-slate-500 dark:text-slate-400">
-          No cards match.
-          <Button
+        <p className="flex items-center gap-2 text-[13px] text-slate-500 dark:text-slate-400">{t('linkedcards.no-cards-match')}<Button
             variant="ghost"
             size="xs"
             onClick={() => {
               setTypeId(ALL);
               setStatus(ALL);
             }}
-          >
-            Clear Filters
-          </Button>
+          >{t('linkedcards.clear-filters')}</Button>
         </p>
       ) : (
         <ul className="divide-y divide-slate-100 overflow-hidden rounded-lg border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-700 dark:bg-slate-900/40">
@@ -141,10 +139,11 @@ function ChildRow({
   statusNames: ReadonlyMap<string, string>;
   onOpen: (itemId: string) => void;
 }) {
+  const { t } = useTranslation();
   const type = typeIn(types, child.type);
   // A state no board names reads as No status (namedStatus).
   const status = namedStatus(child, statusNames);
-  const statusName = status ? statusNames.get(status) : 'No status';
+  const statusName = status ? statusNames.get(status) : t('linkedcards.no-status-2');
   const assignee = itemAssignee(child);
   const title = itemTitle(child);
   return (
@@ -167,9 +166,7 @@ function ChildRow({
         {isArchived(child) ? (
           <span
             className={`${CHIP} bg-amber-50 text-amber-800 ring-amber-200 dark:bg-amber-500/10 dark:text-amber-300 dark:ring-amber-500/30`}
-          >
-            Archived
-          </span>
+          >{t('linkedcards.archived')}</span>
         ) : null}
         <span
           className={`${CHIP} max-w-[9rem] truncate bg-slate-50 text-slate-600 ring-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:ring-slate-700`}
@@ -202,22 +199,20 @@ export function LinkedCardGroup({
   onOpen: (itemId: string) => void;
   onAdd: (typeId: string) => void;
 }) {
+  const { t } = useTranslation();
   const headingId = useId();
   return (
     <section aria-labelledby={headingId} className="mb-8">
       <h3
         id={headingId}
         className="mb-2 flex items-center gap-1.5 text-[13px] font-semibold text-slate-800 dark:text-slate-100"
-      >
-        Linked as {group.label}
+      >{t('linkedcards.linked-as')}{group.label}
         <span className="rounded-full bg-slate-100 px-1.5 text-[11px] font-medium tabular-nums text-slate-500 dark:bg-slate-800 dark:text-slate-400">
           {group.cards.length}
         </span>
       </h3>
       {group.cards.length === 0 ? (
-        <p className="text-[13px] text-slate-500 dark:text-slate-400">
-          No cards link here as {group.label} yet.
-        </p>
+        <p className="text-[13px] text-slate-500 dark:text-slate-400">{t('linkedcards.no-cards-link-here-as')}{group.label}{t('linkedcards.yet')}</p>
       ) : (
         <FilteredCards
           cards={group.cards}
@@ -238,8 +233,7 @@ export function LinkedCardGroup({
                 onClick={() => onAdd(typeId)}
                 className="inline-flex cursor-pointer items-center gap-1 rounded-md px-2 py-1 text-[12px] font-medium text-brand-700 transition hover:bg-brand-50 dark:text-brand-300 dark:hover:bg-brand-500/10"
               >
-                <PlusIcon size={12} />
-                New {type.label}
+                <PlusIcon size={12} />{t('linkedcards.new')}{type.label}
               </button>
             );
           })}

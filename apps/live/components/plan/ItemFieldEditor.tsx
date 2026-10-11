@@ -3,6 +3,7 @@
 // One field of an item, as the item panel edits it (docs/specs/026-plan/plan-board.md "Working on a
 // board"): a built-in field by its kind, a custom field by its kind, and the description as rich text.
 // Each saves as it changes.
+import { useTranslation } from '@/lib/i18n';
 import { Select } from '@livediagram/ui';
 import {
   ITEM_TYPES,
@@ -87,6 +88,7 @@ export const fieldId = (item: Item, f: string) => `item-${item.id}-${f}`;
 const NO_ITEMS: ReadonlyMap<string, Item> = new Map();
 
 export function ItemFieldEditor({ f, ctx }: { f: string; ctx: ItemFieldContext }) {
+  const { t } = useTranslation();
   const { item, type, canEdit, onSave } = ctx;
   const plan = usePlan();
   const items = plan?.items ?? NO_ITEMS;
@@ -158,7 +160,7 @@ export function ItemFieldEditor({ f, ctx }: { f: string; ctx: ItemFieldContext }
             value={status}
             onChange={(e) => onSave('status', e.target.value || undefined)}
           >
-            <option value="">No status</option>
+            <option value="">{t('itemfieldeditor.no-status')}</option>
             {options.map((s) => (
               <option key={s.status} value={s.status} disabled={'excluded' in s}>
                 {s.name}
@@ -217,9 +219,7 @@ export function ItemFieldEditor({ f, ctx }: { f: string; ctx: ItemFieldContext }
         <div className="flex flex-col gap-1">
           <DateField id={id} value={value} disabled={disabled} onSave={(v) => onSave(f, v)} />
           {late ? (
-            <span className="text-[12px] text-amber-700 dark:text-amber-300" role="note">
-              Starts after it is due
-            </span>
+            <span className="text-[12px] text-amber-700 dark:text-amber-300" role="note">{t('itemfieldeditor.starts-after-it-is-due')}</span>
           ) : null}
         </div>
       );

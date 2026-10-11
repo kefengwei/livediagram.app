@@ -4,6 +4,7 @@
 // its kind. Every value is a plain string, number or true/false under the field's id; clearing a
 // field removes its value. A value of the wrong kind (the field's kind changed) shows empty and is
 // replaced by the next edit.
+import { useTranslation } from '@/lib/i18n';
 import { Select, TextInput } from '@livediagram/ui';
 import {
   ITEM_UNKNOWN_STRING_MAX,
@@ -29,6 +30,7 @@ export function CustomFieldEditor({
   disabled: boolean;
   onSave: Save;
 }) {
+  const { t } = useTranslation();
   const text = typeof value === 'string' ? value : '';
   switch (field.kind) {
     case 'text':
@@ -106,7 +108,7 @@ export function CustomFieldEditor({
           value={options.includes(text) ? text : ''}
           onChange={(e) => onSave(e.target.value || undefined)}
         >
-          <option value="">None</option>
+          <option value="">{t('customfieldeditor.none')}</option>
           {options.map((o) => (
             <option key={o} value={o}>
               {o}

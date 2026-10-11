@@ -3,6 +3,7 @@
 // The pairing page (docs/specs/013-workspace/workbench-embeds.md "Pairing"; blueprint "The pairing page"): a
 // workbench asked to open the person's documents with one of their tokens, and they answer here, signed in, in
 // their own browser. One read after auth settles, one answer; focus follows the heading at each state.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import {
@@ -88,20 +89,20 @@ function Message({ state, title, body }: { state: string; title: string; body: R
 }
 
 function Loading() {
+  const { t } = useTranslation();
   return (
     <OauthShell>
-      <p role="status" className="text-sm text-slate-500 dark:text-slate-400">
-        Loading…
-      </p>
+      <p role="status" className="text-sm text-slate-500 dark:text-slate-400">{t('pairworkbench.loading')}</p>
     </OauthShell>
   );
 }
 
 function Missing() {
+  const { t } = useTranslation();
   return (
     <Message
       state="missing"
-      title="We couldn’t find this request"
+      title={t('pairworkbench.we-couldn-t-find-this-request')}
       body="It may belong to another account. Check you’re signed in as the person who runs the workbench."
     />
   );
@@ -110,6 +111,7 @@ function Missing() {
 const command = <code className={MONO}>{PAIR_COMMAND}</code>;
 
 export function PairWorkbench() {
+  const { t } = useTranslation();
   const params = useSearchParams();
   const { authLoaded, isSignedIn, clerkUserId } = useClerkApiBootstrap();
   const raw = params.get('code') ?? '';
@@ -138,7 +140,7 @@ export function PairWorkbench() {
     return (
       <Message
         state="off"
-        title="Workbenches aren’t available"
+        title={t('pairworkbench.workbenches-aren-t-available')}
         body="This deployment doesn’t have accounts enabled, so there’s nothing to pair."
       />
     );
@@ -148,14 +150,12 @@ export function PairWorkbench() {
     const back = window.location.pathname + window.location.search;
     return (
       <OauthShell>
-        <Heading state="signed-out">Sign in to approve this workbench</Heading>
+        <Heading state="signed-out">{t('pairworkbench.sign-in-to-approve-this-workbench')}</Heading>
         <div className="mt-5">
           <a
             href={`/sign-in/?redirect_url=${encodeURIComponent(back)}`}
             className={`inline-flex ${OAUTH_PRIMARY}`}
-          >
-            Sign in
-          </a>
+          >{t('pairworkbench.sign-in')}</a>
         </div>
       </OauthShell>
     );
@@ -182,7 +182,7 @@ export function PairWorkbench() {
       return (
         <Message
           state="allowed"
-          title="Workbench allowed"
+          title={t('pairworkbench.workbench-allowed')}
           body={`Return to ${step.name ?? 'your workbench'}; it carries on by itself.`}
         />
       );
@@ -190,7 +190,7 @@ export function PairWorkbench() {
       return (
         <Message
           state="declined"
-          title="Workbench not allowed"
+          title={t('pairworkbench.workbench-not-allowed')}
           body="Nothing was paired. Your terminal will stop waiting."
         />
       );
@@ -198,16 +198,16 @@ export function PairWorkbench() {
       return (
         <Message
           state="expired"
-          title="This request has expired"
-          body={<>Run {command} again to ask anew.</>}
+          title={t('pairworkbench.this-request-has-expired')}
+          body={<>{t('pairworkbench.run')}{command}{t('pairworkbench.again-to-ask-anew')}</>}
         />
       );
     case 'answered':
       return (
         <Message
           state="answered"
-          title="This request was already answered"
-          body={<>Run {command} again if you need to ask anew.</>}
+          title={t('pairworkbench.this-request-was-already-answered')}
+          body={<>{t('pairworkbench.run-2')}{command}{t('pairworkbench.again-if-you-need-to-ask')}</>}
         />
       );
     case 'pending':
@@ -222,29 +222,23 @@ function PendingRequest({
   step: PendingStep;
   onAnswer: (request: WorkbenchPairingRequestView, choice: Answer) => Promise<void>;
 }) {
+  const { t } = useTranslation();
   const { request, working, failed } = step;
   const token = request.tokenName ? (
-    <>
-      the token <strong className={STRONG}>{request.tokenName}</strong>
+    <>{t('pairworkbench.the-token')}<strong className={STRONG}>{request.tokenName}</strong>
     </>
   ) : (
     'an unnamed token'
   );
   return (
     <OauthShell>
-      <Heading state={pendingState(step)}>Allow this workbench?</Heading>
-      <p className={BODY}>
-        Allow {request.name ? <strong className={STRONG}>{request.name}</strong> : 'a workbench'} at{' '}
-        <code className={MONO}>{request.origin}</code> to open your documents with {token}?
+      <Heading state={pendingState(step)}>{t('pairworkbench.allow-this-workbench')}</Heading>
+      <p className={BODY}>{t('pairworkbench.allow')}{request.name ? <strong className={STRONG}>{request.name}</strong> : 'a workbench'}{t('pairworkbench.at')}{' '}
+        <code className={MONO}>{request.origin}</code>{t('pairworkbench.to-open-your-documents-with')}{token}?
       </p>
-      <p className={BODY}>
-        It opens one document at a time, as you, inside that tool. You can unpair it any time in
-        Settings, under API Tokens.
-      </p>
+      <p className={BODY}>{t('pairworkbench.it-opens-one-document-at-a')}</p>
       {failed ? (
-        <p role="alert" className="mt-3 text-xs text-rose-600 dark:text-rose-400">
-          Something went wrong. Please try again.
-        </p>
+        <p role="alert" className="mt-3 text-xs text-rose-600 dark:text-rose-400">{t('pairworkbench.something-went-wrong-please-try-again')}</p>
       ) : null}
       <div className="mt-5 flex items-center gap-2">
         <button
@@ -260,9 +254,7 @@ function PendingRequest({
           onClick={() => void onAnswer(request, 'decline')}
           disabled={working !== null}
           className={SECONDARY}
-        >
-          Don’t allow
-        </button>
+        >{t('pairworkbench.don-t-allow')}</button>
       </div>
     </OauthShell>
   );

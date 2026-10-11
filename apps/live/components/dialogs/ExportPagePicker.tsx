@@ -4,6 +4,7 @@
 // "Export"): All pages or One page (the shared segmented control), with One page the page itself,
 // and a line saying what the download will be. With All pages a page is still picked, for the
 // preview.
+import { useTranslation } from '@/lib/i18n';
 import type { LaidOutPage } from '@livediagram/document';
 import { ACTIVE_SEGMENT, SEGMENT_TRACK, Select } from '@livediagram/ui';
 import { SegmentSlider } from '@/components/primitives/SegmentSlider';
@@ -35,13 +36,14 @@ export function ExportPagePicker({
   onScope: (scope: PageScope) => void;
   onPick: (index: number) => void;
 }) {
+  const { t } = useTranslation();
   const label = (p: LaidOutPage) => exportPageLabel(p, pages.length);
   return (
     <div className="flex flex-col gap-2.5 rounded-lg bg-slate-50 px-3 py-3 dark:bg-slate-800/60">
       <div className="flex flex-wrap items-center gap-3">
         <div
           role="group"
-          aria-label="Pages to export"
+          aria-label={t('exportpagepicker.pages-to-export')}
           className={`relative grid w-56 grid-cols-2 rounded-lg p-0.5 ${SEGMENT_TRACK}`}
         >
           <SegmentSlider
@@ -67,7 +69,7 @@ export function ExportPagePicker({
         </div>
         {pages.length > 1 ? (
           <Select
-            aria-label={scope === 'one' ? 'Page to export' : 'Page to preview'}
+            aria-label={scope === 'one' ? t('exportpagepicker.page-to-export') : t('exportpagepicker.page-to-preview')}
             size="sm"
             className="min-w-0 flex-1"
             value={page.index}

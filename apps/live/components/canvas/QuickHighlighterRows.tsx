@@ -5,6 +5,7 @@
 // nothing is selected. The marker's own five colours and three widths, in the same row rhythm as a
 // whiteboard marker's (QuickPenRows).
 
+import { useTranslation } from '@/lib/i18n';
 import { BorderStrokeIcon } from '@/components/palette/palette-style-previews';
 import type { QuickStyleApi } from '@/hooks/canvas/useQuickStyle';
 import { HIGHLIGHTER_WIDTHS, type HighlighterWidthId } from '@/lib/highlighter-config';
@@ -30,10 +31,11 @@ export function QuickHighlighterRows({
   quickStyle: QuickStyleApi;
   showTitles: boolean;
 }) {
+  const { t } = useTranslation();
   return (
     <>
       <QuickRadioRow
-        title="Highlighter colour"
+        title={t('quickhighlighterrows.highlighter-colour')}
         testId="quick-style-highlighter-colour"
         showTitle={showTitles}
         options={highlighter.colour.options.map((o) => ({ ...o, content: null }))}
@@ -50,7 +52,7 @@ export function QuickHighlighterRows({
         }
       />
       <QuickRadioRow
-        title="Highlighter width"
+        title={t('quickhighlighterrows.highlighter-width')}
         testId="quick-style-highlighter-width"
         showTitle={showTitles}
         options={HIGHLIGHTER_WIDTHS.map((w) => ({

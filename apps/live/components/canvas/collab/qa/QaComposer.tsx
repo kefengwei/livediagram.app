@@ -4,6 +4,7 @@
 // and re-arming it per note is how a name slips onto the one note that
 // shouldn't have it.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { QA_MAX_TEXT } from '@livediagram/document';
 import { tint } from '../collab-chrome';
@@ -19,11 +20,12 @@ export function QaComposer({
   selfName: string;
   onAdd: (text: string, anonymous: boolean) => void;
 }) {
+  const { t } = useTranslation();
   const [anonymous, setAnonymous] = useState(false);
   return (
     <CollabComposer
       textColor={textColor}
-      placeholder="Add a note…"
+      placeholder={t('qacomposer.add-a-note')}
       ariaLabel="Add a note to the board"
       sendLabel="Post note"
       maxLength={QA_MAX_TEXT}

@@ -1,8 +1,10 @@
 'use client';
 
+
 import { track } from '@/lib/telemetry';
 import type { ExplorerViewMode } from './useExplorerViewMode';
 import { HoverCard, Glyph } from '@livediagram/ui';
+import { useTranslation } from '@/lib/i18n';
 
 // The List / Card segmented toggle in the Explorer header (docs/specs/006-document/document-snapshots.md).
 // Lets you switch how the browse views render the same folders +
@@ -14,6 +16,8 @@ export function ViewToggle({
   mode: ExplorerViewMode;
   onChange: (mode: ExplorerViewMode) => void;
 }) {
+  const { t } = useTranslation();
+  
   // Track only real switches (docs/specs/017-telemetry/telemetry.md): clicking the already-active
   // side changes nothing, so it isn't a signal worth counting.
   const choose = (next: ExplorerViewMode) => {
@@ -25,22 +29,22 @@ export function ViewToggle({
   return (
     <div
       role="group"
-      aria-label="View mode"
+      aria-label={t('viewtoggle.view-mode')}
       className="flex items-center gap-0.5 rounded-md border border-slate-200 bg-slate-50 p-0.5 dark:border-slate-700 dark:bg-slate-800"
     >
       <ToggleButton
         active={mode === 'list'}
         onClick={() => choose('list')}
-        label="List view"
-        description="Compact rows."
+        label={t('viewtoggle.list-view')}
+        description={t('viewtoggle.compact-rows')}
       >
         <ListIcon />
       </ToggleButton>
       <ToggleButton
         active={mode === 'card'}
         onClick={() => choose('card')}
-        label="Card view"
-        description="Cards with a large preview of each document."
+        label={t('viewtoggle.card-view')}
+        description={t('viewtoggle.cards-with-a-large-preview-of')}
       >
         <GridIcon />
       </ToggleButton>
@@ -61,6 +65,7 @@ function ToggleButton({
   description: string;
   children: React.ReactNode;
 }) {
+  
   return (
     <HoverCard title={label} description={description}>
       <button

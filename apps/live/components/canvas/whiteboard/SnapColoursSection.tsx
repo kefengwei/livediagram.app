@@ -4,6 +4,7 @@
 // shown only while the board has custom colours to snap, naming how many, with one button that
 // snaps them all to stock colours. Afterwards it says what happened, until the flyout closes.
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import type { SnapColoursApi } from '@/hooks/canvas/useSnapColours';
 import { TAB_CUSTOM_COLOURS_MAX } from '@/lib/quick-style-pen';
@@ -12,6 +13,7 @@ import { FlyoutHeading } from './WhiteboardFlyout';
 const customColours = (n: number) => `${n} custom colour${n === 1 ? '' : 's'}`;
 
 export function SnapColoursSection({ snap }: { snap: SnapColoursApi }) {
+  const { t } = useTranslation();
   const { colours, blocked } = snap;
   // The last snap: how many colours, and the board's colours as they were when it was pressed.
   const [done, setDone] = useState<{ count: number; from: string[] } | null>(null);
@@ -30,8 +32,8 @@ export function SnapColoursSection({ snap }: { snap: SnapColoursApi }) {
   };
 
   return (
-    <div role="group" aria-label="Colours">
-      <FlyoutHeading className="mb-1.5">Colours</FlyoutHeading>
+    <div role="group" aria-label={t('snapcolourssection.colours')}>
+      <FlyoutHeading className="mb-1.5">{t('snapcolourssection.colours-2')}</FlyoutHeading>
       {done ? null : (
         <div className="flex flex-col items-start gap-2">
           <div className="flex items-center gap-2">
@@ -55,9 +57,7 @@ export function SnapColoursSection({ snap }: { snap: SnapColoursApi }) {
             disabled={blocked}
             onClick={press}
             className="flex h-10 items-center rounded-lg px-3 text-sm font-medium text-slate-700 ring-1 ring-slate-300 transition hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-brand-500 disabled:cursor-not-allowed disabled:opacity-50 dark:text-slate-200 dark:ring-slate-600 dark:hover:bg-slate-800"
-          >
-            Snap to stock colours
-          </button>
+          >{t('snapcolourssection.snap-to-stock-colours')}</button>
         </div>
       )}
       {/* Present while the offer shows, so the confirmation is announced when it lands. */}

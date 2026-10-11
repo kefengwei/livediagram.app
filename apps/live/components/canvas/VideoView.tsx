@@ -1,5 +1,6 @@
 'use client';
 
+
 import { useState } from 'react';
 import { HoverCard, SOLID_BRAND_DARK_CONTROL, Tooltip, Glyph } from '@livediagram/ui';
 import {
@@ -13,6 +14,7 @@ import {
 import { track } from '@/lib/telemetry';
 import { bodySetClass } from '@/lib/animation-classes';
 import { useFrameBlocked } from '@/components/canvas/use-frame-blocked';
+import { useTranslation } from '@/lib/i18n';
 
 // Inner content of a video element (docs/specs/009-elements/youtube-video.md): a YouTube poster frame with a
 // play button, which swaps for the real player when pressed.
@@ -31,6 +33,9 @@ import { useFrameBlocked } from '@/components/canvas/use-frame-blocked';
 //   shipping their users to Google on page load.
 
 export function VideoView({ element }: { element: VideoElement }) {
+  const { t } = useTranslation();
+  
+  
   const url = element.link?.kind === 'url' ? element.link.url : undefined;
   const target = embedTargetFor(url);
   const [playing, setPlaying] = useState(false);
@@ -153,7 +158,7 @@ export function VideoView({ element }: { element: VideoElement }) {
             setPlaying(true);
             track('Element', 'Used', 'Video');
           }}
-          aria-label="Play video"
+          aria-label={t('videoview.play-video')}
           // Sized against the CARD (the wrapper is inset-0), not its own
           // contents: the glyph inside is percentage-height, which needs a
           // parent with a height to resolve against.
@@ -174,18 +179,16 @@ export function VideoView({ element }: { element: VideoElement }) {
 // of the two happened. It names the likely cause, names the site, and offers
 // the one thing that always works: opening the page properly.
 function BlockedNotice({ target }: { target: EmbedTarget }) {
+  const { t } = useTranslation();
+  
   return (
     <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1.5 rounded-[inherit] bg-slate-900/95 px-5 text-center">
       <span className="text-slate-400">
         <BlockedGlyph />
       </span>
       <span className="text-[11px] font-medium text-slate-200">
-        {target.label} isn&apos;t loading
-      </span>
-      <span className="max-w-full text-[10px] leading-snug text-slate-400">
-        Many sites refuse to be shown inside another page, and some are just slow. Either way the
-        site decides, not the canvas.
-      </span>
+        {target.label}{t('videoview.isn-t-loading')}</span>
+      <span className="max-w-full text-[10px] leading-snug text-slate-400">{t('videoview.many-sites-refuse-to-be-shown')}</span>
       <a
         href={target.embedUrl}
         target="_blank"
@@ -195,9 +198,7 @@ function BlockedNotice({ target }: { target: EmbedTarget }) {
         onClick={(e) => e.stopPropagation()}
         onPointerDown={(e) => e.stopPropagation()}
         className="pointer-events-auto mt-1 cursor-pointer rounded-md bg-white/15 px-2.5 py-1 text-[11px] font-medium text-white transition hover:bg-white/25"
-      >
-        Open in a new tab
-      </a>
+      >{t('videoview.open-in-a-new-tab')}</a>
     </div>
   );
 }
@@ -216,6 +217,8 @@ function BlockedGlyph() {
 // The pre-load card for a provider that publishes no thumbnail: its name, and
 // a button. Deliberately not an auto-mounted iframe — see the header.
 function LoadCard({ target, onLoad }: { target: EmbedTarget; onLoad: () => void }) {
+  const { t } = useTranslation();
+  
   return (
     <div className="pointer-events-none flex h-full w-full flex-col items-center justify-center gap-2 rounded-[inherit] px-3 text-center">
       <span className="inline-flex items-center rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-slate-300">
@@ -229,9 +232,7 @@ function LoadCard({ target, onLoad }: { target: EmbedTarget; onLoad: () => void 
           track('Element', 'Used', 'Video');
         }}
         className="pointer-events-auto cursor-pointer rounded-md bg-white/15 px-2.5 py-1 text-[11px] font-medium text-white transition hover:bg-white/25"
-      >
-        Load embed
-      </button>
+      >{t('videoview.load-embed')}</button>
     </div>
   );
 }
@@ -256,6 +257,8 @@ function PlayerControls({
   // refusal is indistinguishable from a successful load (see use-frame-blocked).
   openUrl?: string;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <div
       // Inert strip, interactive buttons — same rule as the poster: anything
@@ -268,25 +271,25 @@ function PlayerControls({
     >
       <ControlButton
         onClick={onToggleControls}
-        label={controls ? 'Lock the player (drag the video)' : 'Use the player controls'}
+        label={controls ? t('videoview.lock-the-player-drag-the-video') : t('videoview.use-the-player-controls')}
         active={controls}
       >
         {/* A pointer arrow: "the pointer goes to the player". */}
         <path d="M4 3l8 5-3.4 1.2L7.4 13z" />
       </ControlButton>
-      <ControlButton onClick={onStop} label="Stop video">
+      <ControlButton onClick={onStop} label={t('videoview.stop-video')}>
         <rect x="4.5" y="4.5" width="7" height="7" rx="1.2" />
       </ControlButton>
       {openUrl ? (
         <HoverCard
-          title="Open this page in a new tab"
-          description="For when the embed stays blank: some sites refuse to be shown inside another page."
+          title={t('videoview.open-this-page-in-a-new')}
+          description={t('videoview.for-when-the-embed-stays-blank')}
         >
           <a
             href={openUrl}
             target="_blank"
             rel="noreferrer noopener"
-            aria-label="Open this page in a new tab"
+            aria-label={t('videoview.open-this-page-in-a-new-2')}
             onClick={(e) => e.stopPropagation()}
             onPointerDown={(e) => e.stopPropagation()}
             className="pointer-events-auto flex h-6 w-6 cursor-pointer items-center justify-center rounded-md bg-slate-900/70 text-white transition hover:bg-slate-900/90"
@@ -313,6 +316,7 @@ function ControlButton({
   active?: boolean;
   children: React.ReactNode;
 }) {
+  
   return (
     <Tooltip label={label}>
       <button
@@ -368,6 +372,8 @@ function EmptyState({
   url: string | undefined;
   provider: EmbedProvider | undefined;
 }) {
+  const { t } = useTranslation();
+  
   // Name the service this embed was made for, when it was made from one of
   // the provider tiles (docs/specs/009-elements/embed-providers.md); the generic list is the fallback.
   const named = provider ? EMBED_PROVIDER_LABEL[provider] : null;
@@ -376,15 +382,14 @@ function EmptyState({
       <EmbedGlyph />
       {url ? (
         <>
-          <span className="text-[11px] font-medium text-slate-200">Can&apos;t embed that link</span>
+          <span className="text-[11px] font-medium text-slate-200">{t('videoview.can-t-embed-that-link')}</span>
           <span className="w-full truncate text-[10px] text-slate-400">{url}</span>
         </>
       ) : (
         <>
           <span className="text-[11px] font-medium text-slate-200">
             {/* "Add a Website link" reads like a typo; a website has an
-                address, not a link. */}
-            Double-click to{' '}
+                address, not a link. */}{t('videoview.double-click-to')}{' '}
             {provider === 'website'
               ? 'add a web address'
               : named
@@ -394,7 +399,7 @@ function EmptyState({
           <span className="text-[10px] leading-snug text-slate-400">
             {provider
               ? EMBED_PROVIDER_HINT[provider]
-              : 'YouTube, Vimeo, Loom, Figma, Google Docs, or any website'}
+              : t('videoview.youtube-vimeo-loom-figma-google-docs')}
           </span>
         </>
       )}

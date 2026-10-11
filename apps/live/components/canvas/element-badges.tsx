@@ -9,6 +9,7 @@
 // and an overview zoom is for shape, not affordances. Resize handles are
 // deliberately NOT treated this way (element-parts.tsx): interaction
 // grips need a constant hit size.
+import { useTranslation } from '@/lib/i18n';
 import { initialsOf } from '@/lib/identity';
 import { HoverCard, GlyphDisc, IDENTITY_FILL, identityVars } from '@livediagram/ui';
 import { useCanvasZoom } from '@/components/canvas/CanvasZoomContext';
@@ -22,6 +23,7 @@ export function RemoteSelectorsStrip({
 }: {
   selectors: { id: string; name: string; color: string }[];
 }) {
+  const { t } = useTranslation();
   const zoom = useCanvasZoom();
   if (zoom < ADORNMENT_MIN_ZOOM) return null;
   return (
@@ -41,7 +43,7 @@ export function RemoteSelectorsStrip({
         >
           <HoverCard
             title={`Locked to ${p.name}`}
-            description="Selected by them; you can't edit it right now."
+            description={t('element-badges.selected-by-them-you-can-t')}
           >
             <GlyphDisc
               size={20}

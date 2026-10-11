@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { HoverCard } from '@livediagram/ui';
 import { PHOTO_ZOOM_MAX } from '@/lib/photo-view';
 
@@ -17,6 +18,7 @@ export function ZoomControls({
   onZoomOut: () => void;
   onFit: () => void;
 }) {
+  const { t } = useTranslation();
   const button =
     'flex h-7 min-w-7 items-center justify-center rounded-full px-2 text-sm text-white hover:bg-white/15 disabled:opacity-40 disabled:hover:bg-transparent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white';
   return (
@@ -27,10 +29,10 @@ export function ZoomControls({
       // draws a box.
       onPointerDown={(e) => e.stopPropagation()}
     >
-      <HoverCard title="Zoom out" description="Shortcut: −">
+      <HoverCard title={t('zoomcontrols.zoom-out')} description={t('zoomcontrols.shortcut')}>
         <button
           type="button"
-          aria-label="Zoom out"
+          aria-label={t('zoomcontrols.zoom-out-2')}
           disabled={zoom <= 1}
           onClick={onZoomOut}
           className={button}
@@ -46,12 +48,12 @@ export function ZoomControls({
         {Math.round(zoom * 100)}%
       </span>
       <HoverCard
-        title="Zoom in"
-        description="Shortcut: +. Or scroll, or pinch; drag with the middle button to move around."
+        title={t('zoomcontrols.zoom-in')}
+        description={t('zoomcontrols.shortcut-or-scroll-or-pinch-drag')}
       >
         <button
           type="button"
-          aria-label="Zoom in"
+          aria-label={t('zoomcontrols.zoom-in-2')}
           disabled={zoom >= PHOTO_ZOOM_MAX}
           onClick={onZoomIn}
           className={button}
@@ -59,16 +61,14 @@ export function ZoomControls({
           +
         </button>
       </HoverCard>
-      <HoverCard title="Show the whole photo" description="Shortcut: 0">
+      <HoverCard title={t('zoomcontrols.show-the-whole-photo')} description={t('zoomcontrols.shortcut-0')}>
         <button
           type="button"
-          aria-label="Show the whole photo"
+          aria-label={t('zoomcontrols.show-the-whole-photo-2')}
           disabled={zoom === 1}
           onClick={onFit}
           className={`${button} text-xs`}
-        >
-          Fit
-        </button>
+        >{t('zoomcontrols.fit')}</button>
       </HoverCard>
     </div>
   );

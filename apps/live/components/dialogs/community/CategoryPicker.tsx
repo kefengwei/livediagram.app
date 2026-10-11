@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 import { useId, useRef, type KeyboardEvent } from 'react';
 import { COMMUNITY_CATEGORIES, type CommunityCategory } from '@livediagram/api-schema';
@@ -26,6 +27,7 @@ export function CategoryPicker({
   invalid?: boolean;
   disabled?: boolean;
 }) {
+  const { t } = useTranslation();
   const tiles = useRef<(HTMLButtonElement | null)[]>([]);
   const hintId = useId();
   const chosen = COMMUNITY_CATEGORIES.find((c) => c.id === value);
@@ -86,7 +88,7 @@ export function CategoryPicker({
         })}
       </div>
       <p id={hintId} className="text-xs text-slate-500 dark:text-slate-400">
-        {chosen ? chosen.blurb : 'Choose the one that fits best.'}
+        {chosen ? chosen.blurb : t('categorypicker.choose-the-one-that-fits-best')}
       </p>
     </div>
   );

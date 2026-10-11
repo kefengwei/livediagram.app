@@ -10,6 +10,7 @@
 // (the label's collapsed caret means the whole text, the note's means the
 // line — docs/specs/009-elements/rich-text-notes.md), and that lives in each editor's session, not here.
 
+import { useTranslation } from '@/lib/i18n';
 import type { ListStyle, RunHeading } from '@livediagram/document';
 import {
   BLOCK_TYPES,
@@ -31,6 +32,7 @@ export function BlockTypePicker({
   onApplyHeading: (level: RunHeading | null) => void;
   onApplyList: (style: ListStyle) => void;
 }) {
+  const { t } = useTranslation();
   const blockType = blockTypeOf(heading, listStyle);
   const apply = (next: BlockType) => {
     const applies = blockTypeApplies(next);
@@ -42,8 +44,8 @@ export function BlockTypePicker({
   };
   return (
     <ToolbarDropdown
-      label="Block type"
-      description="Heading level, paragraph, or a list, applied to the selected lines."
+      label={t('blocktypepicker.block-type')}
+      description={t('blocktypepicker.heading-level-paragraph-or-a-list')}
       menuClassName="min-w-[10rem]"
       trigger={<span className="px-1 text-xs font-medium">{blockTypeLabel(blockType)}</span>}
     >

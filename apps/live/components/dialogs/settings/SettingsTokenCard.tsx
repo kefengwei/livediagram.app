@@ -4,6 +4,7 @@
 // who it is, whether it is being used, and how much of its six months is
 // left, drawn as a bar so the tokens that need rotating stand out from a
 // glance down the list, then the workbenches it is paired with.
+import { useTranslation } from '@/lib/i18n';
 import type { ApiToken, WorkbenchPairing } from '@livediagram/api-schema';
 import { Tooltip } from '@livediagram/ui';
 import { KeyIcon, TrashIcon } from '@/components/primitives/explorer-icons';
@@ -47,8 +48,9 @@ export function SettingsTokenCard({
   pairings: readonly WorkbenchPairing[];
   onUnpair: (pairingId: string) => void;
 }) {
+  const { t } = useTranslation();
   const status = tokenStatus(token, now);
-  const name = token.name || 'Untitled token';
+  const name = token.name || t('settingstokencard.untitled-token');
   const elapsed = lifetimeElapsed(token, now);
   const live = usedRecently(token, now);
   const timeLeft =
@@ -73,13 +75,11 @@ export function SettingsTokenCard({
               </p>
             </Tooltip>
             {token.readOnly ? (
-              <span className="shrink-0 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-600 dark:bg-slate-700 dark:text-slate-300">
-                Read-only
-              </span>
+              <span className="shrink-0 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-semibold text-slate-600 dark:bg-slate-700 dark:text-slate-300">{t('settingstokencard.read-only')}</span>
             ) : null}
           </div>
           <p className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-[11px] text-slate-500 dark:text-slate-400">
-            <span>Created {formatTokenDate(token.createdAt)}</span>
+            <span>{t('settingstokencard.created')}{formatTokenDate(token.createdAt)}</span>
             <span aria-hidden>·</span>
             {token.lastUsedAt ? (
               <span className="inline-flex items-center gap-1">
@@ -88,15 +88,14 @@ export function SettingsTokenCard({
                     aria-hidden
                     className="h-1.5 w-1.5 rounded-full bg-emerald-500 ring-2 ring-emerald-500/20"
                   />
-                ) : null}
-                Used {relativeTime(token.lastUsedAt, now)}
+                ) : null}{t('settingstokencard.used')}{relativeTime(token.lastUsedAt, now)}
               </span>
             ) : (
-              <span>Never used</span>
+              <span>{t('settingstokencard.never-used')}</span>
             )}
           </p>
         </div>
-        <Tooltip label="Revoke">
+        <Tooltip label={t('settingstokencard.revoke')}>
           <button
             type="button"
             onClick={(e) => onRevoke(e.currentTarget)}

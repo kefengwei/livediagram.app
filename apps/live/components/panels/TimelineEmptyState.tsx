@@ -11,10 +11,12 @@
 // its documents and team memberships on first read (docs/specs/013-workspace/timeline.md §5), so
 // this is mostly what a genuinely new visitor sees.
 
+import { useTranslation } from '@/lib/i18n';
 import Link from 'next/link';
 import { EmptyState, SOLID_BRAND_DARK_CONTROL, Glyph } from '@livediagram/ui';
 
 export function TimelineEmptyState() {
+  const { t } = useTranslation();
   return (
     <EmptyState
       icon={
@@ -26,17 +28,15 @@ export function TimelineEmptyState() {
           />
         </Glyph>
       }
-      title="Nothing has happened yet"
-      description="Create a document, comment on one, or join a team, and it will show up here."
+      title={t('timelineemptystate.nothing-has-happened-yet')}
+      description={t('timelineemptystate.create-a-document-comment-on-one')}
     >
       {/* Same CTA treatment as every other Explorer empty state
           (ExplorerEmptyState), so the two read as one surface. */}
       <Link
         href="/new"
         className={`inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-500 ${SOLID_BRAND_DARK_CONTROL}`}
-      >
-        New document
-      </Link>
+      >{t('timelineemptystate.new-document')}</Link>
     </EmptyState>
   );
 }

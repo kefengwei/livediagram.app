@@ -5,6 +5,7 @@
 // new ones to name, in order), then its layout (swimlanes, card size, Fill Tab; skippable, starting from the board as
 // it is); Create Board, on the last step only, writes them all as one change. Someone who may only view reads that the
 // board is not set up yet.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { PLAN_COLUMNS_MAX, type ItemTypeDef } from '@livediagram/items';
 import { ChevronLeftIcon, Button, CheckIcon, PlanCardsIcon } from '@livediagram/ui';
@@ -54,6 +55,7 @@ export function PlanSetupBoard({
   initial?: { columns: SetupColumn[]; typeIds: string[] } | undefined;
   onCancel?: (() => void) | undefined;
 }) {
+  const { t } = useTranslation();
   const [step, setStep] = useState<Step>('types');
   const [typeIds, setTypeIds] = useState<string[]>(() => initial?.typeIds ?? []);
   const [columns, setColumns] = useState<SetupColumn[]>(() => initial?.columns ?? []);
@@ -72,11 +74,11 @@ export function PlanSetupBoard({
   return (
     <SetupCard
       titleId="setup-board-title"
-      title="Setup Board"
+      title={t('plansetupboard.setup-board')}
       line={
         canEdit
-          ? 'Pick its cards, columns and layout. Change them any time from its cog.'
-          : 'This board is not set up yet. Someone who can edit it will set it up.'
+          ? t('plansetupboard.pick-its-cards-columns-and-layout')
+          : t('plansetupboard.this-board-is-not-set-up')
       }
       icon={<PlanBoardTileArt preset="kanban" size={20} />}
       help="planBoards"
@@ -92,23 +94,17 @@ export function PlanSetupBoard({
               size="sm"
               onClick={() => setStep(step === 'layout' ? 'columns' : 'types')}
             >
-              <ChevronLeftIcon size={12} />
-              Back
-            </Button>
+              <ChevronLeftIcon size={12} />{t('plansetupboard.back')}</Button>
           ) : (
             <span
               className="flex items-center gap-1.5 text-[12px]"
               style={{ color: palette.muted }}
             >
-              <PlanCardsIcon size={14} />
-              Step 1 of 3
-            </span>
+              <PlanCardsIcon size={14} />{t('plansetupboard.step-1-of-3')}</span>
           )}
           <span className="flex items-center gap-2">
             {onCancel ? (
-              <Button variant="secondary" size="sm" onClick={onCancel}>
-                Cancel
-              </Button>
+              <Button variant="secondary" size="sm" onClick={onCancel}>{t('plansetupboard.cancel')}</Button>
             ) : null}
             {step === 'types' ? (
               <Button
@@ -116,9 +112,7 @@ export function PlanSetupBoard({
                 size="sm"
                 disabled={typeIds.length === 0}
                 onClick={() => setStep('columns')}
-              >
-                Next: Columns
-              </Button>
+              >{t('plansetupboard.next-columns')}</Button>
             ) : (
               <>
                 {/* Create Board (or Save Board) is the Layout step's alone; Columns leads on to it. The step
@@ -129,9 +123,7 @@ export function PlanSetupBoard({
                     size="sm"
                     disabled={columns.length === 0}
                     onClick={() => setStep('layout')}
-                  >
-                    Next: Layout
-                  </Button>
+                  >{t('plansetupboard.next-layout')}</Button>
                 ) : (
                   <Button
                     variant="primary"
@@ -140,7 +132,7 @@ export function PlanSetupBoard({
                     onClick={() => onSetUp(columns, typeIds, layout)}
                   >
                     <CheckIcon size={12} />
-                    {initial ? 'Save Board' : 'Create Board'}
+                    {initial ? t('plansetupboard.save-board') : t('plansetupboard.create-board')}
                   </Button>
                 )}
               </>

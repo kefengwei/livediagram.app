@@ -12,6 +12,7 @@
 // so the two entry points can't drift. Purely a form: it owns a draft
 // and hands the finished { name, definition } back via onSave.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import {
   deriveTextColorForBg,
@@ -78,6 +79,7 @@ export function CustomThemeBuilder({
   // Explorer Themes pane), which owns the header — so no BackBar here.
   variant?: 'inline' | 'modal';
 }) {
+  const { t } = useTranslation();
   const isEdit = !!initial;
   const source = initial ?? seed;
   const [name, setName] = useState(source?.name ?? '');
@@ -152,7 +154,7 @@ export function CustomThemeBuilder({
       {/* Inline (in the theme browse): the shared BackBar returns. In a
           modal host (Explorer) the dialog owns the header, so no bar. */}
       {variant === 'inline' ? (
-        <BackBar label="Back" current={isEdit ? 'Edit theme' : 'New theme'} onClick={onCancel} />
+        <BackBar label={t('customthemebuilder.back')} current={isEdit ? t('customthemebuilder.edit-theme') : t('customthemebuilder.new-theme')} onClick={onCancel} />
       ) : null}
 
       {/* Live preview — the in-progress theme as a real diagram scene,
@@ -160,9 +162,7 @@ export function CustomThemeBuilder({
       <div className="relative">
         <ThemeSwatch theme={previewTheme} heightClass="h-24" realPattern />
         <span className="inline-flex items-center pointer-events-none absolute right-2 top-2 rounded-md bg-slate-900/70 px-2 py-0.5 text-[10px] font-semibold text-white shadow-sm">
-          <span className="text-optical-line text-optical-caps [--optical-tracking:0.025em]">
-            Illustration
-          </span>
+          <span className="text-optical-line text-optical-caps [--optical-tracking:0.025em]">{t('customthemebuilder.illustration')}</span>
         </span>
       </div>
 
@@ -173,23 +173,21 @@ export function CustomThemeBuilder({
             className="h-4 w-4 shrink-0 rounded border border-black/10 dark:border-white/20"
             style={{ backgroundColor: copied }}
           />
-          <span className="flex-1">Copied colour: click any box to paste it.</span>
+          <span className="flex-1">{t('customthemebuilder.copied-colour-click-any-box-to')}</span>
           <button
             type="button"
             onClick={() => setCopied(null)}
             className="font-medium underline-offset-2 hover:underline"
-          >
-            Cancel
-          </button>
+          >{t('customthemebuilder.cancel')}</button>
         </div>
       ) : null}
 
       <label className="flex flex-col gap-1">
-        <FieldLabel>Name</FieldLabel>
+        <FieldLabel>{t('customthemebuilder.name')}</FieldLabel>
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="My theme"
+          placeholder={t('customthemebuilder.my-theme')}
           className="rounded-md border border-slate-200 bg-white px-2.5 py-1.5 text-sm text-slate-800 outline-none transition focus:border-brand-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
         />
       </label>
@@ -200,28 +198,28 @@ export function CustomThemeBuilder({
           hides the one place you would go to correct it. Larger tiles so the
           colour (the whole point) reads at a glance. */}
       <div className="flex flex-col gap-1.5">
-        <FieldLabel>Base colours</FieldLabel>
+        <FieldLabel>{t('customthemebuilder.base-colours')}</FieldLabel>
         <div className="grid grid-cols-4 gap-2">
           <ColorTile
-            label="Background"
+            label={t('customthemebuilder.background')}
             value={def.backgroundColor}
             onChange={setBackground}
             painter={painter}
           />
           <ColorTile
-            label="Fill"
+            label={t('customthemebuilder.fill')}
             value={def.elementFill ?? FALLBACK_FILL}
             onChange={setFill}
             painter={painter}
           />
           <ColorTile
-            label="Stroke"
+            label={t('customthemebuilder.stroke')}
             value={def.elementStroke ?? FALLBACK_STROKE}
             onChange={setStroke}
             painter={painter}
           />
           <ColorTile
-            label="Text"
+            label={t('customthemebuilder.text')}
             value={def.elementText ?? FALLBACK_TEXT}
             onChange={(c) => {
               setTextTouched(true);
@@ -232,11 +230,9 @@ export function CustomThemeBuilder({
         </div>
       </div>
 
-      <ExpandRow label="Pattern" open={patternOpen} onToggle={() => setPatternOpen((o) => !o)}>
-        <p className="mb-2 text-[11px] leading-snug text-slate-500 dark:text-slate-300">
-          The pattern tints automatically from your background colour.
-        </p>
-        <FieldLabel className="mb-1">Style</FieldLabel>
+      <ExpandRow label={t('customthemebuilder.pattern')} open={patternOpen} onToggle={() => setPatternOpen((o) => !o)}>
+        <p className="mb-2 text-[11px] leading-snug text-slate-500 dark:text-slate-300">{t('customthemebuilder.the-pattern-tints-automatically-from-your')}</p>
+        <FieldLabel className="mb-1">{t('customthemebuilder.style')}</FieldLabel>
         <div className="grid grid-cols-4 gap-1 sm:grid-cols-7">
           {PATTERNS.filter((p) => !isAnimatedPattern(p.id)).map((p) => (
             <PatternButton
@@ -249,7 +245,7 @@ export function CustomThemeBuilder({
             </PatternButton>
           ))}
         </div>
-        <FieldLabel className="mb-1 mt-3">Animated</FieldLabel>
+        <FieldLabel className="mb-1 mt-3">{t('customthemebuilder.animated')}</FieldLabel>
         <div className="grid grid-cols-4 gap-1 sm:grid-cols-7">
           {PATTERNS.filter((p) => isAnimatedPattern(p.id)).map((p) => (
             <PatternButton
@@ -267,7 +263,7 @@ export function CustomThemeBuilder({
             applied to the tab when the theme is picked). */}
         <div className="mt-3 flex flex-col gap-1 border-t border-slate-100 pt-3 dark:border-slate-800">
           <div className="flex items-center justify-between">
-            <FieldLabel>Opacity</FieldLabel>
+            <FieldLabel>{t('customthemebuilder.opacity')}</FieldLabel>
             <span className="text-[10px] font-medium text-slate-500 dark:text-slate-300">
               {Math.round((def.backgroundOpacity ?? 1) * 100)}%
             </span>
@@ -279,7 +275,7 @@ export function CustomThemeBuilder({
             step={0.05}
             value={def.backgroundOpacity ?? 1}
             onChange={(e) => patch({ backgroundOpacity: parseFloat(e.target.value) })}
-            aria-label="Pattern opacity"
+            aria-label={t('customthemebuilder.pattern-opacity')}
             className={RANGE_SLIDER}
           />
         </div>
@@ -306,16 +302,14 @@ export function CustomThemeBuilder({
           type="button"
           onClick={onCancel}
           className="rounded-md px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-        >
-          Cancel
-        </button>
+        >{t('customthemebuilder.cancel-2')}</button>
         <Button
           variant="primary"
           size="xs"
           disabled={saving}
           onClick={() => onSave({ name: name.trim() || 'My theme', definition: def })}
         >
-          {saving ? 'Saving…' : isEdit ? 'Save changes' : 'Save theme'}
+          {saving ? 'Saving…' : isEdit ? t('customthemebuilder.save-changes') : t('customthemebuilder.save-theme')}
         </Button>
       </div>
     </div>

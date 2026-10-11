@@ -3,6 +3,7 @@
 // An article page's Style tab (docs/specs/007-editor/article-pages.md "Article style"): the looks
 // to start from, then each field on its own. Every choice is one edit to the article's style,
 // shared by all its pages; hovering a look or a choice previews it on the writing.
+
 import { useEffect, useRef, type ReactNode } from 'react';
 import {
   ARTICLE_LOOK_IDS,
@@ -19,6 +20,7 @@ import { PanelSection } from '../illustrate-page-panel-sections';
 import { ColourPicker } from '@/components/colour/ColourPicker';
 import { standardGroup } from '@/components/colour/colour-options';
 import { useDocumentColours } from '@/hooks/ui/useDocumentColours';
+import { useTranslation } from '@/lib/i18n';
 
 // The Theme accent's id in the colour picker: the article stores no accent of its own.
 const THEME_ACCENT = 'theme';
@@ -41,6 +43,9 @@ export function ArticleStyleSection({
   // A style to show on the writing while a choice is hovered; null puts it back.
   onPreview: (style: ArticleStyle | null) => void;
 }) {
+  const { t } = useTranslation();
+  
+  
   // A choice hovered as the panel closes (Escape, a press elsewhere) is never left on the page.
   const clearPreview = useRef(onPreview);
   useEffect(() => {
@@ -55,8 +60,8 @@ export function ArticleStyleSection({
     <div onPointerLeave={() => onPreview(null)}>
       {part === 'style' ? (
         <>
-          <PanelSection title="Looks">
-            <div role="radiogroup" aria-label="Article look" className="grid grid-cols-5 gap-1.5">
+          <PanelSection title={t('articlestylesection.looks')}>
+            <div role="radiogroup" aria-label={t('articlestylesection.article-look')} className="grid grid-cols-5 gap-1.5">
               {ARTICLE_LOOK_IDS.map((id) => (
                 <LookCard
                   key={id}
@@ -69,14 +74,14 @@ export function ArticleStyleSection({
               ))}
             </div>
           </PanelSection>
-          <PanelSection title="Accent">
+          <PanelSection title={t('articlestylesection.accent')}>
             {/* The one colour picker (docs/specs/004-interface-design/colour-picker.md): the
                 theme's accent, then the strong standard colours for light paper. */}
             <div className="mb-2">
               <ColourPicker
-                label="Accent colour"
+                label={t('articlestylesection.accent-colour')}
                 value={style?.accent ?? THEME_ACCENT}
-                leading={[{ id: THEME_ACCENT, colour: themeAccent, label: 'Theme' }]}
+                leading={[{ id: THEME_ACCENT, colour: themeAccent, label: t('articlestylesection.theme') }]}
                 standard={[standardGroup('strong', 'light', 'hex')]}
                 yours={yours}
                 onPick={(id) =>
@@ -87,14 +92,14 @@ export function ArticleStyleSection({
               />
             </div>
             <Toggle
-              label="Headings in the Accent"
+              label={t('articlestylesection.headings-in-the-accent')}
               on={r.accentHeadings}
               onChange={(v) => onChange({ patch: { accentHeadings: v } })}
             />
           </PanelSection>
-          <PanelSection title="Page">
+          <PanelSection title={t('articlestylesection.page')}>
             <Segmented
-              label="Margins"
+              label={t('articlestylesection.margins')}
               value={r.margins}
               options={[
                 ['narrow', 'Narrow'],
@@ -105,7 +110,7 @@ export function ArticleStyleSection({
               onHover={(v) => preview({ margins: v })}
             />
             <Toggle
-              label="Page Numbers"
+              label={t('articlestylesection.page-numbers')}
               on={r.pageNumbers}
               onChange={(v) => onChange({ patch: { pageNumbers: v } })}
             />
@@ -113,23 +118,23 @@ export function ArticleStyleSection({
         </>
       ) : (
         <>
-          <PanelSection title="Fonts">
+          <PanelSection title={t('articlestylesection.fonts')}>
             <div className="grid grid-cols-2 gap-2">
               <FontSelect
-                label="Headings"
+                label={t('articlestylesection.headings')}
                 value={r.headingFont}
                 onChange={(f) => onChange({ patch: { headingFont: f } })}
               />
               <FontSelect
-                label="Body"
+                label={t('articlestylesection.body')}
                 value={r.bodyFont}
                 onChange={(f) => onChange({ patch: { bodyFont: f } })}
               />
             </div>
           </PanelSection>
-          <PanelSection title="Size and Spacing">
+          <PanelSection title={t('articlestylesection.size-and-spacing')}>
             <Segmented
-              label="Text Size"
+              label={t('articlestylesection.text-size')}
               value={r.textSize}
               options={[
                 ['small', 'Small'],
@@ -140,7 +145,7 @@ export function ArticleStyleSection({
               onHover={(v) => preview({ textSize: v })}
             />
             <Segmented
-              label="Line Spacing"
+              label={t('articlestylesection.line-spacing')}
               value={r.lineSpacing}
               options={[
                 ['single', 'Single'],
@@ -151,7 +156,7 @@ export function ArticleStyleSection({
               onHover={(v) => preview({ lineSpacing: v })}
             />
             <Segmented
-              label="Paragraph Spacing"
+              label={t('articlestylesection.paragraph-spacing')}
               value={r.paragraphSpacing}
               options={[
                 ['none', 'None'],
@@ -162,7 +167,7 @@ export function ArticleStyleSection({
               onHover={(v) => preview({ paragraphSpacing: v })}
             />
             <Segmented
-              label="Lines Under Text"
+              label={t('articlestylesection.lines-under-text')}
               value={r.rules}
               options={[
                 ['none', 'None'],
@@ -201,6 +206,8 @@ function LookCard({
   onPick: () => void;
   onHover: () => void;
 }) {
+  const { t } = useTranslation();
+  
   const look = ARTICLE_LOOKS[id];
   const ink = '#1e293b';
   const heading = look.accentHeadings ? accent : ink;
@@ -235,9 +242,7 @@ function LookCard({
             color: heading,
             borderBottom: look.rules !== 'none' ? `1px solid ${accent}` : undefined,
           }}
-        >
-          Aa
-        </span>
+        >{t('articlestylesection.aa')}</span>
         {[90, 70, 85].map((w, i) => (
           <span
             key={i}
@@ -293,6 +298,7 @@ function Toggle({
   on: boolean;
   onChange: (on: boolean) => void;
 }) {
+  
   return (
     <label className="mt-2 flex cursor-pointer items-center justify-between gap-2 text-xs text-slate-700 dark:text-slate-200">
       {label}
@@ -329,6 +335,7 @@ function Segmented<T extends string>({
   onChange: (v: T) => void;
   onHover: (v: T) => void;
 }): ReactNode {
+  
   return (
     <div className="mt-2 first:mt-0">
       <p className="mb-1 text-[11px] font-medium text-slate-500 dark:text-slate-400">{label}</p>

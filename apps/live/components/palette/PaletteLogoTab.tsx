@@ -4,6 +4,7 @@
 // mode while the tab has a logo page: the Pen and the Pencil, then Draw mode's three markers in this
 // person's colours and widths. A marker is picked up for one stroke; pressed again while held, it
 // opens Draw mode's own flyout for it (colour and width), whose changes re-arm it at once.
+import { useTranslation } from '@/lib/i18n';
 import { useContext, useState } from 'react';
 import { EditorContext } from '@/app/document/[id]/EditorContext';
 import { useCanvasSurface } from '@/components/canvas/CanvasSurfaceContext';
@@ -111,6 +112,7 @@ export function PaletteLogoTab({
   actions: PaletteTileActions;
   pendingDraw: PendingDraw | null | undefined;
 }) {
+  const { t } = useTranslation();
   const editor = useContext(EditorContext);
   const model = editor?.whiteboardDock;
   const tools = tiles.filter((t) => t.action.type !== 'marker');
@@ -120,9 +122,7 @@ export function PaletteLogoTab({
       <PaletteToolRows tiles={tools} actions={actions} pendingDraw={pendingDraw} />
       {markers.length > 0 ? (
         <>
-          <p className="px-1 pt-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Markers
-          </p>
+          <p className="px-1 pt-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('palettelogotab.markers')}</p>
           <div className="flex flex-col gap-0.5">
             {markers.map((def) => {
               const a = def.action;

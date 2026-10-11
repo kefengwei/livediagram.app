@@ -5,6 +5,7 @@
 // per person with estimates, a retro's coloured columns of face-down notes and votes, a roadmap's project bars, bug
 // triage's priority rows, a week's days, All Cards' status rows, and Blank's empty board waiting to be set up. In the
 // tab's own light or dark look. Decorative: the tile's name and line say what it is.
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import type { PlanPalette } from './plan-palette';
 
@@ -357,6 +358,7 @@ function AllCards({ palette }: P) {
 
 // Blank: an empty board, dashed, waiting for Setup Board.
 function Blank({ palette }: P) {
+  const { t } = useTranslation();
   return (
     <div
       aria-hidden
@@ -371,9 +373,7 @@ function Blank({ palette }: P) {
           color: palette.muted,
         }}
       >
-        <span className="text-[10px] leading-none">+</span>
-        Setup Board
-      </span>
+        <span className="text-[10px] leading-none">+</span>{t('board-previews.setup-board')}</span>
     </div>
   );
 }

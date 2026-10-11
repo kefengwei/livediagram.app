@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { DefaultFolderPickerDialog } from '@/components/placement/DefaultFolderPickerDialog';
 import type { PickerFolder } from '@/components/placement/PlacementBrowser';
@@ -41,6 +42,7 @@ export function WizardDefaultFolder({
     teamId: string | null,
   ) => Promise<PickerFolder | null>;
 }) {
+  const { t } = useTranslation();
   const [changing, setChanging] = useState(false);
   return (
     <div className="flex min-h-6 items-center text-xs text-slate-600 dark:text-slate-300">
@@ -48,24 +50,18 @@ export function WizardDefaultFolder({
         <p role="note" className="min-w-0">
           <span className="font-semibold text-slate-800 dark:text-slate-100">
             {defaultKeyEntry(shown.key).label}
-          </span>{' '}
-          go to{' '}
+          </span>{' '}{t('wizarddefaultfolder.go-to')}{' '}
           <span className="font-semibold text-slate-800 dark:text-slate-100">
             {shown.folderName}
-          </span>{' '}
-          by default.{' '}
+          </span>{' '}{t('wizarddefaultfolder.by-default')}{' '}
           <button
             type="button"
             onClick={() => setChanging(true)}
             className="rounded font-semibold text-brand-700 underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-brand-600 dark:text-brand-300 dark:focus-visible:outline-brand-400"
-          >
-            Change default
-          </button>
+          >{t('wizarddefaultfolder.change-default')}</button>
         </p>
       ) : offer ? (
-        <SwitchRow checked={alwaysSave} onChange={onAlwaysSave} className="text-sm">
-          Always save {defaultKeyEntry(offer.key).noun} here
-        </SwitchRow>
+        <SwitchRow checked={alwaysSave} onChange={onAlwaysSave} className="text-sm">{t('wizarddefaultfolder.always-save')}{defaultKeyEntry(offer.key).noun}{t('wizarddefaultfolder.here')}</SwitchRow>
       ) : null}
       {changing && shown && defaults ? (
         <DefaultFolderPickerDialog

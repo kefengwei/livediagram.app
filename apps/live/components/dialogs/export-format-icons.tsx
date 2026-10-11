@@ -3,9 +3,11 @@
 // per-surface icon files are. The type-only import back into the
 // dialog file is the usual host pattern.
 
+import { useTranslation } from '@/lib/i18n';
 import type { Format } from './ExportTabDialog';
 
 export function FormatIcon({ kind }: { kind: Format }) {
+  const { t } = useTranslation();
   switch (kind) {
     case 'markdown':
       return (
@@ -28,9 +30,7 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="9"
             fontWeight="600"
             fill="rgb(71 85 105)"
-          >
-            md
-          </text>
+          >{t('export-format-icons.md')}</text>
         </svg>
       );
     case 'mermaid':
@@ -54,9 +54,7 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="9"
             fontWeight="600"
             fill="rgb(71 85 105)"
-          >
-            mmd
-          </text>
+          >{t('export-format-icons.mmd')}</text>
         </svg>
       );
     case 'excalidraw':
@@ -80,9 +78,7 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="8"
             fontWeight="600"
             fill="rgb(71 85 105)"
-          >
-            excali
-          </text>
+          >{t('export-format-icons.excali')}</text>
         </svg>
       );
     case 'logo-kit':
@@ -121,9 +117,7 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="7"
             fontWeight="700"
             fill="rgb(190 18 60)"
-          >
-            PDF
-          </text>
+          >{t('export-format-icons.pdf')}</text>
         </svg>
       );
     case 'png':
@@ -164,9 +158,7 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="9"
             fontWeight="600"
             fill="rgb(21 128 61)"
-          >
-            SVG
-          </text>
+          >{t('export-format-icons.svg')}</text>
         </svg>
       );
     case 'file':
@@ -190,9 +182,7 @@ export function FormatIcon({ kind }: { kind: Format }) {
             fontSize="9"
             fontWeight="600"
             fill="rgb(71 85 105)"
-          >
-            json
-          </text>
+          >{t('export-format-icons.json')}</text>
         </svg>
       );
   }

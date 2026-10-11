@@ -7,6 +7,7 @@
 // one. A box that shows you your own card tells the room what you wrote the
 // moment somebody watches you type it.
 
+import { useTranslation } from '@/lib/i18n';
 import { CountBadge } from '@livediagram/ui';
 import { useState } from 'react';
 import { IDEA_MAX_TEXT, type ShapeElement } from '@livediagram/document';
@@ -58,6 +59,7 @@ export function IdeaBoxFace({
   // can be grouped, moved and dot-voted like anything else on the canvas.
   onScatter?: () => void;
 }) {
+  const { t } = useTranslation();
   const cards = element.ideaCards ?? [];
   const open = element.ideasRevealed === true;
   // Ideas past this index arrived after the box first painted, and slide in.
@@ -65,7 +67,7 @@ export function IdeaBoxFace({
 
   const menu =
     onClear || onOpenSettings ? (
-      <ElementEllipsisMenu kind="command" label="Idea box options" color={textColor} align="left">
+      <ElementEllipsisMenu kind="command" label={t('ideaboxface.idea-box-options')} color={textColor} align="left">
         {(close) => (
           <>
             {onClear ? (
@@ -74,9 +76,7 @@ export function IdeaBoxFace({
                   onClear();
                   close();
                 }}
-              >
-                Empty the box
-                {cards.length ? <CountBadge count={cards.length} /> : null}
+              >{t('ideaboxface.empty-the-box')}{cards.length ? <CountBadge count={cards.length} /> : null}
               </ElementMenuItem>
             ) : null}
             {onOpenSettings ? (
@@ -108,7 +108,7 @@ export function IdeaBoxFace({
           onAddIdea ? (
             <CollabComposer
               textColor={textColor}
-              placeholder="Add an idea…"
+              placeholder={t('ideaboxface.add-an-idea')}
               ariaLabel="Add an anonymous idea"
               sendLabel="Submit idea"
               maxLength={IDEA_MAX_TEXT}
@@ -119,20 +119,16 @@ export function IdeaBoxFace({
         }
       >
         {!open && onReveal && cards.length > 0 ? (
-          <AccentBar onPress={onReveal} icon={<EyeGlyph />} count={cards.length}>
-            Open the box
-          </AccentBar>
+          <AccentBar onPress={onReveal} icon={<EyeGlyph />} count={cards.length}>{t('ideaboxface.open-the-box')}</AccentBar>
         ) : null}
         {open && onScatter && cards.length > 0 ? (
-          <AccentBar onPress={onScatter} icon={<ScatterGlyph />}>
-            Scatter to sticky notes
-          </AccentBar>
+          <AccentBar onPress={onScatter} icon={<ScatterGlyph />}>{t('ideaboxface.scatter-to-sticky-notes')}</AccentBar>
         ) : null}
 
         {cards.length === 0 ? (
-          <EmptyRows textColor={textColor} title="Nothing in the box yet">
+          <EmptyRows textColor={textColor} title={t('ideaboxface.nothing-in-the-box-yet')}>
             {onAddIdea
-              ? 'Be the first to add an idea. Nobody’s name is stored with it.'
+              ? t('ideaboxface.be-the-first-to-add-an')
               : undefined}
           </EmptyRows>
         ) : open ? (
@@ -159,13 +155,12 @@ export function IdeaBoxFace({
 // is nothing to switch, and saying so where you write is the reassurance the
 // element exists to give.
 function AnonymousBadge() {
+  const { t } = useTranslation();
   return (
     <span
       className="pointer-events-auto inline-flex items-center gap-1 rounded-full py-0.5 pl-1 pr-2 text-[10px] font-semibold"
       style={{ color: QA_ACCENT_INK, backgroundColor: tint(QA_ACCENT, 0.14) }}
     >
-      <MaskGlyph size={11} />
-      Anonymous
-    </span>
+      <MaskGlyph size={11} />{t('ideaboxface.anonymous')}</span>
   );
 }

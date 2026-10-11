@@ -4,6 +4,7 @@
 // Current: a pulsing accent dot and an expanded, accent-lit row with the time
 // left large and a bar draining as it runs.
 
+import { useTranslation } from '@/lib/i18n';
 import { Glyph } from '@livediagram/ui';
 import { usePressWithoutDrag } from '@/hooks/ui/usePressWithoutDrag';
 import { tint } from '../collab-chrome';
@@ -47,6 +48,7 @@ export function AgendaStep({
   textColor: string;
   onPress?: () => void;
 }) {
+  const { t } = useTranslation();
   const press = usePressWithoutDrag(() => onPress?.());
   const name = label || `Segment ${index + 1}`;
   const current = state === 'current';
@@ -124,8 +126,7 @@ export function AgendaStep({
                   className="agenda-start absolute right-0 top-1/2 flex -translate-y-1/2 items-center gap-1 whitespace-nowrap font-semibold"
                   style={{ color: QA_ACCENT_INK }}
                 >
-                  <PlayGlyph /> Start
-                </span>
+                  <PlayGlyph />{t('agendastep.start')}</span>
               ) : null}
             </span>
           )}

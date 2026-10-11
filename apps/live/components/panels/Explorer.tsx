@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { memo, useCallback, useState } from 'react';
 import { DocumentRowShell } from './DocumentRowShell';
 import { useIsMobileViewport } from '@/hooks/ui/useIsMobileViewport';
@@ -63,6 +64,7 @@ function ExplorerImpl({
   favouriteIds,
   onToggleFavourite,
 }: ExplorerProps) {
+  const { t } = useTranslation();
   const minimalChrome = useMinimalChrome();
   // Mobile viewport ⇒ render nothing. Mobile users reach the
   // Explorer from the AuthControls "Explorer" menu item (docs/specs/007-editor/live-app.md)
@@ -166,7 +168,7 @@ function ExplorerImpl({
   return (
     <MovablePanel
       helpArticle="explorerPanel"
-      title="Explorer"
+      title={t('explorer.explorer')}
       dataTourId="explorer"
       layoutChrome
       position={position}
@@ -199,9 +201,7 @@ function ExplorerImpl({
       <div className="flex flex-col gap-2 px-2.5 pb-2.5 pt-1">
         {(current ?? currentTeam ?? currentShared) ? (
           <div className="flex flex-col gap-1 rounded-xl bg-slate-50 p-2 ring-1 ring-slate-200/60 dark:bg-slate-800/50 dark:ring-slate-700/60">
-            <p className="px-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-white">
-              Current Document
-            </p>
+            <p className="px-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-white">{t('explorer.current-document')}</p>
             <ul className="flex flex-col gap-0.5 overflow-hidden">
               {current ? (
                 <DocumentRowShell exiting={exitingDocumentIds.has(current.id)}>

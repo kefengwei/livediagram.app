@@ -3,6 +3,7 @@
 // The formula bar (docs/specs/029-sheets/sheet.md "Formula bar"): the name box (the selection; a reference or range
 // typed there and Enter selects it) and fx with the active cell's input as typed, edited there as in the cell. A
 // spilled cell shows its formula greyed. Read-only for someone who may not edit.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import {
   findRangeName,
@@ -64,6 +65,7 @@ export function SheetFormulaBar({
   actions: SheetActions;
   input: FormulaInput;
 }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const range = c.selection.ranges[c.selection.ranges.length - 1]!;
   // The selection, or its name when it is exactly a named range (sheet.md "Named ranges").
@@ -92,7 +94,7 @@ export function SheetFormulaBar({
       onDoubleClick={stop}
     >
       <input
-        aria-label="Name box"
+        aria-label={t('sheetformulabar.name-box')}
         // A small rounded field, as the name box reads in a modern spreadsheet.
         className="my-[3px] ml-1.5 h-[22px] w-20 shrink-0 rounded-md border px-2 text-center font-mono text-[11.5px] outline-none transition focus:ring-2"
         style={
@@ -122,9 +124,7 @@ export function SheetFormulaBar({
         className="ml-1.5 flex h-7 w-8 shrink-0 items-center justify-center border-l font-serif text-[13px] italic"
         style={{ color: c.palette.muted, borderColor: c.palette.cardBorder }}
         aria-hidden
-      >
-        fx
-      </span>
+      >{t('sheetformulabar.fx')}</span>
       <div className="relative min-w-0 flex-1">
         {editing?.origin === 'bar' ? (
           <>
@@ -137,7 +137,7 @@ export function SheetFormulaBar({
             <textarea
               ref={barRef}
               data-sheet-editor={c.sheet.id}
-              aria-label="Formula bar"
+              aria-label={t('sheetformulabar.formula-bar')}
               value={editing.draft}
               spellCheck={false}
               rows={lines}
@@ -163,7 +163,7 @@ export function SheetFormulaBar({
           </>
         ) : (
           <textarea
-            aria-label="Formula bar"
+            aria-label={t('sheetformulabar.formula-bar-2')}
             readOnly={!c.canEdit || !!owner}
             value={shown}
             rows={lines}

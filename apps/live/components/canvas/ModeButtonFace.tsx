@@ -16,6 +16,8 @@
 //     scales and sinks. Hover is desktop-only — a touch device has no hover, and
 //     a sticky :hover after a tap reads as a stuck button.
 
+
+import { useTranslation } from '@/lib/i18n';
 import { SELECTION_MODE_LABEL, type SelectionMode } from '@livediagram/document';
 import { keycapEdge } from '@/components/canvas/paper-kit';
 import { usePressWithoutDrag } from '@/hooks/ui/usePressWithoutDrag';
@@ -73,9 +75,10 @@ export function ModeButtonFace({
   // Undefined on a read-only surface that can't switch tools (an embed).
   onPress?: () => void;
 }) {
+  const { t } = useTranslation();
   const isCurrent = activeMode === mode;
   const press = usePressWithoutDrag(onPress);
-  const kicker = isCurrent ? 'Leave' : 'Switch to';
+  const kicker = isCurrent ? 'Leave' : t('modebuttonface.switch-to');
   const text = label.trim() || `${kicker} ${MODE_LABEL[mode]}`;
   // The face: the glyph in a translucent chip (which is what reads as "this is
   // a control" rather than "this is a box with a picture in it"), a small

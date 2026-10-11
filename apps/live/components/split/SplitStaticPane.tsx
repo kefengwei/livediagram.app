@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useMemo, useRef, type CSSProperties, type Ref } from 'react';
 import type { Tab } from '@livediagram/document';
 import { isTextEditFocused } from '@livediagram/ui';
@@ -44,6 +45,7 @@ export function SplitStaticPane({
   fitNonce: number;
   onFocus: (via: 'Click' | 'Hover') => void;
 }) {
+  const { t } = useTranslation();
   const { editingId, userPreferences } = useEditorContext();
   const { appearance } = useAppearance();
   const isDark = appearance === 'dark';
@@ -109,7 +111,7 @@ export function SplitStaticPane({
       ) : !loaded || !svg ? (
         <PaneMessage busy>{`Loading ${tab.name}…`}</PaneMessage>
       ) : empty ? (
-        <PaneMessage>Nothing on this tab yet. Click to start on it.</PaneMessage>
+        <PaneMessage>{t('splitstaticpane.nothing-on-this-tab-yet-click')}</PaneMessage>
       ) : (
         <TabSvgViewport
           svg={svg}
@@ -125,9 +127,7 @@ export function SplitStaticPane({
         <span className="truncate text-sm font-semibold text-slate-800 dark:text-slate-100">
           {tab.name}
         </span>
-        <span className="shrink-0 rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">
-          Live
-        </span>
+        <span className="shrink-0 rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300">{t('splitstaticpane.live')}</span>
       </div>
     </section>
   );

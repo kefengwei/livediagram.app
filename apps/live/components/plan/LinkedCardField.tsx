@@ -7,6 +7,7 @@
 // the field (in place, so the panel's focus trap keeps it): a filter, None, then the candidate cards, each with its
 // whole title (wrapping to three lines). Keys: Enter or Space opens it,
 // the arrows move, Enter picks, Escape closes.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
   itemColourOf,
@@ -47,6 +48,7 @@ export function LinkedCardField({
   onSave: (next: string | undefined) => void;
   onOpen: (itemId: string) => void;
 }) {
+  const { t } = useTranslation();
   const listId = useId();
   const triggerRef = useRef<HTMLButtonElement>(null);
   const boxRef = useRef<HTMLDivElement>(null);
@@ -200,7 +202,7 @@ export function LinkedCardField({
               ref={filterRef}
               type="text"
               value={query}
-              placeholder="Find a card"
+              placeholder={t('linkedcardfield.find-a-card')}
               aria-label={`Find a card for ${label}`}
               aria-controls={listId}
               aria-activedescendant={`${listId}-${active}`}
@@ -264,9 +266,7 @@ export function LinkedCardField({
               );
             })}
             {options.length === 1 && query ? (
-              <li className="px-2 py-1.5 text-[12px] text-slate-500 dark:text-slate-400">
-                No cards match
-              </li>
+              <li className="px-2 py-1.5 text-[12px] text-slate-500 dark:text-slate-400">{t('linkedcardfield.no-cards-match')}</li>
             ) : null}
           </ul>
         </div>

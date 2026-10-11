@@ -2,6 +2,7 @@
 
 // Setup Sheet's last step, Style (docs/specs/029-sheets/sheet.md "Setup Sheet"): an option row per look with a small
 // drawn preview, Freeze Header Row (not for Blank), and the cell size.
+import { useTranslation } from '@/lib/i18n';
 import type { SheetCellSize, SheetLook } from '@livediagram/sheets';
 import { SwitchRow } from '@/components/primitives/SwitchRow';
 import { OptionRows } from '@/components/plan/OptionRows';
@@ -130,15 +131,14 @@ export function SheetSetupStyle({
   // A start with rows (Blank has none, so only gridlines and sizes apply).
   hasRows: boolean;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-4">
       <section className="flex flex-col gap-1.5" aria-labelledby="setup-sheet-look">
-        <h3 id="setup-sheet-look" className={HEADING} style={{ color: palette.muted }}>
-          Look
-        </h3>
+        <h3 id="setup-sheet-look" className={HEADING} style={{ color: palette.muted }}>{t('sheetsetupstyle.look')}</h3>
         <OptionRows
           kind="single"
-          label="Look"
+          label={t('sheetsetupstyle.look-2')}
           palette={palette}
           selected={look}
           onPick={(id) => onLook(id as SheetLook)}
@@ -158,12 +158,10 @@ export function SheetSetupStyle({
         />
       </section>
       <section className="flex flex-col gap-1.5" aria-labelledby="setup-sheet-size">
-        <h3 id="setup-sheet-size" className={HEADING} style={{ color: palette.muted }}>
-          Cell Size
-        </h3>
+        <h3 id="setup-sheet-size" className={HEADING} style={{ color: palette.muted }}>{t('sheetsetupstyle.cell-size')}</h3>
         <OptionRows
           kind="single"
-          label="Cell Size"
+          label={t('sheetsetupstyle.cell-size-2')}
           palette={palette}
           selected={size}
           onPick={(id) => onSize(id as SheetCellSize)}
@@ -173,12 +171,8 @@ export function SheetSetupStyle({
       {hasRows ? (
         <div className="flex flex-col gap-2 border-t pt-4" style={{ borderColor: palette.border }}>
           <SwitchRow checked={freeze} onChange={onFreeze} className="cursor-pointer">
-            <span className="block text-[13px] font-semibold" style={{ color: palette.text }}>
-              Freeze Header Row
-            </span>
-            <span className="block text-[12px]" style={{ color: palette.muted }}>
-              The first row stays put while the rest scrolls.
-            </span>
+            <span className="block text-[13px] font-semibold" style={{ color: palette.text }}>{t('sheetsetupstyle.freeze-header-row')}</span>
+            <span className="block text-[12px]" style={{ color: palette.muted }}>{t('sheetsetupstyle.the-first-row-stays-put-while')}</span>
           </SwitchRow>
         </div>
       ) : null}

@@ -12,6 +12,7 @@
 // hover card, and in the linked portal's label — never drawn on the canvas ring,
 // where a caption over the energy looked like a sticker on a window.
 
+import { useTranslation } from '@/lib/i18n';
 import type { ShapeElement, Tab } from '@livediagram/document';
 import { MenuAccordionSection } from '@/components/primitives/PortalMenu';
 import { MenuTile, MenuTileGrid } from '@/components/primitives/MenuTiles';
@@ -42,6 +43,7 @@ export function PortalMenuSection({
   // The accordion plumbing from the menu scaffold (open state + toggle).
   sectionProps: { open: boolean; onToggle: () => void };
 }) {
+  const { t } = useTranslation();
   // Typed locally and committed on blur / Enter, like every other text field in
   // the editor: committing per keystroke would push one history entry per
   // letter. Re-seeded (during render) on a different portal or a label changed elsewhere.
@@ -74,11 +76,9 @@ export function PortalMenuSection({
   };
 
   return (
-    <MenuAccordionSection title="Portal" icon={<ToolsMenuGlyph />} {...sectionProps}>
+    <MenuAccordionSection title={t('portalmenusection.portal')} icon={<ToolsMenuGlyph />} {...sectionProps}>
       <div className="px-3 pt-1">
-        <label className="text-[10px] font-medium text-slate-500 dark:text-slate-400">
-          Name
-          <input
+        <label className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('portalmenusection.name')}<input
             value={name}
             onChange={(e) => setName(e.target.value)}
             onBlur={commitName}
@@ -95,9 +95,7 @@ export function PortalMenuSection({
           />
         </label>
       </div>
-      <p className="px-3 pt-2 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-        Leads to
-      </p>
+      <p className="px-3 pt-2 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('portalmenusection.leads-to')}</p>
       <MenuTileGrid cols={2}>
         {candidates.map((candidate) => (
           <MenuTile
@@ -114,7 +112,7 @@ export function PortalMenuSection({
         ))}
         {/* Always offered, and the only option when this is the first portal in
             the document: the far end usually doesn't exist yet. */}
-        <MenuTile icon={<PlusGlyph />} label="Create portal" onClick={onCreateLinkedPortal} />
+        <MenuTile icon={<PlusGlyph />} label={t('portalmenusection.create-portal')} onClick={onCreateLinkedPortal} />
       </MenuTileGrid>
     </MenuAccordionSection>
   );

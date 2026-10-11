@@ -1,5 +1,6 @@
 'use client';
 
+
 import { useCallback, useRef, useState, type CSSProperties } from 'react';
 import { lucidePanelsTopLeft, lucideSettings } from '@livediagram/icons/lucide';
 import { FirstPageChoice } from './FirstPageChoice';
@@ -43,6 +44,7 @@ import { IllustratePagePanel, type PagePanelTab } from './IllustratePagePanel';
 import { AddPageButton } from './AddPageButton';
 import { ArticleStyleSection } from './article/ArticleStyleSection';
 import { useStylePanelRequest } from '@/lib/article/article-editor-store';
+import { useTranslation } from '@/lib/i18n';
 import {
   previewedBackground,
   setPageBackgroundPreview,
@@ -92,6 +94,9 @@ export function IllustratePages({
   // The sheets alone, without their title bars or the add button (zen, presenting).
   bare?: boolean;
 }) {
+  const { t } = useTranslation();
+  
+  
   const { pages, focusPage } = view;
   const articles = view.articles ?? null;
   // An article page's style (a hover in its Style tab previews one).
@@ -292,7 +297,7 @@ export function IllustratePages({
             >
               <HoverCard
                 title={label}
-                description="Press to fit this page to the screen."
+                description={t('illustratepages.press-to-fit-this-page-to')}
                 className="min-w-0 max-w-full"
               >
                 <button
@@ -471,6 +476,7 @@ function PageCog({
   onToggle: () => void;
   cogRef: (el: HTMLButtonElement | null) => void;
 }) {
+  
   return (
     <div
       className="pointer-events-auto"
@@ -501,22 +507,24 @@ function PageCog({
 // On an empty page, beside its cog: start it from a layout. Its words show on a wide screen with
 // room in the title bar; on a phone, or when the page is small on screen, just the icon.
 function LayoutInvite({ wide, onOpen }: { wide: boolean; onOpen: () => void }) {
+  const { t } = useTranslation();
+  
   return (
     <div
       className="pointer-events-auto"
       onPointerDown={(e) => e.stopPropagation()}
       onDoubleClick={(e) => e.stopPropagation()}
     >
-      <Tooltip label="Start from a layout">
+      <Tooltip label={t('illustratepages.start-from-a-layout')}>
         <button
           type="button"
-          aria-label="Start from a layout"
+          aria-label={t('illustratepages.start-from-a-layout-2')}
           onClick={onOpen}
           className="flex h-6 items-center gap-1.5 rounded-md px-1.5 text-xs font-medium text-slate-500 transition hover:bg-white hover:text-slate-800 focus-visible:outline-2 focus-visible:outline-brand-600 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
         >
           <LayoutIcon />
           {wide ? (
-            <span className="hidden whitespace-nowrap sm:inline">Start from a layout</span>
+            <span className="hidden whitespace-nowrap sm:inline">{t('illustratepages.start-from-a-layout-3')}</span>
           ) : null}
         </button>
       </Tooltip>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { pageWritingBars } from '@/lib/article/article-export';
 import { useArticleLaidOutSeq } from '@/lib/article/article-editor-store';
 import { articleOpsToSvg } from '@/lib/article/article-draw';
@@ -145,6 +146,7 @@ export function Minimap({
   dimOutside,
   size,
 }: MinimapProps) {
+  const { t } = useTranslation();
   const svgRef = useRef<SVGSVGElement>(null);
   // Drawn as the elements settle, not per frame of a gesture (docs/specs/008-canvas/canvas-performance.md),
   // and deferred: the change that settles them (a drag's release) commits first, and the Map's picture,
@@ -316,7 +318,7 @@ export function Minimap({
   return (
     <MovablePanel
       helpArticle="minimap"
-      title="Map"
+      title={t('minimap.map')}
       position={position}
       defaultCorner="bottom-left"
       width="w-64"
@@ -337,7 +339,7 @@ export function Minimap({
           className={`block w-full cursor-pointer touch-none text-slate-400 ${MAP_HEIGHT[size]}`}
           style={{ backgroundColor: paperColor }}
           role="img"
-          aria-label="Canvas map: tap or drag to navigate, scroll to zoom"
+          aria-label={t('minimap.canvas-map-tap-or-drag-to')}
           onPointerDown={(e) => {
             draggingRef.current = true;
             e.currentTarget.setPointerCapture(e.pointerId);

@@ -6,6 +6,7 @@
 // naming it leaves the card's type out), so strays can be found and put
 // somewhere, and the field filters (Card Type among them) narrow it further. Choosing one opens it. A popover above its button in
 // Plan mode's bottom-right cluster, like Card Types and the Trash.
+import { useTranslation } from '@/lib/i18n';
 import { useMemo, useState } from 'react';
 import {
   CARD_FIELDS,
@@ -99,6 +100,7 @@ function CardFinderBody({
   popoverAnchor?: DockAnchor;
   onPopoverClose: () => void;
 }) {
+  const { t } = useTranslation();
   const search = useCardSearch(plan, live, { show, boardStatuses });
   const { filtered: ofTypes, found, query, filters } = search;
   const counts = {
@@ -107,7 +109,7 @@ function CardFinderBody({
   };
   return (
     <MovablePanel
-      title="Cards"
+      title={t('cardfinderpanel.cards')}
       helpArticle="planCards"
       position={null}
       defaultCorner="bottom-right"
@@ -124,7 +126,7 @@ function CardFinderBody({
         <CardSearchControls plan={plan} live={live} search={search} autoFocus={finePointer}>
           <div
             role="radiogroup"
-            aria-label="Which cards"
+            aria-label={t('cardfinderpanel.which-cards')}
             className="flex gap-1 rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800"
           >
             {SHOWS.map((s) => (
@@ -162,7 +164,7 @@ function CardFinderBody({
           </div>
         ) : (
           <ul
-            aria-label="Cards"
+            aria-label={t('cardfinderpanel.cards-2')}
             // The same height however many cards: the panel never shrinks as a search narrows it.
             className={`flex ${LIST_HEIGHT} flex-col gap-1.5 overflow-y-auto p-0.5`}
           >
@@ -183,7 +185,7 @@ function CardFinderBody({
                     <PlanCardFace item={it} palette={palette} fields={CARD_FIELDS} size="compact" />
                   </button>
                   {plan.canEdit ? (
-                    <Tooltip label="Move to Trash">
+                    <Tooltip label={t('cardfinderpanel.move-to-trash')}>
                       <button
                         type="button"
                         aria-label={`Move #${it.key} to the Trash`}
@@ -201,8 +203,7 @@ function CardFinderBody({
               );
             })}
             {found.length > CARD_FINDER_ROWS_MAX ? (
-              <li className="px-2 py-2 text-center text-[11px] text-slate-500 dark:text-slate-400">
-                Showing {CARD_FINDER_ROWS_MAX} of {found.length}. Search to narrow them down.
+              <li className="px-2 py-2 text-center text-[11px] text-slate-500 dark:text-slate-400">{t('cardfinderpanel.showing')}{CARD_FINDER_ROWS_MAX}{t('cardfinderpanel.of')}{found.length}. Search to narrow them down.
               </li>
             ) : null}
           </ul>

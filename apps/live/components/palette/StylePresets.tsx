@@ -19,6 +19,7 @@
 // its own file so EditorContextMenu doesn't accrete more large categories
 // inline (see the no-god-files principle).
 
+import { useTranslation } from '@/lib/i18n';
 import {
   ARROW_THICKNESS_PX,
   CHART_PALETTES,
@@ -466,9 +467,10 @@ export function ChartPalettePresets({
 
 // Shared "Reset to default" button beneath the preset grids.
 function ResetButton({ onReset }: { onReset: () => void }) {
+  const { t } = useTranslation();
   return (
     <div className="px-0 pb-1 pt-1.5">
-      <MenuActionButton label="Reset to default" onClick={onReset} />
+      <MenuActionButton label={t('stylepresets.reset-to-default')} onClick={onReset} />
     </div>
   );
 }

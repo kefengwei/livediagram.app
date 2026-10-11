@@ -8,6 +8,7 @@
 // Kept short: the formats used all the time are buttons; lists, alignment, colours, inserts and
 // the less used formats are menus (page-toolbar-panels.tsx). Where it sits is
 // page-toolbar-placement.ts; which article it is for, page-toolbar-presence.ts.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import {
   lucideBaseline,
@@ -122,6 +123,7 @@ export function PageToolbar({
   // An insert the writing alone cannot make (an object or a drawing): handled by the host.
   onInsert?: (flow: string, what: ObjectInsert) => void;
 }) {
+  const { t } = useTranslation();
   const worked = useActiveArticle();
   const selected =
     worked && articlePages.some((p) => p.flow === worked.handle.flow) ? worked : null;
@@ -234,7 +236,7 @@ export function PageToolbar({
       <div
         ref={bar}
         role="toolbar"
-        aria-label="Article Formatting"
+        aria-label={t('pagetoolbar.article-formatting')}
         data-page-toolbar=""
         data-article-keep-active=""
         onMouseDown={(e) => e.preventDefault()}
@@ -259,7 +261,7 @@ export function PageToolbar({
         </button>
         <Divider />
         <Button
-          label="Bold"
+          label={t('pagetoolbar.bold')}
           keys="Mod-b"
           pressed={selection.marks.has('bold')}
           onPress={() => run(toggleBold, 'format')}
@@ -267,7 +269,7 @@ export function PageToolbar({
           <Bold />
         </Button>
         <Button
-          label="Italic"
+          label={t('pagetoolbar.italic')}
           keys="Mod-i"
           pressed={selection.marks.has('italic')}
           onPress={() => run(toggleItalic, 'format')}
@@ -275,7 +277,7 @@ export function PageToolbar({
           <Italic />
         </Button>
         <Button
-          label="Underline"
+          label={t('pagetoolbar.underline')}
           keys="Mod-u"
           pressed={selection.marks.has('underline')}
           onPress={() => run(toggleUnderline, 'format')}
@@ -283,7 +285,7 @@ export function PageToolbar({
           <Underline />
         </Button>
         <Button
-          label="Colour"
+          label={t('pagetoolbar.colour')}
           anchor="colour"
           menu
           popup="dialog"
@@ -299,7 +301,7 @@ export function PageToolbar({
           </span>
         </Button>
         <Button
-          label="Link"
+          label={t('pagetoolbar.link')}
           keys="Mod-k"
           anchor="link"
           pressed={open === 'link' || selection.marks.has('link')}
@@ -309,7 +311,7 @@ export function PageToolbar({
         </Button>
         <Divider />
         <Button
-          label="Lists"
+          label={t('pagetoolbar.lists')}
           anchor="list"
           menu
           expanded={open === 'list'}
@@ -319,7 +321,7 @@ export function PageToolbar({
           {selection.list ? <ListGlyph list={selection.list} /> : <ListIcon />}
         </Button>
         <Button
-          label="Alignment"
+          label={t('pagetoolbar.alignment')}
           anchor="align"
           menu
           expanded={open === 'align'}
@@ -328,7 +330,7 @@ export function PageToolbar({
           <AlignGlyph align={selection.align ?? 'left'} />
         </Button>
         <Button
-          label="More Formatting"
+          label={t('pagetoolbar.more-formatting')}
           anchor="more"
           menu
           expanded={open === 'more'}
@@ -338,7 +340,7 @@ export function PageToolbar({
         </Button>
         <Divider />
         <Button
-          label="Insert"
+          label={t('pagetoolbar.insert')}
           anchor="insert"
           menu
           expanded={open === 'insert'}
@@ -348,7 +350,7 @@ export function PageToolbar({
         </Button>
         <Divider />
         <Button
-          label="Comment"
+          label={t('pagetoolbar.comment')}
           keys="Mod-Alt-m"
           disabled={!selection.hasText || !onNote}
           onPress={() => onNote?.(handle.flow, 'comment')}
@@ -356,7 +358,7 @@ export function PageToolbar({
           <CommentIcon />
         </Button>
         <Button
-          label="Assign Action"
+          label={t('pagetoolbar.assign-action')}
           disabled={!selection.hasText || !onNote}
           onPress={() => onNote?.(handle.flow, 'action')}
         >
@@ -364,7 +366,7 @@ export function PageToolbar({
         </Button>
       </div>
       {open === 'style' ? (
-        <ToolbarPopover anchor="style" menu onClose={close} label="Text Style" width={210}>
+        <ToolbarPopover anchor="style" menu onClose={close} label={t('pagetoolbar.text-style')} width={210}>
           <StylePanel
             selection={selection}
             onStyle={(style) => choose(() => run(setBlockStyle(style), 'block'))}
@@ -372,7 +374,7 @@ export function PageToolbar({
         </ToolbarPopover>
       ) : null}
       {open === 'list' ? (
-        <ToolbarPopover anchor="list" menu onClose={close} label="Lists" width={230}>
+        <ToolbarPopover anchor="list" menu onClose={close} label={t('pagetoolbar.lists-2')} width={230}>
           <ListPanel
             selection={selection}
             onList={(list) => choose(() => run(toggleList(list), 'block'))}
@@ -381,7 +383,7 @@ export function PageToolbar({
         </ToolbarPopover>
       ) : null}
       {open === 'align' ? (
-        <ToolbarPopover anchor="align" menu onClose={close} label="Alignment" width={210}>
+        <ToolbarPopover anchor="align" menu onClose={close} label={t('pagetoolbar.alignment-2')} width={210}>
           <AlignPanel
             selection={selection}
             onAlign={(align) => choose(() => run(setAlign(align)))}
@@ -389,7 +391,7 @@ export function PageToolbar({
         </ToolbarPopover>
       ) : null}
       {open === 'colour' ? (
-        <ToolbarPopover anchor="colour" onClose={close} label="Colour">
+        <ToolbarPopover anchor="colour" onClose={close} label={t('pagetoolbar.colour-2')}>
           <ColourPanel
             selection={selection}
             accent={accent}
@@ -399,7 +401,7 @@ export function PageToolbar({
         </ToolbarPopover>
       ) : null}
       {open === 'link' ? (
-        <ToolbarPopover anchor="link" onClose={close} label="Link">
+        <ToolbarPopover anchor="link" onClose={close} label={t('pagetoolbar.link-2')}>
           <LinkField
             initial={selection.link ?? ''}
             onApply={(href) => {
@@ -419,7 +421,7 @@ export function PageToolbar({
         </ToolbarPopover>
       ) : null}
       {open === 'insert' ? (
-        <ToolbarPopover anchor="insert" menu onClose={close} label="Insert" width={200}>
+        <ToolbarPopover anchor="insert" menu onClose={close} label={t('pagetoolbar.insert-2')} width={200}>
           <InsertPanel
             onObject={(what) => choose(() => onInsert?.(handle.flow, what))}
             onBlock={(what) => choose(() => insertBlock(what))}
@@ -427,7 +429,7 @@ export function PageToolbar({
         </ToolbarPopover>
       ) : null}
       {open === 'more' ? (
-        <ToolbarPopover anchor="more" menu onClose={close} label="More Formatting" width={220}>
+        <ToolbarPopover anchor="more" menu onClose={close} label={t('pagetoolbar.more-formatting-2')} width={220}>
           <MorePanel selection={selection} onAction={(a) => choose(() => more(a))} />
         </ToolbarPopover>
       ) : null}

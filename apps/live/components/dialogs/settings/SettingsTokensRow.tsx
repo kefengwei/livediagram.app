@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { useClerkApiBootstrap } from '@/hooks/persistence/useClerkApiBootstrap';
 import { useTokens } from '@/hooks/persistence/useTokens';
@@ -20,6 +21,7 @@ import type { SettingsTokensRowSpec } from './settings-catalogue';
 // reveal is open, then the tokens. Tokens are Clerk-only, so a guest gets the
 // reason and a way to sign in rather than a form that would only ever 403.
 export function SettingsTokensRow({ row }: { row: SettingsTokensRowSpec }) {
+  const { t } = useTranslation();
   const { authLoaded, clerkUserId, isSignedIn } = useClerkApiBootstrap();
   const enabled = Boolean(isSignedIn && clerkUserId);
   const tokens = useTokens(clerkUserId ?? null, { enabled });
@@ -48,9 +50,7 @@ export function SettingsTokensRow({ row }: { row: SettingsTokensRowSpec }) {
                 <span className="block text-sm font-semibold text-slate-800 dark:text-slate-100">
                   {row.label}
                 </span>
-                <span className="block text-xs text-slate-500 dark:text-slate-400">
-                  Sign in to create API tokens.
-                  <SettingsSignInLink />
+                <span className="block text-xs text-slate-500 dark:text-slate-400">{t('settingstokensrow.sign-in-to-create-api-tokens')}<SettingsSignInLink />
                 </span>
               </span>
             </div>
@@ -75,10 +75,8 @@ export function SettingsTokensRow({ row }: { row: SettingsTokensRowSpec }) {
                 />
               ) : null}
               {firstRun ? (
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Connecting Claude or another AI tool? It creates its own token when you approve
-                  it.{' '}
-                  <HelpArticleLink article="connectAiTool" variant="text" label="Read the guide" />
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">{t('settingstokensrow.connecting-claude-or-another-ai-tool')}{' '}
+                  <HelpArticleLink article="connectAiTool" variant="text" label={t('settingstokensrow.read-the-guide')} />
                 </p>
               ) : (
                 <SettingsTokenList

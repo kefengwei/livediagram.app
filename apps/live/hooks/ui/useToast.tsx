@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import {
   createContext,
   useCallback,
@@ -185,6 +186,7 @@ function ToastStack({
 }
 
 function ToastBubble({ toast, onDismiss }: { toast: ToastEntry; onDismiss: () => void }) {
+  const { t } = useTranslation();
   const offer = toast.offer;
   const waits = offer !== undefined || toast.actions !== undefined;
   useEffect(() => {
@@ -255,7 +257,7 @@ function ToastBubble({ toast, onDismiss }: { toast: ToastEntry; onDismiss: () =>
       <button
         type="button"
         onClick={() => answer(false)}
-        aria-label="Dismiss"
+        aria-label={t('usetoast.dismiss')}
         className="rounded-md p-1 text-current opacity-60 transition hover:opacity-100"
       >
         <CloseIcon size={12} />

@@ -5,6 +5,7 @@
 // and the folder chip. Split from document-row-shared (the menu) so each
 // file holds one concern.
 
+import { useTranslation } from '@/lib/i18n';
 import { SharedDotIcon } from '@/components/chrome/share-state-icons';
 import { FolderOutlineIcon, StarIcon } from '@/components/primitives/explorer-icons';
 import { OFFLINE_OWNER_ID } from '@/lib/offline/offline-store';
@@ -35,10 +36,11 @@ const badgeBase =
 // worth a marker: hiding is a set-and-forget negative you rarely revisit,
 // where a favourite is a positive you actively scan for.
 export function FavouriteMarker() {
+  const { t } = useTranslation();
   return (
     <HoverCard
-      title="Favourite"
-      description="Starred by you. Find it under Favourites in Quick find."
+      title={t('document-badges.favourite')}
+      description={t('document-badges.starred-by-you-find-it-under')}
     >
       <span className="inline-flex shrink-0 items-center text-amber-500 dark:text-amber-400">
         <StarIcon filled />
@@ -60,8 +62,9 @@ export function FavouriteMarker() {
 // full path would be unbounded on a row that has to stay compact; the
 // containing folder is the identifying bit in practice.
 export function FolderChip({ label, onOpen }: { label: string; onOpen: () => void }) {
+  const { t } = useTranslation();
   return (
-    <HoverCard title={label} description="Go to this folder.">
+    <HoverCard title={label} description={t('document-badges.go-to-this-folder')}>
       <button
         type="button"
         onClick={(e) => {
@@ -104,6 +107,7 @@ export function VisibilityBadge({
   document: PaneDocument;
   iconOnly?: boolean;
 }) {
+  const { t } = useTranslation();
   // Only a listed row asks, and every row shares one capabilities request: a switched-off
   // Community hides the Public badge everywhere (community.md "Turning the Community off").
   const communityOn = useCommunityEnabled(API_BASE, !!liveDoc.communityListed);
@@ -134,8 +138,8 @@ export function VisibilityBadge({
   if (liveDoc.communityListed && communityOn) {
     return (
       <HoverCard
-        title="Public"
-        description="In the public Community: anyone can find it, view it and make their own copy."
+        title={t('document-badges.public')}
+        description={t('document-badges.in-the-public-community-anyone-can')}
       >
         <span
           tabIndex={iconOnly ? 0 : undefined}
@@ -149,7 +153,7 @@ export function VisibilityBadge({
   }
   if (liveDoc.shared || liveDoc.shareCode) {
     return (
-      <HoverCard title="Shared" description="Anyone with the link can open it.">
+      <HoverCard title={t('document-badges.shared')} description={t('document-badges.anyone-with-the-link-can-open')}>
         <span
           tabIndex={iconOnly ? 0 : undefined}
           className={`${base} bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/30`}
@@ -163,8 +167,8 @@ export function VisibilityBadge({
   if (liveDoc.team) {
     return (
       <HoverCard
-        title="Team"
-        description="In a team library, so every member of the team can open it."
+        title={t('document-badges.team')}
+        description={t('document-badges.in-a-team-library-so-every')}
       >
         <span
           tabIndex={iconOnly ? 0 : undefined}
@@ -182,7 +186,7 @@ export function VisibilityBadge({
     );
   }
   return (
-    <HoverCard title="Private" description="Only visible to you.">
+    <HoverCard title={t('document-badges.private')} description={t('document-badges.only-visible-to-you')}>
       <span
         tabIndex={iconOnly ? 0 : undefined}
         className={`${base} bg-slate-100 text-slate-500 ring-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:ring-slate-700`}

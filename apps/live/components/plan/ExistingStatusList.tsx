@@ -5,9 +5,11 @@
 // it and how many of its cards this board would show. Driven from the picker's field (a combobox): the field keeps
 // focus and the highlighted row is its active descendant, so arrows move through the rows, Enter adds the
 // highlighted one, and a press on a row adds it.
+
 import { useEffect } from 'react';
 import { PlusIcon } from '@livediagram/ui';
 import type { MissingStatus } from '@livediagram/items';
+import { useTranslation } from '@/lib/i18n';
 
 export const HEADING =
   'text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400';
@@ -28,6 +30,8 @@ export function usedOn(s: Pick<MissingStatus, 'boards'>): string {
 // A status's swatch: the colour its first board gives its column, or a hollow ring when none does. Shared with Setup
 // Board's Existing States.
 export function StatusSwatch({ colour }: { colour?: string | undefined }) {
+  
+  
   return (
     <span
       aria-hidden
@@ -62,6 +66,8 @@ export function ExistingStatusList({
   // Add All, offered with two or more; absent while the field narrows the rows.
   onPickAll?: (() => void) | undefined;
 }) {
+  const { t } = useTranslation();
+  
   // Keep the highlighted row in view as the arrows move it.
   useEffect(() => {
     if (active < 0) return;
@@ -70,9 +76,7 @@ export function ExistingStatusList({
   return (
     <div className="flex flex-col gap-1">
       <div className="flex min-h-6 items-center justify-between gap-2">
-        <p id={`${listId}-label`} className={`${HEADING} flex items-center gap-1.5`}>
-          Existing Statuses
-          <span className="rounded-full bg-slate-100 px-1.5 text-[10px] tabular-nums text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+        <p id={`${listId}-label`} className={`${HEADING} flex items-center gap-1.5`}>{t('existingstatuslist.existing-statuses')}<span className="rounded-full bg-slate-100 px-1.5 text-[10px] tabular-nums text-slate-500 dark:bg-slate-800 dark:text-slate-400">
             {total}
           </span>
         </p>
@@ -82,9 +86,7 @@ export function ExistingStatusList({
             className="inline-flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-0.5 text-[12px] font-semibold text-brand-700 transition hover:bg-brand-50 motion-reduce:transition-none dark:text-brand-300 dark:hover:bg-brand-500/10"
             onClick={onPickAll}
           >
-            <PlusIcon size={12} />
-            Add All
-          </button>
+            <PlusIcon size={12} />{t('existingstatuslist.add-all')}</button>
         ) : null}
       </div>
       {statuses.length ? (
@@ -143,8 +145,7 @@ export function ExistingStatusList({
           })}
         </ul>
       ) : (
-        <p className="rounded-md border border-dashed border-slate-200 px-2 py-2 text-[12px] text-slate-500 dark:border-slate-700 dark:text-slate-400">
-          No existing status matches “{query.trim()}”.
+        <p className="rounded-md border border-dashed border-slate-200 px-2 py-2 text-[12px] text-slate-500 dark:border-slate-700 dark:text-slate-400">{t('existingstatuslist.no-existing-status-matches')}{query.trim()}”.
         </p>
       )}
     </div>

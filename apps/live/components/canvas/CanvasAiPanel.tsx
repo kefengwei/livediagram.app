@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { AiPanelContent } from '@/components/panels/AiPanel';
 import { MovablePanel } from '@/components/primitives/MovablePanel';
 import type { UserPreferences } from '@/lib/user-preferences';
@@ -21,9 +22,10 @@ export function CanvasAiPanel({
   tabName: string;
   settings: UserPreferences;
 }) {
+  const { t } = useTranslation();
   return (
     <MovablePanel
-      title="AI Assistant"
+      title={t('canvasaipanel.ai-assistant')}
       position={wiring.position}
       defaultCorner="top-right-stacked"
       width="w-auto sm:w-64"

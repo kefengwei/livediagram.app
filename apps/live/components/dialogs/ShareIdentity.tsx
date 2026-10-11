@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { GlyphDisc, HoverCard, RefreshIcon, IDENTITY_FILL, identityVars } from '@livediagram/ui';
 import { initialsOf, randomName, type Participant } from '@/lib/identity';
 
@@ -16,6 +17,7 @@ export function ShareIdentity({
   name: string;
   onChange: (name: string) => void;
 }) {
+  const { t } = useTranslation();
   const shown = name.trim() || participant.name;
   return (
     <div className="flex min-w-0 flex-1 items-center gap-2">
@@ -33,16 +35,14 @@ export function ShareIdentity({
         <label
           htmlFor="share-name"
           className="text-[10px] font-semibold uppercase tracking-wider text-slate-400"
-        >
-          Sharing as
-        </label>
+        >{t('shareidentity.sharing-as')}</label>
         {/* Shuffle sits right against the name it changes, not out by Done. */}
         <div className="-ml-1 flex min-w-0 items-center">
-          <HoverCard title="Shuffle name" description="Pick a different random name.">
+          <HoverCard title={t('shareidentity.shuffle-name')} description={t('shareidentity.pick-a-different-random-name')}>
             <button
               type="button"
               onClick={() => onChange(randomName())}
-              aria-label="Generate a different name"
+              aria-label={t('shareidentity.generate-a-different-name')}
               className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
             >
               <RefreshIcon size={13} />
@@ -53,7 +53,7 @@ export function ShareIdentity({
             value={name}
             onChange={(e) => onChange(e.target.value)}
             placeholder={participant.name}
-            aria-label="Your name"
+            aria-label={t('shareidentity.your-name')}
             className="min-w-0 flex-1 rounded border border-transparent bg-transparent px-1 text-sm font-medium text-slate-800 outline-none transition hover:border-slate-200 focus:border-brand-400 dark:text-slate-100 dark:hover:border-slate-700"
           />
         </div>

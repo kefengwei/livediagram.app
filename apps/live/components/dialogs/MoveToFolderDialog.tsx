@@ -18,6 +18,7 @@
 // (the team library) pass `teams` only and no `personalFolders`, which
 // drops the personal space entirely and opens straight inside the team.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Button, useEscape, DialogCloseButton } from '@livediagram/ui';
 import { Dialog } from '@/components/dialogs/Dialog';
@@ -83,6 +84,7 @@ export function MoveToFolderDialog({
   onPick,
   onClose,
 }: MoveToFolderDialogProps) {
+  const { t } = useTranslation();
   // Open on the subject's current home so the browser has a live
   // selection from the first paint (the "always something selected"
   // rule) and "no move" is visibly the default.
@@ -112,15 +114,13 @@ export function MoveToFolderDialog({
     >
       <div className="flex items-start justify-between gap-3 border-b border-slate-100 px-5 pb-3 pt-5 dark:border-slate-800">
         <div className="min-w-0">
-          <h2 className="truncate text-base font-semibold text-slate-900 dark:text-slate-100">
-            Move &ldquo;{subjectName}&rdquo;
-          </h2>
+          <h2 className="truncate text-base font-semibold text-slate-900 dark:text-slate-100">{t('movetofolderdialog.move')}{subjectName}{t('movetofolderdialog.')}</h2>
           <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
             {subjectKind === 'folder'
-              ? 'Pick the folder it should live inside.'
+              ? t('movetofolderdialog.pick-the-folder-it-should-live')
               : teamList.length > 0
-                ? 'Pick a destination folder or team.'
-                : 'Pick a destination folder.'}
+                ? t('movetofolderdialog.pick-a-destination-folder-or-team')
+                : t('movetofolderdialog.pick-a-destination-folder')}
           </p>
         </div>
         <div className="-mt-1 flex shrink-0 items-center">
@@ -147,12 +147,8 @@ export function MoveToFolderDialog({
       </div>
 
       <div className="flex items-center justify-end gap-2 border-t border-slate-100 px-5 py-3 dark:border-slate-800">
-        <Button variant="secondary" size="sm" onClick={onClose}>
-          Cancel
-        </Button>
-        <Button size="sm" disabled={placement === current} onClick={() => commit(placement)}>
-          Move here
-        </Button>
+        <Button variant="secondary" size="sm" onClick={onClose}>{t('movetofolderdialog.cancel')}</Button>
+        <Button size="sm" disabled={placement === current} onClick={() => commit(placement)}>{t('movetofolderdialog.move-here')}</Button>
       </div>
     </Dialog>
   );

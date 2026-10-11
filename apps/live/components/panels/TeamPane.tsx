@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { PencilIcon, PlusIcon, TrashIcon } from '@/components/primitives/explorer-icons';
 import { useCallback, useEffect, useState, type ComponentProps } from 'react';
 import { Button, CircleXIcon } from '@livediagram/ui';
@@ -60,6 +61,7 @@ export function TeamPane({
   // The Explorer's lens (docs/specs/013-workspace/explorer-filters.md), passed straight through.
   lens?: ComponentProps<typeof TeamSharedDocuments>['lens'];
 }) {
+  const { t } = useTranslation();
   const [detail, setDetail] = useState<TeamDetailResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [failed, setFailed] = useState(false);
@@ -158,16 +160,12 @@ export function TeamPane({
           <p className="mt-4 text-[10px] font-semibold uppercase tracking-wider text-rose-600">
             404
           </p>
-          <h1 className="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">
-            Team not found
-          </h1>
+          <h1 className="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">{t('teampane.team-not-found')}</h1>
           <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
             This team doesn&apos;t exist, or you&apos;re not a member of it. Ask an admin for an
             invite, or head back to your own documents.
           </p>
-          <Button size="md" onClick={onLeftTeam} className="mt-6 shadow-sm">
-            Back to your documents
-          </Button>
+          <Button size="md" onClick={onLeftTeam} className="mt-6 shadow-sm">{t('teampane.back-to-your-documents')}</Button>
         </div>
       </div>
     );
@@ -204,16 +202,16 @@ export function TeamPane({
               <button
                 type="button"
                 onClick={() => setLinkOpen(true)}
-                aria-label="Invite by link"
+                aria-label={t('teampane.invite-by-link')}
                 className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium text-brand-600 transition hover:bg-brand-50 dark:text-brand-300 dark:hover:bg-brand-500/10"
               >
                 <LinkIcon />
-                <span className="hidden sm:inline">Invite by link</span>
+                <span className="hidden sm:inline">{t('teampane.invite-by-link-2')}</span>
               </button>
             ) : null}
             <EllipsisTriggerButton
               ref={setMenuButton}
-              label="Team actions"
+              label={t('teampane.team-actions')}
               expanded={menuOpen}
               onClick={() => setMenuOpen((o) => !o)}
             />
@@ -235,7 +233,7 @@ export function TeamPane({
                         <PencilIcon />
                       </span>
                     }
-                    label="Edit team"
+                    label={t('teampane.edit-team')}
                     onClick={() => {
                       setEditOpen(true);
                       setMenuOpen(false);
@@ -249,7 +247,7 @@ export function TeamPane({
                         <SignInIcon />
                       </span>
                     }
-                    label="Leave team"
+                    label={t('teampane.leave-team')}
                     onClick={() => {
                       setMenuOpen(false);
                       if (selfRow) void removeMember(selfRow, true);
@@ -263,7 +261,7 @@ export function TeamPane({
                         <TrashIcon />
                       </span>
                     }
-                    label="Delete team"
+                    label={t('teampane.delete-team')}
                     onClick={() => {
                       setMenuOpen(false);
                       void deleteTeam();
@@ -312,8 +310,8 @@ export function TeamPane({
               type="email"
               value={inviteEmail}
               onChange={(e) => setInviteEmail(e.target.value)}
-              placeholder="Add your team by email address, they will receive an invite."
-              aria-label="Invite by email address"
+              placeholder={t('teampane.add-your-team-by-email-address')}
+              aria-label={t('teampane.invite-by-email-address')}
               className="min-w-0 flex-1 bg-transparent text-sm text-slate-900 outline-none placeholder:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-400"
             />
             <Button
@@ -321,9 +319,7 @@ export function TeamPane({
               size="xs"
               disabled={!inviteEmail.trim() || inviteBusy}
               className="shrink-0 py-1 shadow-sm"
-            >
-              Invite
-            </Button>
+            >{t('teampane.invite')}</Button>
           </form>
         ) : null}
       </div>
@@ -345,7 +341,7 @@ export function TeamPane({
 
       <TeamFormModal
         open={editOpen}
-        title="Edit Team"
+        title={t('teampane.edit-team-2')}
         submitLabel="Save"
         initial={{ name: team.name, organisation: team.organisation }}
         onSubmit={(values) => {

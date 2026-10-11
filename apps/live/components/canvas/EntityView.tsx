@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { entityHeaderHeight, type EntityField, type ShapeElement } from '@livediagram/document';
 
 // A record box (docs/specs/009-elements/entity.md): a title bar over a list of `name: Type` rows — a
@@ -23,6 +24,7 @@ export function EntityView({
   textColor: string;
   fontFamily: string | undefined;
 }) {
+  const { t } = useTranslation();
   const fields = element.entityFields ?? [];
   const rule = element.strokeColor ?? '#cbd5e1';
   return (
@@ -41,9 +43,7 @@ export function EntityView({
       />
       <div className="flex min-h-0 flex-1 flex-col gap-[3px] overflow-hidden px-2 py-1.5">
         {fields.length === 0 ? (
-          <span className="text-[10px] italic opacity-40" style={{ color: textColor }}>
-            No fields yet
-          </span>
+          <span className="text-[10px] italic opacity-40" style={{ color: textColor }}>{t('entityview.no-fields-yet')}</span>
         ) : (
           fields.map((f, i) => <Row key={i} field={f} color={textColor} />)
         )}

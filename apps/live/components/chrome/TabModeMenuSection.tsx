@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { EDITOR_MODE_ICONS } from '@livediagram/ui';
 import { EDITOR_MODE_CATALOGUE, type EditorMode } from '@livediagram/document';
 import type { ReactNode } from 'react';
@@ -24,16 +25,17 @@ export function TabModeMenuSection({
   open: boolean;
   onToggle: () => void;
 }) {
+  const { t } = useTranslation();
   const Current = EDITOR_MODE_ICONS[choice.mode];
   return (
     <MenuAccordionSection
-      title="Mode"
+      title={t('tabmodemenusection.mode')}
       icon={<Current className="h-3.5 w-3.5" />}
       open={open}
       onToggle={onToggle}
       flush
     >
-      <div role="group" aria-label="Mode" className="flex flex-col">
+      <div role="group" aria-label={t('tabmodemenusection.mode-2')} className="flex flex-col">
         {EDITOR_MODE_CATALOGUE.map(({ id, label, description }) => {
           const Icon = EDITOR_MODE_ICONS[id];
           const checked = id === choice.mode;

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import dynamic from 'next/dynamic';
 import { useEffect, useRef } from 'react';
 import { useOnline } from '@/hooks/ui/useOnline';
@@ -33,6 +34,7 @@ export function LoadErrorCard({
   ownerId: string | null;
   reload?: () => void;
 }) {
+  const { t } = useTranslation();
   const online = useOnline();
   const wasOffline = useRef(false);
 
@@ -54,8 +56,8 @@ export function LoadErrorCard({
         ? { message: LOAD_ERROR_MESSAGE }
         : {
             eyebrow: 'Offline',
-            title: 'You’re offline',
-            message: 'This document will open as soon as you reconnect.',
+            title: t('loaderrorcard.you-re-offline'),
+            message: t('loaderrorcard.this-document-will-open-as-soon'),
           })}
     >
       {/* The recovery card is for the full app only (an embed's visitor is on someone else's page,

@@ -3,6 +3,7 @@
 // The workbench page's status screens and their copy (docs/specs/013-workspace/blueprints/
 // workbench-embeds.md "Presentation and UX", WB33): bare like an embed's (no header, no Explorer), the
 // copy in a `role="status"` region, `refused` and `unbound` headed by an `h1`.
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import { LoadErrorCard } from '@/components/chrome/LoadErrorCard';
 import type { WorkbenchPhase } from './workbench-machine';
@@ -25,6 +26,7 @@ function StatusShell({ children }: { children: ReactNode }) {
 }
 
 export function WorkbenchStatus({ phase }: { phase: WorkbenchStatusPhase }) {
+  const { t } = useTranslation();
   switch (phase.phase) {
     case 'refused':
       return (
@@ -40,8 +42,7 @@ export function WorkbenchStatus({ phase }: { phase: WorkbenchStatusPhase }) {
     case 'unbound':
       return (
         <StatusShell>
-          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-            This view opens only inside <code className="font-mono">{phase.origin}</code>.
+          <h1 className="text-xl font-semibold text-slate-900 dark:text-slate-100">{t('workbenchstatus.this-view-opens-only-inside')}<code className="font-mono">{phase.origin}</code>.
           </h1>
         </StatusShell>
       );

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Button, Glyph, DialogCloseButton, DialogHeader } from '@livediagram/ui';
 import { Dialog } from '@/components/dialogs/Dialog';
@@ -20,6 +21,7 @@ export function ShareOfflineGate({
   onSyncToCloud: () => Promise<void>;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const [busy, setBusy] = useState(false);
   const toast = useToast();
 
@@ -39,7 +41,7 @@ export function ShareOfflineGate({
   return (
     <Dialog open onClose={onClose} ariaLabel="Share this document" size="md">
       <DialogHeader
-        title="Share this document"
+        title={t('shareofflinegate.share-this-document')}
         subtitle="This document is saved offline, in this browser only."
       >
         <HelpArticleLink article="offlineMode" size="md" />
@@ -54,9 +56,7 @@ export function ShareOfflineGate({
           </Glyph>
         </span>
         <div className="flex flex-col gap-1.5">
-          <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
-            Sync it to your account to share
-          </p>
+          <p className="text-sm font-medium text-slate-800 dark:text-slate-100">{t('shareofflinegate.sync-it-to-your-account-to')}</p>
           <p className="mx-auto max-w-sm text-xs leading-relaxed text-slate-500 dark:text-slate-400">
             Share links, real-time collaboration, and the live image all need the document to live
             on our servers. Syncing uploads this document to your account and keeps working on it
@@ -64,14 +64,12 @@ export function ShareOfflineGate({
           </p>
         </div>
         <Button onClick={() => void sync()} disabled={busy} className="mt-1 shadow-sm">
-          {busy ? 'Syncing…' : 'Sync Document'}
+          {busy ? 'Syncing…' : t('shareofflinegate.sync-document')}
         </Button>
       </div>
 
       <DialogFooter>
-        <Button variant="secondary" size="xs" onClick={onClose} disabled={busy}>
-          Cancel
-        </Button>
+        <Button variant="secondary" size="xs" onClick={onClose} disabled={busy}>{t('shareofflinegate.cancel')}</Button>
       </DialogFooter>
     </Dialog>
   );

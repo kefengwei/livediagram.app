@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import {
   bannerLayout,
   BORDER_RADIUS_PX,
@@ -21,6 +22,7 @@ export function BannerFace({
   editable,
   onSetHeading,
 }: WebFaceProps) {
+  const { t } = useTranslation();
   const zoom = useCanvasZoom();
   const l = bannerLayout(element.width, element.height);
   const radius = cornerRadiusPx(
@@ -39,7 +41,7 @@ export function BannerFace({
       <div className="absolute" style={{ ...rectStyle(l.subtitle), fontFamily }}>
         <InlineTextLine
           value={element.pageSubtitle ?? ''}
-          placeholder="Subtitle"
+          placeholder={t('bannerface.subtitle')}
           editable={editable}
           onCommit={(v) => onSetHeading('pageSubtitle', v)}
           zoom={zoom}

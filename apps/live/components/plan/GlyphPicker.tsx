@@ -6,12 +6,14 @@
 // the chosen category's glyphs; a search covers every category. Opening focuses the search; a pick closes it and
 // hands focus back to the button, as do Escape (the editor stays open) and a press outside. One radio group; each
 // tile is named "{Name} glyph".
+
 import { useEffect, useId, useRef, useState } from 'react';
 import { PLAN_GLYPH_CATEGORIES, glyphMatches, planGlyphLabel } from '@livediagram/items';
 import { ChevronDownIcon, SearchIcon, Select, TextInput, Tooltip } from '@livediagram/ui';
 import { AnchoredPopover } from '@/components/primitives/AnchoredPopover';
 import { PlanTypeGlyph } from './plan-type-glyph';
 import { ACCENT_TEXT, ACCENT_TINT, accentVars } from './plan-palette';
+import { useTranslation } from '@/lib/i18n';
 
 // The category menu's value for every glyph at once.
 const ALL = 'all';
@@ -35,6 +37,8 @@ export function GlyphPicker({
   // Drawn inside another field (the type editor's Name): just the glyph and a chevron, no border and no name.
   inline?: boolean;
 }) {
+  
+  
   const [open, setOpen] = useState(false);
   // Held in state so the popover anchors on its first render.
   const [trigger, setTrigger] = useState<HTMLButtonElement | null>(null);
@@ -104,6 +108,8 @@ export function GlyphGrid({
   colour: string;
   onPick: (glyph: string) => void;
 }) {
+  const { t } = useTranslation();
+  
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState(() => categoryOf(value));
   const searchId = useId();
@@ -127,15 +133,15 @@ export function GlyphGrid({
             id={searchId}
             compact
             type="search"
-            aria-label="Search glyphs"
-            placeholder="Search glyphs"
+            aria-label={t('glyphpicker.search-glyphs')}
+            placeholder={t('glyphpicker.search-glyphs-2')}
             className="pl-8"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
         <Select
-          aria-label="Glyph category"
+          aria-label={t('glyphpicker.glyph-category')}
           size="sm"
           className="w-36 shrink-0"
           selectClassName="h-full text-[12px]"
@@ -145,7 +151,7 @@ export function GlyphGrid({
             setCategory(e.target.value);
           }}
         >
-          <option value={ALL}>All glyphs</option>
+          <option value={ALL}>{t('glyphpicker.all-glyphs')}</option>
           {PLAN_GLYPH_CATEGORIES.map((c) => (
             <option key={c.id} value={c.id}>
               {c.label}
@@ -155,12 +161,11 @@ export function GlyphGrid({
       </div>
       <div
         role="radiogroup"
-        aria-label="Glyph"
+        aria-label={t('glyphpicker.glyph')}
         className="grid max-h-[8.5rem] grid-cols-[repeat(auto-fill,2rem)] content-start justify-between gap-0.5 overflow-y-auto overscroll-contain"
       >
         {glyphs.length === 0 ? (
-          <p className="col-span-full px-1 py-3 text-[12px] text-slate-500 dark:text-slate-400">
-            No glyphs match “{query.trim()}”.
+          <p className="col-span-full px-1 py-3 text-[12px] text-slate-500 dark:text-slate-400">{t('glyphpicker.no-glyphs-match')}{query.trim()}”.
           </p>
         ) : (
           glyphs.map((g) => {

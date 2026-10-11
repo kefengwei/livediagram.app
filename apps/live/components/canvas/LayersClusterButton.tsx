@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { LayersStackIcon } from '@/components/panels/layers-panel-icons';
 import { HoverCard } from '@livediagram/ui';
 import { CLUSTER_STRIP, CLUSTER_CONTROL_REST } from '@/components/canvas/cluster-strip';
@@ -18,12 +19,13 @@ export function LayersClusterButton({
   popoverOpen: boolean;
   onTogglePopover: (button: HTMLElement) => void;
 }) {
+  const { t } = useTranslation();
   const button = (
     <button
       type="button"
       onPointerDown={(e) => e.stopPropagation()}
       onClick={(e) => onTogglePopover(e.currentTarget)}
-      aria-label="Open Layers"
+      aria-label={t('layersclusterbutton.open-layers')}
       aria-expanded={popoverOpen}
       className={`flex h-11 w-11 items-center justify-center transition ${
         popoverOpen
@@ -47,7 +49,7 @@ export function LayersClusterButton({
       {popoverOpen ? (
         button
       ) : (
-        <HoverCard title="Open Layers" description="Show this tab's layers.">
+        <HoverCard title={t('layersclusterbutton.open-layers-2')} description={t('layersclusterbutton.show-this-tab-s-layers')}>
           {button}
         </HoverCard>
       )}

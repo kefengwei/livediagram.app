@@ -7,6 +7,7 @@
 // and a bar marking where it lands, moves with the arrow keys, and comes off with its cross or dropped on Available
 // Fields. Available Fields lists the type's fields not on the card: drag one onto any part, or press it to pick a
 // part from a menu. Reset to Default puts a size back; a size equal to its default is stored as absent.
+import { useTranslation } from '@/lib/i18n';
 import {
   isValidElement,
   useMemo,
@@ -174,6 +175,7 @@ export function ItemTypeDisplay({
   display: CardDisplayDraft;
   onChange: (next: CardDisplayDraft) => void;
 }) {
+  const { t } = useTranslation();
   const [size, setSize] = useState<CardSize>('compact');
   const drafted = useMemo(() => ({ ...type, display }), [type, display]);
   const layout = typeCardLayout(drafted, size);
@@ -314,7 +316,7 @@ export function ItemTypeDisplay({
       </p>
       <div
         role="radiogroup"
-        aria-label="Card size"
+        aria-label={t('itemtypedisplay.card-size')}
         className="relative grid grid-cols-3 self-start rounded-lg bg-slate-100 p-0.5 dark:bg-slate-800"
       >
         {/* The selection slides to the picked size, as the Share dialog's Valid does. */}
@@ -367,7 +369,7 @@ export function ItemTypeDisplay({
         <div className="flex min-w-0 flex-col gap-3">
           <section
             ref={tray}
-            aria-label="Available Fields"
+            aria-label={t('itemtypedisplay.available-fields')}
             className={`flex flex-col gap-1.5 rounded-xl border border-dashed p-3 transition-colors ${
               overTray && draggingPlaced
                 ? 'border-solid border-brand-500 bg-brand-50 dark:border-brand-400 dark:bg-brand-500/15'
@@ -376,22 +378,14 @@ export function ItemTypeDisplay({
                   : 'border-transparent'
             }`}
           >
-            <h4 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              Available Fields
-            </h4>
+            <h4 className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('itemtypedisplay.available-fields-2')}</h4>
             {draggingPlaced ? (
-              <p className="py-1 text-[12px] font-medium text-brand-700 dark:text-brand-300">
-                Drop to take it off the card
-              </p>
+              <p className="py-1 text-[12px] font-medium text-brand-700 dark:text-brand-300">{t('itemtypedisplay.drop-to-take-it-off-the')}</p>
             ) : available.length === 0 ? (
-              <p className="text-[12px] text-slate-500 dark:text-slate-400">
-                Every field this type has is on the card.
-              </p>
+              <p className="text-[12px] text-slate-500 dark:text-slate-400">{t('itemtypedisplay.every-field-this-type-has-is')}</p>
             ) : (
               <>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Drag one onto the card, or press it to choose where it goes.
-                </p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">{t('itemtypedisplay.drag-one-onto-the-card-or')}</p>
                 <ul className="flex flex-wrap gap-1.5">
                   {available.map((f) => (
                     <li key={f}>
@@ -430,9 +424,7 @@ export function ItemTypeDisplay({
                   const { [size]: _drop, ...rest } = display;
                   onChange(rest);
                 }}
-              >
-                Reset to Default
-              </Button>
+              >{t('itemtypedisplay.reset-to-default')}</Button>
             </div>
           ) : null}
         </div>

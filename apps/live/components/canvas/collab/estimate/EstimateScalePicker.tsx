@@ -6,6 +6,8 @@
 // the card becomes a normal estimate card. A viewer who can't edit sees that
 // it is waiting.
 
+
+import { useTranslation } from '@/lib/i18n';
 import {
   ESTIMATE_SCALE_LABELS,
   ESTIMATE_SCALE_VALUES,
@@ -42,6 +44,7 @@ export function EstimateScalePicker({
   textColor: string;
   onChoose?: (scale: EstimateScale) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="flex min-h-0 flex-1 flex-col justify-center gap-3">
       <div className="flex items-center gap-2.5">
@@ -53,12 +56,12 @@ export function EstimateScalePicker({
         </GlyphDisc>
         <div className="flex min-w-0 flex-col">
           <span className="text-[12.5px] font-semibold leading-tight" style={{ color: textColor }}>
-            {onChoose ? 'Choose a scale' : 'Waiting for a scale'}
+            {onChoose ? t('estimatescalepicker.choose-a-scale') : t('estimatescalepicker.waiting-for-a-scale')}
           </span>
           <span className="text-[10.5px] leading-snug" style={{ color: textColor, opacity: 0.55 }}>
             {onChoose
-              ? 'Everyone picks privately from these cards.'
-              : 'Someone who can edit picks one first.'}
+              ? t('estimatescalepicker.everyone-picks-privately-from-these-cards')
+              : t('estimatescalepicker.someone-who-can-edit-picks-one')}
           </span>
         </div>
       </div>

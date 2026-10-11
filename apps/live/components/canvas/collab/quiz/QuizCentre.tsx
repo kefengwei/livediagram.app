@@ -1,8 +1,10 @@
 'use client';
 
+
 import type { QuizPhase } from '@livediagram/document';
 import { QUIZ_CORRECT_GREEN } from '@livediagram/document';
 import { CollabButton } from '../collab-chrome';
+import { useTranslation } from '@/lib/i18n';
 
 // What the disc in the middle of a Quiz says (docs/specs/012-collaboration/quiz.md), one branch per phase.
 // The question itself stays hidden until the round opens, so nobody reads
@@ -25,6 +27,8 @@ function Question({
   textColor: string;
   small?: boolean;
 }) {
+  
+  
   return (
     <p
       className={`font-semibold leading-snug ${small ? 'line-clamp-2 text-[12px]' : 'line-clamp-4 text-[15px]'}`}
@@ -67,6 +71,8 @@ export function QuizCentre({
   textColor: string;
   actions: QuizCentreActions;
 }) {
+  const { t } = useTranslation();
+  
   if (phase === 'setup' || phase === 'ready') {
     return (
       <>
@@ -82,18 +88,14 @@ export function QuizCentre({
         </Meta>
         {phase === 'setup' ? (
           actions.edit ? (
-            <CollabButton tone="loud" textColor={textColor} onPress={actions.edit}>
-              Set Up Question
-            </CollabButton>
+            <CollabButton tone="loud" textColor={textColor} onPress={actions.edit}>{t('quizcentre.set-up-question')}</CollabButton>
           ) : (
-            <Meta textColor={textColor}>Waiting for a question</Meta>
+            <Meta textColor={textColor}>{t('quizcentre.waiting-for-a-question')}</Meta>
           )
         ) : actions.start ? (
-          <CollabButton tone="loud" textColor={textColor} onPress={actions.start}>
-            Start
-          </CollabButton>
+          <CollabButton tone="loud" textColor={textColor} onPress={actions.start}>{t('quizcentre.start')}</CollabButton>
         ) : (
-          <Meta textColor={textColor}>Waiting to start</Meta>
+          <Meta textColor={textColor}>{t('quizcentre.waiting-to-start')}</Meta>
         )}
       </>
     );
@@ -110,11 +112,9 @@ export function QuizCentre({
           {secondsLeft}
         </span>
         <Question text={question} textColor={textColor} />
-        <Meta textColor={textColor}>{answered} answered</Meta>
+        <Meta textColor={textColor}>{answered}{t('quizcentre.answered')}</Meta>
         {actions.lock ? (
-          <CollabButton textColor={textColor} onPress={actions.lock}>
-            Lock Now
-          </CollabButton>
+          <CollabButton textColor={textColor} onPress={actions.lock}>{t('quizcentre.lock-now')}</CollabButton>
         ) : null}
       </>
     );
@@ -123,15 +123,13 @@ export function QuizCentre({
   if (phase === 'locked') {
     return (
       <>
-        <Meta textColor={textColor}>Time&apos;s up</Meta>
+        <Meta textColor={textColor}>{t('quizcentre.time-s-up')}</Meta>
         <Question text={question} textColor={textColor} />
-        <Meta textColor={textColor}>{answered} answered</Meta>
+        <Meta textColor={textColor}>{answered}{t('quizcentre.answered-2')}</Meta>
         {actions.reveal ? (
-          <CollabButton tone="loud" textColor={textColor} onPress={actions.reveal}>
-            Reveal Answer
-          </CollabButton>
+          <CollabButton tone="loud" textColor={textColor} onPress={actions.reveal}>{t('quizcentre.reveal-answer')}</CollabButton>
         ) : (
-          <Meta textColor={textColor}>Waiting for the reveal</Meta>
+          <Meta textColor={textColor}>{t('quizcentre.waiting-for-the-reveal')}</Meta>
         )}
       </>
     );
@@ -143,13 +141,10 @@ export function QuizCentre({
     <>
       <Question text={question} textColor={textColor} small />
       <p className="text-[13px] font-bold" style={{ color: QUIZ_CORRECT_GREEN }}>
-        {correctCount} of {answered} correct
-      </p>
-      {answered > 0 && correctCount === 0 ? <Meta textColor={textColor}>Nobody got it</Meta> : null}
+        {correctCount}{t('quizcentre.of')}{answered}{t('quizcentre.correct')}</p>
+      {answered > 0 && correctCount === 0 ? <Meta textColor={textColor}>{t('quizcentre.nobody-got-it')}</Meta> : null}
       {actions.reset ? (
-        <CollabButton textColor={textColor} onPress={actions.reset}>
-          Run Again
-        </CollabButton>
+        <CollabButton textColor={textColor} onPress={actions.reset}>{t('quizcentre.run-again')}</CollabButton>
       ) : null}
     </>
   );

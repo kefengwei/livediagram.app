@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { PencilIcon, TrashIcon } from '@/components/primitives/explorer-icons';
 import { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
 import { useReposition } from '@/hooks/canvas/useReposition';
@@ -108,6 +109,7 @@ export function PortalMenu({
   canDelete: boolean;
   canClearContent: boolean;
 } & SessionToolsProps) {
+  const { t } = useTranslation();
   // The menu itself lists the verbs (Rename, Duplicate, Clear…); the two
   // organise pickers — "copyTo" (docs/specs/006-document/tab-document-many-to-many.md, link the tab into another
   // document) and "folder" (docs/specs/006-document/tab-folders.md, file the tab into a tab-bar folder) —
@@ -148,7 +150,7 @@ export function PortalMenu({
   const { attach, element, tree, surfaceProps } = useControlMenu({
     onClose,
     trigger: anchor ?? null,
-    label: point ? 'Canvas menu' : 'Tab menu',
+    label: point ? t('tabportalmenu.canvas-menu') : t('tabportalmenu.tab-menu'),
   });
   const setRef = useCallback(
     (el: HTMLDivElement | null) => {
@@ -314,14 +316,14 @@ export function PortalMenu({
           <MenuToolbar>
             <MenuToolButton
               icon={<PencilIcon />}
-              label="Rename"
-              description="Rename this tab."
+              label={t('tabportalmenu.rename')}
+              description={t('tabportalmenu.rename-this-tab')}
               onClick={onRename}
             />
             <MenuToolButton
               icon={<DuplicateIcon />}
-              label="Duplicate"
-              description="Create a copy of this tab in this document."
+              label={t('tabportalmenu.duplicate')}
+              description={t('tabportalmenu.create-a-copy-of-this-tab')}
               onClick={onDuplicate}
             />
             {/* Paste in the tab ⋯ menu: one tab verb among several, so an
@@ -331,9 +333,9 @@ export function PortalMenu({
             {canvas && !point ? (
               <MenuToolButton
                 icon={<PasteMenuIcon />}
-                label="Paste"
+                label={t('tabportalmenu.paste')}
                 description={
-                  canvas.canPaste ? 'Paste what you copied onto this tab.' : 'Nothing to paste yet.'
+                  canvas.canPaste ? t('tabportalmenu.paste-what-you-copied-onto-this') : t('tabportalmenu.nothing-to-paste-yet')
                 }
                 onClick={() => {
                   canvas.onPaste();
@@ -347,11 +349,11 @@ export function PortalMenu({
             {sideBySide ? (
               <MenuToolButton
                 icon={<SideBySideIcon />}
-                label={sideBySide.closing ? 'Close Side by Side' : 'Side by Side'}
+                label={sideBySide.closing ? t('tabportalmenu.close-side-by-side') : t('tabportalmenu.side-by-side')}
                 description={
                   sideBySide.closing
                     ? 'Go back to one tab: this one, across the whole window.'
-                    : 'Show this tab on the right, beside the tab you were on. Or drag its pill to the right edge.'
+                    : t('tabportalmenu.show-this-tab-on-the-right')
                 }
                 onClick={() => {
                   sideBySide.run();
@@ -367,18 +369,18 @@ export function PortalMenu({
             <div ref={setDeleteRow} className="ml-auto flex items-center gap-0.5">
               <MenuToolButton
                 icon={<TabLockIcon />}
-                label={locked ? 'Unlock tab' : 'Lock tab'}
+                label={locked ? t('tabportalmenu.unlock-tab') : t('tabportalmenu.lock-tab')}
                 description={locked ? 'Make this tab editable again.' : 'Make this tab read-only.'}
                 onClick={onToggleLock}
                 active={locked}
               />
               <MenuToolButton
                 icon={<TrashIcon />}
-                label="Delete"
+                label={t('tabportalmenu.delete')}
                 description={
                   locked
-                    ? 'This tab is locked. Unlock it before deleting.'
-                    : "Delete this tab. Its content can't be recovered."
+                    ? t('tabportalmenu.this-tab-is-locked-unlock-it')
+                    : t('tabportalmenu.delete-this-tab-its-content-can')
                 }
                 onClick={() => setConfirmingDelete(true)}
                 disabled={!canDelete || locked}
@@ -397,7 +399,7 @@ export function PortalMenu({
                 <MenuActionRow
                   plain
                   icon={<PasteMenuIcon />}
-                  label="Paste"
+                  label={t('tabportalmenu.paste-2')}
                   disabled={!canvas.canPaste}
                   onClick={() => {
                     canvas.onPaste();
@@ -411,40 +413,40 @@ export function PortalMenu({
           {/* Verbose actions live in collapsible categories (closed by
             default, one open at a time), matching the element menu. */}
           <MenuAccordionSection
-            title="Organise"
+            title={t('tabportalmenu.organise')}
             icon={<FolderMenuIcon />}
             {...sectionProps('organise')}
           >
             <MenuTileGrid cols={2}>
               <MenuTile
                 icon={<FolderMenuIcon />}
-                label="Add to Folder"
+                label={t('tabportalmenu.add-to-folder')}
                 onClick={() => setView('folder')}
               />
               <MenuTile
                 icon={<MoveIcon />}
-                label="Add to Document"
+                label={t('tabportalmenu.add-to-document')}
                 onClick={() => setView('copyTo')}
                 disabled={otherDocuments.length === 0 || planTab}
               />
             </MenuTileGrid>
           </MenuAccordionSection>
           <MenuAccordionSection
-            title="Content"
+            title={t('tabportalmenu.content')}
             icon={<FileExportIcon />}
             {...sectionProps('content')}
           >
             <MenuTileGrid cols={3}>
               <MenuTile
                 icon={<FileImportIcon />}
-                label="Import"
+                label={t('tabportalmenu.import')}
                 onClick={onImport}
                 disabled={locked}
               />
-              <MenuTile icon={<FileExportIcon />} label="Export" onClick={onExport} />
+              <MenuTile icon={<FileExportIcon />} label={t('tabportalmenu.export')} onClick={onExport} />
               <MenuTile
                 icon={<ClearIcon />}
-                label="Clear"
+                label={t('tabportalmenu.clear')}
                 onClick={onClearContent}
                 disabled={!canClearContent}
               />
@@ -466,7 +468,7 @@ export function PortalMenu({
             realtime room and leaves no trace on the document. ── */}
           <MenuGroupSeparator />
           <MenuFlyoutSection
-            title="Collaborate"
+            title={t('tabportalmenu.collaborate')}
             icon={<CollaborateMenuIcon />}
             panel
             {...flyoutProps('collaborate')}
@@ -547,9 +549,9 @@ export function PortalMenu({
           top: pos.top + adjust.y,
           transform: point
             ? point.openUp
-              ? 'translate(0, calc(-100% - 4px))'
+              ? t('tabportalmenu.translate-0-calc-100-4px')
               : 'none'
-            : 'translate(-100%, calc(-100% - 4px))',
+            : t('tabportalmenu.translate-100-calc-100-4px'),
         }}
       >
         <MenuTreeContext.Provider value={tree}>{body}</MenuTreeContext.Provider>

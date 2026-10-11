@@ -5,6 +5,7 @@
 // (Existing Statuses, ExistingStatusList), narrowing them as it is typed, the arrows moving through them and Enter
 // adding the highlighted one; with none highlighted, Enter (or Add Column) adds the typed name, which uses the
 // existing status of that name rather than a near-duplicate, and says so. Without any, it is the plain field.
+import { useTranslation } from '@/lib/i18n';
 import { useId, useState } from 'react';
 import { Button, PlusIcon, TextInput } from '@livediagram/ui';
 import type { MissingStatus, PlanBoardSetup } from '@livediagram/items';
@@ -44,6 +45,7 @@ export function AddColumnPicker({
   // A new status's name (a name matching an existing status arrives as a pick instead).
   onName: (name: string) => void;
 }) {
+  const { t } = useTranslation();
   const id = useId();
   const listId = `${id}-statuses`;
   const [name, setName] = useState('');
@@ -69,14 +71,14 @@ export function AddColumnPicker({
     <div className="flex w-full flex-col gap-3 text-left" onPointerDown={stop} onKeyDown={stop}>
       <div className="flex flex-col gap-1.5">
         <label htmlFor={`${id}-name`} className={HEADING}>
-          {combo ? 'Add a Column' : 'Name a New Status'}
+          {combo ? t('addcolumnpicker.add-a-column') : t('addcolumnpicker.name-a-new-status')}
         </label>
         <div className="flex w-full gap-2">
           <TextInput
             compact
             id={`${id}-name`}
-            aria-label="New column name"
-            placeholder={combo ? 'Find or name a status' : 'In Review'}
+            aria-label={t('addcolumnpicker.new-column-name')}
+            placeholder={combo ? t('addcolumnpicker.find-or-name-a-status') : t('addcolumnpicker.in-review')}
             maxLength={COLUMN_NAME_MAX}
             value={name}
             autoFocus={autoFocus}
@@ -114,9 +116,7 @@ export function AddColumnPicker({
             onClick={addTyped}
             className="h-9 shrink-0 gap-1 px-3 text-[13px] font-semibold"
           >
-            <PlusIcon size={14} />
-            Add Column
-          </Button>
+            <PlusIcon size={14} />{t('addcolumnpicker.add-column')}</Button>
         </div>
         {note ? (
           <p

@@ -1,5 +1,6 @@
 'use client';
 
+
 import { CountBadge, DialogCloseButton } from '@livediagram/ui';
 import { TrashIcon } from '@/components/primitives/explorer-icons';
 import { useEffect, useEffectEvent, useState } from 'react';
@@ -16,6 +17,7 @@ import { useConfirm } from '@/hooks/ui/useConfirm';
 import { GalleryImageButton } from '@/components/panels/GalleryImageButton';
 import { ImageDropZone } from '@/components/canvas/ImageDropZone';
 import { ImageSearchPane } from '@/components/panels/ImageSearchPane';
+import { useTranslation } from '@/lib/i18n';
 
 // Three-tab modal launched from the Image element's placeholder + the
 // "Upload image" palette button. Tab 1 (Upload) accepts a file via
@@ -62,6 +64,9 @@ export function ImagePicker({
   onClose,
   uploadOnly = false,
 }: ImagePickerProps) {
+  const { t } = useTranslation();
+  
+  
   const [tab, setTab] = useState<'upload' | 'gallery' | 'search'>('upload');
   const [gallery, setGallery] = useState<ImageSummary[] | null>(null);
   const [galleryError, setGalleryError] = useState<string | null>(null);
@@ -92,7 +97,7 @@ export function ImagePicker({
       const { image } = await addImageFileForDocument(ownerId, documentId, file);
       onSelect(image);
     } catch (e) {
-      setUploadError(e instanceof ImageUploadError ? e.message : 'Upload failed.');
+      setUploadError(e instanceof ImageUploadError ? e.message : t('imagepicker.upload-failed'));
     } finally {
       setUploading(false);
     }
@@ -173,21 +178,15 @@ export function ImagePicker({
       className="max-h-[calc(100dvh-2rem)]"
     >
       <header className="flex items-center justify-between border-b border-slate-200 px-4 py-3 dark:border-slate-800">
-        <h2 className="text-sm font-semibold text-slate-800 dark:text-slate-100">Image</h2>
+        <h2 className="text-sm font-semibold text-slate-800 dark:text-slate-100">{t('imagepicker.image')}</h2>
         <DialogCloseButton compact onClick={onClose} />
       </header>
       {uploadOnly ? null : (
         <nav className="flex gap-1 border-b border-slate-200 px-4 pt-3 dark:border-slate-800">
-          <TabButton active={tab === 'upload'} onClick={() => setTab('upload')}>
-            Upload
+          <TabButton active={tab === 'upload'} onClick={() => setTab('upload')}>{t('imagepicker.upload')}</TabButton>
+          <TabButton active={tab === 'gallery'} onClick={() => setTab('gallery')}>{t('imagepicker.gallery')}{gallery ? <CountBadge count={gallery.length} className="ml-1.5 align-middle" /> : null}
           </TabButton>
-          <TabButton active={tab === 'gallery'} onClick={() => setTab('gallery')}>
-            Gallery
-            {gallery ? <CountBadge count={gallery.length} className="ml-1.5 align-middle" /> : null}
-          </TabButton>
-          <TabButton active={tab === 'search'} onClick={() => setTab('search')}>
-            Search
-          </TabButton>
+          <TabButton active={tab === 'search'} onClick={() => setTab('search')}>{t('imagepicker.search')}</TabButton>
         </nav>
       )}
       <div className="min-h-0 flex-1 overflow-y-auto p-4">
@@ -215,16 +214,12 @@ export function ImagePicker({
       </div>
       {currentImageId && onRemove ? (
         <footer className="flex items-center justify-between gap-3 border-t border-slate-200 px-4 py-3 dark:border-slate-800">
-          <p className="text-[11px] text-slate-500 dark:text-slate-400">
-            Detaches the image from this element. The gallery copy is kept.
-          </p>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400">{t('imagepicker.detaches-the-image-from-this-element')}</p>
           <button
             type="button"
             onClick={onRemove}
             className="rounded-md border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-50 hover:text-slate-800 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-          >
-            Remove from element
-          </button>
+          >{t('imagepicker.remove-from-element')}</button>
         </footer>
       ) : null}
     </Dialog>
@@ -246,6 +241,8 @@ function GalleryGrid({
   onSelect: (image: ImageSummary) => void;
   onDelete: (image: ImageSummary) => void;
 }) {
+  const { t } = useTranslation();
+  
   if (error) {
     return (
       <p className="rounded-md bg-rose-50 px-3 py-2 text-xs text-rose-700 dark:bg-rose-500/15 dark:text-rose-300">
@@ -254,13 +251,11 @@ function GalleryGrid({
     );
   }
   if (!gallery) {
-    return <p className="text-xs text-slate-500 dark:text-slate-400">Loading…</p>;
+    return <p className="text-xs text-slate-500 dark:text-slate-400">{t('imagepicker.loading')}</p>;
   }
   if (gallery.length === 0) {
     return (
-      <p className="rounded-md border border-dashed border-slate-300 bg-slate-50 px-3 py-6 text-center text-xs text-slate-500 dark:border-slate-700 dark:bg-slate-800/30 dark:text-slate-400">
-        No images yet. Drop one in the Upload tab and it'll show up here.
-      </p>
+      <p className="rounded-md border border-dashed border-slate-300 bg-slate-50 px-3 py-6 text-center text-xs text-slate-500 dark:border-slate-700 dark:bg-slate-800/30 dark:text-slate-400">{t('imagepicker.no-images-yet-drop-one-in')}</p>
     );
   }
   return (
@@ -322,6 +317,7 @@ function TabButton({
   onClick: () => void;
   children: React.ReactNode;
 }) {
+  
   return (
     <button
       type="button"

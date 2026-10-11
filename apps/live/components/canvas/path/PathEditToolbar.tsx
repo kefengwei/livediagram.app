@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import type { ReactElement } from 'react';
 import { Tooltip } from '@livediagram/ui';
 import type { PathHandleMode } from '@livediagram/document';
@@ -48,6 +49,7 @@ export function PathEditToolbar({
   onToggleClosed: () => void;
   onDone: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div
       data-canvas-toolbar=""
@@ -61,9 +63,9 @@ export function PathEditToolbar({
         bounds={view.bounds}
         canvasOffset={viewportOffset}
         zoom={zoom}
-        title="Edit path"
+        title={t('pathedittoolbar.edit-path')}
       >
-        <div role="radiogroup" aria-label="Node type" className="flex items-center gap-0.5">
+        <div role="radiogroup" aria-label={t('pathedittoolbar.node-type')} className="flex items-center gap-0.5">
           {NODE_TYPES.map((t) => (
             <Tip key={t.id} label={`${t.label} point`}>
               <button
@@ -80,18 +82,16 @@ export function PathEditToolbar({
           ))}
         </div>
         <Divider />
-        <Tip label="Delete point">
+        <Tip label={t('pathedittoolbar.delete-point')}>
           <button
             type="button"
             aria-keyshortcuts="Delete"
             disabled={!view.hasSelection}
             onClick={onDelete}
             className={BUTTON}
-          >
-            Delete point
-          </button>
+          >{t('pathedittoolbar.delete-point-2')}</button>
         </Tip>
-        <Tip label={view.closed ? 'Open path' : 'Close path'}>
+        <Tip label={view.closed ? t('pathedittoolbar.open-path') : t('pathedittoolbar.close-path')}>
           <button
             type="button"
             aria-keyshortcuts={view.closed ? undefined : 'J'}
@@ -99,14 +99,12 @@ export function PathEditToolbar({
             onClick={onToggleClosed}
             className={BUTTON}
           >
-            {view.closed ? 'Open path' : 'Close path'}
+            {view.closed ? t('pathedittoolbar.open-path-2') : t('pathedittoolbar.close-path-2')}
           </button>
         </Tip>
         <Divider />
-        <Tip label="Done">
-          <button type="button" aria-keyshortcuts="Escape" onClick={onDone} className={BUTTON}>
-            Done
-          </button>
+        <Tip label={t('pathedittoolbar.done')}>
+          <button type="button" aria-keyshortcuts="Escape" onClick={onDone} className={BUTTON}>{t('pathedittoolbar.done-2')}</button>
         </Tip>
       </FloatingToolbar>
     </div>

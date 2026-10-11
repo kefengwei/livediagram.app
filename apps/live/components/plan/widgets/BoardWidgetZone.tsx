@@ -5,6 +5,7 @@
 // widget left or right to reorder it (a bar shows where it lands), moves a focused one with Alt+← and
 // Alt+→, and takes one off with its × (shown only while the board is selected) or Delete. A widget dragged in from the palette shows the same
 // bar (`dropAt`, from the palette drag); the drop itself is the palette's.
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState, type ReactNode } from 'react';
 import { placeWidget, removeWidget, nudgeWidget, type BoardWidgetKind } from '@livediagram/items';
 import { CloseIcon, PlusIcon } from '@livediagram/ui';
@@ -40,6 +41,7 @@ export function BoardWidgetZone({
   onChange: (next: BoardWidgetKind[]) => void;
   render: (kind: BoardWidgetKind) => ReactNode;
 }) {
+  const { t } = useTranslation();
   const zone = useRef<HTMLDivElement>(null);
   const [reorder, setReorder] = useState<Reorder | null>(null);
   const suppressClick = useRef(false);
@@ -103,11 +105,9 @@ export function BoardWidgetZone({
         ) : canEdit && selected ? (
           // The hint only while the board is selected, so an unselected header stays clean.
           <span className="inline-flex items-center gap-1.5">
-            <InfoArt />
-            Drag Widgets here from the palette
-            <button
+            <InfoArt />{t('boardwidgetzone.drag-widgets-here-from-the-palette')}<button
               type="button"
-              aria-label="Add a widget"
+              aria-label={t('boardwidgetzone.add-a-widget')}
               className="ml-1 flex h-6 w-6 items-center justify-center rounded-md border border-dashed transition hover:bg-black/5 dark:hover:bg-white/10"
               style={{ borderColor: palette.border }}
               onPointerDown={(e) => e.stopPropagation()}
@@ -126,7 +126,7 @@ export function BoardWidgetZone({
       ref={zone}
       data-widget-zone
       role="list"
-      aria-label="Board widgets"
+      aria-label={t('boardwidgetzone.board-widgets')}
       className="flex h-9 min-w-0 flex-1 items-center gap-1.5 overflow-x-auto overflow-y-hidden rounded-md px-1 [scrollbar-width:thin]"
       style={{ outline: dropAt !== null ? `1.5px dashed ${palette.focus}` : undefined }}
     >
@@ -140,7 +140,7 @@ export function BoardWidgetZone({
             role="listitem"
             tabIndex={canEdit ? 0 : undefined}
             aria-label={canEdit ? `${BOARD_WIDGET_INFO[kind].label} widget` : undefined}
-            aria-keyshortcuts={canEdit ? 'Alt+ArrowLeft Alt+ArrowRight Delete' : undefined}
+            aria-keyshortcuts={canEdit ? t('boardwidgetzone.alt-arrowleft-alt-arrowright-delete') : undefined}
             className={`group/widget relative flex shrink-0 items-center rounded-md outline-none focus-visible:ring-2 ${
               flash === kind ? 'animate-pulse motion-reduce:animate-none' : ''
             } ${canEdit ? 'cursor-grab active:cursor-grabbing' : ''}`}
@@ -201,7 +201,7 @@ export function BoardWidgetZone({
       {canEdit ? (
         <button
           type="button"
-          aria-label="Add a widget"
+          aria-label={t('boardwidgetzone.add-a-widget-2')}
           className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-dashed transition hover:bg-black/5 dark:hover:bg-white/10"
           style={{ borderColor: palette.border, color: palette.muted }}
           onPointerDown={(e) => e.stopPropagation()}

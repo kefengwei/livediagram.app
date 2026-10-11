@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 // A card's comments in the item panel (docs/specs/026-plan/items.md "Comments"): the same thread list, composer
 // and resolve control as the canvas's comment popover (comment-thread-parts), on the card's `comments` field, drawn
@@ -32,6 +33,7 @@ export function ItemComments({
   canEdit: boolean;
   comments: ItemCommentsContext;
 }) {
+  const { t } = useTranslation();
   const self = usePlan()?.self ?? null;
   const thread = itemThread(item);
   const resolved = thread?.resolved ?? false;
@@ -42,7 +44,7 @@ export function ItemComments({
       {count > 0 ? (
         <div className="flex min-h-7 items-center justify-between gap-2">
           <span className="text-[12px] font-medium text-slate-500 dark:text-slate-400">
-            {count === 1 ? '1 comment' : `${count} comments`}
+            {count === 1 ? t('itemcomments.1-comment') : `${count} comments`}
           </span>
           {canComment ? (
             <CommentResolveToggle

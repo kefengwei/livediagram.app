@@ -9,6 +9,8 @@
 // It turns AMBER whenever a target filter is on, matching the panel's preview,
 // so a restricted eraser never looks like a broken one.
 
+
+import { useTranslation } from '@/lib/i18n';
 export function EraserBrushRing({
   pos,
   radius,
@@ -21,6 +23,7 @@ export function EraserBrushRing({
   radius: number;
   filtered: boolean;
 }) {
+  const { t } = useTranslation();
   // A Point brush has no size to show; the OS cursor already marks the spot.
   if (!pos || radius <= 0) return null;
   return (
@@ -33,8 +36,8 @@ export function EraserBrushRing({
         width: radius * 2,
         height: radius * 2,
         transform: 'translate(-50%, -50%)',
-        borderColor: filtered ? 'rgba(245, 158, 11, 0.9)' : 'rgba(100, 116, 139, 0.85)',
-        background: filtered ? 'rgba(245, 158, 11, 0.12)' : 'rgba(148, 163, 184, 0.14)',
+        borderColor: filtered ? t('eraserbrushring.rgba-245-158-11-0-9') : t('eraserbrushring.rgba-100-116-139-0-85'),
+        background: filtered ? t('eraserbrushring.rgba-245-158-11-0-12') : t('eraserbrushring.rgba-148-163-184-0-14'),
       }}
     />
   );

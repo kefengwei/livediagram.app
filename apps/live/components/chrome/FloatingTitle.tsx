@@ -3,6 +3,7 @@
 // FloatingToolbar + SelectionPopover so the pill styling stays in lockstep; the
 // `placeAbove` side comes from the same useEdgeAwarePlacement hook that drives
 // the box's own position.
+
 export function FloatingTitle({ title, placeAbove }: { title: string; placeAbove: boolean }) {
   return (
     <span

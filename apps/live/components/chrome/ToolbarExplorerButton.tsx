@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { track } from '@/lib/telemetry';
 import { HoverCard, Glyph } from '@livediagram/ui';
 import { useUiScale } from '@/components/providers/ui-scale';
@@ -33,6 +34,7 @@ export function ToolbarExplorerButton({
   // Given the button itself, which the popover anchors to.
   onToggle: (button: HTMLElement) => void;
 }) {
+  const { t } = useTranslation();
   // Drawn at the UI scale (docs/specs/007-editor/ui-scale.md), still 12px from
   // the corner. Inline it sits in the strip, which is scaled already.
   const scale = useUiScale('toolbar');
@@ -41,7 +43,7 @@ export function ToolbarExplorerButton({
   const button = (
     <button
       type="button"
-      aria-label="Explorer"
+      aria-label={t('toolbarexplorerbutton.explorer')}
       aria-expanded={open}
       onClick={(e) => {
         if (!open) track('UI', 'Opened', 'ToolbarExplorer');
@@ -87,7 +89,7 @@ export function ToolbarExplorerButton({
       {open ? (
         button
       ) : (
-        <HoverCard title="Explorer" description="Your documents, folders and teams.">
+        <HoverCard title={t('toolbarexplorerbutton.explorer-2')} description={t('toolbarexplorerbutton.your-documents-folders-and-teams')}>
           {button}
         </HoverCard>
       )}

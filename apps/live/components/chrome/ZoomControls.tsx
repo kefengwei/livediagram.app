@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { IsometricOrbitButton } from '@/components/chrome/IsometricOrbitButton';
 import { ZoomMenu } from '@/components/chrome/ZoomMenu';
 import { ZenExitIcon, ZenIcon } from '@/components/palette/palette-icons';
@@ -46,6 +47,7 @@ export function ZoomControls({
   zenEnterHere,
   pinchOnly = false,
 }: ZoomControlsProps) {
+  const { t } = useTranslation();
   return (
     <div
       data-zoom-controls
@@ -57,8 +59,8 @@ export function ZoomControls({
       className="pointer-events-auto flex animate-fade-in items-center gap-1 rounded-lg border border-slate-200 bg-white p-1 shadow-lg shadow-slate-900/5 dark:border-slate-700 dark:bg-slate-900 dark:shadow-slate-950/40"
     >
       {pinchOnly ? null : (
-        <HoverCard title="Zoom out" description="Zoom out by 10%.">
-          <IconButton onClick={onZoomOut} label="Zoom out">
+        <HoverCard title={t('zoomcontrols.zoom-out-3')} description={t('zoomcontrols.zoom-out-by-10')}>
+          <IconButton onClick={onZoomOut} label={t('zoomcontrols.zoom-out-4')}>
             <Glyph size={14} units={14}>
               <line x1="3" y1="7" x2="11" y2="7" />
             </Glyph>
@@ -67,8 +69,8 @@ export function ZoomControls({
       )}
       <ZoomMenu zoom={zoom} onSetZoom={onSetZoom} onFitToScreen={onFitToScreen} />
       {pinchOnly ? null : (
-        <HoverCard title="Zoom in" description="Zoom in by 10%.">
-          <IconButton onClick={onZoomIn} label="Zoom in">
+        <HoverCard title={t('zoomcontrols.zoom-in-3')} description={t('zoomcontrols.zoom-in-by-10')}>
+          <IconButton onClick={onZoomIn} label={t('zoomcontrols.zoom-in-4')}>
             <Glyph size={14} units={14}>
               <line x1="3" y1="7" x2="11" y2="7" />
               <line x1="7" y1="3" x2="7" y2="11" />
@@ -83,15 +85,13 @@ export function ZoomControls({
         {pinchOnly ? null : (
           <div className="mx-0.5 h-6 w-px bg-slate-200 dark:bg-slate-700" aria-hidden />
         )}
-        <HoverCard title="Fit to screen" description="Pan and zoom so everything on the tab fits.">
+        <HoverCard title={t('zoomcontrols.fit-to-screen')} description={t('zoomcontrols.pan-and-zoom-so-everything-on')}>
           <button
             type="button"
             onClick={onFitToScreen}
-            aria-label="Fit to screen"
+            aria-label={t('zoomcontrols.fit-to-screen-2')}
             className="flex h-9 items-center justify-center rounded-md px-2.5 text-xs font-medium text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
-          >
-            Fit
-          </button>
+          >{t('zoomcontrols.fit-2')}</button>
         </HoverCard>
       </span>
       {onIsoOrbit && onIsoReset ? (
@@ -109,14 +109,14 @@ export function ZoomControls({
         <>
           <div className="mx-0.5 h-6 w-px bg-slate-200 dark:bg-slate-700" aria-hidden />
           <HoverCard
-            title={zenActive ? 'Exit zen mode' : 'Zen mode'}
+            title={zenActive ? t('zoomcontrols.exit-zen-mode') : t('zoomcontrols.zen-mode')}
             description={
               zenActive
-                ? 'Bring back the toolbars and panels (Z or Esc).'
-                : 'Hide every panel and toolbar to focus on the canvas (Z).'
+                ? t('zoomcontrols.bring-back-the-toolbars-and-panels')
+                : t('zoomcontrols.hide-every-panel-and-toolbar-to')
             }
           >
-            <IconButton onClick={onToggleZen} label={zenActive ? 'Exit zen mode' : 'Zen mode'}>
+            <IconButton onClick={onToggleZen} label={zenActive ? t('zoomcontrols.exit-zen-mode-2') : t('zoomcontrols.zen-mode-2')}>
               {zenActive ? <ZenExitIcon /> : <ZenIcon />}
             </IconButton>
           </HoverCard>

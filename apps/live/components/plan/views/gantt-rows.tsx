@@ -4,6 +4,7 @@
 // "Swimlanes", "Row order"): a row's colour dot, #key, title, status pill and children's progress, with a grip at
 // its left edge (on hover or focus, to an editor) that drags it to a new place; and a swimlane's header, a
 // collapsible band naming its lane.
+
 import {
   ITEM_TYPES,
   STATUS_PHASE_LABELS,
@@ -25,6 +26,7 @@ import { ColourDot } from '../ColourSwatches';
 import { PersonDisc } from '../PersonDisc';
 import { PlanTypeGlyph } from '../plan-type-glyph';
 import { tint } from '../plan-card-parts';
+import { useTranslation } from '@/lib/i18n';
 
 // Under this names column width a row's status is a dot, named in a tooltip.
 export const GANTT_PILL_MIN_COLUMN_PX = 160;
@@ -50,6 +52,7 @@ export function GanttStatusPill({
   // The names column is too narrow for the name: a dot, named in a tooltip.
   narrow: boolean;
 }) {
+  
   const colour = PHASE_COLOURS[status.phase];
   if (narrow)
     return (
@@ -103,6 +106,7 @@ export function GanttNameRow({
   // While this row is dragged: how far it has travelled (chart px).
   lift?: number | undefined;
 }) {
+  
   const kids = row.total ? `${row.done}/${row.total}` : '';
   const own = itemColourOf(row.item);
   const lifted = lift !== undefined;
@@ -158,11 +162,13 @@ export function GanttRowGrip({
   palette: PlanPalette;
   onGripDown: GanttRowReorderProps['onGripDown'];
 }) {
+  const { t } = useTranslation();
+  
   return (
-    <Tooltip label="Drag to Reorder">
+    <Tooltip label={t('gantt-rows.drag-to-reorder')}>
       <span
         role="img"
-        aria-label="Drag to Reorder"
+        aria-label={t('gantt-rows.drag-to-reorder-2')}
         data-gantt-row-grip
         className="absolute left-0.5 top-1/2 z-10 flex h-5 w-2.5 -translate-y-1/2 cursor-grab touch-none items-center justify-center rounded opacity-0 transition group-focus-within:opacity-100 group-hover:opacity-100 active:cursor-grabbing motion-reduce:transition-none"
         style={{ color: palette.muted }}

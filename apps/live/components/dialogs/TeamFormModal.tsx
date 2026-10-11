@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import { Button, CloseIcon, TextInput } from '@livediagram/ui';
 import { Dialog } from '@/components/dialogs/Dialog';
@@ -28,6 +29,7 @@ export function TeamFormModal({
   onSubmit: (values: { name: string; organisation: string | null }) => void;
   onCancel: () => void;
 }) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [organisation, setOrganisation] = useState('');
   const nameRef = useRef<HTMLInputElement>(null);
@@ -86,7 +88,7 @@ export function TeamFormModal({
               <button
                 type="button"
                 onClick={onCancel}
-                aria-label="Close"
+                aria-label={t('teamformmodal.close')}
                 className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300"
               >
                 <CloseIcon size={16} />
@@ -100,35 +102,30 @@ export function TeamFormModal({
             Members edit shared work; admins also manage who&rsquo;s in the team.
           </p>
           <label className="mt-4 block">
-            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
-              Team name
-            </span>
+            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">{t('teamformmodal.team-name')}</span>
             <TextInput
               ref={nameRef}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Platform squad"
+              placeholder={t('teamformmodal.e-g-platform-squad')}
               maxLength={80}
               className="mt-1"
             />
           </label>
           <label className="mt-3 block">
-            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
-              Organisation <span className="normal-case text-slate-400">(optional)</span>
+            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">{t('teamformmodal.organisation')}<span className="normal-case text-slate-400">{t('teamformmodal.optional')}</span>
             </span>
             <TextInput
               value={organisation}
               onChange={(e) => setOrganisation(e.target.value)}
-              placeholder="e.g. ACME Corp"
+              placeholder={t('teamformmodal.e-g-acme-corp')}
               maxLength={120}
               className="mt-1"
             />
           </label>
         </div>
         <DialogFooter>
-          <Button variant="secondary" onClick={onCancel}>
-            Cancel
-          </Button>
+          <Button variant="secondary" onClick={onCancel}>{t('teamformmodal.cancel')}</Button>
           <Button type="submit" disabled={!name.trim()}>
             {submitLabel}
           </Button>

@@ -4,6 +4,7 @@
 // "Comments", "On Plan cards"): the list of comments, the composer with @-mentions, and the Resolve / Reopen
 // control. The canvas's comment popover and a Plan card's item panel both compose them; the panel draws them
 // `comfortable` (a feed: larger text, the composer beside your own avatar), the popover `compact`.
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState, type RefObject } from 'react';
 import { useAutoHeight } from '@/hooks/ui/useAutoHeight';
 import {
@@ -50,6 +51,7 @@ export function CommentResolveToggle({
   onResolve: () => void;
   onUnresolve: () => void;
 }) {
+  const { t } = useTranslation();
   if (!resolved)
     return (
       <button
@@ -57,23 +59,17 @@ export function CommentResolveToggle({
         onClick={onResolve}
         className="inline-flex cursor-pointer items-center gap-1 rounded-md px-2 py-0.5 text-[11px] font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
       >
-        <CheckIcon size={12} />
-        Resolve
-      </button>
+        <CheckIcon size={12} />{t('comment-thread-parts.resolve')}</button>
     );
   return (
     <span className="inline-flex items-center gap-1.5">
       <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[11px] font-medium text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300">
-        <CheckIcon size={11} />
-        Resolved
-      </span>
+        <CheckIcon size={11} />{t('comment-thread-parts.resolved')}</span>
       <button
         type="button"
         onClick={onUnresolve}
         className="cursor-pointer rounded-md px-2 py-0.5 text-[11px] font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-      >
-        Reopen
-      </button>
+      >{t('comment-thread-parts.reopen')}</button>
     </span>
   );
 }
@@ -95,15 +91,14 @@ export function CommentThreadList({
   density?: CommentDensity;
   className?: string;
 }) {
+  const { t } = useTranslation();
   const resolved = thread?.resolved ?? false;
   const comments = thread?.comments ?? [];
   if (comments.length === 0)
     return (
       <p
         className={`${density === 'comfortable' ? 'py-1 text-[13px]' : 'px-3 py-3 text-xs'} text-slate-500 dark:text-slate-400`}
-      >
-        No comments yet. Start the conversation.
-      </p>
+      >{t('comment-thread-parts.no-comments-yet-start-the-conversation')}</p>
     );
   return (
     <ul className={className}>
@@ -141,6 +136,7 @@ export function CommentComposer({
   self?: { name: string; color: string } | null;
   className?: string;
 }) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState('');
   const [focused, setFocused] = useState(false);
   const ownRef = useRef<HTMLTextAreaElement>(null);
@@ -206,8 +202,8 @@ export function CommentComposer({
               submit();
             }
           }}
-          placeholder="Add a comment…"
-          aria-label="Add a comment"
+          placeholder={t('comment-thread-parts.add-a-comment')}
+          aria-label={t('comment-thread-parts.add-a-comment-2')}
           rows={comfortable ? 1 : 2}
           style={{ maxHeight: COMPOSER_MAX_PX }}
           className={`block w-full resize-none rounded-lg border border-slate-200 bg-white text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-brand-400 focus:ring-2 focus:ring-brand-400/30 motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 ${
@@ -224,9 +220,7 @@ export function CommentComposer({
             disabled={!draft.trim()}
             // Keeps the compact density: overrides append after the size scale, so they win.
             className="px-3 py-1 text-[11px]"
-          >
-            Comment
-          </Button>
+          >{t('comment-thread-parts.comment')}</Button>
         </div>
       </div>
     </footer>
@@ -245,6 +239,7 @@ function CommentRow({
   // Undefined when this session may not delete it, so the row never renders a delete affordance.
   onDelete?: () => void;
 }) {
+  const { t } = useTranslation();
   const now = useRelativeNow();
   const comfortable = density === 'comfortable';
   const when = new Date(comment.createdAt).toLocaleString(undefined, {
@@ -299,10 +294,10 @@ function CommentRow({
         </p>
       </div>
       {!resolved && onDelete ? (
-        <Tooltip label="Delete comment">
+        <Tooltip label={t('comment-thread-parts.delete-comment')}>
           <button
             type="button"
-            aria-label="Delete comment"
+            aria-label={t('comment-thread-parts.delete-comment-2')}
             onClick={onDelete}
             className="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center self-start rounded-md text-slate-400 opacity-0 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:opacity-100 group-hover:opacity-100 motion-reduce:transition-none dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
           >

@@ -3,6 +3,7 @@
 // The token manager's list (docs/specs/015-api/public-api-and-tokens.md#36-management--the-settings-dialogs-api-tokens-category):
 // newest first, one card each with its paired workbenches, and a revoke that
 // confirms in a popover before anything breaks.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import type { ApiToken, WorkbenchPairing } from '@livediagram/api-schema';
 import { ConfirmPopover } from '@/components/primitives/ConfirmPopover';
@@ -22,12 +23,13 @@ export function SettingsTokenList({
   pairingsFor: (tokenId: string) => readonly WorkbenchPairing[];
   onUnpair: (pairingId: string) => void;
 }) {
+  const { t } = useTranslation();
   const now = useRelativeNow();
   const [confirm, setConfirm] = useState<{ id: string; anchor: HTMLElement } | null>(null);
 
   if (tokens === null) {
     return (
-      <ul aria-busy className="flex flex-col gap-2.5" aria-label="Loading tokens">
+      <ul aria-busy className="flex flex-col gap-2.5" aria-label={t('settingstokenlist.loading-tokens')}>
         {[0, 1].map((i) => (
           <li
             key={i}
@@ -43,7 +45,7 @@ export function SettingsTokenList({
 
   return (
     <>
-      <ul className="flex flex-col gap-2.5" aria-label="Your API tokens">
+      <ul className="flex flex-col gap-2.5" aria-label={t('settingstokenlist.your-api-tokens')}>
         {sortTokens(tokens).map((token) => (
           <SettingsTokenCard
             key={token.id}

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 // The pressable face of a Session button (docs/specs/012-collaboration/session-button.md): the tool's glyph over
 // what pressing it will do.
@@ -92,6 +93,7 @@ export function SessionButtonFace({
   /** The way out of the quick settings to the element's full menu (docs/specs/008-canvas/canvas-and-palette.md). */
   onOpenSettings?: () => void;
 }) {
+  const { t } = useTranslation();
   const plan = sessionButtonPlan(config);
   const derived = sessionButtonText(plan, timerState);
   const text = label.trim();
@@ -154,7 +156,7 @@ export function SessionButtonFace({
         aria-disabled
         // Only a Choices poll can land here: every other answer style is
         // startable the moment it has a question (see sessionButtonPlan).
-        aria-label="Poll not set up. Open Session to write at least two choices, or switch its answers to Yes / No."
+        aria-label={t('sessionbuttonface.poll-not-set-up-open-session')}
         className={`pointer-events-auto cursor-default opacity-60 ${layout}`}
       >
         {inner}

@@ -11,7 +11,9 @@
 // Device-local (lib/presentation-config): how YOU drive a deck on THIS
 // machine, not a property of the document.
 
+
 import { HoverCard } from '@livediagram/ui';
+import { useTranslation } from '@/lib/i18n';
 import {
   AUTO_ADVANCE_CHOICES,
   SLIDE_SPEEDS,
@@ -22,6 +24,7 @@ import {
 
 /** A labelled band of settings. */
 function Group({ title, children }: { title: string; children: React.ReactNode }) {
+  
   return (
     <>
       <span className="px-2 pb-0.5 pt-1.5 text-[10px] font-semibold uppercase tracking-wide text-white/40">
@@ -42,6 +45,7 @@ function Segmented<T extends string | number>({
   value: T;
   onPick: (id: T) => void;
 }) {
+  
   return (
     <div className="flex gap-1 px-1">
       {options.map((o) => (
@@ -116,15 +120,17 @@ export function PresentationSettings({
   config: PresentationConfig;
   onChange: (patch: Partial<PresentationConfig>) => void;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <div
       role="dialog"
-      aria-label="Presentation settings"
+      aria-label={t('presentationsettings.presentation-settings')}
       onClick={(e) => e.stopPropagation()}
       onPointerDown={(e) => e.stopPropagation()}
       className="pointer-events-auto fixed right-4 top-16 z-[66] flex max-h-[75vh] w-64 flex-col gap-1 overflow-y-auto rounded-xl bg-slate-900/90 p-2 shadow-2xl backdrop-blur"
     >
-      <Group title="Transition">
+      <Group title={t('presentationsettings.transition')}>
         <Segmented
           options={SLIDE_TRANSITIONS}
           value={config.transition}
@@ -143,26 +149,26 @@ export function PresentationSettings({
 
       <div className="my-1 border-t border-white/10" />
 
-      <Group title="Playback">
+      <Group title={t('presentationsettings.playback')}>
         {/* Auto-advance pairs with Loop: together they are the whole
             "leave it running on the wall" setup. */}
         <Segmented
           options={AUTO_ADVANCE_CHOICES.map((c) => ({
             id: c.seconds,
             label: c.label,
-            hint: c.seconds === 0 ? 'Only move when you say so' : `Advance every ${c.seconds}s`,
+            hint: c.seconds === 0 ? t('presentationsettings.only-move-when-you-say-so') : `Advance every ${c.seconds}s`,
           }))}
           value={config.autoAdvanceSeconds}
           onPick={(seconds) => onChange({ autoAdvanceSeconds: seconds })}
         />
         <Toggle
-          label="Click to advance"
+          label={t('presentationsettings.click-to-advance')}
           hint="Off if you'd rather only the keys and buttons move the deck"
           on={config.advanceOnClick}
           onChange={(next) => onChange({ advanceOnClick: next })}
         />
         <Toggle
-          label="Loop the deck"
+          label={t('presentationsettings.loop-the-deck')}
           hint="After the last slide, start again rather than ending"
           on={config.loop}
           onChange={(next) => onChange({ loop: next })}
@@ -171,38 +177,38 @@ export function PresentationSettings({
 
       <div className="my-1 border-t border-white/10" />
 
-      <Group title="Display">
+      <Group title={t('presentationsettings.display')}>
         <Segmented
           options={SLIDE_ZOOMS}
           value={config.zoom}
           onPick={(id) => onChange({ zoom: id })}
         />
         <Toggle
-          label="Show position"
+          label={t('presentationsettings.show-position')}
           hint="The 7 / 23 counter and the slide's name"
           on={config.showPosition}
           onChange={(next) => onChange({ showPosition: next })}
         />
         <Toggle
-          label="Keep controls visible"
+          label={t('presentationsettings.keep-controls-visible')}
           hint="Stop them fading out when the pointer rests"
           on={config.keepControls}
           onChange={(next) => onChange({ keepControls: next })}
         />
         <Toggle
-          label="Hide the pointer"
+          label={t('presentationsettings.hide-the-pointer')}
           hint="A still cursor left on a projector is a distraction"
           on={config.hidePointer}
           onChange={(next) => onChange({ hidePointer: next })}
         />
         <Toggle
-          label="Show elapsed time"
+          label={t('presentationsettings.show-elapsed-time')}
           hint="A clock counting from the moment you started"
           on={config.showElapsed}
           onChange={(next) => onChange({ showElapsed: next })}
         />
         <Toggle
-          label="Show slide budget"
+          label={t('presentationsettings.show-slide-budget')}
           hint="Time on this slide against the minutes it was given"
           on={config.showBudget}
           onChange={(next) => onChange({ showBudget: next })}

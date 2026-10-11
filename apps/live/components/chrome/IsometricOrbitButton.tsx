@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { isDragTravel } from '@/lib/press-gestures';
 import { HoverCard, Glyph } from '@livediagram/ui';
 
@@ -37,8 +38,9 @@ export function IsometricOrbitButton({
   // (drag) and resets (click) without a second control.
   onReset: () => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <HoverCard title="Orbit" description="Drag to orbit, click to reset the angle.">
+    <HoverCard title={t('isometricorbitbutton.orbit')} description={t('isometricorbitbutton.drag-to-orbit-click-to-reset')}>
       <button
         type="button"
         // Begin the orbit drag, and watch for a no-drag release (a tap) to
@@ -66,7 +68,7 @@ export function IsometricOrbitButton({
           window.addEventListener('pointerup', onUp);
           onOrbit(startX, startY);
         }}
-        aria-label="Orbit isometric view"
+        aria-label={t('isometricorbitbutton.orbit-isometric-view')}
         className="flex h-9 w-9 cursor-grab items-center justify-center rounded-md text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 active:cursor-grabbing dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
       >
         <OrbitGlyph />

@@ -2,6 +2,7 @@
 
 // Priority by Status (docs/specs/026-plan/plan-views.md "Priority by Status"): a grid of priority by status
 // phase, each cell the cards in both, shaded by how many against the fullest cell.
+import { useTranslation } from '@/lib/i18n';
 import { useMemo } from 'react';
 import {
   PRIORITY_LABELS,
@@ -16,11 +17,12 @@ import type { PlanViewProps } from './PlanViewView';
 const NO_PHASES = new Map();
 
 export function PriorityMatrixView({ plan, items, palette, fontFamily }: PlanViewProps) {
+  const { t } = useTranslation();
   const phases = plan?.statusPhases ?? NO_PHASES;
   const model = useMemo(() => priorityMatrixModel(items.values(), phases), [items, phases]);
   return (
     <ViewFrame
-      title="Priority by Status"
+      title={t('prioritymatrixview.priority-by-status')}
       count={model.total}
       countLabel={`${model.total} ${model.total === 1 ? 'card' : 'cards'}`}
       palette={palette}
@@ -30,7 +32,7 @@ export function PriorityMatrixView({ plan, items, palette, fontFamily }: PlanVie
     >
       <div
         role="table"
-        aria-label="Cards by priority and status"
+        aria-label={t('prioritymatrixview.cards-by-priority-and-status')}
         className="absolute inset-0 grid gap-1 p-3 text-[12px]"
         style={{
           gridTemplateColumns: 'minmax(0, min(120px, 25%)) repeat(3, minmax(0, 1fr))',
@@ -54,7 +56,7 @@ export function PriorityMatrixView({ plan, items, palette, fontFamily }: PlanVie
           </span>
         ))}
         {model.rows.map((row) => {
-          const label = row.priority ? PRIORITY_LABELS[row.priority] : 'No Priority';
+          const label = row.priority ? PRIORITY_LABELS[row.priority] : t('prioritymatrixview.no-priority');
           const tint = row.priority ? PRIORITY_COLOURS[row.priority] : palette.muted;
           return (
             <div key={row.priority ?? '-'} role="row" className="contents">

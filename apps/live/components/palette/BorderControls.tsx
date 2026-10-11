@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { BorderRadius, BorderStroke, BorderStyle } from '@livediagram/document';
 import { BORDER_RADII, BORDER_STROKES, BORDER_STYLES } from './context-menu-constants';
 import { SizeButton } from '@/components/palette/palette-controls';
@@ -46,9 +47,10 @@ export function BorderControls({
   onPreviewBorderRadius: (value: BorderRadius) => void;
   onPreviewStyleEnd: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="px-2 py-1">
-      <BorderGrid label="Strength" cols={5}>
+      <BorderGrid label={t('bordercontrols.strength')} cols={5}>
         {BORDER_STROKES.map((v) => (
           <SizeButton
             key={v}
@@ -61,7 +63,7 @@ export function BorderControls({
           </SizeButton>
         ))}
       </BorderGrid>
-      <BorderGrid label="Pattern" cols={3}>
+      <BorderGrid label={t('bordercontrols.pattern')} cols={3}>
         {BORDER_STYLES.map((v) => (
           <SizeButton
             key={v}
@@ -75,7 +77,7 @@ export function BorderControls({
         ))}
       </BorderGrid>
       {radius !== null ? (
-        <BorderGrid label="Radius" cols={5}>
+        <BorderGrid label={t('bordercontrols.radius')} cols={5}>
           {BORDER_RADII.map((v) => (
             <SizeButton
               key={v}

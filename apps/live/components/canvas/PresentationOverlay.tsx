@@ -16,6 +16,7 @@
 // advances. A click while a popover is open dismisses it rather than
 // advancing, so reading a note never costs you a slide.
 
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
 import { announce } from '@/lib/announcer';
 import { isPressableControl } from '@livediagram/ui';
@@ -62,6 +63,7 @@ export function PresentationOverlay({
   config: PresentationConfig;
   onChangeConfig: (patch: Partial<PresentationConfig>) => void;
 }) {
+  const { t } = useTranslation();
   // An item slide is named by its card (docs/specs/012-collaboration/presentation-mode.md "Item slides").
   const plan = usePlan();
   const [notesOpen, setNotesOpen] = useState(false);
@@ -379,10 +381,8 @@ export function PresentationOverlay({
       {atEnd ? (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm">
           <div className="flex flex-col items-center gap-2 text-center">
-            <span className="text-sm font-semibold text-white/90">End of the deck</span>
-            <span className="text-[11px] text-white/50">
-              Click, press Space, or hit Esc to go back to the document.
-            </span>
+            <span className="text-sm font-semibold text-white/90">{t('presentationoverlay.end-of-the-deck')}</span>
+            <span className="text-[11px] text-white/50">{t('presentationoverlay.click-press-space-or-hit-esc')}</span>
           </div>
         </div>
       ) : null}

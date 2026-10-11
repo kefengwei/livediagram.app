@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import {
   BORDER_RADIUS_PX,
   cornerRadiusPx,
@@ -25,6 +26,7 @@ export function SiteHeaderFace({
   editable,
   onSetRows,
 }: WebFaceProps) {
+  const { t } = useTranslation();
   const zoom = useCanvasZoom();
   const links = element.navLinks ?? [];
   const l = headerLayout(element.width, element.height, links);
@@ -79,7 +81,7 @@ export function SiteHeaderFace({
         >
           <InlineTextLine
             value={k.text}
-            placeholder="Link"
+            placeholder={t('siteheaderface.link')}
             editable={editable}
             onCommit={(v) => edit(i, v)}
             zoom={zoom}

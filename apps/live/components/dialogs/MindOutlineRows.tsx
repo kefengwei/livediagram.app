@@ -5,6 +5,7 @@
 // tree; each row edits its text in place (OutlineRowEditor) with bold / italic / underline; the
 // structure keys and the toolbar act on the row being edited through the pure row model
 // (lib/outline-rows.ts), and the caret is put back where the edit leaves it.
+import { useTranslation } from '@/lib/i18n';
 import {
   useCallback,
   useEffect,
@@ -81,6 +82,7 @@ export function MindOutlineRows({
   onRows: (rows: OutlineRow[]) => void;
   onSave: () => void;
 }) {
+  const { t } = useTranslation();
   const els = useRef(new Map<string, HTMLDivElement>());
   // The latest rows and save, for the key and paste handlers (stable, so rows don't re-render).
   const rowsRef = useRef(rows);
@@ -259,9 +261,9 @@ export function MindOutlineRows({
 
   return (
     <>
-      <div role="toolbar" aria-label="Outline" className="flex flex-wrap items-center gap-0.5">
+      <div role="toolbar" aria-label={t('mindoutlinerows.outline')} className="flex flex-wrap items-center gap-0.5">
         <MindOutlineToolButton
-          label="Bold"
+          label={t('mindoutlinerows.bold')}
           shortcut="⌘B"
           pressed={format.bold}
           disabled={active < 0}
@@ -270,7 +272,7 @@ export function MindOutlineRows({
           <BoldIcon />
         </MindOutlineToolButton>
         <MindOutlineToolButton
-          label="Italic"
+          label={t('mindoutlinerows.italic')}
           shortcut="⌘I"
           pressed={format.italic}
           disabled={active < 0}
@@ -279,7 +281,7 @@ export function MindOutlineRows({
           <ItalicIcon />
         </MindOutlineToolButton>
         <MindOutlineToolButton
-          label="Underline"
+          label={t('mindoutlinerows.underline')}
           shortcut="⌘U"
           pressed={format.underline}
           disabled={active < 0}
@@ -289,7 +291,7 @@ export function MindOutlineRows({
         </MindOutlineToolButton>
         <MindOutlineToolDivider />
         <MindOutlineToolButton
-          label="Outdent"
+          label={t('mindoutlinerows.outdent')}
           shortcut="Shift+Tab"
           disabled={!can(outdentRow)}
           onClick={act(outdentRow)}
@@ -297,7 +299,7 @@ export function MindOutlineRows({
           <OutdentIcon size={16} />
         </MindOutlineToolButton>
         <MindOutlineToolButton
-          label="Indent"
+          label={t('mindoutlinerows.indent')}
           shortcut="Tab"
           disabled={!can(indentRow)}
           onClick={act(indentRow)}
@@ -305,7 +307,7 @@ export function MindOutlineRows({
           <IndentIcon size={16} />
         </MindOutlineToolButton>
         <MindOutlineToolButton
-          label="Move Up"
+          label={t('mindoutlinerows.move-up')}
           shortcut="Alt+↑"
           disabled={!can((r, k) => moveRow(r, k, true))}
           onClick={act((r, k) => moveRow(r, k, true))}
@@ -313,7 +315,7 @@ export function MindOutlineRows({
           <ArrowUpIcon size={16} />
         </MindOutlineToolButton>
         <MindOutlineToolButton
-          label="Move Down"
+          label={t('mindoutlinerows.move-down')}
           shortcut="Alt+↓"
           disabled={!can((r, k) => moveRow(r, k, false))}
           onClick={act((r, k) => moveRow(r, k, false))}
@@ -322,7 +324,7 @@ export function MindOutlineRows({
         </MindOutlineToolButton>
         <MindOutlineToolDivider />
         <MindOutlineToolButton
-          label="Line Break"
+          label={t('mindoutlinerows.line-break')}
           shortcut="Shift+Enter"
           disabled={active < 0}
           onClick={() => activeId && typed(activeId, '\n')}

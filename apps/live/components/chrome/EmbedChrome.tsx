@@ -13,6 +13,7 @@
 // stretching across the canvas and colliding with the zoom dock when a
 // document has many tabs.
 
+import { useTranslation } from '@/lib/i18n';
 import { useRef, type ReactNode } from 'react';
 import { MenuIcon, useClickOutside, Glyph, useMenu, useMenuButton } from '@livediagram/ui';
 import type { Tab } from '@livediagram/document';
@@ -47,6 +48,7 @@ type EmbedChromeProps = {
 };
 
 export function EmbedChrome({ tabs, activeId, onSelectTab, shareCode }: EmbedChromeProps) {
+  const { t } = useTranslation();
   const openUrl = shareCode ? `/document/shared?s=${encodeURIComponent(shareCode)}` : '/new';
   // A menu button (docs/specs/004-interface-design/menus.md); Escape and the keys come from the hooks.
   const {
@@ -73,9 +75,7 @@ export function EmbedChrome({ tabs, activeId, onSelectTab, shareCode }: EmbedChr
         rel="noopener noreferrer"
         className="pointer-events-auto flex shrink-0 items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1.5 text-[11px] font-medium text-slate-700 shadow-sm transition hover:bg-white hover:text-slate-900 dark:bg-slate-900/90 dark:text-slate-200 dark:hover:bg-slate-900 dark:hover:text-white"
       >
-        <OpenExternalIcon />
-        Open in livediagram
-      </a>
+        <OpenExternalIcon />{t('embedchrome.open-in-livediagram')}</a>
       {tabs.length > 1 ? (
         <div ref={menuRef} className="pointer-events-auto relative">
           <button
@@ -134,7 +134,8 @@ function TabMenu({
   onClose: () => void;
   children: ReactNode;
 }) {
-  const { attach, surfaceProps } = useMenu({ onClose, trigger, label: 'Tabs' });
+  const { t } = useTranslation();
+  const { attach, surfaceProps } = useMenu({ onClose, trigger, label: t('embedchrome.tabs') });
   return (
     <div
       ref={attach}

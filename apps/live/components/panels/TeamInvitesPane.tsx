@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { lucideGlyph, IDENTITY_FILL, identityVars } from '@livediagram/ui';
 import { lucideMail } from '@livediagram/icons/lucide';
 
@@ -22,12 +23,13 @@ export function TeamInvitesPane({
   onAccept: (invite: TeamInvite) => void;
   onDecline: (invite: TeamInvite) => void;
 }) {
+  const { t } = useTranslation();
   if (invites.length === 0) {
     return (
       <EmptyState
         icon={<MailIcon />}
-        title="No pending invites"
-        description="When someone adds you to a team, the invitation shows up here for you to accept or decline."
+        title={t('teaminvitespane.no-pending-invites')}
+        description={t('teaminvitespane.when-someone-adds-you-to-a')}
       />
     );
   }
@@ -65,12 +67,8 @@ export function TeamInvitesPane({
               type="button"
               onClick={() => onDecline(invite)}
               className="shrink-0 rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:border-slate-300 hover:bg-slate-50 hover:text-slate-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-            >
-              Decline
-            </button>
-            <Button size="xs" onClick={() => onAccept(invite)} className="shrink-0 shadow-sm">
-              Accept
-            </Button>
+            >{t('teaminvitespane.decline')}</button>
+            <Button size="xs" onClick={() => onAccept(invite)} className="shrink-0 shadow-sm">{t('teaminvitespane.accept')}</Button>
           </li>
         );
       })}

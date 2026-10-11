@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import {
   BorderColourIcon,
   FillColourIcon,
@@ -81,6 +82,7 @@ export function MultiStyleSections({
   techIconSrc: ShapeElement | undefined;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const { sectionProps, colorProps, textColorHandlers, fillColorHandlers, strokeColorHandlers } =
     scaffold;
   // As in the single-element menu: a swatch reads the canvas's ink for any
@@ -106,13 +108,13 @@ export function MultiStyleSections({
       ) : null}
       {part === 'style' && colourable ? (
         <MenuAccordionSection
-          title="Colours"
+          title={t('multistylesections.colours')}
           icon={<PaletteMenuIcon />}
           {...sectionProps('m-colours')}
         >
           {textSrc ? (
             <ColourRow
-              label="Text"
+              label={t('multistylesections.text')}
               icon={<TextColourIcon />}
               value={shownColour(
                 textSrc,
@@ -128,7 +130,7 @@ export function MultiStyleSections({
           ) : null}
           {fillSrc ? (
             <ColourRow
-              label="Background"
+              label={t('multistylesections.background')}
               tone="soft"
               icon={<FillColourIcon />}
               value={fillSrc.fillColor ?? defaultFillColor(fillSrc, surface)}
@@ -139,7 +141,7 @@ export function MultiStyleSections({
           ) : null}
           {strokeSrc ? (
             <ColourRow
-              label="Border"
+              label={t('multistylesections.border')}
               icon={<BorderColourIcon />}
               value={shownColour(
                 strokeSrc,
@@ -158,7 +160,7 @@ export function MultiStyleSections({
             // single-arrow menu shows). Mixed selections use the Border row
             // above — its setter recolours the arrows too.
             <ColourRow
-              label="Line"
+              label={t('multistylesections.line')}
               icon={<BorderColourIcon />}
               value={shownColour(arrowSrc, 'line', surface, defaultArrowStrokeColor(surface))}
               ink={inkSwatch(arrowSrc, 'line', surface)}
@@ -169,7 +171,7 @@ export function MultiStyleSections({
           ) : null}
           <div className="px-2 pb-1 pt-1.5">
             <MenuActionButton
-              label="Reset to theme"
+              label={t('multistylesections.reset-to-theme')}
               onClick={() => {
                 props.onResetColors();
                 onClose();
@@ -180,7 +182,7 @@ export function MultiStyleSections({
       ) : null}
       {part === 'style' && borderableSel ? (
         <MenuAccordionSection
-          title="Border"
+          title={t('multistylesections.border-2')}
           icon={<BorderGlyph />}
           {...sectionProps('m-border-style')}
         >
@@ -214,7 +216,7 @@ export function MultiStyleSections({
           the selection holds any; applies to every tech icon in it. */}
       {part === 'motion' && techIconSrc ? (
         <MenuAccordionSection
-          title="Icon"
+          title={t('multistylesections.icon')}
           icon={<IconCategoryGlyph />}
           {...sectionProps('m-icon-size')}
         >
@@ -229,7 +231,7 @@ export function MultiStyleSections({
       {/* Weight — every line-art icon in the selection (docs/specs/004-interface-design/iconography.md). */}
       {part === 'motion' && lineIconSrc ? (
         <MenuAccordionSection
-          title="Weight"
+          title={t('multistylesections.weight')}
           icon={<IconCategoryGlyph />}
           {...sectionProps('m-icon-weight')}
         >

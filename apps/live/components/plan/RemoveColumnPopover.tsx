@@ -5,11 +5,13 @@
 // this board (picked in a menu), or move them to the Trash (where they can be restored). The cards are the state's,
 // so the choice reaches every board that shows it, and the popover says so. Cancel keeps the state; Delete Status
 // does the move, then removes the state's column from every board.
+
 import { useId, useState, type ReactNode } from 'react';
 import type { PlanColumn } from '@livediagram/items';
 import { Button, Select, TrashIcon } from '@livediagram/ui';
 import { AnchoredPopover } from '@/components/primitives/AnchoredPopover';
 import { PlanTypeGlyph } from './plan-type-glyph';
+import { useTranslation } from '@/lib/i18n';
 
 export type RemoveColumnChoice = { kind: 'move'; to: string } | { kind: 'trash' };
 
@@ -32,10 +34,12 @@ export function RemoveColumnPopover({
   onCancel: () => void;
   onRemove: (choice: RemoveColumnChoice) => void;
 }) {
+  const { t } = useTranslation();
+  
   const [kind, setKind] = useState<'move' | 'trash'>(others.length > 0 ? 'move' : 'trash');
   const [to, setTo] = useState(others[0]?.status ?? '');
   const selectId = useId();
-  const cards = cardCount === 1 ? 'Its card' : `Its ${cardCount} cards`;
+  const cards = cardCount === 1 ? t('removecolumnpopover.its-card') : `Its ${cardCount} cards`;
   return (
     <AnchoredPopover
       anchor={anchor}
@@ -49,23 +53,19 @@ export function RemoveColumnPopover({
         className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-3 text-slate-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
       >
         <div>
-          <h3 className="text-[14px] font-semibold">Delete {column.name}?</h3>
+          <h3 className="text-[14px] font-semibold">{t('removecolumnpopover.delete')}{column.name}?</h3>
           <p className="mt-0.5 text-[12px] text-slate-500 dark:text-slate-400">
-            {cards} {cardCount === 1 ? 'is' : 'are'} in {column.name}, on every board that shows it.
-            Where should {cardCount === 1 ? 'it' : 'they'} go?
-          </p>
+            {cards} {cardCount === 1 ? 'is' : 'are'}{t('removecolumnpopover.in')}{column.name}{t('removecolumnpopover.on-every-board-that-shows-it')}{cardCount === 1 ? 'it' : 'they'}{t('removecolumnpopover.go')}</p>
         </div>
-        <div role="radiogroup" aria-label="Where the cards go" className="flex flex-col gap-1.5">
+        <div role="radiogroup" aria-label={t('removecolumnpopover.where-the-cards-go')} className="flex flex-col gap-1.5">
           {others.length > 0 ? (
             <Option
               on={kind === 'move'}
               onPick={() => setKind('move')}
               icon={<PlanTypeGlyph glyph="send" size={16} />}
-              title="Move to Another Column"
+              title={t('removecolumnpopover.move-to-another-column')}
             >
-              <label htmlFor={selectId} className="sr-only">
-                Move the cards to
-              </label>
+              <label htmlFor={selectId} className="sr-only">{t('removecolumnpopover.move-the-cards-to')}</label>
               <Select
                 id={selectId}
                 className="mt-1.5 w-full"
@@ -89,17 +89,13 @@ export function RemoveColumnPopover({
             on={kind === 'trash'}
             onPick={() => setKind('trash')}
             icon={<TrashIcon size={16} />}
-            title="Move to the Trash"
+            title={t('removecolumnpopover.move-to-the-trash')}
           >
-            <p className="mt-0.5 text-[12px] text-slate-500 dark:text-slate-400">
-              You can restore them from the Trash.
-            </p>
+            <p className="mt-0.5 text-[12px] text-slate-500 dark:text-slate-400">{t('removecolumnpopover.you-can-restore-them-from-the')}</p>
           </Option>
         </div>
         <div className="flex justify-end gap-2">
-          <Button variant="secondary" size="sm" onClick={onCancel}>
-            Cancel
-          </Button>
+          <Button variant="secondary" size="sm" onClick={onCancel}>{t('removecolumnpopover.cancel')}</Button>
           <Button
             variant="primary"
             size="sm"
@@ -107,9 +103,7 @@ export function RemoveColumnPopover({
               onRemove(kind === 'move' && to ? { kind: 'move', to } : { kind: 'trash' })
             }
           >
-            <TrashIcon size={14} />
-            Delete Status
-          </Button>
+            <TrashIcon size={14} />{t('removecolumnpopover.delete-status')}</Button>
         </div>
       </div>
     </AnchoredPopover>
@@ -130,6 +124,7 @@ function Option({
   title: string;
   children: ReactNode;
 }) {
+  
   const ring = on
     ? 'border-brand-400 bg-brand-50/70 dark:border-brand-500/60 dark:bg-brand-500/10'
     : 'border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600';

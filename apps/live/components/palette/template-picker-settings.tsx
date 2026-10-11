@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import { NAME_MAX_LENGTH } from '@livediagram/document';
 import { TextInput, Glyph } from '@livediagram/ui';
@@ -63,6 +64,7 @@ export function NewDocumentSettingsStep({
   // skip this step" (docs/specs/013-workspace/default-folders.md "Skipping the Location step").
   stepFooter?: ReactNode;
 }) {
+  const { t } = useTranslation();
   // Local Browser is Offline Mode (docs/specs/006-document/offline-mode.md): it drives the warning below and
   // removes the folder step (an offline document has no server folder / team).
   const offline = isOfflineLocation(saveLocation);
@@ -73,7 +75,7 @@ export function NewDocumentSettingsStep({
     <div className="flex flex-col gap-5">
       {/* Name */}
       <label className="flex flex-col gap-1.5">
-        <span className={fieldLabel}>Document name</span>
+        <span className={fieldLabel}>{t('template-picker-settings.document-name')}</span>
         <TextInput
           value={documentName}
           placeholder={placeholder}
@@ -90,7 +92,7 @@ export function NewDocumentSettingsStep({
           can join without reshaping the step. Sits above Save In because the
           location decides whether placement applies at all. */}
       <div className="flex flex-col gap-1.5">
-        <span className={fieldLabel}>Save location</span>
+        <span className={fieldLabel}>{t('template-picker-settings.save-location')}</span>
         <SaveLocationPicker value={saveLocation} onChange={onSaveLocation} />
       </div>
 
@@ -111,7 +113,7 @@ export function NewDocumentSettingsStep({
             <HelpArticleLink
               article="offlineMode"
               variant="text"
-              label="Learn more"
+              label={t('template-picker-settings.learn-more')}
               className="!text-amber-800 underline hover:!text-amber-900 dark:!text-amber-200 dark:hover:!text-amber-100"
             />
           </span>

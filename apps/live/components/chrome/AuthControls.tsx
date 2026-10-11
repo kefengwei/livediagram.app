@@ -20,6 +20,7 @@
 // outside a ClerkProvider would throw, so the disabled branch never
 // touches Clerk.
 
+import { useTranslation } from '@/lib/i18n';
 import { useDeferredAuth } from '@/components/providers/deferred-auth';
 import { useSelfHostAuth } from '@/lib/self-host-auth';
 import Link from 'next/link';
@@ -56,6 +57,7 @@ type AuthControlsProps = {
 };
 
 function AuthControlsEnabled({ onOpenAccount }: AuthControlsProps) {
+  const { t } = useTranslation();
   const { authLoaded, isSignedIn, user, signOut } = useDeferredAuth();
   // A menu button (docs/specs/004-interface-design/menus.md): the menu keyboard comes from the hooks.
   const {
@@ -82,9 +84,7 @@ function AuthControlsEnabled({ onOpenAccount }: AuthControlsProps) {
       <Link href={signInHref} className={`${HEADER_ACTION_BTN} ${HEADER_ACTION_TONE}`}>
         <HeaderGlyph>
           <SignInIcon />
-        </HeaderGlyph>
-        Sign in
-      </Link>
+        </HeaderGlyph>{t('authcontrols.sign-in')}</Link>
     );
   }
 
@@ -107,7 +107,7 @@ function AuthControlsEnabled({ onOpenAccount }: AuthControlsProps) {
         type="button"
         onClick={toggle}
         onKeyDown={onTriggerKeyDown}
-        aria-label="Account menu"
+        aria-label={t('authcontrols.account-menu')}
         aria-haspopup="menu"
         aria-expanded={menuOpen}
         className={`${HEADER_ACTION_BTN} ${HEADER_ACTION_TONE}`}
@@ -155,9 +155,7 @@ function AuthControlsEnabled({ onOpenAccount }: AuthControlsProps) {
                 onOpenAccount();
               }}
               className="block w-full rounded px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700"
-            >
-              Account
-            </button>
+            >{t('authcontrols.account')}</button>
           ) : (
             <Link
               href="/explorer?settings=account"
@@ -165,9 +163,7 @@ function AuthControlsEnabled({ onOpenAccount }: AuthControlsProps) {
               tabIndex={-1}
               onClick={closeMenu}
               className="block w-full rounded px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700"
-            >
-              Account
-            </Link>
+            >{t('authcontrols.account-2')}</Link>
           )}
           <button
             type="button"
@@ -182,9 +178,7 @@ function AuthControlsEnabled({ onOpenAccount }: AuthControlsProps) {
               void signOut({ redirectUrl: '/' });
             }}
             className="block w-full rounded px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700"
-          >
-            Sign out
-          </button>
+          >{t('authcontrols.sign-out')}</button>
         </AccountMenu>
       ) : null}
     </div>

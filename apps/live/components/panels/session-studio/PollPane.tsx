@@ -10,6 +10,7 @@
 // results and the End control live in the floating Poll panel everyone can
 // see, not behind a menu only the host has open.
 
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import {
@@ -100,6 +101,7 @@ export function PollComposerBody({
   options: string[];
   onOptionsChange: (next: string[]) => void;
 }) {
+  const { t } = useTranslation();
   const optionRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   const trimmed = options.map((o) => o.trim()).filter((o) => o.length > 0);
@@ -109,13 +111,13 @@ export function PollComposerBody({
   // bigger than the cap — before asking rather than after.
   const rosterOptions = pollStyleUsesRoster(style) ? pollCollaboratorOptions(collaborators) : [];
   const missing = !question.trim()
-    ? 'Write a question to ask'
+    ? t('pollpane.write-a-question-to-ask')
     : style === 'choice' && trimmed.length < POLL_OPTIONS_MIN
       ? `Add at least ${POLL_OPTIONS_MIN} answers`
       : // The room is the ballot, so there is nothing the facilitator can type
         // to fix this one: it needs another person, not another answer.
         pollStyleUsesRoster(style) && rosterOptions.length < POLL_OPTIONS_MIN
-        ? 'Need at least 2 people here to vote on'
+        ? t('pollpane.need-at-least-2-people-here')
         : null;
 
   const start = () => {
@@ -140,9 +142,7 @@ export function PollComposerBody({
           one, or asking the people in the room you're presenting to), it just
           reaches nobody else, and the facilitator should know that first. */}
       {!hasAudience ? (
-        <StudioCallout>
-          This document isn&apos;t shared, so only you will get this poll. Share it to ask others.
-        </StudioCallout>
+        <StudioCallout>{t('pollpane.this-document-isn-t-shared-so')}</StudioCallout>
       ) : null}
       <div className="flex flex-col gap-1.5">
         <StudioLabel
@@ -151,9 +151,7 @@ export function PollComposerBody({
               ? `${question.length}/${POLL_QUESTION_MAX}`
               : undefined
           }
-        >
-          Question
-        </StudioLabel>
+        >{t('pollpane.question')}</StudioLabel>
         <textarea
           value={question}
           rows={2}
@@ -170,13 +168,13 @@ export function PollComposerBody({
               start();
             }
           }}
-          placeholder="What should we tackle first?"
-          aria-label="Poll question"
+          placeholder={t('pollpane.what-should-we-tackle-first')}
+          aria-label={t('pollpane.poll-question')}
           className={`${field} resize-none leading-snug`}
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <StudioLabel>Answers</StudioLabel>
+        <StudioLabel>{t('pollpane.answers')}</StudioLabel>
         <PollStyleTiles style={style} onChange={setStyle} />
       </div>
       {pollStyleUsesRoster(style) ? <RosterPreview options={rosterOptions} /> : null}
@@ -227,19 +225,14 @@ export function PollComposerBody({
               type="button"
               onClick={() => addOption(true)}
               className="ml-6 self-start rounded-md px-1.5 py-0.5 text-[11px] font-semibold text-brand-600 transition hover:bg-brand-50 dark:text-brand-300 dark:hover:bg-brand-500/15"
-            >
-              + Add answer
-            </button>
+            >{t('pollpane.add-answer')}</button>
           ) : null}
         </div>
       ) : null}
       <StudioButton variant="primary" onClick={start} disabled={missing !== null}>
-        {missing ?? 'Ask everyone'}
+        {missing ?? t('pollpane.ask-everyone')}
       </StudioButton>
-      <p className="text-center text-[10px] leading-snug text-slate-400">
-        Everyone here is asked, view-only visitors included. Answers are anonymous and nothing is
-        saved to the document.
-      </p>
+      <p className="text-center text-[10px] leading-snug text-slate-400">{t('pollpane.everyone-here-is-asked-view-only')}</p>
     </div>
   );
 }
@@ -249,17 +242,15 @@ export function PollComposerBody({
 // writes, and a list they could edit would be a list that disagrees with who is
 // actually here.
 function RosterPreview({ options }: { options: string[] }) {
+  const { t } = useTranslation();
   if (options.length === 0) {
     return (
-      <p className="rounded-lg bg-slate-50 px-2.5 py-2 text-[11px] text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">
-        Nobody else is here yet. Share the document and this poll will list whoever has joined when
-        you ask it.
-      </p>
+      <p className="rounded-lg bg-slate-50 px-2.5 py-2 text-[11px] text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">{t('pollpane.nobody-else-is-here-yet-share')}</p>
     );
   }
   return (
     <div className="flex flex-col gap-1">
-      <StudioLabel>Who people can pick</StudioLabel>
+      <StudioLabel>{t('pollpane.who-people-can-pick')}</StudioLabel>
       <ul className="flex flex-wrap gap-1">
         {options.map((name) => (
           <li
@@ -270,29 +261,24 @@ function RosterPreview({ options }: { options: string[] }) {
           </li>
         ))}
       </ul>
-      <p className="text-[10px] text-slate-400">
-        Taken when you ask, so anyone who joins after won&rsquo;t be on the list.
-      </p>
+      <p className="text-[10px] text-slate-400">{t('pollpane.taken-when-you-ask-so-anyone')}</p>
     </div>
   );
 }
 
 function RunningPoll({ poll }: { poll: LivePoll }) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50/60 p-3 dark:border-emerald-500/30 dark:bg-emerald-500/10">
         <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" aria-hidden />
-          Asking now · {POLL_STYLE_LABEL[poll.style]}
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" aria-hidden />{t('pollpane.asking-now')}{POLL_STYLE_LABEL[poll.style]}
         </span>
         <span className="text-[13px] font-semibold leading-snug text-slate-800 dark:text-slate-100">
           {poll.question}
         </span>
       </div>
-      <StudioCallout>
-        Answers come in on the Poll panel, where you can end the poll or keep its results on the
-        canvas.
-      </StudioCallout>
+      <StudioCallout>{t('pollpane.answers-come-in-on-the-poll')}</StudioCallout>
     </div>
   );
 }

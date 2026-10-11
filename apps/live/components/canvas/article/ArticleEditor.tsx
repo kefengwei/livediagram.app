@@ -8,6 +8,7 @@
 // an undo) is merged in block by block, so neither loses the other. After every change it measures
 // where the writing reaches (how many pages, where each zone landed) and reports it, so the host
 // can add or remove pages and move zones' elements (useArticles).
+import { useTranslation } from '@/lib/i18n';
 import {
   useEffect,
   useLayoutEffect,
@@ -680,6 +681,7 @@ function replaceContent(
 // The foot of an article's last page when the tab is at its page limit and the writing runs past it
 // (docs/specs/007-editor/article-pages.md "Flowing onto pages", Limit). In canvas space, on the page.
 function PageLimitNotice({ page }: { page: LaidOutPage }) {
+  const { t } = useTranslation();
   return (
     <div
       role="status"
@@ -692,9 +694,7 @@ function PageLimitNotice({ page }: { page: LaidOutPage }) {
         height: 32,
       }}
     >
-      <span className="rounded-md bg-amber-50 px-2 py-1 text-xs font-medium text-amber-800 ring-1 ring-amber-200 dark:bg-amber-500/15 dark:text-amber-200 dark:ring-amber-500/30">
-        This tab has reached {MAX_ILLUSTRATE_PAGES} pages: the writing below this line is hidden
-      </span>
+      <span className="rounded-md bg-amber-50 px-2 py-1 text-xs font-medium text-amber-800 ring-1 ring-amber-200 dark:bg-amber-500/15 dark:text-amber-200 dark:ring-amber-500/30">{t('articleeditor.this-tab-has-reached')}{MAX_ILLUSTRATE_PAGES}{t('articleeditor.pages-the-writing-below-this-line')}</span>
     </div>
   );
 }

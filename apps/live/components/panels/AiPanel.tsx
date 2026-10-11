@@ -1,5 +1,6 @@
 'use client';
 
+
 import { useMemo } from 'react';
 import { useSelectionOf } from '@/hooks/canvas/useSelectionStore';
 import { sameMembers, selectionIds, type Selection } from '@/lib/selection-store';
@@ -9,6 +10,7 @@ import type { AiMode } from '@/lib/api-client';
 import { HelpArticleLink } from '@/components/primitives/HelpArticleLink';
 import { useAiPanelSession } from './useAiPanelSession';
 import { HoverCard, SOLID_BRAND_DARK_CONTROL } from '@livediagram/ui';
+import { useTranslation } from '@/lib/i18n';
 
 const selectionSetOf = (s: Selection) => selectionIds(s.selectedId, s.multiSelectedIds);
 
@@ -69,6 +71,8 @@ export function AiPanelContent({
   onApplyElements,
   showSuggestions,
 }: AiPanelProps) {
+  const { t } = useTranslation();
+  
   // What the request is about: the selection, read from the store (empty = the whole tab). The panel
   // describes it, so a selection change renders the panel and not the editor
   // (docs/specs/008-canvas/blueprints/selection-store.md).
@@ -113,7 +117,7 @@ export function AiPanelContent({
     focusIds.length > 0
       ? `${focusIds.length} selected element${focusIds.length !== 1 ? 's' : ''}`
       : contextElements.length === 0
-        ? 'No elements'
+        ? t('aipanel.no-elements')
         : `${contextElements.length} element${contextElements.length !== 1 ? 's' : ''} (whole tab)`;
 
   return (
@@ -142,7 +146,7 @@ export function AiPanelContent({
         <HelpArticleLink
           article="connectAiTool"
           variant="button"
-          label="Connect agent"
+          label={t('aipanel.connect-agent')}
           icon={<PlugIcon />}
           className="!gap-1 !px-2 !py-1 !text-[11px]"
         />
@@ -190,12 +194,12 @@ export function AiPanelContent({
             <div className="flex flex-col gap-1.5">
               {status === 'error' ? (
                 <p className="text-red-600 dark:text-red-400">
-                  {statusMsg || 'Something went wrong.'}
+                  {statusMsg || t('aipanel.something-went-wrong')}
                 </p>
               ) : (
                 <>
                   {summary && <p className="text-slate-600 dark:text-slate-300">{summary}</p>}
-                  <p className="text-slate-400 dark:text-slate-400">Press ⌘Z to undo.</p>
+                  <p className="text-slate-400 dark:text-slate-400">{t('aipanel.press-z-to-undo')}</p>
                 </>
               )}
             </div>
@@ -207,22 +211,17 @@ export function AiPanelContent({
       {history.length > 0 && (
         <div className="flex items-center justify-between gap-2 px-2 pb-1 pt-0.5">
           <span className="text-[10px] text-slate-400 dark:text-slate-400">
-            {Math.floor(history.length / 2)} prior exchange{history.length > 2 ? 's' : ''} in
-            context
-          </span>
+            {Math.floor(history.length / 2)}{t('aipanel.prior-exchange')}{history.length > 2 ? 's' : ''}{t('aipanel.in-context')}</span>
           <button
             type="button"
             onClick={() => setHistory([])}
             className="rounded border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-medium text-slate-500 transition hover:border-slate-300 hover:bg-slate-100 hover:text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200"
-          >
-            Clear context
-          </button>
+          >{t('aipanel.clear-context')}</button>
         </div>
       )}
 
       {/* Context hint */}
-      <p className="px-3 pb-0.5 pt-0.5 text-[10px] text-slate-400 dark:text-slate-400">
-        Context: {contextLabel}
+      <p className="px-3 pb-0.5 pt-0.5 text-[10px] text-slate-400 dark:text-slate-400">{t('aipanel.context')}{contextLabel}
       </p>
 
       {/* Prompt + send */}
@@ -240,7 +239,7 @@ export function AiPanelContent({
           type="button"
           onClick={() => void handleSend()}
           disabled={isLoading || ownerId === 'self'}
-          aria-label="Send"
+          aria-label={t('aipanel.send')}
           className={`flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-500 py-1.5 text-[12px] font-medium text-white transition hover:bg-brand-600 disabled:opacity-50 ${SOLID_BRAND_DARK_CONTROL}`}
         >
           {isLoading ? <Spinner small /> : <SendIcon />}
@@ -276,6 +275,7 @@ function inlineFormat(text: string): React.ReactNode[] {
 }
 
 function MarkdownText({ text }: { text: string }) {
+  
   if (!text) return null;
   const lines = text.split('\n');
   const nodes: React.ReactNode[] = [];

@@ -5,6 +5,7 @@
 // card. Add Filter picks a field, then a value: only the fields the matching cards' types offer and the values some
 // matching card has (each with its count), so no pick ever leaves nothing. The filters are the view's own, saved with
 // it, so everyone sees the same search; someone who may only view sees them but cannot change them.
+import { useTranslation } from '@/lib/i18n';
 import { useMemo } from 'react';
 import {
   CARD_SEARCH_FILTERS_MAX,
@@ -43,6 +44,7 @@ export function CardSearchView({
   elementId,
   settings,
 }: PlanViewProps) {
+  const { t } = useTranslation();
   const filters = settings.filters ?? NO_FILTERS;
   const types = plan?.types;
   const statusNames = plan?.statusNames ?? NO_STATUSES;
@@ -60,7 +62,7 @@ export function CardSearchView({
   const total = matching.length;
   return (
     <ViewFrame
-      title="Card Search"
+      title={t('cardsearchview.card-search')}
       count={total}
       countLabel={`${total} ${total === 1 ? 'card' : 'cards'}`}
       palette={palette}
@@ -71,7 +73,7 @@ export function CardSearchView({
       <div className="absolute inset-0 flex flex-col">
         <div
           role="toolbar"
-          aria-label="Filters"
+          aria-label={t('cardsearchview.filters')}
           className="flex shrink-0 flex-wrap items-center gap-1.5 border-b px-3 py-2"
           style={{ borderColor: palette.border }}
           onPointerDown={(e) => e.stopPropagation()}
@@ -117,9 +119,7 @@ export function CardSearchView({
             />
           ) : null}
           {filters.length === 0 && !canEdit ? (
-            <span className="text-[12px]" style={{ color: palette.muted }}>
-              Every card
-            </span>
+            <span className="text-[12px]" style={{ color: palette.muted }}>{t('cardsearchview.every-card')}</span>
           ) : null}
           {canEdit && filters.length > 0 ? (
             <button
@@ -129,16 +129,14 @@ export function CardSearchView({
               onClick={() => {
                 save([]);
               }}
-            >
-              Clear All
-            </button>
+            >{t('cardsearchview.clear-all')}</button>
           ) : null}
         </div>
         {total === 0 ? (
           <p className="px-3 py-4 text-[13px]" style={{ color: palette.muted }}>
             {filters.length
-              ? 'No cards match these filters.'
-              : 'No cards yet. Add cards to a board.'}
+              ? t('cardsearchview.no-cards-match-these-filters')
+              : t('cardsearchview.no-cards-yet-add-cards-to')}
           </p>
         ) : (
           <ul
@@ -169,7 +167,7 @@ export function CardSearchView({
                       {itemTitle(card)}
                     </span>
                     <span className="shrink-0 text-[11px]" style={{ color: palette.muted }}>
-                      {status ? statusNames.get(status) : 'No status'}
+                      {status ? statusNames.get(status) : t('cardsearchview.no-status')}
                     </span>
                     {assignee ? <PersonDisc person={assignee} /> : null}
                   </button>

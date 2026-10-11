@@ -18,6 +18,7 @@
 // A view-role visitor still gets to roll and watch it; it simply isn't written
 // back, which is why `shared` exists — see below.
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { usePressWithoutDrag } from '@/hooks/ui/usePressWithoutDrag';
 import { spinFrameDelays, spinReel, type PickerCandidate } from '@/lib/picker';
@@ -50,6 +51,7 @@ export function PickerFace({
   // Rolls and returns the result to show; absent on a surface that can't roll.
   onRoll?: () => PickerCandidate | null;
 }) {
+  const { t } = useTranslation();
   // The frame currently on the reel, or null when standing still.
   const [spinning, setSpinning] = useState<PickerCandidate | null>(null);
   const timers = useRef<number[]>([]);
@@ -124,7 +126,7 @@ export function PickerFace({
     ? (candidates.find((c) => c.label === result) ?? { label: result })
     : null;
   const shown = spinning ?? settled;
-  const shownText = shown?.label ?? (empty ? 'Nothing to pick from' : '—');
+  const shownText = shown?.label ?? (empty ? t('pickerface.nothing-to-pick-from') : '—');
 
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center gap-1 px-3 py-2">
@@ -163,7 +165,7 @@ export function PickerFace({
           type="button"
           {...press}
           disabled={empty}
-          aria-label="Pick at random"
+          aria-label={t('pickerface.pick-at-random')}
           className="pointer-events-auto mt-0.5 cursor-pointer rounded-full bg-black/[0.06] px-3 py-1 text-[11px] font-semibold transition hover:bg-black/[0.1] disabled:cursor-default disabled:opacity-50 dark:bg-white/10 dark:hover:bg-white/15"
           style={{ color: textColor }}
         >

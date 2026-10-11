@@ -4,6 +4,7 @@
 // before its cog, each the cog's size with a tooltip: Tidy Up (while the selection holds a
 // hand-drawn line; the mind map's tidy wand), Mirror (pressed while on; opens its popover,
 // LogoMirrorPopover) and Guides (pressed while the page shows them; opens LogoGuidesPopover).
+import { useTranslation } from '@/lib/i18n';
 import { useContext, type ReactNode } from 'react';
 import { lucideGrid3x3, lucideWandSparkles } from '@livediagram/icons/lucide';
 import { lucideGlyph, Tooltip } from '@livediagram/ui';
@@ -80,12 +81,13 @@ function TidyUpButton({
   tidyUp: () => void;
   labelled: boolean;
 }) {
+  const { t } = useTranslation();
   useSelectionOf((s) => s.selectedId);
   useSelectionOf((s) => s.multiSelectedIds);
   return canTidyUp() ? (
     <TitleButton
-      label="Tidy Up: straighten the selected drawing"
-      text={labelled ? 'Tidy Up' : undefined}
+      label={t('logotitlebar.tidy-up-straighten-the-selected-drawing')}
+      text={labelled ? t('logotitlebar.tidy-up') : undefined}
       onClick={tidyUp}
     >
       <TidyUpIcon />

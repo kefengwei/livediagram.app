@@ -13,6 +13,7 @@
 // itself and re-offers when the tab's theme changes (the dismissal is
 // keyed to the specific mismatch, not forever).
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { CloseIcon, SOLID_BRAND_DARK_CONTROL, Glyph } from '@livediagram/ui';
 import { isLightColor } from '@livediagram/document';
@@ -20,6 +21,7 @@ import { getTheme } from '@/lib/themes';
 import { useAppearance } from '@/hooks/ui/useAppearance';
 
 export function ThemeModeBanner({ themeId }: { themeId: string | undefined }) {
+  const { t } = useTranslation();
   const { appearance, set } = useAppearance();
   // The mismatch this banner was dismissed for. Keyed by theme + target
   // so dismissing it for one tab doesn't suppress it forever: switch to a
@@ -33,10 +35,10 @@ export function ThemeModeBanner({ themeId }: { themeId: string | undefined }) {
   if (appearance === target || dismissedKey === key) return null;
 
   const toDark = target === 'dark';
-  const title = toDark ? 'This tab uses a dark theme' : 'This tab uses a light theme';
+  const title = toDark ? t('thememodebanner.this-tab-uses-a-dark-theme') : t('thememodebanner.this-tab-uses-a-light-theme');
   const sub = toDark
-    ? 'Switch the editor to dark mode to match.'
-    : 'Switch the editor to light mode to match.';
+    ? t('thememodebanner.switch-the-editor-to-dark-mode')
+    : t('thememodebanner.switch-the-editor-to-light-mode');
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-0 z-[var(--z-overlay)] flex justify-center px-4 pb-16">
@@ -48,7 +50,7 @@ export function ThemeModeBanner({ themeId }: { themeId: string | undefined }) {
         <button
           type="button"
           onClick={() => set(target)}
-          aria-label={toDark ? 'Switch to dark mode' : 'Switch to light mode'}
+          aria-label={toDark ? t('thememodebanner.switch-to-dark-mode') : t('thememodebanner.switch-to-light-mode')}
           className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-500 text-white shadow-sm transition hover:bg-brand-600 ${SOLID_BRAND_DARK_CONTROL}`}
         >
           {toDark ? <MoonIcon /> : <SunIcon />}
@@ -56,7 +58,7 @@ export function ThemeModeBanner({ themeId }: { themeId: string | undefined }) {
         <button
           type="button"
           onClick={() => setDismissedKey(key)}
-          aria-label="Dismiss"
+          aria-label={t('thememodebanner.dismiss')}
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200"
         >
           <CloseIcon size={15} />

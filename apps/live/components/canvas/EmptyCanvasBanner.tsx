@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { HelpArticleLink } from '@/components/primitives/HelpArticleLink';
 import { Glyph } from '@livediagram/ui';
 
@@ -26,6 +27,7 @@ export function EmptyCanvasBanner({
   onQuickStart: () => void;
   placementClassName?: string;
 }) {
+  const { t } = useTranslation();
   return (
     <div
       className={`pointer-events-none fixed inset-x-0 flex justify-center px-4 ${placementClassName}`}
@@ -41,12 +43,11 @@ export function EmptyCanvasBanner({
         </span>
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-medium text-slate-800 dark:text-slate-100">
-            {tabName} is empty
-          </p>
+            {tabName}{t('emptycanvasbanner.is-empty')}</p>
           <p className="mt-0.5 truncate text-xs text-slate-500 phone:hidden dark:text-slate-400">
             {readOnly
-              ? 'Nothing here yet. The owner can build it out, and your view updates live.'
-              : 'Add an element from the Palette, or start from a template.'}
+              ? t('emptycanvasbanner.nothing-here-yet-the-owner-can')
+              : t('emptycanvasbanner.add-an-element-from-the-palette')}
           </p>
         </div>
         {readOnly ? null : (
@@ -64,7 +65,7 @@ export function EmptyCanvasBanner({
               // hovering turned the label dark brand on dark slate.
               className="optical-edges inline-flex items-center rounded-lg border phone:rounded-full border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 shadow-sm transition hover:bg-slate-50 hover:text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white"
             >
-              <span className="text-optical-line">Quick Start</span>
+              <span className="text-optical-line">{t('emptycanvasbanner.quick-start')}</span>
             </button>
           </div>
         )}

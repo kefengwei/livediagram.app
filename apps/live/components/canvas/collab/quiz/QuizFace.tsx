@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import {
   clampQuizSeconds,
@@ -72,6 +73,7 @@ export function QuizFace({
   actions: QuizActions;
   onOpenSettings?: () => void;
 }) {
+  const { t } = useTranslation();
   const [editing, setEditing] = useState(false);
   // The element's stroke colour, when one is set, draws the outlines: the
   // disc's edge, the countdown ring and the answers' borders. Unset, they are
@@ -196,7 +198,7 @@ export function QuizFace({
         >
           <QuizCentre
             phase={phase}
-            question={label.trim() || 'Untitled question'}
+            question={label.trim() || t('quizface.untitled-question')}
             optionCount={options.length}
             seconds={seconds}
             secondsLeft={Math.ceil(remaining / 1000)}
@@ -253,7 +255,7 @@ export function QuizFace({
           className="absolute -translate-x-1/2"
           style={{ left: c, top: c - QUIZ_DISC_RADIUS + ELLIPSIS_INSET }}
         >
-          <ElementEllipsisMenu kind="command" label="Quiz options" color={textColor}>
+          <ElementEllipsisMenu kind="command" label={t('quizface.quiz-options')} color={textColor}>
             {(close) => {
               const row = (text: string, fn?: () => void) =>
                 fn ? (

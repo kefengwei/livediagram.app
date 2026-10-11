@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import {
   TECH_ICON_DND_MIME,
   TECH_PROVIDERS,
@@ -36,6 +37,7 @@ export function TechPickerTab({
   techResults,
   loading = false,
 }: TechPickerTabProps) {
+  const { t } = useTranslation();
   // A provider is a category. Its artwork is its first mark, so the tile
   // carries the brand's own colours rather than a generic glyph.
   const categories = TECH_PROVIDERS.map((provider) => {
@@ -70,7 +72,7 @@ export function TechPickerTab({
               key={icon.id}
               label={`Add ${icon.label}`}
               caption={icon.short ?? icon.label}
-              description="Click to add, or drag onto the canvas."
+              description={t('techpickertab.click-to-add-or-drag-onto')}
               onClick={() => addTechIcon(icon.id)}
               noTint
               draggable
@@ -89,7 +91,7 @@ export function TechPickerTab({
       query={techQuery}
       onQueryChange={setTechQuery}
       searchInput={{
-        placeholder: 'Search tech',
+        placeholder: t('techpickertab.search-tech'),
         ariaLabel: 'Search technology icons',
         clearAriaLabel: 'Clear technology search',
         clearDescription: 'Clear the technology search query.',

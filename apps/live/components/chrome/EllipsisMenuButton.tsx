@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 
 import { PortalMenu } from './TabPortalMenu';
@@ -82,6 +83,7 @@ export function EllipsisMenuButton({
   modeChoice?: TabModeChoice;
   planTab?: boolean;
 } & SessionToolsProps) {
+  const { t } = useTranslation();
   // In state, so the menu anchors to the button on the render that opens it.
   const [button, setButton] = useState<HTMLButtonElement | null>(null);
   return (
@@ -90,7 +92,7 @@ export function EllipsisMenuButton({
         ref={setButton}
         type="button"
         onClick={onToggle}
-        aria-label="Tab menu"
+        aria-label={t('ellipsismenubutton.tab-menu')}
         aria-haspopup="dialog"
         aria-expanded={open}
         data-tour-id="tab-menu-trigger"

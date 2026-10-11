@@ -4,6 +4,7 @@
 // cell, grown with its text, whose references show in their colours through an overlay drawn underneath (the
 // textarea's own text is transparent, its caret not). Under it, the function list while a name is typed, the
 // argument hint inside a call, and the reason a formula cannot be saved.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef } from 'react';
 import { FUNCTION_DOCS, formatA1 } from '@livediagram/sheets';
 import { argumentAt, argumentSlot, refSpans } from './formula-assist';
@@ -45,13 +46,14 @@ export function FunctionAssist({
   draft: string;
   onPick: (name: string) => void;
 }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const arg = argumentAt(draft, input.caret);
   if (input.matches)
     return (
       <ul
         role="listbox"
-        aria-label="Functions"
+        aria-label={t('sheetcelleditor.functions')}
         className="absolute left-0 top-full z-20 mt-1 max-h-64 w-72 overflow-auto rounded-lg border py-1 text-[12px] shadow-lg"
         style={{
           backgroundColor: c.palette.surface,
@@ -74,7 +76,7 @@ export function FunctionAssist({
           >
             <span className="font-semibold">{name}</span>
             <span className="ml-2" style={{ color: c.palette.muted }}>
-              {input.matches!.ranges.has(name) ? 'Named range' : FUNCTION_DOCS[name]?.summary}
+              {input.matches!.ranges.has(name) ? t('sheetcelleditor.named-range') : FUNCTION_DOCS[name]?.summary}
             </span>
           </li>
         ))}

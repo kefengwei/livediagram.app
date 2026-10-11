@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import type { TemplateCategory, TemplateDescriptor, TemplateKind } from '@livediagram/templates';
 import { TEMPLATE_CATEGORIES, isBlankTemplate } from '@livediagram/templates';
@@ -75,11 +76,12 @@ export function TemplatePickerBrowse({
   // narrowed to it.
   modeFilter: TemplateModeFilter;
 }) {
+  const { t } = useTranslation();
   const shelves: Shelf[] = [
     {
       id: 'popular' as const,
-      label: 'Popular',
-      description: 'Where most people start.',
+      label: t('templatepickerbrowse.popular'),
+      description: t('templatepickerbrowse.where-most-people-start'),
       items: popularTemplates,
     },
     ...TEMPLATE_CATEGORIES.map((c): Shelf => ({
@@ -123,8 +125,8 @@ export function TemplatePickerBrowse({
             type="search"
             value={templateQuery}
             onChange={(e) => setTemplateQuery(e.target.value)}
-            placeholder="Search templates..."
-            aria-label="Search templates"
+            placeholder={t('templatepickerbrowse.search-templates')}
+            aria-label={t('templatepickerbrowse.search-templates-2')}
             autoComplete="off"
             className="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-9 text-sm text-slate-800 placeholder:text-slate-400 transition [&::-webkit-search-cancel-button]:hidden focus:border-brand-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-400/25 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:bg-slate-800"
           />
@@ -132,7 +134,7 @@ export function TemplatePickerBrowse({
             <button
               type="button"
               onClick={() => setTemplateQuery('')}
-              aria-label="Clear search"
+              aria-label={t('templatepickerbrowse.clear-search')}
               className="absolute right-2 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-200/70 hover:text-slate-700 dark:hover:bg-slate-700 dark:hover:text-slate-200"
             >
               <CloseIcon />
@@ -148,9 +150,7 @@ export function TemplatePickerBrowse({
         {templateFilter ? (
           filteredTemplates.length === 0 ? (
             <div className="flex flex-col items-center gap-2 px-1 py-6 text-center">
-              <p className="text-xs text-slate-400 dark:text-slate-400">
-                No {modeFilter.choice === 'all' ? '' : `${editorModeLabel(modeFilter.choice)} `}
-                templates match “{templateQuery.trim()}”.
+              <p className="text-xs text-slate-400 dark:text-slate-400">{t('templatepickerbrowse.no')}{modeFilter.choice === 'all' ? '' : `${editorModeLabel(modeFilter.choice)} `}{t('templatepickerbrowse.templates-match')}{templateQuery.trim()}”.
               </p>
               {/* Found in other modes: one press shows them (docs/specs/007-editor/templates-by-mode.md). */}
               {matchesInEveryMode > 0 ? (

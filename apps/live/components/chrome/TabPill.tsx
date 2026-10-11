@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { ComponentProps, Dispatch, SetStateAction } from 'react';
 import { NameEditor } from '@/components/primitives/NameEditor';
 import type { Tab } from '@livediagram/document';
@@ -52,6 +53,7 @@ export type TabPillCtx = {
 };
 
 export function TabPill({ tab, ctx }: { tab: Tab; ctx: TabPillCtx }) {
+  const { t } = useTranslation();
   // The tab showing in the other pane (docs/specs/007-editor/split-view.md) says so on its pill.
   const split = useSplitViewContext();
   const beside =
@@ -183,7 +185,7 @@ export function TabPill({ tab, ctx }: { tab: Tab; ctx: TabPillCtx }) {
           {beside ? (
             <span className="flex items-center text-brand-500 dark:text-brand-300">
               <SideBySideIcon size={12} />
-              <span className="sr-only">, open side by side</span>
+              <span className="sr-only">{t('tabpill.open-side-by-side')}</span>
             </span>
           ) : null}
         </button>

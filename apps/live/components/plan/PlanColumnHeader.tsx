@@ -4,6 +4,7 @@
 // bar, name, count (against its WIP limit), and, for someone who may edit, a cog at the far right that
 // opens the column's settings (PlanColumnPopover). The cog shows on hover and focus, and always on a
 // touch screen. A column just added from another column's settings opens its own, its name selected.
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { PlanBoardSetup, ProjectedColumn } from '@livediagram/items';
 import { CountBadge, SettingsIcon } from '@livediagram/ui';
@@ -36,6 +37,7 @@ export function PlanColumnHeader({
   // A tap on the header (a phone): the view frames this column, given the header. Absent, a tap does nothing.
   onFrame?: ((header: HTMLElement) => void) | undefined;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   // Opened for a column just added: its name is selected, ready to type over.
   const [fresh, setFresh] = useState(false);
@@ -80,7 +82,7 @@ export function PlanColumnHeader({
             color={col.overLimit ? palette.warning : palette.muted}
             label={
               column.wipLimit
-                ? `${col.count} of a WIP limit of ${column.wipLimit}${col.overLimit ? ', over the limit' : ''}`
+                ? `${col.count} of a WIP limit of ${column.wipLimit}${col.overLimit ? t('plancolumnheader.over-the-limit') : ''}`
                 : `${col.count} items`
             }
           >
@@ -111,9 +113,7 @@ export function PlanColumnHeader({
         ) : null}
       </div>
       {col.overLimit ? (
-        <div className="text-[10px] font-medium" style={{ color: palette.warning }}>
-          Over WIP limit
-        </div>
+        <div className="text-[10px] font-medium" style={{ color: palette.warning }}>{t('plancolumnheader.over-wip-limit')}</div>
       ) : null}
       {open ? (
         <PlanColumnPopover

@@ -4,6 +4,7 @@
 // for someone who may edit. It opens a popover holding the same four sections as the board's element menu's Board
 // (Board Setup, Swimlanes, Supported Cards, Card Layout), one open at a time, so the board is set up without the
 // right-click menu. A press outside or Escape closes it, handing focus back to the cog.
+import { useTranslation } from '@/lib/i18n';
 import type { ShapeElement } from '@livediagram/document';
 import { PlanBoardSectionsPanel } from '@/components/palette/PlanBoardMenuSection';
 import type { PlanPalette } from './plan-palette';
@@ -17,9 +18,10 @@ export function BoardSettingsButton({
   element: ShapeElement;
   palette: PlanPalette;
 }) {
+  const { t } = useTranslation();
   return (
     <SettingsCog
-      label="Board Settings"
+      label={t('boardsettingsbutton.board-settings')}
       palette={palette}
       onOpen={() => track('Plan', 'Opened', 'BoardSettings')}
     >

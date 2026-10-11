@@ -1,6 +1,7 @@
 // Shared building blocks used by all boxed element views (shape, text, sticky).
 // Kept here to avoid duplication across the three view components.
 
+
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
 import { LockIcon, SOLID_BRAND_DARK } from '@livediagram/ui';
 import type { DragMode } from '@/lib/canvas';

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { PencilIcon, TrashIcon } from '@/components/primitives/explorer-icons';
 import { useCallback, useRef, useState } from 'react';
 import { isLayerLocked, layerOpacityOf, type Layer } from '@livediagram/document';
@@ -77,6 +78,7 @@ export function LayerRowMenu({
   onMergeUp: () => void;
   onMergeDown: () => void;
 }) {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement | null>(null);
   // A control menu (it holds the opacity slider; docs/specs/004-interface-design/menus.md). The
   // ConfirmPopover claims Escape while it is open, so Escape here only ever closes the menu.
@@ -130,8 +132,8 @@ export function LayerRowMenu({
           <MenuToolbar>
             <MenuToolButton
               icon={<PencilIcon />}
-              label="Rename"
-              description="Rename this layer."
+              label={t('layerrowmenu.rename')}
+              description={t('layerrowmenu.rename-this-layer')}
               onClick={() => {
                 onClose();
                 onRename();
@@ -140,11 +142,11 @@ export function LayerRowMenu({
             <div ref={deleteRef} className="ml-auto">
               <MenuToolButton
                 icon={<TrashIcon />}
-                label="Delete"
+                label={t('layerrowmenu.delete')}
                 description={
                   canDelete
-                    ? 'Delete this layer and everything on it.'
-                    : 'The last layer can’t be deleted.'
+                    ? t('layerrowmenu.delete-this-layer-and-everything-on')
+                    : t('layerrowmenu.the-last-layer-can-t-be')
                 }
                 onClick={() => {
                   if (elementCount === 0) {
@@ -162,7 +164,7 @@ export function LayerRowMenu({
           {/* flush: the MenuGroupSeparator above already draws the rule, so
             the first section skips its own border-t (no double line). */}
           <MenuAccordionSection
-            title="Layer"
+            title={t('layerrowmenu.layer')}
             icon={<LayersGlyph />}
             flush
             {...sectionProps('layer')}
@@ -171,19 +173,19 @@ export function LayerRowMenu({
             <MenuTileGrid cols={3}>
               <MenuTile
                 icon={<LayerUpIcon />}
-                label="Bring to Top"
+                label={t('layerrowmenu.bring-to-top')}
                 disabled={isTop}
                 onClick={onBringToTop}
               />
               <MenuTile
                 icon={<LayerDownIcon />}
-                label="Send to Back"
+                label={t('layerrowmenu.send-to-back')}
                 disabled={isBottom}
                 onClick={onSendToBottom}
               />
               <MenuTile
                 icon={<EyeIcon />}
-                label="Hide Others"
+                label={t('layerrowmenu.hide-others')}
                 disabled={isTop && isBottom}
                 onClick={() => {
                   onHideOthers();
@@ -193,7 +195,7 @@ export function LayerRowMenu({
             </MenuTileGrid>
           </MenuAccordionSection>
           <MenuAccordionSection
-            title="Content"
+            title={t('layerrowmenu.content')}
             icon={<ContentGlyph />}
             {...sectionProps('content')}
           >
@@ -206,7 +208,7 @@ export function LayerRowMenu({
               />
               <MenuTile
                 icon={<ClearIcon />}
-                label="Clear"
+                label={t('layerrowmenu.clear')}
                 disabled={elementCount === 0}
                 onClick={() => {
                   const anchorEl = ref.current;
@@ -215,11 +217,11 @@ export function LayerRowMenu({
               />
             </MenuTileGrid>
           </MenuAccordionSection>
-          <MenuAccordionSection title="Merge" icon={<MergeGlyph />} {...sectionProps('merge')}>
+          <MenuAccordionSection title={t('layerrowmenu.merge')} icon={<MergeGlyph />} {...sectionProps('merge')}>
             <MenuTileGrid cols={2}>
               <MenuTile
                 icon={<LayerUpIcon />}
-                label="With Layer Above"
+                label={t('layerrowmenu.with-layer-above')}
                 disabled={isTop}
                 onClick={() => {
                   onClose();
@@ -228,7 +230,7 @@ export function LayerRowMenu({
               />
               <MenuTile
                 icon={<LayerDownIcon />}
-                label="With Layer Below"
+                label={t('layerrowmenu.with-layer-below')}
                 disabled={isBottom}
                 onClick={() => {
                   onClose();

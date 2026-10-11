@@ -16,6 +16,7 @@
 // third rendering of a comment thread, with no delete handler and no self, so
 // the thread renders readable and inert.
 
+import { useTranslation } from '@/lib/i18n';
 import {
   activeCommentCount,
   elementActions,
@@ -65,6 +66,7 @@ export function PresentationElementPopover({
   at: { x: number; y: number };
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const now = useRelativeNow();
   const note = element.note?.trim();
   const comments = activeCommentCount(element.commentThread);
@@ -94,7 +96,7 @@ export function PresentationElementPopover({
         </span>
         <button
           type="button"
-          aria-label="Close details"
+          aria-label={t('presentationelementpopover.close-details')}
           onClick={onClose}
           className="shrink-0 cursor-pointer rounded p-0.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"
         >
@@ -103,7 +105,7 @@ export function PresentationElementPopover({
       </div>
 
       {note ? (
-        <Section title="Note">
+        <Section title={t('presentationelementpopover.note')}>
           <div className="text-[11px] leading-snug text-slate-600 dark:text-slate-300">
             {/* The same renderer the note popover uses, so formatting made
                 in the editor survives onto the projector (docs/specs/009-elements/rich-text-notes.md). */}
@@ -113,7 +115,7 @@ export function PresentationElementPopover({
       ) : null}
 
       {comments > 0 ? (
-        <Section title={comments === 1 ? '1 comment' : `${comments} comments`}>
+        <Section title={comments === 1 ? t('presentationelementpopover.1-comment') : `${comments} comments`}>
           {/* No handlers: no composer, no resolve, no delete. */}
           <div className="max-h-64 overflow-y-auto text-slate-700 dark:text-slate-200">
             <CommentBubbles

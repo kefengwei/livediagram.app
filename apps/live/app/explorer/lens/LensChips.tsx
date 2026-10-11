@@ -1,11 +1,13 @@
 'use client';
 
+
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import type { LensChip, LensDimension, LensIssue } from '@livediagram/explorer-lens';
 import { CheckIcon, ChevronDownIcon, Portal } from '@livediagram/ui';
 import { SparkleIcon } from '@/components/primitives/explorer-icons';
 import { useReposition } from '@/hooks/canvas/useReposition';
 import { LensIssues } from './LensStates';
+import { useTranslation } from '@/lib/i18n';
 
 // The chip row (docs/specs/013-workspace/explorer-filters.md "The chip row"): one chip per
 // dimension, each writing its token into the one lens string. A chip with several values opens a
@@ -32,11 +34,13 @@ export function LensChips({
   onChoose: (dimension: LensDimension, value: string | null) => void;
   onClear: () => void;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <div className="mb-3">
       <div
         role="group"
-        aria-label="Filters"
+        aria-label={t('lenschips.filters')}
         className="-mx-1 flex items-center gap-1.5 overflow-x-auto px-1 py-1"
       >
         {chips.map((chip) =>
@@ -53,9 +57,7 @@ export function LensChips({
           className={`${active ? '' : 'invisible '}ml-1 inline-flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium text-slate-600 underline-offset-2 hover:text-slate-900 hover:underline focus-visible:outline-2 focus-visible:outline-brand-500 dark:text-slate-300 dark:hover:text-white`}
           aria-hidden={!active}
           tabIndex={active ? undefined : -1}
-        >
-          Clear
-        </button>
+        >{t('lenschips.clear')}</button>
       </div>
       <LensIssues issues={issues} />
     </div>
@@ -144,6 +146,7 @@ function ChipListbox({
   onChoose: (value: string | null) => void;
   onClose: (refocus: boolean) => void;
 }) {
+  
   const id = useId();
   const list = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);

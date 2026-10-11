@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { lucideGlyph } from '@livediagram/ui';
 import { lucidePalette } from '@livediagram/icons/lucide';
 
@@ -29,6 +30,7 @@ import { ThemeBuilderModal, themeDeleteConfirm } from './ThemeBuilderModal';
 import { ThemeSwatch } from '@/components/primitives/ThemeSwatch';
 
 export function ThemesPane() {
+  const { t } = useTranslation();
   const { themes, loading, createTheme, updateTheme, deleteTheme } = useCustomThemes();
   const confirm = useConfirm();
   const [building, setBuilding] = useState<null | 'new' | string>(null);
@@ -57,7 +59,7 @@ export function ThemesPane() {
   };
 
   if (loading) {
-    return <p className="px-1 py-8 text-sm text-slate-500">Loading themes…</p>;
+    return <p className="px-1 py-8 text-sm text-slate-500">{t('themespane.loading-themes')}</p>;
   }
 
   return (
@@ -65,16 +67,14 @@ export function ThemesPane() {
       {themes.length === 0 ? (
         <EmptyState
           icon={<PaletteIcon />}
-          title="No custom themes yet"
-          description="Build your own colour palette and reuse it across every document, just like a built-in one."
+          title={t('themespane.no-custom-themes-yet')}
+          description={t('themespane.build-your-own-colour-palette-and')}
         >
           <button
             type="button"
             onClick={() => setBuilding('new')}
             className={`rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-500 ${SOLID_BRAND_DARK_CONTROL}`}
-          >
-            New theme
-          </button>
+          >{t('themespane.new-theme')}</button>
         </EmptyState>
       ) : (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
@@ -115,14 +115,14 @@ export function ThemesPane() {
             className="flex min-h-[7rem] flex-col items-center justify-center gap-1.5 rounded-xl border border-dashed border-slate-300 text-slate-500 transition hover:border-brand-400 hover:text-brand-600 dark:border-slate-600 dark:text-slate-400"
           >
             <PlusIcon size={20} />
-            <span className="text-xs font-medium">New theme</span>
+            <span className="text-xs font-medium">{t('themespane.new-theme-2')}</span>
           </button>
         </div>
       )}
 
       {building !== null ? (
         <ThemeBuilderModal
-          title={editing ? 'Edit theme' : 'New theme'}
+          title={editing ? t('themespane.edit-theme') : t('themespane.new-theme-3')}
           initial={editing ? { name: editing.name, definition: editing.definition } : undefined}
           saving={saving}
           onSave={handleSave}

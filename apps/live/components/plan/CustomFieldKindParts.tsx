@@ -3,6 +3,7 @@
 // New Custom Field's kind and preview (docs/specs/026-plan/item-types.md "Editing a type": Add Field): the eight
 // kinds as a grid of icon tiles, one radio group, and a preview of the field as the card's panel will show it,
 // named as typed, with a sample value of its kind.
+import { useTranslation } from '@/lib/i18n';
 import type { CustomFieldDef, CustomFieldKind } from '@livediagram/items';
 import { CheckIcon, lucideGlyph } from '@livediagram/ui';
 import { lucideHash, lucideList, lucideLink, lucideType } from '@livediagram/icons/lucide';
@@ -64,8 +65,9 @@ export function CustomFieldKindTiles({
   value: CustomFieldKind;
   onChange: (kind: CustomFieldKind) => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <div role="radiogroup" aria-label="New field's kind" className="grid grid-cols-4 gap-1">
+    <div role="radiogroup" aria-label={t('customfieldkindparts.new-field-s-kind')} className="grid grid-cols-4 gap-1">
       {kinds.map((k) => {
         const on = k === value;
         return (
@@ -100,25 +102,22 @@ function SampleValue({
   options: readonly string[];
   linkLabel: string | undefined;
 }) {
+  const { t } = useTranslation();
   const box =
     'rounded-md border border-slate-200 bg-white px-2 py-1 text-slate-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200';
   switch (kind) {
     case 'text':
-      return <div className={box}>Some text</div>;
+      return <div className={box}>{t('customfieldkindparts.some-text')}</div>;
     case 'longtext':
       return (
-        <div className={`${box} leading-snug`}>
-          A few lines of notes, as long as they need to be.
-        </div>
+        <div className={`${box} leading-snug`}>{t('customfieldkindparts.a-few-lines-of-notes-as')}</div>
       );
     case 'number':
       return <div className={`${box} w-20 tabular-nums`}>42</div>;
     case 'date':
       return (
         <div className={`${box} inline-flex items-center gap-1.5`}>
-          <PlanTypeGlyph glyph="calendar" size={13} />
-          12 Oct 2026
-        </div>
+          <PlanTypeGlyph glyph="calendar" size={13} />{t('customfieldkindparts.12-oct-2026')}</div>
       );
     case 'checkbox':
       return (
@@ -127,18 +126,18 @@ function SampleValue({
         </span>
       );
     case 'link':
-      return <span className="text-brand-700 underline dark:text-brand-300">example.com</span>;
+      return <span className="text-brand-700 underline dark:text-brand-300">{t('customfieldkindparts.example-com')}</span>;
     case 'choice':
       return (
         <span className="inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-[12px] text-slate-700 dark:bg-slate-800 dark:text-slate-200">
-          {options[0] ?? 'An option'}
+          {options[0] ?? t('customfieldkindparts.an-option')}
         </span>
       );
     case 'card':
       return (
         <div className={`${box} inline-flex items-center gap-1.5`}>
           <PlanTypeGlyph glyph="ticket" size={13} />
-          {linkLabel ? `A ${linkLabel} card` : 'A linked card'}
+          {linkLabel ? `A ${linkLabel} card` : t('customfieldkindparts.a-linked-card')}
         </div>
       );
   }
@@ -156,16 +155,15 @@ export function CustomFieldPreview({
   // The linked type's name, for a Link to Card field.
   linkLabel?: string | undefined;
 }) {
+  const { t } = useTranslation();
   return (
     <figure
-      aria-label="Preview"
+      aria-label={t('customfieldkindparts.preview')}
       className="rounded-lg bg-slate-50 px-3 py-1.5 dark:bg-slate-800/50"
     >
-      <figcaption className="pt-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-400">
-        Preview
-      </figcaption>
+      <figcaption className="pt-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-400">{t('customfieldkindparts.preview-2')}</figcaption>
       <div className="pointer-events-none" aria-hidden>
-        <ItemDetailsRow label={label.trim() || 'Field name'}>
+        <ItemDetailsRow label={label.trim() || t('customfieldkindparts.field-name')}>
           <SampleValue kind={kind} options={options} linkLabel={linkLabel} />
         </ItemDetailsRow>
       </div>

@@ -1,5 +1,7 @@
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState } from 'react';
-import { EDITOR_MODES, editorModeLabel, nextEditorMode } from '@livediagram/document';
+import { EDITOR_MODES, nextEditorMode } from '@livediagram/document';
+import { EDITOR_MODE_LABEL_KEY } from '@/lib/i18n/shared-labels';
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -31,6 +33,7 @@ import { ModeKeyHint } from './ModeKeyHint';
 // row, choosing or Escape returns focus to the chip, Tab closes it. An outside press closes it.
 
 export function ModeMenuChip({ mode, onChange }: EditorModeSwitchProps) {
+  const { t } = useTranslation();
   const {
     open,
     close,
@@ -42,7 +45,9 @@ export function ModeMenuChip({ mode, onChange }: EditorModeSwitchProps) {
   } = useMenuButton();
   const root = useRef<HTMLDivElement>(null);
   const Icon = EDITOR_MODE_ICONS[mode];
-  const label = editorModeLabel(mode);
+  // The shared catalogue cannot call `t` (it ships to marketing and help too), so the live
+  // side owns the map (lib/i18n/shared-labels.ts).
+  const label = t(EDITOR_MODE_LABEL_KEY[mode]);
   const modes = EDITOR_MODES;
   const keyLeadsTo = nextEditorMode(mode, 1);
 
@@ -121,11 +126,12 @@ function ModeMenu({
   onChange: EditorModeSwitchProps['onChange'];
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const { attach, surfaceProps } = useMenu({
     onClose,
     trigger: chip,
     initialFocus,
-    label: 'Editor mode',
+    label: t('modemenuchip.editor-mode'),
   });
   return (
     <div
@@ -156,7 +162,7 @@ function ModeMenu({
             }`}
           >
             <RowIcon size={16} aria-hidden className="shrink-0" />
-            <span className="flex-1">{editorModeLabel(option)}</span>
+            <span className="flex-1">{t(EDITOR_MODE_LABEL_KEY[option])}</span>
             <span className="flex w-7 shrink-0 justify-end">
               {checked ? <CheckIcon aria-hidden /> : null}
               {option === keyLeadsTo && !checked ? <ModeKeyHint /> : null}

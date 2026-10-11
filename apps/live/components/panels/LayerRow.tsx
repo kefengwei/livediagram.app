@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { PointerEvent as ReactPointerEvent } from 'react';
 import { isLayerLocked, isLayerVisible, type Layer } from '@livediagram/document';
 import { InlineRenameInput } from '@/components/primitives/InlineRenameInput';
@@ -65,6 +66,7 @@ export function LayerRow({
   onSelectLayer: (id: string) => void;
   onToggleVisibility: (id: string) => void;
 }) {
+  const { t } = useTranslation();
   const active = layer.id === activeLayerId;
   const visible = isLayerVisible(layer);
   const locked = isLayerLocked(layer);
@@ -96,9 +98,9 @@ export function LayerRow({
       onDoubleClick={() => setRenamingId(layer.id)}
     >
       <HoverCard
-        title={visible ? 'Hide layer' : 'Show layer'}
+        title={visible ? t('layerrow.hide-layer') : t('layerrow.show-layer')}
         description={
-          visible ? 'Hide every element on this layer.' : 'Show this layer’s elements again.'
+          visible ? t('layerrow.hide-every-element-on-this-layer') : t('layerrow.show-this-layer-s-elements-again')
         }
       >
         <button
@@ -162,9 +164,7 @@ export function LayerRow({
         doesn't read as "nothing here". */}
       {empty && renamingId !== layer.id ? (
         <span className="inline-flex items-center shrink-0 rounded bg-slate-100 px-1 py-0.5 text-[9px] font-semibold text-slate-400 dark:bg-slate-800">
-          <span className="text-optical-line text-optical-caps [--optical-tracking:0.025em]">
-            Empty
-          </span>
+          <span className="text-optical-line text-optical-caps [--optical-tracking:0.025em]">{t('layerrow.empty')}</span>
         </span>
       ) : null}
       {locked ? (
@@ -175,7 +175,7 @@ export function LayerRow({
           <LockIcon />
         </span>
       ) : null}
-      <HoverCard title="Layer options" description="Rename, restack, lock, merge, and more.">
+      <HoverCard title={t('layerrow.layer-options')} description={t('layerrow.rename-restack-lock-merge-and-more')}>
         <button
           type="button"
           aria-label={`${layer.name} options`}

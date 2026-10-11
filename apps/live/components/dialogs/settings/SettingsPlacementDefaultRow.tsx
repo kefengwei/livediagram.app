@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { DefaultFolderPickerDialog } from '@/components/placement/DefaultFolderPickerDialog';
 import { placementValue } from '@/components/placement/PlacementBrowser';
@@ -54,6 +55,7 @@ export function SettingsPlacementDefaultRow({
   row: SettingsPlacementDefaultRowSpec;
   lists: SettingsPlacementLists;
 }) {
+  const { t } = useTranslation();
   const { status, defaults, ownerId } = usePlacementDefaultsState();
   const index = useDefaultFolderIndex({
     personal: lists.folders,
@@ -71,7 +73,7 @@ export function SettingsPlacementDefaultRow({
       )
     : null;
   const text = failed
-    ? "Couldn't load your default folders"
+    ? t('settingsplacementdefaultrow.couldn-t-load-your-default-folders')
     : destination
       ? destinationText(destination)
       : 'Loading…';
@@ -112,18 +114,14 @@ export function SettingsPlacementDefaultRow({
                   className={PLACEMENT_ROW_BUTTON}
                   aria-label={`Change default folder for ${entry.noun}`}
                   onClick={() => setChanging(true)}
-                >
-                  Change
-                </button>
+                >{t('settingsplacementdefaultrow.change')}</button>
                 {destination.kind !== 'root' ? (
                   <button
                     type="button"
                     className={PLACEMENT_ROW_BUTTON}
                     aria-label={`Clear default folder for ${entry.noun}`}
                     onClick={() => void clearPlacementDefault(key, 'settings')}
-                  >
-                    Clear
-                  </button>
+                  >{t('settingsplacementdefaultrow.clear')}</button>
                 ) : null}
               </>
             ) : null}

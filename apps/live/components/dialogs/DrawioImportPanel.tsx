@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState } from 'react';
 import { Button } from '@livediagram/ui';
 import { pickExport, readDrop, type PickedExport } from '@/lib/pick-folder';
@@ -96,6 +97,7 @@ function progressText(state: DrawioImportStep): string {
 }
 
 function PickStep({ error, onPicked }: { error?: string; onPicked: (files: File[]) => void }) {
+  const { t } = useTranslation();
   const input = useRef<HTMLInputElement>(null);
   const choose = () => input.current?.click();
   return (
@@ -119,7 +121,7 @@ function PickStep({ error, onPicked }: { error?: string; onPicked: (files: File[
         }}
       />
       <ImportDropZone
-        label="Drop draw.io files or a folder here, or choose files"
+        label={t('drawioimportpanel.drop-draw-io-files-or-a')}
         onChoose={choose}
         onDropData={async (data) => onPicked(filesOfPick(await readDrop(data)))}
         {...(error ? { error } : {})}
@@ -129,12 +131,8 @@ function PickStep({ error, onPicked }: { error?: string; onPicked: (files: File[
           variant="secondary"
           size="md"
           onClick={async () => onPicked(filesOfPick(await pickExport('folder')))}
-        >
-          Choose a folder
-        </Button>
-        <Button variant="primary" size="md" onClick={choose}>
-          Choose files
-        </Button>
+        >{t('drawioimportpanel.choose-a-folder')}</Button>
+        <Button variant="primary" size="md" onClick={choose}>{t('drawioimportpanel.choose-files')}</Button>
       </div>
     </>
   );

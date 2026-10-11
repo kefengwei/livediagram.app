@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { View } from '@/lib/viewport-store';
 import { Portal } from '@livediagram/ui';
 import { useViewportOf, useViewportStore } from '@/hooks/canvas/useViewportStore';
@@ -113,6 +114,7 @@ export const Canvas = withStableEventProps(CanvasView);
 const wholeView = (v: View) => v;
 
 function CanvasView(props: CanvasProps) {
+  const { t } = useTranslation();
   const {
     tabLocked,
     readOnly,
@@ -647,7 +649,7 @@ function CanvasView(props: CanvasProps) {
       // the main landmark (not "application") because the floating
       // panels render inside it and must keep normal SR navigation.
       tabIndex={0}
-      aria-label="Canvas"
+      aria-label={t('canvas.canvas')}
       data-canvas-a11y-root=""
       onPointerMove={handlePointerMoveCanvas}
       onPointerLeave={handlePointerLeaveCanvas}

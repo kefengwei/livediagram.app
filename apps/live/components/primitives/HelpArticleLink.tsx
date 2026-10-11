@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import {
   HELP_LINK_COPY,
@@ -68,10 +69,14 @@ export function HelpArticleLink({
   description = HELP_LINK_COPY[article].description,
   variant = 'icon',
   size = 'sm',
-  label = 'Learn more',
+  label: labelProp,
   icon,
   className,
 }: HelpArticleLinkProps) {
+  const { t } = useTranslation();
+  // The fallback is resolved in the body, not the signature: a default parameter cannot
+  // call `t` (docs/specs/004-interface-design/localization.md).
+  const label = labelProp ?? t('helparticlelink.learn-more');
   const href = helpArticleHref(article);
   const onClick = () => trackHelpArticle(article);
   const common = {
@@ -115,7 +120,7 @@ export function HelpArticleLink({
               label rules (docs/specs/004-interface-design/optical-alignment.md); without them the
               content sat over half a pixel right of centre. */}
           {icon ?? <HelpMarkIcon />}
-          <span className="text-optical-line">{label === 'Learn more' ? 'Help' : label}</span>
+          <span className="text-optical-line">{label === t('helparticlelink.learn-more') ? 'Help' : label}</span>
         </a>
       </HoverCard>
     );
@@ -146,9 +151,7 @@ export function HelpArticleLink({
         >
           <span aria-hidden className="text-[14px] font-semibold leading-none">
             ?
-          </span>
-          Help
-        </a>
+          </span>{t('helparticlelink.help')}</a>
       </HoverCard>
     );
   }

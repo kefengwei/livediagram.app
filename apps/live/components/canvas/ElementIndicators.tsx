@@ -8,6 +8,7 @@
 // space reserved so nothing moves. Selecting the element fades the whole cluster away (its own
 // selection chrome takes those edges) until it is deselected. Like the other adornments they
 // scale with the canvas and hide below ADORNMENT_MIN_ZOOM.
+
 import {
   ActionIcon,
   CommentIcon,

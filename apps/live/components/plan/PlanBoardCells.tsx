@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 // A Plan board's rows and cards (docs/specs/026-plan/plan-board.md "What the board shows"), drawn by
 // PlanBoardView: a row's collapsible band when the board has swimlanes, one card in a cell, and the
@@ -140,6 +141,7 @@ export function PlanBoardCard({
   // "Voting on Plan cards"): the card carries the vote's stepper, unless it is face down.
   cardVote?: CardVote | null;
 }) {
+  const { t } = useTranslation();
   const types = usePlan()?.types ?? ITEM_TYPES;
   const hold = useLongPress((x, y) => onLongPress?.(item, { x, y }));
   return (
@@ -151,7 +153,7 @@ export function PlanBoardCard({
         role="listitem"
         tabIndex={0}
         data-plan-card={item.id}
-        aria-label={faceDown ? 'Hidden card' : itemAccessibleName(item, types)}
+        aria-label={faceDown ? t('planboardcells.hidden-card') : itemAccessibleName(item, types)}
         // touch-none: a finger on a card drags it, never scrolls the board under it (a maximised board scrolls).
         className="relative touch-none rounded-lg outline-none transition-opacity focus-visible:ring-2"
         style={{

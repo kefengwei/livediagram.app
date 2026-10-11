@@ -2,6 +2,7 @@
 
 // Setup Sheet's steps before Style (docs/specs/029-sheets/sheet.md "Setup Sheet"): Start From, an option row per
 // start; and for Plan Cards, Cards (the Cards panel's own search and filters) then Columns (the fields those cards have).
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import { itemTitle, namedStatus, typeIn, type Item, type ItemTypeDef } from '@livediagram/items';
 import { PlanTypeGlyph } from '@/components/plan/plan-type-glyph';
@@ -110,16 +111,15 @@ export function SheetSetupStart({
   plan: Pick<PlanContextValue, 'items' | 'types' | 'statusNames'> | undefined;
   live: readonly Item[];
 }) {
+  const { t } = useTranslation();
   const starts = STARTS.filter((s) => s.id !== 'cards' || (plan && live.length > 0));
   return (
     <div className="flex flex-col gap-4">
       <section className="flex flex-col gap-1.5" aria-labelledby="setup-sheet-start">
-        <h3 id="setup-sheet-start" className={HEADING} style={{ color: palette.muted }}>
-          Start From
-        </h3>
+        <h3 id="setup-sheet-start" className={HEADING} style={{ color: palette.muted }}>{t('sheetsetupstart.start-from')}</h3>
         <OptionRows
           kind="single"
-          label="Start From"
+          label={t('sheetsetupstart.start-from-2')}
           palette={palette}
           selected={start}
           onPick={(id) => onStart(id as SetupStart)}
@@ -152,18 +152,15 @@ export function SheetSetupCards({
   live: readonly Item[];
   search: CardSearch;
 }) {
+  const { t } = useTranslation();
   return (
     <section className="flex flex-col gap-2.5" aria-labelledby="setup-sheet-cards">
-      <h3 id="setup-sheet-cards" className={HEADING} style={{ color: palette.muted }}>
-        Cards
-      </h3>
-      <p className="text-[12px]" style={{ color: palette.muted }}>
-        Search and filter as the Cards panel does; each card found becomes a row.
-      </p>
+      <h3 id="setup-sheet-cards" className={HEADING} style={{ color: palette.muted }}>{t('sheetsetupstart.cards')}</h3>
+      <p className="text-[12px]" style={{ color: palette.muted }}>{t('sheetsetupstart.search-and-filter-as-the-cards')}</p>
       <CardSearchControls plan={plan} live={live} search={search} />
       <p role="status" className="text-[12px]" style={{ color: palette.muted }}>
         {search.found.length === 0
-          ? 'No cards match'
+          ? t('sheetsetupstart.no-cards-match')
           : `${search.found.length} ${search.found.length === 1 ? 'card' : 'cards'}`}
       </p>
       <CardsPreview palette={palette} plan={plan} cards={search.found} />
@@ -185,13 +182,14 @@ function CardsPreview({
   plan: Pick<PlanContextValue, 'types' | 'statusNames'>;
   cards: readonly Item[];
 }) {
+  const { t } = useTranslation();
   if (!cards.length) return null;
   const shown = [...cards].sort((a, b) => a.key - b.key).slice(0, SETUP_PREVIEW_CARDS);
   const more = cards.length - shown.length;
   return (
     <div>
       <ul
-        aria-label="Cards found"
+        aria-label={t('sheetsetupstart.cards-found')}
         className="divide-y overflow-hidden rounded-lg border"
         style={{ borderColor: palette.border }}
       >
@@ -214,16 +212,14 @@ function CardsPreview({
                 {itemTitle(card)}
               </span>
               <span className="shrink-0 text-[11px]" style={{ color: palette.muted }}>
-                {status ? (plan.statusNames.get(status) ?? status) : 'No status'}
+                {status ? (plan.statusNames.get(status) ?? status) : t('sheetsetupstart.no-status')}
               </span>
             </li>
           );
         })}
       </ul>
       {more > 0 ? (
-        <p className="mt-1.5 text-[12px]" style={{ color: palette.muted }}>
-          and {more} more
-        </p>
+        <p className="mt-1.5 text-[12px]" style={{ color: palette.muted }}>{t('sheetsetupstart.and')}{more}{t('sheetsetupstart.more')}</p>
       ) : null}
     </div>
   );
@@ -243,17 +239,14 @@ export function SheetSetupColumns({
   columns: readonly string[];
   onColumns: (c: string[]) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <section className="flex flex-col gap-1.5" aria-labelledby="setup-sheet-columns">
-      <h3 id="setup-sheet-columns" className={HEADING} style={{ color: palette.muted }}>
-        Columns
-      </h3>
-      <p className="text-[12px]" style={{ color: palette.muted }}>
-        The fields your cards have, one column each. Number, Title, Type and State are always there.
-      </p>
+      <h3 id="setup-sheet-columns" className={HEADING} style={{ color: palette.muted }}>{t('sheetsetupstart.columns')}</h3>
+      <p className="text-[12px]" style={{ color: palette.muted }}>{t('sheetsetupstart.the-fields-your-cards-have-one')}</p>
       <OptionRows
         kind="multiple"
-        label="Columns"
+        label={t('sheetsetupstart.columns-2')}
         palette={palette}
         selected={columns}
         onPick={(f) =>

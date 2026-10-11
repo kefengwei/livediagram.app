@@ -3,12 +3,14 @@
 // Combine (docs/specs/007-editor/logo-pages.md "Combine"): the four operations as tiles, and the
 // multi-selection toolbar's Combine button that opens them. The selection menu's Combine section
 // shows the same tiles (MultiSelectionContextMenu).
+
 import { useState } from 'react';
 import { HoverCard, Glyph } from '@livediagram/ui';
 import { PortalMenu } from '@/components/primitives/PortalMenu';
 import { MenuTile, MenuTileGrid } from '@/components/primitives/MenuTiles';
 import { TOOLBAR_BTN, TOOLBAR_BTN_ON } from '@/components/canvas/toolbar-buttons';
 import type { CombineOp } from '@/lib/combine/combine';
+import { useTranslation } from '@/lib/i18n';
 
 const COMBINE_CHOICES: readonly { op: CombineOp; label: string }[] = [
   { op: 'unite', label: 'Unite' },
@@ -19,6 +21,7 @@ const COMBINE_CHOICES: readonly { op: CombineOp; label: string }[] = [
 
 /** The four operations as a two-by-two grid of tiles. */
 export function CombineTiles({ onCombine }: { onCombine: (op: CombineOp) => void }) {
+  
   return (
     <MenuTileGrid cols={2}>
       {COMBINE_CHOICES.map((c) => (
@@ -34,16 +37,18 @@ export function CombineTiles({ onCombine }: { onCombine: (op: CombineOp) => void
 }
 
 export function CombineMenuButton({ onCombine }: { onCombine: (op: CombineOp) => void }) {
+  const { t } = useTranslation();
+  
   const [open, setOpen] = useState(false);
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
   return (
     <>
-      <HoverCard title="Combine" description="Make one shape of these: unite, subtract and more.">
+      <HoverCard title={t('combinemenu.combine')} description={t('combinemenu.make-one-shape-of-these-unite')}>
         <button
           ref={setAnchor}
           type="button"
           onClick={() => setOpen((v) => !v)}
-          aria-label="Combine shapes"
+          aria-label={t('combinemenu.combine-shapes')}
           aria-haspopup="menu"
           aria-expanded={open}
           className={open ? TOOLBAR_BTN_ON : TOOLBAR_BTN}
@@ -67,6 +72,7 @@ export function CombineMenuButton({ onCombine }: { onCombine: (op: CombineOp) =>
 
 // Two overlapping squares, the part each operation keeps filled.
 export function CombineOpGlyph({ op, size = 20 }: { op: CombineOp; size?: number }) {
+  
   const a = 'M2.5 2.5h7v7h-7z';
   const b = 'M6.5 6.5h7v7h-7z';
   const overlap = 'M6.5 6.5h3v3h-3z';

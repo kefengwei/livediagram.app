@@ -4,6 +4,7 @@
 // sorted low to high in a short flip cascade, the spread called out, and the
 // lowest and highest cards ringed, because they are who should talk first.
 
+import { useTranslation } from '@/lib/i18n';
 import {
   estimateRank,
   estimateSpread,
@@ -126,6 +127,7 @@ function Card({
   delay?: number;
   children: React.ReactNode;
 }) {
+  const { t } = useTranslation();
   return (
     <span className="relative flex flex-col items-center pb-2">
       <span
@@ -151,7 +153,7 @@ function Card({
           <span
             className="block h-4 w-4 rounded-full"
             style={{ backgroundColor: tint(textColor, 0.2) }}
-            aria-label="Someone who has since left the room"
+            aria-label={t('estimatetable.someone-who-has-since-left-the')}
           />
         )}
       </span>

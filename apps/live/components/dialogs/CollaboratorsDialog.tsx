@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef } from 'react';
 import type { Tab } from '@livediagram/document';
 import { Button, DialogHeader, DialogCloseButton } from '@livediagram/ui';
@@ -71,6 +72,7 @@ export function CollaboratorsDialog({
   onStepDown,
   onClose,
 }: CollaboratorsDialogProps) {
+  const { t } = useTranslation();
   // Keeps each row's "Active 2 mins ago" honest while the modal stays open.
   const now = useRelativeNow();
   const { appearance } = useAppearance();
@@ -92,7 +94,7 @@ export function CollaboratorsDialog({
       className="max-h-[min(36rem,calc(100dvh-2rem))]"
     >
       <DialogHeader
-        title={<span id={TITLE_ID}>Collaborators</span>}
+        title={<span id={TITLE_ID}>{t('collaboratorsdialog.collaborators')}</span>}
         subtitle={rosterSummary(roster)}
       >
         <HelpArticleLink article="livePresence" size="md" />
@@ -102,7 +104,7 @@ export function CollaboratorsDialog({
         {roster.groups.map((group) => (
           <section
             key={group.tab?.id ?? 'another-tab'}
-            aria-label={group.tab?.name ?? 'Another Tab'}
+            aria-label={group.tab?.name ?? t('collaboratorsdialog.another-tab')}
           >
             <div className="mb-1.5 flex items-center gap-2">
               {group.tab ? (
@@ -113,21 +115,17 @@ export function CollaboratorsDialog({
                 />
               ) : null}
               <h3 className="truncate text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                {group.tab?.name ?? 'Another Tab'}
+                {group.tab?.name ?? t('collaboratorsdialog.another-tab-2')}
               </h3>
               {group.isActive ? (
-                <span className="shrink-0 rounded-full bg-brand-50 px-1.5 py-0.5 text-[10px] font-semibold text-brand-700 dark:bg-brand-500/15 dark:text-brand-300">
-                  You&apos;re Here
-                </span>
+                <span className="shrink-0 rounded-full bg-brand-50 px-1.5 py-0.5 text-[10px] font-semibold text-brand-700 dark:bg-brand-500/15 dark:text-brand-300">{t('collaboratorsdialog.you-re-here')}</span>
               ) : group.tab ? (
                 <Button
                   variant="secondary"
                   size="xs"
                   className="ml-auto shrink-0"
                   onClick={() => onGoToTab(group.tab!.id)}
-                >
-                  Go to Tab
-                </Button>
+                >{t('collaboratorsdialog.go-to-tab')}</Button>
               ) : null}
             </div>
             <ul className="flex flex-col">
@@ -196,7 +194,7 @@ export function CollaboratorsDialog({
                             aria-label={following ? `Stop following ${p.name}` : `Follow ${p.name}`}
                             onClick={() => (following ? onStopFollowing() : onFollow(p.id))}
                           >
-                            {following ? 'Stop Following' : 'Follow'}
+                            {following ? t('collaboratorsdialog.stop-following') : 'Follow'}
                           </Button>
                         )}
                       </div>

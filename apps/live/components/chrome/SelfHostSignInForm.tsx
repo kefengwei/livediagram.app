@@ -11,6 +11,7 @@
 // It reuses the same chrome as the Clerk pages (components/chrome/auth-shared), so
 // the two look like one product rather than two.
 
+import { useTranslation } from '@/lib/i18n';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useRef, useState } from 'react';
@@ -50,6 +51,7 @@ async function post(path: string, body: unknown): Promise<string | null> {
 }
 
 export function SelfHostSignInForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
   const { signInHref, signUpHref } = useAuthHrefs();
   const [email, setEmail] = useState('');
@@ -84,7 +86,7 @@ export function SelfHostSignInForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
       } | null;
       if (!res.ok || !body?.url) {
         setSocialLoading('');
-        setError(body?.message ?? 'Could not start that sign-in.');
+        setError(body?.message ?? t('selfhostsigninform.could-not-start-that-sign-in'));
         return;
       }
       window.location.assign(body.url);
@@ -138,24 +140,18 @@ export function SelfHostSignInForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
     <AuthCard
       subtitle={
         mode === 'sign-in'
-          ? 'Sign in to keep your documents across devices.'
-          : 'Create an account to keep your documents across devices.'
+          ? t('selfhostsigninform.sign-in-to-keep-your-documents')
+          : t('selfhostsigninform.create-an-account-to-keep-your')
       }
       error={error}
       footer={
         mode === 'sign-in' ? (
-          <>
-            No account yet?{' '}
-            <Link href={signUpHref} className="font-medium text-slate-900 dark:text-slate-100">
-              Create one
-            </Link>
+          <>{t('selfhostsigninform.no-account-yet')}{' '}
+            <Link href={signUpHref} className="font-medium text-slate-900 dark:text-slate-100">{t('selfhostsigninform.create-one')}</Link>
           </>
         ) : (
-          <>
-            Already have an account?{' '}
-            <Link href={signInHref} className="font-medium text-slate-900 dark:text-slate-100">
-              Sign in
-            </Link>
+          <>{t('selfhostsigninform.already-have-an-account')}{' '}
+            <Link href={signInHref} className="font-medium text-slate-900 dark:text-slate-100">{t('selfhostsigninform.sign-in')}</Link>
           </>
         )
       }
@@ -181,7 +177,7 @@ export function SelfHostSignInForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
             <>
               <ProviderAuthButton
                 glyph={<FeishuGlyph />}
-                label="Continue with Feishu"
+                label={t('selfhostsigninform.continue-with-feishu')}
                 loading={socialLoading === 'feishu'}
                 disabled={socialLoading !== ''}
                 onClick={() => void startSocial('feishu')}
@@ -191,11 +187,9 @@ export function SelfHostSignInForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
           ) : null}
           <AuthEmailField value={email} onChange={setEmail} />
           <Button type="submit" size="md" disabled={loading} className="w-full shadow-sm">
-            {loading ? 'Sending…' : 'Email me a code'}
+            {loading ? 'Sending…' : t('selfhostsigninform.email-me-a-code')}
           </Button>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            We&apos;ll email you a six-digit code. No password to remember.
-          </p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{t('selfhostsigninform.we-ll-email-you-a-six')}</p>
         </form>
       )}
     </AuthCard>

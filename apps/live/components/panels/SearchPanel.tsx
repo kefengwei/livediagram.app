@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { LocalOnlyPill } from '@/components/primitives/LocalOnlyPill';
 import { SearchIcon, useEscape } from '@livediagram/ui';
@@ -124,6 +125,7 @@ export function SearchPanel({
   onRunCommand,
   onClose,
 }: SearchPanelProps) {
+  const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const searchedRef = useRef(false);
@@ -274,24 +276,24 @@ export function SearchPanel({
             onKeyDown={handleInputKey}
             placeholder={
               tabs
-                ? 'Search documents, folders, teams, tabs, elements, help...'
-                : 'Search documents, folders, teams, help...'
+                ? t('searchpanel.search-documents-folders-teams-tabs-elements')
+                : t('searchpanel.search-documents-folders-teams-help')
             }
             className="flex-1 bg-transparent text-sm text-slate-800 outline-none placeholder:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-400"
           />
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t('searchpanel.close')}
             className="-mr-1 flex h-7 w-7 shrink-0 items-center justify-center rounded text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
           >
-            <kbd className="text-[10px] font-medium">Esc</kbd>
+            <kbd className="text-[10px] font-medium">{t('searchpanel.esc')}</kbd>
           </button>
         </div>
         <div className="max-h-[60vh] overflow-y-auto py-1">
           {groups.length === 0 ? (
             <p className="px-3 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
-              {query ? 'No matches.' : 'Start typing to search.'}
+              {query ? t('searchpanel.no-matches') : t('searchpanel.start-typing-to-search')}
             </p>
           ) : (
             groups.map((group) => {
@@ -325,27 +327,22 @@ export function SearchPanel({
                           <LocalOnlyPill asLabel />
                         ) : null}
                         {item.kind === 'element' ? (
-                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">
-                            on {item.tabName}
+                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">{t('searchpanel.on')}{item.tabName}
                           </span>
                         ) : null}
                         {/* Which Settings category it lives in: "Theme" alone
                             does not say where picking it will land you, and
                             two settings can read alike out of context. */}
                         {item.kind === 'setting' ? (
-                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">
-                            in {item.categoryLabel}
+                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">{t('searchpanel.in')}{item.categoryLabel}
                           </span>
                         ) : null}
                         {(item.kind === 'folder' || item.kind === 'document') && item.team ? (
-                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">
-                            in {item.team.name}
+                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">{t('searchpanel.in-2')}{item.team.name}
                           </span>
                         ) : null}
                         {item.kind === 'tab' && item.isCurrent ? (
-                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">
-                            current
-                          </span>
+                          <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">{t('searchpanel.current')}</span>
                         ) : null}
                       </button>
                     );

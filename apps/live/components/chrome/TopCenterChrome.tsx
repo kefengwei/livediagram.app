@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { lucidePencilLine } from '@livediagram/icons/lucide';
 import { drawBannerMessage, isHeldPenIntent } from '@/lib/draw-mode';
 import { participantKey } from '@/lib/identity';
@@ -72,6 +73,7 @@ export function TopCenterChrome({
   followingName,
   onStopFollowing,
 }: TopCenterChromeProps) {
+  const { t } = useTranslation();
   // The palette strip, when it is on screen: the mode banners hang from it as its tray
   // (docs/specs/007-editor/toolbar-layout.md "Layout details"), and the stack starts below the tray.
   const drawBanner = !!pendingDraw && !isHeldPenIntent(pendingDraw);
@@ -100,14 +102,12 @@ export function TopCenterChrome({
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white/80" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-white" />
             </span>
-            <span className="max-w-[12rem] truncate">Following {followingName}</span>
+            <span className="max-w-[12rem] truncate">{t('topcenterchrome.following')}{followingName}</span>
             <button
               type="button"
               onClick={onStopFollowing}
               className="cursor-pointer rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-semibold transition hover:bg-white/30"
-            >
-              Stop
-            </button>
+            >{t('topcenterchrome.stop')}</button>
           </TopCenterBanner>
         </TopCenterRow>
       ) : null}
@@ -127,8 +127,8 @@ export function TopCenterChrome({
             icon={<FormatPainterIcon />}
             message={
               formatSourceId
-                ? 'Tap elements to paint this style onto them'
-                : 'Select a base element to copy its style'
+                ? t('topcenterchrome.tap-elements-to-paint-this-style')
+                : t('topcenterchrome.select-a-base-element-to-copy')
             }
             actionLabel="Done"
             onAction={onExitFormatTool}

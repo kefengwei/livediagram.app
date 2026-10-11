@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 
 import { elementActions, type ShapeElement } from '@livediagram/document';
@@ -57,6 +58,7 @@ export function ActionPanelFace({
   onComplete?: (actionId: string) => void;
   onReopen?: (actionId: string) => void;
 }) {
+  const { t } = useTranslation();
   const actions = elementActions(element);
   const open = actions.filter((a) => a.status !== 'done').length;
   const allDone = actions.length > 0 && open === 0;
@@ -66,7 +68,7 @@ export function ActionPanelFace({
   const [initialCount] = useState(actions.length);
 
   const aside = allDone ? (
-    <CollabDoneChip>All Done</CollabDoneChip>
+    <CollabDoneChip>{t('actionpanelface.all-done')}</CollabDoneChip>
   ) : open > 0 ? (
     `${open} open`
   ) : undefined;
@@ -81,9 +83,7 @@ export function ActionPanelFace({
         aside={aside}
         footer={
           onAdd && actions.length > 0 ? (
-            <AccentBar onPress={onAdd} icon={<PlusGlyph size={12} />}>
-              Add Action
-            </AccentBar>
+            <AccentBar onPress={onAdd} icon={<PlusGlyph size={12} />}>{t('actionpanelface.add-action')}</AccentBar>
           ) : undefined
         }
       >
@@ -96,11 +96,11 @@ export function ActionPanelFace({
           <div className="flex flex-1 flex-col items-center justify-center gap-3">
             <EmptyRows
               textColor={textColor}
-              title="No Actions Yet"
+              title={t('actionpanelface.no-actions-yet')}
               rows={0}
               glyph={<ActionGlyph size={14} />}
             >
-              {onAdd ? 'Give someone a clear next step, with their name on it.' : undefined}
+              {onAdd ? t('actionpanelface.give-someone-a-clear-next-step') : undefined}
             </EmptyRows>
             {onAdd ? <AddButton onPress={onAdd} /> : null}
           </div>
@@ -129,6 +129,7 @@ export function ActionPanelFace({
 }
 
 function AddButton({ onPress }: { onPress: () => void }) {
+  const { t } = useTranslation();
   const press = usePressWithoutDrag(onPress);
   return (
     <button
@@ -138,8 +139,6 @@ function AddButton({ onPress }: { onPress: () => void }) {
       className="pointer-events-auto inline-flex cursor-pointer items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-semibold transition hover:scale-[1.03] active:scale-95"
       style={LOUD_ACCENT}
     >
-      <PlusGlyph size={12} />
-      Add Action
-    </button>
+      <PlusGlyph size={12} />{t('actionpanelface.add-action-2')}</button>
   );
 }

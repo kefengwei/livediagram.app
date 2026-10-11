@@ -7,6 +7,7 @@
 // flyouts open on its board side; on a narrow screen the groups scroll sideways together. One
 // flyout at a time, and nothing moves under the pointer when a tool is picked.
 
+
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useCanvasSurface } from '@/components/canvas/CanvasSurfaceContext';
 import type { WhiteboardDockModel } from '@/hooks/canvas/useWhiteboard';
@@ -39,6 +40,7 @@ import { debugLog } from '@/lib/debug-log';
 import { useIsMobileViewport } from '@/hooks/ui/useIsMobileViewport';
 import { useUiScale } from '@/components/providers/ui-scale';
 import { toSurfacePx, uiScaleStyle } from '@/lib/ui-scale';
+import { useTranslation } from '@/lib/i18n';
 
 // How long the "seven pinned" hint stays up.
 const HINT_MS = 4000;
@@ -63,6 +65,8 @@ export type WhiteboardDockProps = {
 };
 
 export function WhiteboardDock({ model, ink }: WhiteboardDockProps) {
+  const { t } = useTranslation();
+  
   // The dock is the Toolbar layout strip's twin, so it draws at the toolbar UI scale
   // (docs/specs/007-editor/ui-scale.md).
   const scale = useUiScale('toolbar');
@@ -174,10 +178,10 @@ export function WhiteboardDock({ model, ink }: WhiteboardDockProps) {
   ): { label: string; body: ReactNode; hideTitle?: boolean } | null => {
     switch (f.kind) {
       case 'eraser':
-        return { label: 'Eraser', body: <EraserFlyoutBody model={model} /> };
+        return { label: t('whiteboarddock.eraser'), body: <EraserFlyoutBody model={model} /> };
       case 'shapes':
         return {
-          label: 'Shapes',
+          label: t('whiteboarddock.shapes'),
           hideTitle: true,
           body: (
             <ShapesFlyout
@@ -196,7 +200,7 @@ export function WhiteboardDock({ model, ink }: WhiteboardDockProps) {
         };
       case 'settings':
         return {
-          label: 'Settings',
+          label: t('whiteboarddock.settings'),
           hideTitle: true,
           body: <SettingsFlyoutBody model={model} ink={ink} appearance={appearance} />,
         };
@@ -318,6 +322,7 @@ function DockBody({
   open: OpenFlyout;
   groups: ReactNode;
 }) {
+  
   return (
     <>
       <DockFlyoutHost fly={fly} open={open} below={below} />

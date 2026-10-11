@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect } from 'react';
 
 // Sends the old profile URL to the Explorer with Settings open on
@@ -10,17 +11,15 @@ import { useEffect } from 'react';
 const TARGET = '/explorer?settings=notifications';
 
 export function ProfileRedirect() {
+  const { t } = useTranslation();
   useEffect(() => {
     window.location.replace(TARGET);
   }, []);
 
   return (
     <main className="flex min-h-dvh items-center justify-center px-6">
-      <p className="text-sm text-slate-500 dark:text-slate-400">
-        Taking you to your notification settings…{' '}
-        <a href={TARGET} className="font-medium text-blue-600 dark:text-blue-400">
-          Continue
-        </a>
+      <p className="text-sm text-slate-500 dark:text-slate-400">{t('profileredirect.taking-you-to-your-notification-settings')}{' '}
+        <a href={TARGET} className="font-medium text-blue-600 dark:text-blue-400">{t('profileredirect.continue')}</a>
       </p>
     </main>
   );

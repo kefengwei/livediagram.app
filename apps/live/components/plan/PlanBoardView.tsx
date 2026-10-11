@@ -4,6 +4,7 @@
 // its set-up projected over the document's items into columns, rows and cards. In Plan mode cards
 // take the pointer and the keyboard; in the other modes the board is an element like any other and a
 // double-click opens a card. Everything the board changes goes through PlanContext.
+import { useTranslation } from '@/lib/i18n';
 import { isCardVotableInVote } from '@livediagram/document';
 import { useCardVote } from './CardVoteContext';
 import { useViewportStoreIfAny } from '@/hooks/canvas/useViewportStore';
@@ -90,6 +91,7 @@ export function PlanBoardView({
   // The tab's (or the element's own) font (docs/specs/026-plan/plan-board.md "Theme and style").
   fontFamily?: string;
 }) {
+  const { t } = useTranslation();
   const plan = usePlan();
   const surface = useCanvasSurface();
   // The board's theme and style colours (docs/specs/026-plan/plan-board.md "Theme and style").
@@ -219,9 +221,7 @@ export function PlanBoardView({
           borderColor: palette.border,
           color: palette.muted,
         }}
-      >
-        This board&rsquo;s set-up can&rsquo;t be read.
-      </div>
+      >{t('planboardview.this-board-s-set-up-can')}</div>
     );
   }
 
@@ -559,7 +559,7 @@ export function PlanBoardView({
                               <AddCardButton
                                 palette={palette}
                                 types={cellTypes}
-                                label={firstEmpty ? 'Add your first card' : 'Add card'}
+                                label={firstEmpty ? t('planboardview.add-your-first-card') : t('planboardview.add-card')}
                                 open={isAdding}
                                 onClosed={closeAdding}
                                 onCreateType={createType}

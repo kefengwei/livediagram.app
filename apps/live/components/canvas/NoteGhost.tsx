@@ -1,3 +1,5 @@
+
+import { useTranslation } from '@/lib/i18n';
 import type { CSSProperties } from 'react';
 import { PlusIcon } from '@livediagram/ui';
 import { eventStormingNote, type EventStormingNoteKind } from '@livediagram/document';
@@ -23,6 +25,7 @@ export function NoteGhost({
   position: 'absolute' | 'fixed';
   testId: string;
 }) {
+  const { t } = useTranslation();
   // A plain sticky has no kind; it ghosts in the plain note's yellow.
   const fill = kind ? eventStormingNote(kind).fill : '#fde68a';
   const style: CSSProperties = {
@@ -46,7 +49,7 @@ export function NoteGhost({
       style={style}
     >
       <PlusIcon size={box.height * 0.12} />
-      {kind ? eventStormingNote(kind).label : 'Sticky note'}
+      {kind ? eventStormingNote(kind).label : t('noteghost.sticky-note')}
     </div>
   );
 }

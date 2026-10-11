@@ -2,6 +2,7 @@
 
 // Show Me in the card type editor (docs/specs/026-plan/item-types.md "Editing a type"): the button that starts the
 // tour of making a card type, and the tour itself, drawn over the editor. Never offered: only the button runs it.
+import { useTranslation } from '@/lib/i18n';
 import { lucideGlyph } from '@livediagram/ui';
 import { lucideFootprints } from '@livediagram/icons/lucide';
 import { useLatest } from '@/hooks/ui/useLatest';
@@ -40,6 +41,7 @@ const FootprintsIcon = lucideGlyph(lucideFootprints, 14);
 
 // The header's Show Me, left of Help and drawn as it is (HelpArticleLink's labelled variant).
 export function ShowMeButton({ tour }: { tour: TourEngine<CardTypeTourApi> }) {
+  const { t } = useTranslation();
   return (
     <button
       type="button"
@@ -51,9 +53,7 @@ export function ShowMeButton({ tour }: { tour: TourEngine<CardTypeTourApi> }) {
         tour.start();
       }}
     >
-      <FootprintsIcon />
-      Show Me
-    </button>
+      <FootprintsIcon />{t('cardtypetour.show-me')}</button>
   );
 }
 

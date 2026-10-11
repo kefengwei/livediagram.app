@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { isBoxed, type Element } from '@livediagram/document';
 import { ContextMenuDivider } from '@/components/palette/ContextMenu';
 import {
@@ -65,6 +66,7 @@ export function ElementContentSections({
   textColorHandlers,
   labelFillHandlers,
 }: ElementContentSectionsProps) {
+  const { t } = useTranslation();
   const boxed = isBoxed(target);
   const surface = useCanvasSurface();
   return (
@@ -82,39 +84,35 @@ export function ElementContentSections({
           {...sectionProps('text')}
         >
           {target.type === 'table' ? (
-            <p className="px-3 pt-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-              Applies to every cell.
-            </p>
+            <p className="px-3 pt-1.5 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('elementcontentsections.applies-to-every-cell')}</p>
           ) : null}
           <div className="flex gap-1 px-2 py-1.5">
-            <TextToggle active={!!target.textBold} label="Bold" onClick={props.onToggleTextBold}>
+            <TextToggle active={!!target.textBold} label={t('elementcontentsections.bold')} onClick={props.onToggleTextBold}>
               <BoldIcon />
             </TextToggle>
             <TextToggle
               active={!!target.textItalic}
-              label="Italic"
+              label={t('elementcontentsections.italic')}
               onClick={props.onToggleTextItalic}
             >
               <ItalicIcon />
             </TextToggle>
             <TextToggle
               active={!!target.textUnderline}
-              label="Underline"
+              label={t('elementcontentsections.underline')}
               onClick={props.onToggleTextUnderline}
             >
               <UnderlineIcon />
             </TextToggle>
             <TextToggle
               active={!!target.textStrikethrough}
-              label="Strikethrough"
+              label={t('elementcontentsections.strikethrough')}
               onClick={props.onToggleTextStrikethrough}
             >
               <StrikethroughIcon />
             </TextToggle>
           </div>
-          <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-            Size
-          </p>
+          <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('elementcontentsections.size')}</p>
           <TextSizeTiles
             current={target.textSize ?? 'sm'}
             onSet={props.onSetTextSize}
@@ -137,7 +135,7 @@ export function ElementContentSections({
               backdrop. */}
           {target.type === 'arrow' ? (
             <ColourRow
-              label="Background"
+              label={t('elementcontentsections.background')}
               tone="soft"
               icon={<FillColourIcon />}
               value={target.labelFill ?? 'transparent'}
@@ -150,12 +148,12 @@ export function ElementContentSections({
       ) : null}
       {/* Image — pick / change / clear the bitmap (docs/specs/009-elements/images.md). */}
       {target.type === 'image' ? (
-        <MenuAccordionSection title="Image" icon={<ImageGlyph />} {...sectionProps('image')}>
+        <MenuAccordionSection title={t('elementcontentsections.image')} icon={<ImageGlyph />} {...sectionProps('image')}>
           {hasImage ? (
             <MenuTileGrid cols={2}>
               <MenuTile
                 icon={<ImageGlyph />}
-                label="Change Image"
+                label={t('elementcontentsections.change-image')}
                 onClick={() => {
                   props.onOpenImagePicker(target.id);
                   onClose();
@@ -163,7 +161,7 @@ export function ElementContentSections({
               />
               <MenuTile
                 icon={<RemoveIconGlyph />}
-                label="Remove Image"
+                label={t('elementcontentsections.remove-image')}
                 onClick={() => {
                   props.onRemoveImage(target.id);
                   onClose();
@@ -174,7 +172,7 @@ export function ElementContentSections({
             <div className="px-2 py-1.5">
               <MenuTile
                 icon={<ImageGlyph />}
-                label="Select Image"
+                label={t('elementcontentsections.select-image')}
                 onClick={() => {
                   props.onOpenImagePicker(target.id);
                   onClose();
@@ -191,8 +189,8 @@ export function ElementContentSections({
           {/* The hero's caption card (docs/specs/009-elements/web-components-and-no-groups.md): any image can carry one. */}
           <ContextMenuDivider />
           <MenuToggleRow
-            label="Caption Card"
-            description="A title and a line of text over the image."
+            label={t('elementcontentsections.caption-card')}
+            description={t('elementcontentsections.a-title-and-a-line-of')}
             checked={!!target.heroCaption}
             onToggle={() => props.onSetHeroCaption(!target.heroCaption)}
           />
@@ -200,24 +198,24 @@ export function ElementContentSections({
       ) : null}
       {/* Table — header row / column + zebra. */}
       {target.type === 'table' ? (
-        <MenuAccordionSection title="Table" icon={<TableGlyph />} {...sectionProps('table')}>
+        <MenuAccordionSection title={t('elementcontentsections.table')} icon={<TableGlyph />} {...sectionProps('table')}>
           <MenuToggleRow
-            label="Header row"
-            description="Style the first row as a header."
+            label={t('elementcontentsections.header-row')}
+            description={t('elementcontentsections.style-the-first-row-as-a')}
             checked={target.headerRow ?? false}
             onToggle={props.onToggleTableHeaderRow}
           />
           <ContextMenuDivider />
           <MenuToggleRow
-            label="Header column"
-            description="Style the first column as a header."
+            label={t('elementcontentsections.header-column')}
+            description={t('elementcontentsections.style-the-first-column-as-a')}
             checked={target.headerColumn ?? false}
             onToggle={props.onToggleTableHeaderColumn}
           />
           <ContextMenuDivider />
           <MenuToggleRow
-            label="Zebra striping"
-            description="Tint alternate body rows."
+            label={t('elementcontentsections.zebra-striping')}
+            description={t('elementcontentsections.tint-alternate-body-rows')}
             checked={target.zebra ?? false}
             onToggle={props.onToggleTableZebra}
           />
@@ -227,12 +225,12 @@ export function ElementContentSections({
           a video's YouTube URL (docs/specs/009-elements/youtube-video.md). Both keep their URL in `link`, so
           both use this one section rather than a second URL editor. */}
       {target.type === 'link-card' || target.type === 'video' ? (
-        <MenuAccordionSection title="Link" icon={<LinkMenuIcon />} {...sectionProps('link')}>
+        <MenuAccordionSection title={t('elementcontentsections.link')} icon={<LinkMenuIcon />} {...sectionProps('link')}>
           {hasLink ? (
             <MenuTileGrid cols={2}>
               <MenuTile
                 icon={<LinkMenuIcon />}
-                label="Change Link"
+                label={t('elementcontentsections.change-link')}
                 onClick={() => {
                   props.onLinkElement(target.id);
                   onClose();
@@ -240,7 +238,7 @@ export function ElementContentSections({
               />
               <MenuTile
                 icon={<RemoveIconGlyph />}
-                label="Remove Link"
+                label={t('elementcontentsections.remove-link')}
                 onClick={() => {
                   props.onRemoveLink();
                   onClose();
@@ -251,7 +249,7 @@ export function ElementContentSections({
             <div className="px-2 py-1.5">
               <MenuTile
                 icon={<LinkMenuIcon />}
-                label="Set Link"
+                label={t('elementcontentsections.set-link')}
                 onClick={() => {
                   props.onLinkElement(target.id);
                   onClose();
@@ -268,7 +266,7 @@ export function ElementContentSections({
       {showCollaborateGroup ? <MenuGroupSeparator /> : null}
       {boxed ? (
         <MenuAccordionSection
-          title="Collaborate"
+          title={t('elementcontentsections.collaborate')}
           icon={<CommentMenuIcon />}
           {...sectionProps('collaborate')}
         >
@@ -277,7 +275,7 @@ export function ElementContentSections({
           <MenuTileGrid cols={2}>
             <MenuTile
               icon={<ActionMenuIcon />}
-              label={target.action ? 'View Action' : 'Assign Action'}
+              label={target.action ? t('elementcontentsections.view-action') : t('elementcontentsections.assign-action')}
               onClick={() => {
                 props.onAssignAction(target.id);
                 onClose();
@@ -288,7 +286,7 @@ export function ElementContentSections({
                 menu was one more tile to read past on the way to the thread. */}
             <MenuTile
               icon={<CommentMenuIcon />}
-              label="Add Comment"
+              label={t('elementcontentsections.add-comment')}
               onClick={() => {
                 props.onOpenComments(target.id);
                 onClose();
@@ -299,7 +297,7 @@ export function ElementContentSections({
       ) : null}
       {boxed ? (
         <MenuAccordionSection
-          title="Resources"
+          title={t('elementcontentsections.resources')}
           icon={<LinkMenuIcon />}
           {...sectionProps('resources')}
         >
@@ -309,7 +307,7 @@ export function ElementContentSections({
             <MenuTileGrid cols={2}>
               <MenuTile
                 icon={<LinkMenuIcon />}
-                label={target.link ? 'Edit Link' : 'Add Link'}
+                label={target.link ? t('elementcontentsections.edit-link') : t('elementcontentsections.add-link')}
                 onClick={() => {
                   props.onLinkElement(target.id);
                   onClose();
@@ -317,7 +315,7 @@ export function ElementContentSections({
               />
               <MenuTile
                 icon={<NoteMenuIcon />}
-                label={target.note ? 'Edit Note' : 'Add Note'}
+                label={target.note ? t('elementcontentsections.edit-note') : t('elementcontentsections.add-note')}
                 onClick={() => {
                   props.onOpenNote(target.id);
                   onClose();
@@ -328,7 +326,7 @@ export function ElementContentSections({
             <div className="px-2 py-1.5">
               <MenuTile
                 icon={<NoteMenuIcon />}
-                label={target.note ? 'Edit Note' : 'Add Note'}
+                label={target.note ? t('elementcontentsections.edit-note-2') : t('elementcontentsections.add-note-2')}
                 onClick={() => {
                   props.onOpenNote(target.id);
                   onClose();

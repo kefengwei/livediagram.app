@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useId, useRef, useState } from 'react';
 import { COMMUNITY_TAG_MAX, COMMUNITY_TAG_MIN, COMMUNITY_TAGS_MAX } from '@livediagram/api-schema';
 import { ChipField, type ChipFieldHandle } from '@/components/primitives/ChipField';
@@ -33,6 +34,7 @@ export function TagInput({
   // The field's validation message from the dialog's submit, shown under the field.
   error?: string;
 }) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState('');
   const [rejected, setRejected] = useState<TagRejection | null>(null);
   // A chip's remove button, a Popular suggestion and the field itself (disabled once five tags are in)
@@ -89,7 +91,7 @@ export function TagInput({
         invalid={rejected !== null || !!error}
         id={inputId}
         placeholder={
-          full ? 'That is all five' : tags.length ? 'Add another' : 'e.g. aws, onboarding'
+          full ? t('taginput.that-is-all-five') : tags.length ? t('taginput.add-another') : t('taginput.e-g-aws-onboarding')
         }
         ariaLabel="Tags"
         ariaDescribedBy={error ? `${errorId} ${hintId}` : hintId}
@@ -108,7 +110,7 @@ export function TagInput({
       <FieldError id={errorId} message={error} />
       {offered.length > 0 && !full ? (
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-xs text-slate-500 dark:text-slate-400">Popular:</span>
+          <span className="text-xs text-slate-500 dark:text-slate-400">{t('taginput.popular')}</span>
           {offered.map((tag) => (
             <button
               key={tag}

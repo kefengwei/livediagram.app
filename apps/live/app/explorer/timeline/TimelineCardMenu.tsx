@@ -20,6 +20,7 @@
 // this trigger, so the slot hooks hold "which card's menu is open" and
 // both paths flip it.
 
+import { useTranslation } from '@/lib/i18n';
 import { CloseIcon } from '@livediagram/ui';
 import { useState, type ReactNode } from 'react';
 import { EllipsisTriggerButton } from '@/components/primitives/EllipsisTriggerButton';
@@ -153,6 +154,7 @@ function EntityMenu({
   onClose: () => void;
   then: (fn: () => void) => () => void;
 }) {
+  const { t } = useTranslation();
   const plain = items.filter((i) => !i.destructive);
   const destructive = items.filter((i) => i.destructive);
   return (
@@ -171,7 +173,7 @@ function EntityMenu({
       <MenuActionRow
         plain
         icon={<CloseIcon size={11} />}
-        label="Remove from Timeline"
+        label={t('timelinecardmenu.remove-from-timeline')}
         onClick={onRemove}
       />
       {destructive.length > 0 ? <MenuGroupSeparator /> : null}

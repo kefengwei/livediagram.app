@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 import { useOnline } from '@/hooks/ui/useOnline';
 import { TopCenterBanner, TopCenterRow } from './TopCenter';
@@ -7,6 +8,7 @@ import { TopCenterBanner, TopCenterRow } from './TopCenter';
 // top-centre stack while the browser says it is offline. Changes are held in memory, not stored, so
 // the copy says "in this tab": closing it while offline loses them.
 export function OfflineBanner({ readOnly }: { readOnly: boolean }) {
+  const { t } = useTranslation();
   const online = useOnline();
   if (online) return null;
   return (
@@ -15,8 +17,8 @@ export function OfflineBanner({ readOnly }: { readOnly: boolean }) {
         <span role="status" className="flex items-center gap-2">
           <span aria-hidden className="h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
           {readOnly
-            ? 'You’re offline. You’ll see changes when you reconnect.'
-            : 'You’re offline. Changes stay in this tab and save when you reconnect.'}
+            ? t('offlinebanner.you-re-offline-you-ll-see')
+            : t('offlinebanner.you-re-offline-changes-stay-in')}
         </span>
       </TopCenterBanner>
     </TopCenterRow>

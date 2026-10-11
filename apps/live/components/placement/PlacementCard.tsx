@@ -1,7 +1,9 @@
 'use client';
 
+
 import { useState, type ReactNode } from 'react';
 import { Glyph } from '@livediagram/ui';
+import { useTranslation } from '@/lib/i18n';
 
 // The pieces a placement level is built from (docs/specs/006-document/offline-mode.md, docs/specs/013-workspace/folders.md, docs/specs/006-document/save-locations.md):
 // the selectable destination card, the inline New Folder card, their
@@ -53,6 +55,9 @@ function InlineCreateTile({
   // Position in the level's cascade; absent = no entrance animation.
   enterIndex?: number;
 }) {
+  const { t } = useTranslation();
+  
+  
   const row = layout === 'list';
   const enter = enterProps(layout, enterIndex);
   const [naming, setNaming] = useState(false);
@@ -144,7 +149,7 @@ function InlineCreateTile({
         } bg-transparent px-0 text-xs text-slate-800 outline-none placeholder:text-slate-400 dark:text-slate-100 dark:placeholder:text-slate-400`}
       />
       <span className="shrink-0 text-[10px] text-slate-400 dark:text-slate-400">
-        {busy ? 'Creating…' : 'Enter to create'}
+        {busy ? 'Creating…' : t('placementcard.enter-to-create')}
       </span>
     </div>
   );
@@ -165,13 +170,15 @@ export function NewFolderTile({
   layout?: PlacementLayout;
   enterIndex?: number;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <InlineCreateTile
       onCreate={onCreate}
       icon={<NewFolderIcon />}
       label={label}
       sub={sub}
-      placeholder="Folder name"
+      placeholder={t('placementcard.folder-name')}
       layout={layout}
       enterIndex={enterIndex}
     />
@@ -190,13 +197,15 @@ export function NewTeamTile({
   layout?: PlacementLayout;
   enterIndex?: number;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <InlineCreateTile
       onCreate={onCreate}
       icon={<TeamPlaceIcon />}
-      label="New Team"
+      label={t('placementcard.new-team')}
       sub="Create a New Team"
-      placeholder="Team name"
+      placeholder={t('placementcard.team-name')}
       layout={layout}
       enterIndex={enterIndex}
     />
@@ -243,6 +252,7 @@ export function PlacementCard({
   // least one, so a card that leads somewhere says so; 0 / absent = none.
   count?: number;
 }) {
+  
   const row = layout === 'list';
   const enter = enterProps(layout, enterIndex);
   const badge = count ? (

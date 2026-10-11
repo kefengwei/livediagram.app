@@ -6,9 +6,11 @@
 // as one surface, and so nothing here grows a fourth copy of the chip / button
 // class strings the old per-tool sections each carried.
 
+
 import type { ReactNode } from 'react';
 import { PollMenuIcon, TimerMenuIcon, VoteMenuIcon } from '@/components/palette/context-menu-icons';
 import type { StudioTool, StudioToolStatus } from './session-studio';
+import { useTranslation } from '@/lib/i18n';
 import {
   ACTIVE_SEGMENT,
   SEGMENT_TRACK,
@@ -37,10 +39,12 @@ export function StudioSwitcher({
   status: (t: StudioTool) => StudioToolStatus;
   onChange: (t: StudioTool) => void;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <div
       role="tablist"
-      aria-label="Session tools"
+      aria-label={t('studio-ui.session-tools')}
       className={`grid gap-0.5 rounded-lg p-0.5 ${SEGMENT_TRACK}`}
       style={{ gridTemplateColumns: `repeat(${tools.length}, minmax(0, 1fr))` }}
     >
@@ -128,6 +132,7 @@ export function StudioSegmented<T extends string>({
   onChange: (v: T) => void;
   label: string;
 }) {
+  
   return (
     <div role="radiogroup" aria-label={label} className="flex flex-wrap gap-1">
       {options.map((o) => {
@@ -167,6 +172,7 @@ export function TransportButton({
   onClick: () => void;
   primary?: boolean;
 }) {
+  
   return (
     <button
       type="button"
@@ -194,6 +200,7 @@ export function StudioCallout({
   tone?: 'info' | 'warn';
   children: ReactNode;
 }) {
+  
   return (
     <p
       className={`rounded-lg px-2.5 py-1.5 text-[11px] leading-snug ${

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState } from 'react';
 import { SPLIT_KEY_STEP_LARGE_PX, SPLIT_KEY_STEP_PX, SPLIT_MIN_PANE_PX } from '@/lib/split-view';
 
@@ -17,6 +18,7 @@ export function SplitDivider({
   onResize: (width: number, commit?: boolean) => void;
   onReset: () => void;
 }) {
+  const { t } = useTranslation();
   const [dragging, setDragging] = useState(false);
   const grab = useRef<{ startX: number; startWidth: number; id: number } | null>(null);
   const frame = useRef(0);
@@ -26,7 +28,7 @@ export function SplitDivider({
     <div
       role="separator"
       aria-orientation="vertical"
-      aria-label="Resize Side by Side"
+      aria-label={t('splitdivider.resize-side-by-side')}
       aria-valuemin={SPLIT_MIN_PANE_PX}
       aria-valuemax={max}
       aria-valuenow={rightWidth}

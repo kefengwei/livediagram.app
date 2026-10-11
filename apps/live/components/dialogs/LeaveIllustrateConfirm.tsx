@@ -6,6 +6,7 @@
 // question for a title, one plain sentence, and the two ways out: Cancel, or Switch (the target
 // mode's glyph on it). Escape or an outside press stays. With no switch on screen (zen, a
 // Shift+D press), the same card sits centred near the top of the screen.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { editorModeLabel, type EditorMode } from '@livediagram/document';
 import { lucideTriangleAlert } from '@livediagram/icons/lucide';
@@ -56,6 +57,7 @@ function SwitchCard({
   onConfirm: () => void;
   onCancel: () => void;
 }) {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
   const confirmRef = useRef<HTMLButtonElement>(null);
   const [place, setPlace] = useState<{
@@ -134,27 +136,22 @@ function SwitchCard({
             <h2
               id="leave-illustrate-title"
               className="text-sm font-semibold text-slate-900 dark:text-slate-50"
-            >
-              Switch to {label}?
+            >{t('leaveillustrateconfirm.switch-to')}{label}?
             </h2>
             <p
               id="leave-illustrate-body"
               className="mt-1 text-xs leading-5 text-slate-600 dark:text-slate-300"
             >
-              {label} mode doesn&apos;t show pages. Changes you make there may not fit back onto
-              your pages when you return to Illustrate.
-            </p>
+              {label}{t('leaveillustrateconfirm.mode-doesn-t-show-pages-changes')}</p>
           </div>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-2">
-          <Button size="sm" variant="secondary" className="whitespace-nowrap" onClick={onCancel}>
-            Cancel
-          </Button>
+          <Button size="sm" variant="secondary" className="whitespace-nowrap" onClick={onCancel}>{t('leaveillustrateconfirm.cancel')}</Button>
           <Button ref={confirmRef} size="sm" className="whitespace-nowrap" onClick={onConfirm}>
             <span className="inline-flex shrink-0">
               <ModeIcon size={14} aria-hidden />
             </span>
-            <span>Switch</span>
+            <span>{t('leaveillustrateconfirm.switch')}</span>
           </Button>
         </div>
       </div>

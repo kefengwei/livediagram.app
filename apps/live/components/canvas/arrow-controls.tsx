@@ -5,6 +5,7 @@
 // is gated on its value being non-null, so a caller can pass null to hide a
 // row (the context menu does this for elements that don't carry that field).
 
+import { useTranslation } from '@/lib/i18n';
 import {
   ARROW_THICKNESS_PX,
   ARROWHEAD_SHAPES,
@@ -95,18 +96,19 @@ export function ArrowLineControls({
   onSetRouteBehind: (v: boolean) => void;
   onSetExactStart: (v: boolean) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <>
       {thickness !== null ? (
         <>
-          <p className={subLabel}>Thickness</p>
+          <p className={subLabel}>{t('arrow-controls.thickness')}</p>
           <div className="mt-1 grid grid-cols-4 gap-1">
             {(
               [
                 ['thin', 'Thin'],
                 ['medium', 'Medium'],
                 ['thick', 'Thick'],
-                ['extra-thick', 'Extra thick'],
+                ['extra-thick', t('arrow-controls.extra-thick')],
               ] as [ArrowThickness, string][]
             ).map(([id, label]) => (
               <HoverCard
@@ -125,12 +127,12 @@ export function ArrowLineControls({
       {style !== null ? (
         <>
           {thickness !== null ? <div className={divider} /> : null}
-          <p className={subLabel}>Line style</p>
+          <p className={subLabel}>{t('arrow-controls.line-style')}</p>
           <div className="mt-1 grid grid-cols-3 gap-1">
             {(
               [
-                ['straight', 'Straight', 'Plain straight line, the default.'],
-                ['curved', 'Curved', 'Smooth bezier curve bowing perpendicular to the endpoints.'],
+                ['straight', 'Straight', t('arrow-controls.plain-straight-line-the-default')],
+                ['curved', 'Curved', t('arrow-controls.smooth-bezier-curve-bowing-perpendicular-to')],
                 ['angled', 'Angled', 'Axis-aligned L-connector with a single right-angle bend.'],
               ] as [ArrowStyle, string, string][]
             ).map(([id, label, desc]) => (
@@ -146,7 +148,7 @@ export function ArrowLineControls({
       {strokeStyle !== null ? (
         <>
           {thickness !== null || style !== null ? <div className={divider} /> : null}
-          <p className={subLabel}>Line pattern</p>
+          <p className={subLabel}>{t('arrow-controls.line-pattern')}</p>
           <div className="mt-1 grid grid-cols-3 gap-1">
             {LINE_PATTERN_ORDER.map((value) => (
               <HoverCard
@@ -172,14 +174,10 @@ export function ArrowLineControls({
             className="flex w-full items-center justify-between gap-2 rounded-md px-1 py-1 text-left transition hover:bg-slate-50 dark:hover:bg-slate-800/60"
           >
             <span className="flex flex-col">
-              <span className="text-[11px] text-slate-600 dark:text-slate-300">
-                Pass behind boxes
-              </span>
-              <span className="text-[10px] leading-snug text-slate-400">
-                Break the line where it crosses another box.
-              </span>
+              <span className="text-[11px] text-slate-600 dark:text-slate-300">{t('arrow-controls.pass-behind-boxes')}</span>
+              <span className="text-[10px] leading-snug text-slate-400">{t('arrow-controls.break-the-line-where-it-crosses')}</span>
             </span>
-            <ToggleSwitch checked={routeBehind} label="Pass behind boxes" presentational />
+            <ToggleSwitch checked={routeBehind} label={t('arrow-controls.pass-behind-boxes-2')} presentational />
           </button>
         </>
       ) : null}
@@ -190,14 +188,10 @@ export function ArrowLineControls({
           className="flex w-full items-center justify-between gap-2 rounded-md px-1 py-1 text-left transition hover:bg-slate-50 dark:hover:bg-slate-800/60"
         >
           <span className="flex flex-col">
-            <span className="text-[11px] text-slate-600 dark:text-slate-300">
-              Start at exact anchor
-            </span>
-            <span className="text-[10px] leading-snug text-slate-400">
-              Start where you connected it, not spread out from other arrows there.
-            </span>
+            <span className="text-[11px] text-slate-600 dark:text-slate-300">{t('arrow-controls.start-at-exact-anchor')}</span>
+            <span className="text-[10px] leading-snug text-slate-400">{t('arrow-controls.start-where-you-connected-it-not')}</span>
           </span>
-          <ToggleSwitch checked={exactStart} label="Start at exact anchor" presentational />
+          <ToggleSwitch checked={exactStart} label={t('arrow-controls.start-at-exact-anchor-2')} presentational />
         </button>
       ) : null}
     </>
@@ -220,16 +214,17 @@ export function ArrowPointerControls({
   onSetHeadSize: (v: ArrowheadSize) => void;
   onSetHeadShape: (v: ArrowheadShape) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <>
-      <p className={subLabel}>Pick which end(s) of the arrow have a pointer.</p>
+      <p className={subLabel}>{t('arrow-controls.pick-which-end-s-of-the')}</p>
       <div className="mt-1 grid grid-cols-4 gap-1">
         {(
           [
-            ['from', 'Start only', 'Arrowhead on the left / starting end only.'],
-            ['to', 'End only', 'Arrowhead on the right / ending end only (the default).'],
-            ['both', 'Both ends', 'Arrowheads on both ends (a two-way connector).'],
-            ['none', 'No pointers', 'No arrowhead on either end: a plain connector / line.'],
+            ['from', t('arrow-controls.start-only'), 'Arrowhead on the left / starting end only.'],
+            ['to', t('arrow-controls.end-only'), 'Arrowhead on the right / ending end only (the default).'],
+            ['both', t('arrow-controls.both-ends'), t('arrow-controls.arrowheads-on-both-ends-a-two')],
+            ['none', t('arrow-controls.no-pointers'), 'No arrowhead on either end: a plain connector / line.'],
           ] as [ArrowEnds, string, string][]
         ).map(([id, label, desc]) => (
           <HoverCard key={id} title={label} description={desc}>
@@ -242,14 +237,14 @@ export function ArrowPointerControls({
       {headSize !== null && ends !== 'none' ? (
         <>
           <div className={divider} />
-          <p className={subLabel}>Arrowhead size</p>
+          <p className={subLabel}>{t('arrow-controls.arrowhead-size')}</p>
           <div className="mt-1 grid grid-cols-4 gap-1">
             {(
               [
                 ['small', 'Small'],
                 ['medium', 'Medium'],
                 ['large', 'Large'],
-                ['extra-large', 'Extra large'],
+                ['extra-large', t('arrow-controls.extra-large')],
               ] as [ArrowheadSize, string][]
             ).map(([id, label]) => (
               <HoverCard
@@ -268,7 +263,7 @@ export function ArrowPointerControls({
       {headShape !== null && ends !== 'none' ? (
         <>
           <div className={divider} />
-          <p className={subLabel}>Arrowhead shape</p>
+          <p className={subLabel}>{t('arrow-controls.arrowhead-shape')}</p>
           <div className="mt-1 grid grid-cols-4 gap-1">
             {ARROWHEAD_SHAPES.map((shape) => (
               <HoverCard

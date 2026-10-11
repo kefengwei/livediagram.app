@@ -8,10 +8,12 @@
 // the mouse away. It does NOT fade while the notes popover is open, or the
 // popover would be left orphaned over the slide.
 
+
 import { useEffect, useRef, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon, CloseIcon, Tooltip, Glyph } from '@livediagram/ui';
 
 import { SettingsIcon } from '@/components/chrome/tab-bar-icons';
+import { useTranslation } from '@/lib/i18n';
 
 // How long the pointer must be still before the HUD gets out of the way.
 const IDLE_MS = 2600;
@@ -52,6 +54,8 @@ function HudButton({
   disabled?: boolean;
   children: React.ReactNode;
 }) {
+  
+  
   return (
     <button
       type="button"
@@ -124,7 +128,8 @@ export function PresentationHud({
    * whole deck: a hidden slide is not in the presentation, so there is no
    * position to send the presenter to.
    */
-  slides: readonly { id: string; label: string }[];
+  slides: readonly {
+    id: string; label: string }[];
   jumpOpen: boolean;
   onToggleJump: () => void;
   onJump: (index: number) => void;
@@ -138,6 +143,8 @@ export function PresentationHud({
   onClose: () => void;
   hidden: boolean;
 }) {
+  const { t } = useTranslation();
+  
   const hasNotes = (notes ?? '').trim().length > 0;
   return (
     <>
@@ -191,10 +198,10 @@ export function PresentationHud({
             a projector often has a mouse and no keyboard within reach, and
             "click anywhere to advance" is not discoverable and cannot go
             BACK at all. */}
-        <HudButton label="Previous slide" onPress={() => onBack?.()} disabled={!onBack}>
+        <HudButton label={t('presentationhud.previous-slide')} onPress={() => onBack?.()} disabled={!onBack}>
           <ChevronLeftIcon />
         </HudButton>
-        <HudButton label="Next slide" onPress={onNext}>
+        <HudButton label={t('presentationhud.next-slide')} onPress={onNext}>
           <ChevronRightIcon />
         </HudButton>
         {/* Only when this slide HAS a script. A permanent button that opens an
@@ -205,7 +212,7 @@ export function PresentationHud({
         {/* Jumping (docs/specs/012-collaboration/presentation-mode.md). Arrow keys walk the deck, which is everything
             you need until somebody asks about the slide from nine slides ago
             and you arrow back through nine of them in front of a room. */}
-        <HudButton label="Jump to a slide" onPress={onToggleJump} active={jumpOpen}>
+        <HudButton label={t('presentationhud.jump-to-a-slide')} onPress={onToggleJump} active={jumpOpen}>
           <Glyph size={14} units={16}>
             <rect x="2" y="2.5" width="5" height="5" rx="1" />
             <rect x="9" y="2.5" width="5" height="5" rx="1" />
@@ -214,7 +221,7 @@ export function PresentationHud({
           </Glyph>
         </HudButton>
         {hasNotes ? (
-          <HudButton label="Presenter notes" onPress={onToggleNotes} active={notesOpen}>
+          <HudButton label={t('presentationhud.presenter-notes')} onPress={onToggleNotes} active={notesOpen}>
             <Glyph size={14} units={16} strokeLinejoin="miter">
               <rect x="2.5" y="2" width="11" height="12" rx="1.6" />
               <path d="M5 5.5h6M5 8h6M5 10.5h3.5" />
@@ -225,10 +232,10 @@ export function PresentationHud({
             central circle read as a SUN at this size — which is exactly why it
             was replaced everywhere else (see SettingsIcon), and doubly wrong on a
             dark HUD where the stroke is light. */}
-        <HudButton label="Presentation settings" onPress={onToggleSettings} active={settingsOpen}>
+        <HudButton label={t('presentationhud.presentation-settings')} onPress={onToggleSettings} active={settingsOpen}>
           <SettingsIcon />
         </HudButton>
-        <HudButton label="Exit presentation" onPress={onClose}>
+        <HudButton label={t('presentationhud.exit-presentation')} onPress={onClose}>
           <CloseIcon />
         </HudButton>
       </div>
@@ -236,7 +243,7 @@ export function PresentationHud({
       {jumpOpen ? (
         <div
           role="dialog"
-          aria-label="Jump to a slide"
+          aria-label={t('presentationhud.jump-to-a-slide-2')}
           onClick={(e) => e.stopPropagation()}
           onPointerDown={(e) => e.stopPropagation()}
           className="pointer-events-auto fixed right-4 top-16 z-[66] max-h-[60vh] w-72 overflow-y-auto rounded-xl bg-slate-900/90 p-1.5 shadow-2xl backdrop-blur"
@@ -263,7 +270,7 @@ export function PresentationHud({
       {notesOpen ? (
         <div
           role="dialog"
-          aria-label="Presenter notes"
+          aria-label={t('presentationhud.presenter-notes-2')}
           onClick={(e) => e.stopPropagation()}
           onPointerDown={(e) => e.stopPropagation()}
           className="pointer-events-auto fixed right-4 top-16 z-[66] max-h-[50vh] w-80 overflow-y-auto rounded-xl bg-slate-900/90 p-3 text-[12px] leading-relaxed text-white/85 shadow-2xl backdrop-blur"
@@ -271,7 +278,7 @@ export function PresentationHud({
           {hasNotes ? (
             <p className="whitespace-pre-wrap">{notes}</p>
           ) : (
-            <p className="italic text-white/45">No notes for this slide.</p>
+            <p className="italic text-white/45">{t('presentationhud.no-notes-for-this-slide')}</p>
           )}
         </div>
       ) : null}

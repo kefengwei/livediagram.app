@@ -12,6 +12,7 @@
 // The status tints the badge, the glow and the driver markers, never the
 // element's fill: the theme owns the box.
 
+import { useTranslation } from '@/lib/i18n';
 import {
   DECISION_STATUS_HUES,
   DECISION_STATUS_LABELS,
@@ -51,6 +52,7 @@ export function DecisionFace({
   label: string;
   textColor: string;
 }) {
+  const { t } = useTranslation();
   const status = element.decisionStatus ?? DEFAULT_DECISION_STATUS;
   const hue = DECISION_STATUS_HUES[status];
   const ink = `color-mix(in srgb, ${hue} 70%, ${textColor})`;
@@ -59,7 +61,7 @@ export function DecisionFace({
   return (
     <CollabPanel
       element={element}
-      title={label.trim() || 'We will …'}
+      title={label.trim() || t('decisionface.we-will')}
       textColor={textColor}
       // The statement is the sentence people read: larger than a panel title,
       // three lines, bounded so a long one can't squeeze the drivers off.
@@ -102,13 +104,9 @@ export function DecisionFace({
         <span
           className="text-[9.5px] font-bold uppercase tracking-[0.08em]"
           style={{ color: ink, opacity: 0.85 }}
-        >
-          Because
-        </span>
+        >{t('decisionface.because')}</span>
         {drivers.length === 0 ? (
-          <p className="text-[11px] leading-snug" style={{ color: textColor, opacity: 0.5 }}>
-            + Add what drove this from the element’s menu.
-          </p>
+          <p className="text-[11px] leading-snug" style={{ color: textColor, opacity: 0.5 }}>{t('decisionface.add-what-drove-this-from-the')}</p>
         ) : (
           <ul className="flex flex-col gap-1.5">
             {drivers.map((driver, i) => (

@@ -8,6 +8,7 @@
 // selection + apply handlers); this component is presentation + the
 // focus-preservation detail.
 
+import { useTranslation } from '@/lib/i18n';
 import { AlignmentGrid } from '@/components/palette/palette-controls';
 import { AlignIcon as AlignLinesIcon } from '@/components/canvas/table-icons';
 import { BlockTypePicker } from '@/components/rich-text/BlockTypePicker';
@@ -58,6 +59,7 @@ export function RichTextToolbar({
   onColor: (color: string) => void;
   onSetAlign: (x: TextAlignX, y: TextAlignY) => void;
 }) {
+  const { t } = useTranslation();
   const toggles = runToggles('bold', 'italic', 'underline', 'strikethrough');
   const appearance = useCanvasSurface();
   const yours = useDocumentColours();
@@ -95,8 +97,8 @@ export function RichTextToolbar({
           horizontal alignment), not the positional box-dot the grid cells
           use, so the control reads as "alignment" at a glance. */}
       <ToolbarDropdown
-        label="Alignment"
-        description="Align the label inside the element."
+        label={t('richtexttoolbar.alignment')}
+        description={t('richtexttoolbar.align-the-label-inside-the-element')}
         menuClassName="w-28 p-1.5"
         trigger={<AlignLinesIcon dir={alignX} />}
       >
@@ -107,9 +109,9 @@ export function RichTextToolbar({
           (docs/specs/004-interface-design/colour-picker.md) behind a swatch button. A press
           never takes focus from the text (the editor keeps its selection, and its onBlur ignores
           focus landing in the picker's popover). */}
-      <HoverCard title="Text colour" description="Colour the selected text.">
+      <HoverCard title={t('richtexttoolbar.text-colour')} description={t('richtexttoolbar.colour-the-selected-text')}>
         <ColourSwatchButton
-          label="Text colour"
+          label={t('richtexttoolbar.text-colour-2')}
           value={active.color ?? null}
           swatch={active.color ?? DEFAULT_TEXT_COLOUR}
           standard={[standardGroup('strong', appearance, 'hex')]}

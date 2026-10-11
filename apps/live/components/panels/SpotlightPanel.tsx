@@ -9,6 +9,7 @@
 // stops a presenter believing they have dimmed the room's canvas when they
 // have only dimmed their own.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import {
   spotlightExtent,
@@ -71,6 +72,7 @@ export function SpotlightPanel({
   radius: number;
   onSetRadius: (radius: number) => void;
 } & ModePanelProps) {
+  const { t } = useTranslation();
   const [openRow, setOpenRow] = useState<Row | null>(null);
   const toggle = (row: Row) => setOpenRow((r) => (r === row ? null : row));
   const currentSize = spotlightSizeOf(radius);
@@ -78,12 +80,12 @@ export function SpotlightPanel({
     options.find((o) => o.id === id)?.label ?? '';
 
   return (
-    <ModePanel helpArticle="spotlight" title="Spotlight" {...placement}>
+    <ModePanel helpArticle="spotlight" title={t('spotlightpanel.spotlight')} {...placement}>
       <div className="flex flex-col px-2 pb-2">
         <ShroudPreview config={config} radius={radius} />
         <div className="divide-y divide-slate-100 dark:divide-slate-800">
           <ToolOptionRow
-            label="Size"
+            label={t('spotlightpanel.size')}
             options={SPOTLIGHT_SIZES}
             value={currentSize}
             valueLabel={currentSize ? labelOf(SPOTLIGHT_SIZES, currentSize) : 'Custom'}
@@ -97,7 +99,7 @@ export function SpotlightPanel({
             }}
           />
           <ToolOptionRow
-            label="Dim"
+            label={t('spotlightpanel.dim')}
             options={SPOTLIGHT_DIMS}
             value={config.dim}
             valueLabel={labelOf(SPOTLIGHT_DIMS, config.dim)}
@@ -106,7 +108,7 @@ export function SpotlightPanel({
             onPick={(id) => onChange('dim', id)}
           />
           <ToolOptionRow
-            label="Edge"
+            label={t('spotlightpanel.edge')}
             options={SPOTLIGHT_EDGES}
             value={config.edge}
             valueLabel={labelOf(SPOTLIGHT_EDGES, config.edge)}
@@ -115,7 +117,7 @@ export function SpotlightPanel({
             onPick={(id) => onChange('edge', id)}
           />
           <ToolOptionRow
-            label="Shape"
+            label={t('spotlightpanel.shape')}
             options={SPOTLIGHT_SHAPES}
             value={config.shape}
             valueLabel={labelOf(SPOTLIGHT_SHAPES, config.shape)}

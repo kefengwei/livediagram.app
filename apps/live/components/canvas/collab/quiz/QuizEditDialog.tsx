@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Button, CloseIcon, DialogHeader } from '@livediagram/ui';
 import {
@@ -45,6 +46,7 @@ export function QuizEditDialog({
   onClose: () => void;
   onSave: (draft: QuizDraft) => void;
 }) {
+  const { t } = useTranslation();
   const [question, setQuestion] = useState(element.label ?? '');
   const [rows, setRows] = useState<string[]>(() => seedRows(element));
   const [correct, setCorrect] = useState(element.quizCorrect ?? 0);
@@ -90,13 +92,13 @@ export function QuizEditDialog({
           }}
         >
           <DialogHeader
-            title="Edit Quiz"
+            title={t('quizeditdialog.edit-quiz')}
             subtitle="One question, two to six answers. Saving resets the round."
           >
             <button
               type="button"
               onClick={onClose}
-              aria-label="Close"
+              aria-label={t('quizeditdialog.close')}
               className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300"
             >
               <CloseIcon size={16} />
@@ -104,21 +106,19 @@ export function QuizEditDialog({
           </DialogHeader>
           <div className="flex flex-col gap-4 px-6 py-5">
             <label className="block">
-              <span className={labelClass}>Question</span>
+              <span className={labelClass}>{t('quizeditdialog.question')}</span>
               <textarea
                 autoFocus
                 rows={2}
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
-                placeholder="What would you like to ask?"
+                placeholder={t('quizeditdialog.what-would-you-like-to-ask')}
                 className={`${fieldClass} mt-1 resize-none`}
               />
             </label>
             <fieldset>
-              <legend className={labelClass}>Answers</legend>
-              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                Pick the right one. Nobody else sees which until you reveal it.
-              </p>
+              <legend className={labelClass}>{t('quizeditdialog.answers')}</legend>
+              <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{t('quizeditdialog.pick-the-right-one-nobody-else')}</p>
               <div className="mt-2 flex flex-col gap-1.5">
                 {rows.map((row, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -148,9 +148,7 @@ export function QuizEditDialog({
                         className="accent-green-600"
                         checked={correct === i}
                         onChange={() => setCorrect(i)}
-                      />
-                      Correct
-                    </label>
+                      />{t('quizeditdialog.correct')}</label>
                     <button
                       type="button"
                       aria-label={`Remove answer ${quizOptionLetter(i)}`}
@@ -169,12 +167,10 @@ export function QuizEditDialog({
                 className="mt-2"
                 disabled={rows.length >= QUIZ_MAX_OPTIONS}
                 onClick={() => setRows((r) => [...r, ''])}
-              >
-                Add Answer
-              </Button>
+              >{t('quizeditdialog.add-answer')}</Button>
             </fieldset>
             <label className="block">
-              <span className={labelClass}>Time Limit</span>
+              <span className={labelClass}>{t('quizeditdialog.time-limit')}</span>
               <select
                 value={seconds}
                 onChange={(e) => setSeconds(Number(e.target.value))}
@@ -189,12 +185,8 @@ export function QuizEditDialog({
             </label>
           </div>
           <DialogFooter>
-            <Button variant="secondary" size="sm" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button type="submit" size="sm" disabled={!canSave}>
-              Save
-            </Button>
+            <Button variant="secondary" size="sm" onClick={onClose}>{t('quizeditdialog.cancel')}</Button>
+            <Button type="submit" size="sm" disabled={!canSave}>{t('quizeditdialog.save')}</Button>
           </DialogFooter>
         </form>
       </div>

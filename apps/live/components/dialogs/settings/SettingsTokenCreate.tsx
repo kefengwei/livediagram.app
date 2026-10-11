@@ -5,6 +5,7 @@
 // actually give tokens, and the date this one will stop working, so the
 // six-month lifetime is a fact on screen rather than small print. Hands the
 // minted secret up; the reveal is its own card (SettingsTokenReveal).
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Button, SOLID_BRAND_DARK_CONTROL } from '@livediagram/ui';
 import type { TokensController } from '@/hooks/persistence/useTokens';
@@ -25,6 +26,7 @@ export function SettingsTokenCreate({
   // the reader opened: there is nothing to cancel back to.
   onCancel?: () => void;
 }) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   // Fixed when the composer opens: the preview is a date, not a ticking clock.
   const [expires] = useState(() => expiryFrom(Date.now()));
@@ -36,7 +38,7 @@ export function SettingsTokenCreate({
 
   return (
     <form
-      aria-label="New API token"
+      aria-label={t('settingstokencreate.new-api-token')}
       className="flex flex-col gap-3 rounded-xl border border-brand-200 bg-brand-50/40 p-3 dark:border-brand-500/30 dark:bg-brand-500/5"
       onSubmit={(e) => {
         e.preventDefault();
@@ -54,9 +56,7 @@ export function SettingsTokenCreate({
         <label
           htmlFor="settings-token-name"
           className="text-xs font-semibold text-slate-700 dark:text-slate-200"
-        >
-          What Is It For?
-        </label>
+        >{t('settingstokencreate.what-is-it-for')}</label>
         <input
           id="settings-token-name"
           value={name}
@@ -65,10 +65,10 @@ export function SettingsTokenCreate({
           // steal focus (and scroll) from whoever just opened Settings.
           autoFocus={!!onCancel}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Name your token"
+          placeholder={t('settingstokencreate.name-your-token')}
           className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-brand-400 focus:ring-2 focus:ring-brand-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:ring-brand-500/20"
         />
-        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Suggested names">
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label={t('settingstokencreate.suggested-names')}>
           {NAME_SUGGESTIONS.map((suggestion) => (
             <button
               key={suggestion}
@@ -87,8 +87,7 @@ export function SettingsTokenCreate({
         </div>
       </div>
 
-      <p className="text-[11px] text-slate-500 dark:text-slate-400">
-        Full read and write access to your documents, until{' '}
+      <p className="text-[11px] text-slate-500 dark:text-slate-400">{t('settingstokencreate.full-read-and-write-access-to')}{' '}
         <span className="font-semibold text-slate-700 dark:text-slate-200">
           {formatTokenDate(expires)}
         </span>
@@ -103,12 +102,10 @@ export function SettingsTokenCreate({
 
       <div className="flex items-center justify-end gap-2">
         {onCancel ? (
-          <Button size="xs" variant="secondary" onClick={onCancel}>
-            Cancel
-          </Button>
+          <Button size="xs" variant="secondary" onClick={onCancel}>{t('settingstokencreate.cancel')}</Button>
         ) : null}
         <Button type="submit" size="xs" disabled={tokens.creating || tokens.atCap}>
-          {tokens.creating ? 'Creating…' : 'Create Token'}
+          {tokens.creating ? 'Creating…' : t('settingstokencreate.create-token')}
         </Button>
       </div>
     </form>

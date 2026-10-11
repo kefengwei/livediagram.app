@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { CloseIcon, useClickOutside, useEscape, Portal } from '@livediagram/ui';
 import { useReposition } from '@/hooks/canvas/useReposition';
@@ -57,6 +58,7 @@ export function CommentThreadPopover({
   readOnly = false,
   selfId,
 }: CommentThreadPopoverProps) {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
   const composerRef = useRef<HTMLTextAreaElement>(null);
@@ -117,9 +119,7 @@ export function CommentThreadPopover({
         style={{ left: pos.left, top: pos.top, width: WIDTH }}
       >
         <header className="flex items-center justify-between border-b border-slate-100 px-3 py-2 dark:border-slate-800">
-          <h3 className="text-xs font-semibold text-slate-800 dark:text-slate-100">
-            Comments
-            {comments.length > 0 ? (
+          <h3 className="text-xs font-semibold text-slate-800 dark:text-slate-100">{t('commentthreadpopover.comments')}{comments.length > 0 ? (
               <span className="ml-1 font-normal text-slate-500 dark:text-slate-400">
                 ({comments.length})
               </span>
@@ -135,7 +135,7 @@ export function CommentThreadPopover({
             ) : null}
             <button
               type="button"
-              aria-label="Close comments"
+              aria-label={t('commentthreadpopover.close-comments')}
               onClick={onClose}
               className="rounded p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
             >

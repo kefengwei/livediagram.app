@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import type { CommunityAuthor, CommunityCategory, CommunityPost } from '@livediagram/api-schema';
 import { CommunityCopyCount, CommunityLikeCount, CommunityPostTile } from '@livediagram/ui';
@@ -29,12 +30,13 @@ export function CommunityCardPreview({
   likeCount?: number;
   copyCount?: number;
 }) {
+  const { t } = useTranslation();
   // One snapshot version, and one "now", for the dialog's life: a fresh read when it opens, then a stable image
   // (and "just now") while the person types.
   const [version] = useState(() => Date.now());
   const post: CommunityPost = {
     id: 'preview',
-    title: title.trim() || 'Your title',
+    title: title.trim() || t('communitycardpreview.your-title'),
     description: '',
     category: category ?? 'other',
     tags,
@@ -48,11 +50,11 @@ export function CommunityCardPreview({
     liked: false,
   };
   return (
-    <div aria-label="Card preview" role="group" className="flex">
+    <div aria-label={t('communitycardpreview.card-preview')} role="group" className="flex">
       <CommunityPostTile
         post={post}
         now={version}
-        categoryLabel={category ? undefined : 'Choose a Category'}
+        categoryLabel={category ? undefined : t('communitycardpreview.choose-a-category')}
         image={
           <DocumentThumbnail
             ownerId={ownerId}

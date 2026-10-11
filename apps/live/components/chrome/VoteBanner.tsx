@@ -1,9 +1,11 @@
 'use client';
 
+
 import { votesSpentBy, type TabVote } from '@livediagram/document';
 import type { VoteReview } from '@/hooks/canvas/useVoteReview';
 import { TopCenterBanner } from '@/components/chrome/TopCenter';
 import { SOLID_BRAND_DARK_CONTROL } from '@livediagram/ui';
+import { useTranslation } from '@/lib/i18n';
 
 // Floating dot-voting status banner (docs/specs/012-collaboration/session-tools.md). While a vote is open it
 // tells each participant how many of their dots remain; once ended it
@@ -29,13 +31,14 @@ export function VoteBanner({
   onPrev?: () => void;
   onDone?: () => void;
 }) {
+  const { t } = useTranslation();
+  
   if (review) {
     const isLast = review.index === review.total - 1;
     return (
       <TopCenterBanner tone="brand" className="gap-2 px-2 py-1 text-[11px] font-medium">
         <span aria-hidden className="inline-block h-2 w-2 rounded-full bg-amber-400" />
-        <span>
-          Top result {review.index + 1} of {review.total} &middot; {review.votes}{' '}
+        <span>{t('votebanner.top-result')}{review.index + 1}{t('votebanner.of')}{review.total}{t('votebanner.')}{review.votes}{' '}
           {review.votes === 1 ? 'vote' : 'votes'}
         </span>
         {/* Only the vote's host drives the walk (docs/specs/012-collaboration/session-tools.md). Everyone else
@@ -43,11 +46,11 @@ export function VoteBanner({
             controls rather than buttons that would silently no-op. */}
         {review.canControl ? (
           <span className="flex items-center gap-1">
-            <ReviewButton label="Previous" disabled={review.index === 0} onClick={onPrev} />
+            <ReviewButton label={t('votebanner.previous')} disabled={review.index === 0} onClick={onPrev} />
             {isLast ? (
-              <ReviewButton label="Done" emphasis onClick={onDone} />
+              <ReviewButton label={t('votebanner.done')} emphasis onClick={onDone} />
             ) : (
-              <ReviewButton label="Next" emphasis onClick={onNext} />
+              <ReviewButton label={t('votebanner.next')} emphasis onClick={onNext} />
             )}
           </span>
         ) : null}
@@ -65,8 +68,8 @@ export function VoteBanner({
   const message = vote.active
     ? `${remaining} of ${vote.votesPerPerson} ${vote.votesPerPerson === 1 ? 'dot' : 'dots'} left`
     : vote.revealed
-      ? 'Top picks ringed'
-      : 'Voting ended';
+      ? t('votebanner.top-picks-ringed')
+      : t('votebanner.voting-ended');
 
   return (
     <TopCenterBanner tone="brand" className="gap-2 px-3 py-1 text-[11px] font-medium">
@@ -89,6 +92,7 @@ function ReviewButton({
   disabled?: boolean;
   emphasis?: boolean;
 }) {
+  
   return (
     <button
       type="button"

@@ -8,6 +8,7 @@
 // menu does; a wheel or trackpad pan outside it closes it too, since the board it hangs from moves
 // away. On a phone it is a bottom sheet. Someone who may edit gets a full-width Add New Card Type under the
 // tiles (docs/specs/026-plan/plan-board.md "Create Card Type").
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, type SyntheticEvent } from 'react';
 import { type ItemFields, type ItemTypeDef } from '@livediagram/items';
 import { BottomSheet } from '@/components/primitives/BottomSheet';
@@ -40,6 +41,7 @@ export function AddCardPopover({
   onCreateType?: () => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const mobile = useIsMobileViewport();
   // Closes on a wheel (a pan or a zoom) anywhere but the menu itself, which may scroll.
   const box = useRef<HTMLDivElement>(null);
@@ -76,15 +78,13 @@ export function AddCardPopover({
     return (
       <BottomSheet
         role="dialog"
-        aria-label="Add a card"
+        aria-label={t('addcardpopover.add-a-card')}
         onClose={onClose}
         zClassName="z-[var(--z-overlay)]"
         onPointerDown={stop}
       >
         <div className="flex flex-col gap-1 px-2 pb-3" onKeyDown={stop}>
-          <p className="px-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
-            Add a Card
-          </p>
+          <p className="px-2 text-xs font-semibold text-slate-500 dark:text-slate-400">{t('addcardpopover.add-a-card-2')}</p>
           {choices}
         </div>
       </BottomSheet>
@@ -113,13 +113,14 @@ export function AddCardChoices({
   onAdd: (card: NewCard) => void;
   onCreateType?: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <>
       {/* A board taking no types yet offers only Add New Card Type. */}
       {types.length === 0 ? null : (
         <OptionRows
           kind="action"
-          label="Card Types"
+          label={t('addcardpopover.card-types')}
           className="mx-1 my-1"
           rows={types.map((t) => ({
             id: t.id,

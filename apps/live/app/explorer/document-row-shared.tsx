@@ -7,6 +7,7 @@
 // Extracted so the two view modes can't drift on what a document's badge
 // says or which actions its menu offers.
 
+import { useTranslation } from '@/lib/i18n';
 import { CloseIcon } from '@livediagram/ui';
 import {
   ClockIcon,
@@ -126,6 +127,7 @@ export function DocumentActionsMenu({
   // at sharing — the Timeline's share-link cards — rather than everywhere.
   onShare?: () => void;
 }) {
+  const { t } = useTranslation();
   const href = hrefForDocument(liveDoc);
   const offline = liveDoc.ownerId === OFFLINE_OWNER_ID;
   // Offline Mode conversions (docs/specs/006-document/offline-mode.md), shared with the panel row via the hook.
@@ -144,7 +146,7 @@ export function DocumentActionsMenu({
         <MenuActionRow
           plain
           icon={<DocumentIcon />}
-          label="Open"
+          label={t('document-row-shared.open')}
           onClick={() => window.location.assign(href)}
         />
         <MenuGroupSeparator />
@@ -152,14 +154,14 @@ export function DocumentActionsMenu({
           <MenuActionRow
             plain
             icon={<CloseIcon size={11} />}
-            label="Remove from Timeline"
+            label={t('document-row-shared.remove-from-timeline')}
             onClick={then(onRemoveFromTimeline)}
           />
         ) : null}
         <MenuActionRow
           plain
           icon={<DismissSharedIcon />}
-          label="Dismiss"
+          label={t('document-row-shared.dismiss')}
           onClick={then(() => onDismiss?.())}
         />
       </PortalMenu>
@@ -176,11 +178,11 @@ export function DocumentActionsMenu({
           <MenuActionRow
             plain
             icon={<DocumentIcon />}
-            label="Open"
+            label={t('document-row-shared.open-2')}
             onClick={onOpen ? then(onOpen) : () => window.location.assign(href)}
           />
           {onShare ? (
-            <MenuActionRow plain icon={<ShareIcon />} label="Share" onClick={then(onShare)} />
+            <MenuActionRow plain icon={<ShareIcon />} label={t('document-row-shared.share')} onClick={then(onShare)} />
           ) : null}
           <MenuGroupSeparator />
         </>
@@ -189,7 +191,7 @@ export function DocumentActionsMenu({
         <MenuActionRow
           plain
           icon={<PencilIcon size={12} />}
-          label="Rename"
+          label={t('document-row-shared.rename')}
           onClick={then(onStartRename)}
         />
       ) : null}
@@ -197,7 +199,7 @@ export function DocumentActionsMenu({
         <MenuActionRow
           plain
           icon={<DuplicateIcon size={12} />}
-          label="Duplicate"
+          label={t('document-row-shared.duplicate')}
           onClick={then(onDuplicate)}
         />
       ) : null}
@@ -205,7 +207,7 @@ export function DocumentActionsMenu({
         <MenuActionRow
           plain
           icon={<FolderOutlineIcon />}
-          label="Change Folder"
+          label={t('document-row-shared.change-folder')}
           onClick={then(() => onMove(anchor))}
         />
       ) : null}
@@ -222,7 +224,7 @@ export function DocumentActionsMenu({
         />
       ) : null}
       {onShowHistory ? (
-        <MenuActionRow plain icon={<HistoryIcon />} label="History" onClick={then(onShowHistory)} />
+        <MenuActionRow plain icon={<HistoryIcon />} label={t('document-row-shared.history')} onClick={then(onShowHistory)} />
       ) : null}
       {onToggleRecentExclusion ? (
         <MenuActionRow
@@ -231,7 +233,7 @@ export function DocumentActionsMenu({
           // The label states what the click DOES, and by doing so tells
           // you the current state — which is why the document needs no
           // badge anywhere else (docs/specs/013-workspace/hide-from-recent.md).
-          label={recentExcluded ? 'Show in Recent' : 'Hide from Recent'}
+          label={recentExcluded ? t('document-row-shared.show-in-recent') : t('document-row-shared.hide-from-recent')}
           onClick={then(onToggleRecentExclusion)}
         />
       ) : null}
@@ -239,7 +241,7 @@ export function DocumentActionsMenu({
         <MenuActionRow
           plain
           icon={<TeamIcon />}
-          label="Open Team"
+          label={t('document-row-shared.open-team')}
           onClick={() => {
             window.location.assign(
               `/explorer/team?id=${encodeURIComponent(liveDoc.team!.id)}${
@@ -254,14 +256,14 @@ export function DocumentActionsMenu({
           <MenuActionRow
             plain
             icon={<SyncIcon />}
-            label="Sync Document"
+            label={t('document-row-shared.sync-document')}
             onClick={() => void syncToCloud()}
           />
         ) : (
           <MenuActionRow
             plain
             icon={<TakeOfflineIcon />}
-            label="Take Offline"
+            label={t('document-row-shared.take-offline')}
             onClick={() => void takeOffline()}
           />
         )
@@ -270,7 +272,7 @@ export function DocumentActionsMenu({
         <MenuActionRow
           plain
           icon={<CloseIcon size={11} />}
-          label="Remove from Timeline"
+          label={t('document-row-shared.remove-from-timeline-2')}
           onClick={then(onRemoveFromTimeline)}
         />
       ) : null}
@@ -280,7 +282,7 @@ export function DocumentActionsMenu({
           <MenuActionRow
             plain
             icon={<TrashIcon size={12} />}
-            label="Delete"
+            label={t('document-row-shared.delete')}
             onClick={then(onDelete)}
           />
         </>

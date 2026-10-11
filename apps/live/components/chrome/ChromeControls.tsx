@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { AppearanceToggle } from '@/components/chrome/AppearanceToggle';
 import { CHROME_BTN, CHROME_BTN_LABELLED, ChromeLabel } from '@/components/chrome/chrome-button';
 import { SettingsIcon, GithubIcon, SearchGlyph } from '@/components/chrome/tab-bar-icons';
@@ -36,14 +37,15 @@ export function ChromeControls({
   // docs/specs/013-workspace/blueprints/workbench-embeds.md, WB15).
   appearance?: boolean;
 }) {
+  const { t } = useTranslation();
   const BTN = labelled ? `${CHROME_BTN} ${CHROME_BTN_LABELLED}` : CHROME_BTN;
   return (
     <>
       {onOpenSearch ? (
-        <HoverCard title="Search" description="Find documents, folders, tabs and elements.">
-          <button type="button" onClick={onOpenSearch} aria-label="Search" className={BTN}>
+        <HoverCard title={t('chromecontrols.search')} description={t('chromecontrols.find-documents-folders-tabs-and-elements')}>
+          <button type="button" onClick={onOpenSearch} aria-label={t('chromecontrols.search-2')} className={BTN}>
             <SearchGlyph />
-            <ChromeLabel show={labelled}>Search</ChromeLabel>
+            <ChromeLabel show={labelled}>{t('chromecontrols.search-3')}</ChromeLabel>
           </button>
         </HoverCard>
       ) : null}
@@ -60,18 +62,18 @@ export function ChromeControls({
           inline-flex outranks a `hidden` passed alongside it. */}
           <span className="hidden sm:contents">
             <HoverCard
-              title="Source on GitHub"
-              description="View livediagram's open-source code on GitHub."
+              title={t('chromecontrols.source-on-github')}
+              description={t('chromecontrols.view-livediagram-s-open-source-code')}
             >
               <a
                 href={REPO_URL}
                 target="_blank"
                 rel="noreferrer noopener"
-                aria-label="Source on GitHub"
+                aria-label={t('chromecontrols.source-on-github-2')}
                 className={BTN}
               >
                 <GithubIcon />
-                <ChromeLabel show={labelled}>GitHub</ChromeLabel>
+                <ChromeLabel show={labelled}>{t('chromecontrols.github')}</ChromeLabel>
               </a>
             </HoverCard>
           </span>
@@ -81,7 +83,7 @@ export function ChromeControls({
         <HoverCard title={settingsLabel} description={settingsDescription}>
           <button type="button" onClick={onOpenSettings} aria-label={settingsLabel} className={BTN}>
             <SettingsIcon />
-            <ChromeLabel show={labelled}>Settings</ChromeLabel>
+            <ChromeLabel show={labelled}>{t('chromecontrols.settings')}</ChromeLabel>
           </button>
         </HoverCard>
       ) : null}

@@ -21,6 +21,7 @@
 // happy accident for a dot-vote, and the turnout numbers below answer the
 // question the host actually has ("is everyone done?") without it.
 
+import { useTranslation } from '@/lib/i18n';
 import { itemIdOfVoteKey, votesSpentBy, type Element, type TabVote } from '@livediagram/document';
 import { itemTitle } from '@livediagram/items';
 import { usePlan } from '@/components/plan/PlanContext';
@@ -72,12 +73,13 @@ export function VotePanel({
   // View-role visitors watch the vote but never drive it (docs/specs/012-collaboration/session-tools.md).
   readOnly: boolean;
 } & MovablePanelPlacementProps) {
+  const { t } = useTranslation();
   const showResults = vote.revealed;
 
   return (
     <MovablePanel
       helpArticle="sessionVoting"
-      title="Vote"
+      title={t('votepanel.vote')}
       position={position}
       defaultCorner="top-right-stacked"
       width="w-auto sm:w-64"
@@ -104,31 +106,23 @@ export function VotePanel({
         {readOnly || !isHost ? (
           <p className="text-[10px] leading-snug text-slate-400">
             {vote.revealed
-              ? 'The host is walking through the results.'
-              : 'Only the person who started this vote, or the facilitator, can end it.'}
+              ? t('votepanel.the-host-is-walking-through-the')
+              : t('votepanel.only-the-person-who-started-this')}
           </p>
         ) : (
           <div className="flex items-center gap-1">
             {vote.active ? (
-              <button type="button" onClick={onEndVote} className={primaryBtn}>
-                End vote
-              </button>
+              <button type="button" onClick={onEndVote} className={primaryBtn}>{t('votepanel.end-vote')}</button>
             ) : !vote.revealed ? (
               <>
-                <button type="button" onClick={onRevealVote} className={primaryBtn}>
-                  Show results
-                </button>
-                <button type="button" onClick={onClearVote} className={quietBtn}>
-                  Clear
-                </button>
+                <button type="button" onClick={onRevealVote} className={primaryBtn}>{t('votepanel.show-results')}</button>
+                <button type="button" onClick={onClearVote} className={quietBtn}>{t('votepanel.clear')}</button>
               </>
             ) : (
               // Results are up: Clear is how the host puts the canvas back
               // (same effect as Done at the end of the walkthrough, but
               // reachable at any point in it).
-              <button type="button" onClick={onClearVote} className={quietBtn}>
-                Clear vote
-              </button>
+              <button type="button" onClick={onClearVote} className={quietBtn}>{t('votepanel.clear-vote')}</button>
             )}
           </div>
         )}
@@ -142,6 +136,7 @@ export function VotePanel({
 // one person holds all four remaining, which is exactly the case where you
 // shouldn't end the vote yet.
 function VoteTurnout({ vote, participantCount }: { vote: TabVote; participantCount: number }) {
+  const { t } = useTranslation();
   const budget = vote.votesPerPerson;
   // Dots per voter, for everyone who has cast at least one. Voters who
   // haven't started aren't in `vote.votes` at all, which is why the room
@@ -162,8 +157,7 @@ function VoteTurnout({ vote, participantCount }: { vote: TabVote; participantCou
       <div className="flex flex-col gap-0.5">
         <div className="flex items-baseline justify-between gap-2">
           <span className="text-[11px] text-slate-700 dark:text-slate-200">
-            {finished} of {Math.max(participantCount, started)} finished
-          </span>
+            {finished}{t('votepanel.of')}{Math.max(participantCount, started)}{t('votepanel.finished')}</span>
           <span className="text-[11px] font-semibold tabular-nums text-slate-500 dark:text-slate-400">
             {dotsCast}/{dotsTotal}
           </span>
@@ -197,8 +191,7 @@ function VoteTurnout({ vote, participantCount }: { vote: TabVote; participantCou
                 ))}
               </span>
               <span className="shrink-0 text-[10px] tabular-nums text-slate-400 dark:text-slate-400">
-                {budget - spent} left
-              </span>
+                {budget - spent}{t('votepanel.left')}</span>
             </li>
           ))}
         </ul>
@@ -206,10 +199,10 @@ function VoteTurnout({ vote, participantCount }: { vote: TabVote; participantCou
 
       <p className="text-[10px] leading-snug text-slate-400 dark:text-slate-400">
         {notStarted > 0
-          ? `${notStarted} ${notStarted === 1 ? 'person hasn’t' : 'people haven’t'} voted yet`
+          ? `${notStarted} ${notStarted === 1 ? t('votepanel.person-hasn-t') : t('votepanel.people-haven-t')} voted yet`
           : started === 0
-            ? 'No dots cast yet'
-            : 'Everyone here has voted'}
+            ? t('votepanel.no-dots-cast-yet')
+            : t('votepanel.everyone-here-has-voted')}
       </p>
     </>
   );
@@ -232,13 +225,12 @@ function VoteResultsList({
   // shared, so a follower clicking a row would move the whole room.
   canControl: boolean;
 }) {
+  const { t } = useTranslation();
   // The document's cards, to name a Plan card's row.
   const plan = usePlan();
   if (results.length === 0) {
     return (
-      <p className="text-[11px] italic text-slate-400 dark:text-slate-400">
-        No dots were cast on this tab.
-      </p>
+      <p className="text-[11px] italic text-slate-400 dark:text-slate-400">{t('votepanel.no-dots-were-cast-on-this')}</p>
     );
   }
   const top = results[0]!.votes;

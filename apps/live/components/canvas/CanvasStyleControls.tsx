@@ -10,6 +10,7 @@
 // Purely presentational: every change is a callback prop applied live to
 // the active tab. The "Show more" expansion is local UI state owned here.
 
+import { useTranslation } from '@/lib/i18n';
 import { isAnimatedPattern, type BackgroundPattern } from '@livediagram/document';
 import { useShowMoreList } from '@/hooks/ui/useShowMoreList';
 import {
@@ -94,6 +95,7 @@ export function CanvasStyleControls({
   // dialog has the room to show them all.
   showAllPatterns?: boolean;
 }) {
+  const { t } = useTranslation();
   // The "Show more" toggle applies to the STATIC patterns only; the
   // animated set is small and shown in full so it stays discoverable.
   // Auto-expands when the active static pattern sits behind the toggle so
@@ -108,7 +110,7 @@ export function CanvasStyleControls({
 
   return (
     <>
-      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-300">Pattern</p>
+      <p className="text-[10px] font-medium text-slate-500 dark:text-slate-300">{t('canvasstylecontrols.pattern')}</p>
       <PatternGrid
         patterns={visibleStatic}
         gridClass={patternGridClass}
@@ -116,27 +118,23 @@ export function CanvasStyleControls({
         onPick={onSetBackgroundPattern}
       />
       {!showAllPatterns && staticList.hasMore && !staticList.showAll ? (
-        <ShowMoreButton label="Show more patterns" onClick={staticList.reveal} />
+        <ShowMoreButton label={t('canvasstylecontrols.show-more-patterns')} onClick={staticList.reveal} />
       ) : null}
-      <p className="mt-3 border-t border-slate-100 pt-3 text-[10px] font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">
-        Animated
-      </p>
+      <p className="mt-3 border-t border-slate-100 pt-3 text-[10px] font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">{t('canvasstylecontrols.animated')}</p>
       <PatternGrid
         patterns={ANIMATED_PATTERNS}
         gridClass={patternGridClass}
         active={backgroundPattern}
         onPick={onSetBackgroundPattern}
       />
-      <p className="mt-3 border-t border-slate-100 pt-3 text-[10px] font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">
-        Colours
-      </p>
+      <p className="mt-3 border-t border-slate-100 pt-3 text-[10px] font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">{t('canvasstylecontrols.colours')}</p>
       <div className="mt-1 flex items-stretch gap-1">
-        <HoverCard title="Canvas colour" description="The colour of the canvas background.">
-          <ColorSwatch label="Canvas" value={backgroundColor} onChange={onSetBackgroundColor} />
+        <HoverCard title={t('canvasstylecontrols.canvas-colour')} description={t('canvasstylecontrols.the-colour-of-the-canvas-background')}>
+          <ColorSwatch label={t('canvasstylecontrols.canvas')} value={backgroundColor} onChange={onSetBackgroundColor} />
         </HoverCard>
-        <HoverCard title="Pattern colour" description="The colour of the grid dots or ruled lines.">
+        <HoverCard title={t('canvasstylecontrols.pattern-colour')} description={t('canvasstylecontrols.the-colour-of-the-grid-dots')}>
           <ColorSwatch
-            label="Pattern"
+            label={t('canvasstylecontrols.pattern-2')}
             value={patternColor}
             onChange={onSetPatternColor}
             tones={PATTERN_TONES}
@@ -145,7 +143,7 @@ export function CanvasStyleControls({
       </div>
       <div className="mt-3 flex flex-col gap-1 border-t border-slate-100 pt-3 dark:border-slate-800">
         <div className="flex items-center justify-between">
-          <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">Opacity</p>
+          <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('canvasstylecontrols.opacity')}</p>
           <span className="text-[10px] font-medium text-slate-500 dark:text-slate-300">
             {Math.round(backgroundOpacity * 100)}%
           </span>
@@ -162,7 +160,7 @@ export function CanvasStyleControls({
       </div>
       <div className="mt-3 flex flex-col gap-1">
         <div className="flex items-center justify-between">
-          <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">Size</p>
+          <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('canvasstylecontrols.size')}</p>
           <span className="text-[10px] font-medium text-slate-500 dark:text-slate-300">
             {Math.round(backgroundPatternScale * 100)}%
           </span>
@@ -183,7 +181,7 @@ export function CanvasStyleControls({
       {isAnimatedPattern(backgroundPattern) ? (
         <div className="mt-3 flex flex-col gap-1">
           <div className="flex items-center justify-between">
-            <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">Speed</p>
+            <p className="text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('canvasstylecontrols.speed')}</p>
             <span className="text-[10px] font-medium text-slate-500 dark:text-slate-300">
               {Math.round(backgroundAnimationSpeed * 100)}%
             </span>

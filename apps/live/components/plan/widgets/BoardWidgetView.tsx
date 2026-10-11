@@ -5,6 +5,7 @@
 // picture of what it measures (a ring for completion, a bar split by type, a bar per column against its
 // WIP limit, pips for votes). Filter, Only Mine and Not on Board are controls. The pictures are CSS, so
 // they stay crisp at any zoom.
+import { useTranslation } from '@/lib/i18n';
 import {
   ITEM_TYPES,
   PRIORITY_LABELS,
@@ -114,6 +115,7 @@ function Figure({ children, palette }: { children: React.ReactNode; palette: Pla
 }
 
 export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: WidgetContext }) {
+  const { t } = useTranslation();
   const { palette, projection, setup } = ctx;
   const pill = { borderColor: palette.border, color: palette.muted };
   switch (kind) {
@@ -133,8 +135,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
             aria-label={`Showing ${shown} of ${projection.total} items. Show all`}
           >
             <Lead kind="count" color={palette.focus} />
-            <Figure palette={palette}>{shown}</Figure>
-            of {projection.total} · <span style={{ color: palette.focus }}>Show all</span>
+            <Figure palette={palette}>{shown}</Figure>{t('boardwidgetview.of')}{projection.total} · <span style={{ color: palette.focus }}>{t('boardwidgetview.show-all')}</span>
           </button>
         );
       return (
@@ -156,14 +157,10 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
             style={{ ...pill, borderStyle: 'dashed' }}
             onClick={() => ctx.onSetup({ ...setup, doneColumnId: last.id }, 'DoneColumn')}
           >
-            <Lead kind="progress" color={palette.muted} />
-            Set Done Column
-          </button>
+            <Lead kind="progress" color={palette.muted} />{t('boardwidgetview.set-done-column')}</button>
         ) : (
           <span className={WIDGET_PILL} style={pill}>
-            <Lead kind="progress" color={palette.muted} />
-            No done column
-          </span>
+            <Lead kind="progress" color={palette.muted} />{t('boardwidgetview.no-done-column')}</span>
         );
       }
       const pct = projection.total
@@ -192,8 +189,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
           <strong className="font-semibold tabular-nums" style={{ color: palette.text }}>
             {pct}%
           </strong>
-          <span>
-            done · {projection.doneCount}/{projection.total}
+          <span>{t('boardwidgetview.done')}{projection.doneCount}/{projection.total}
           </span>
         </span>
       );
@@ -214,8 +210,8 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
             value={ctx.quick.text ?? ''}
             onChange={(e) => ctx.onQuick({ ...ctx.quick, text: e.target.value })}
             onKeyDown={stopKeys}
-            placeholder="Filter cards"
-            aria-label="Filter this board"
+            placeholder={t('boardwidgetview.filter-cards')}
+            aria-label={t('boardwidgetview.filter-this-board')}
             className="h-7 w-36 rounded-md border bg-transparent pl-7 pr-2 text-[12px] outline-none"
             style={{ borderColor: on ? palette.focus : palette.border, color: palette.text }}
           />
@@ -243,9 +239,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
             )
           }
         >
-          <Lead kind="mine" color="currentColor" />
-          Only Mine
-        </button>
+          <Lead kind="mine" color="currentColor" />{t('boardwidgetview.only-mine')}</button>
       );
     }
     case 'people': {
@@ -254,7 +248,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
         return (
           <span className={WIDGET_PILL} style={pill}>
             <Lead kind="people" color={palette.muted} />
-            {ctx.items.length === 0 ? 'No people yet' : 'No one assigned'}
+            {ctx.items.length === 0 ? t('boardwidgetview.no-people-yet') : t('boardwidgetview.no-one-assigned')}
           </span>
         );
       const extra = people.length - PEOPLE_SHOWN;
@@ -287,7 +281,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
             })}
           </span>
           {extra > 0 ? <span>+{extra}</span> : null}
-          <span>{people.length === 1 ? '1 person' : `${people.length} people`}</span>
+          <span>{people.length === 1 ? t('boardwidgetview.1-person') : `${people.length} people`}</span>
         </span>
       );
     }
@@ -304,11 +298,10 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
         >
           <Lead kind="unplaced" color={n > 0 ? SOON_AMBER : palette.muted} />
           {n === 0 ? (
-            'All on board'
+            t('boardwidgetview.all-on-board')
           ) : (
             <>
-              <Figure palette={palette}>{n}</Figure> not on board
-            </>
+              <Figure palette={palette}>{n}</Figure>{t('boardwidgetview.not-on-board')}</>
           )}
         </button>
       );
@@ -332,9 +325,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
       if (total === 0)
         return (
           <span className={WIDGET_PILL} style={pill}>
-            <Lead kind="types" color={palette.muted} />
-            No cards
-          </span>
+            <Lead kind="types" color={palette.muted} />{t('boardwidgetview.no-cards')}</span>
         );
       return (
         <span
@@ -404,7 +395,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
           }
           role="img"
           aria-label={
-            over > 0 ? `${over} columns over their WIP limit` : 'Every column within its WIP limit'
+            over > 0 ? `${over} columns over their WIP limit` : t('boardwidgetview.every-column-within-its-wip-limit')
           }
         >
           {/* A bar per column: its cards against its limit (or the busiest column), warning when over. */}
@@ -432,11 +423,9 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
             <>
               <CountBadge size="md" background={palette.surface} color={palette.warning}>
                 {over}
-              </CountBadge>
-              over WIP
-            </>
+              </CountBadge>{t('boardwidgetview.over-wip')}</>
           ) : (
-            'Within WIP'
+            t('boardwidgetview.within-wip')
           )}
         </span>
       );
@@ -446,9 +435,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
       if (overdue === 0 && soon === 0)
         return (
           <span className={WIDGET_PILL} style={pill}>
-            <Lead kind="due" color={DONE_GREEN} />
-            Nothing due
-          </span>
+            <Lead kind="due" color={DONE_GREEN} />{t('boardwidgetview.nothing-due')}</span>
         );
       const today = todayNumber(ctx.now);
       // Each count narrows the board to exactly the cards it counts, not done: overdue (due by
@@ -490,9 +477,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
       if (estimated === 0)
         return (
           <span className={WIDGET_PILL} style={pill}>
-            <Lead kind="points" color={palette.muted} />
-            No estimates
-          </span>
+            <Lead kind="points" color={palette.muted} />{t('boardwidgetview.no-estimates')}</span>
         );
       const share = total ? done / total : 0;
       return (
@@ -515,9 +500,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
           </span>
           <strong className="font-semibold tabular-nums" style={{ color: palette.text }}>
             {done}/{total}
-          </strong>
-          pts
-        </span>
+          </strong>{t('boardwidgetview.pts')}</span>
       );
     }
     case 'priorities': {
@@ -525,16 +508,14 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
       if (counts.length === 0)
         return (
           <span className={WIDGET_PILL} style={pill}>
-            <Lead kind="priorities" color={palette.muted} />
-            No priorities
-          </span>
+            <Lead kind="priorities" color={palette.muted} />{t('boardwidgetview.no-priorities')}</span>
         );
       return (
         <span
           className={`${WIDGET_PILL} gap-1 pl-1.5`}
           style={pill}
           role="group"
-          aria-label="Cards by priority"
+          aria-label={t('boardwidgetview.cards-by-priority')}
         >
           <Lead kind="priorities" color={PRIORITY_COLOURS[counts[0]!.priority]} />
           {counts.map(({ priority, count }) => {
@@ -586,13 +567,12 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
             color={n > 0 ? SOON_AMBER : ctx.items.length === 0 ? palette.muted : DONE_GREEN}
           />
           {ctx.items.length === 0 ? (
-            'Nothing to assign'
+            t('boardwidgetview.nothing-to-assign')
           ) : n === 0 ? (
-            'All assigned'
+            t('boardwidgetview.all-assigned')
           ) : (
             <>
-              <Figure palette={palette}>{n}</Figure> unassigned
-            </>
+              <Figure palette={palette}>{n}</Figure>{t('boardwidgetview.unassigned')}</>
           )}
         </button>
       );
@@ -602,9 +582,7 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
       if (!top)
         return (
           <span className={WIDGET_PILL} style={pill}>
-            <Lead kind="top-voted" color={palette.muted} />
-            No votes yet
-          </span>
+            <Lead kind="top-voted" color={palette.muted} />{t('boardwidgetview.no-votes-yet')}</span>
         );
       return (
         <button
@@ -640,10 +618,9 @@ export function BoardWidgetView({ kind, ctx }: { kind: BoardWidgetKind; ctx: Wid
           <Lead kind="stale" color={n > 0 ? SOON_AMBER : palette.muted} />
           {n > 0 ? (
             <>
-              <Figure palette={palette}>{n}</Figure> stale
-            </>
+              <Figure palette={palette}>{n}</Figure>{t('boardwidgetview.stale')}</>
           ) : (
-            'Nothing stale'
+            t('boardwidgetview.nothing-stale')
           )}
         </span>
       );

@@ -8,6 +8,7 @@
 // shared placement browser (docs/specs/013-workspace/folders.md), with room to breathe and a filter for
 // long document lists. Single-click commits — both are one-shot pickers.
 
+import { useTranslation } from '@/lib/i18n';
 import { lucideFolderX } from '@livediagram/icons/lucide';
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs/Dialog';
@@ -79,16 +80,17 @@ export function AddTabToFolderDialog({
   onRemoveFromFolder: () => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <OrganiseDialogFrame
-      title="Add to Folder"
+      title={t('taborganisedialogs.add-to-folder')}
       sub="File this tab into a folder on the tab bar. Same name means same folder."
       onClose={onClose}
     >
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
         <PlacementCard
-          label="No Folder"
-          sub={currentFolder === null ? 'Current' : 'Loose on the bar'}
+          label={t('taborganisedialogs.no-folder')}
+          sub={currentFolder === null ? 'Current' : t('taborganisedialogs.loose-on-the-bar')}
           icon={<NoFolderIcon />}
           selected={currentFolder === null}
           onSelect={() => {
@@ -137,6 +139,7 @@ function DocumentPickCard({
   document: { id: string; name: string; savedAt?: number };
   onPick: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <button
       type="button"
@@ -150,7 +153,7 @@ function DocumentPickCard({
         className="h-16 w-full rounded border border-slate-100 bg-slate-50 dark:border-slate-700 dark:bg-slate-900/40"
       />
       <span className="w-full truncate text-xs font-medium text-slate-700 dark:text-slate-200">
-        {liveDoc.name || 'Untitled document'}
+        {liveDoc.name || t('taborganisedialogs.untitled-document')}
       </span>
     </button>
   );
@@ -171,13 +174,14 @@ export function AddTabToDocumentDialog({
   onPick: (targetDocumentId: string) => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const visible = otherDocuments.filter(
-    (d) => !query.trim() || matches(query, d.name || 'Untitled document'),
+    (d) => !query.trim() || matches(query, d.name || t('taborganisedialogs.untitled-document-2')),
   );
   return (
     <OrganiseDialogFrame
-      title="Add to Document"
+      title={t('taborganisedialogs.add-to-document')}
       sub="Link this tab into another document. It stays one live tab: edits show in both places."
       onClose={onClose}
     >
@@ -185,14 +189,12 @@ export function AddTabToDocumentDialog({
         autoFocus
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Filter documents…"
-        aria-label="Filter documents"
+        placeholder={t('taborganisedialogs.filter-documents')}
+        aria-label={t('taborganisedialogs.filter-documents-2')}
         className="mb-3 w-full rounded-md border border-slate-200 bg-white px-2.5 py-1.5 text-sm text-slate-800 outline-none placeholder:text-slate-400 focus:border-brand-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400"
       />
       {visible.length === 0 ? (
-        <p className="px-1 py-8 text-center text-xs text-slate-400 dark:text-slate-400">
-          No document matches.
-        </p>
+        <p className="px-1 py-8 text-center text-xs text-slate-400 dark:text-slate-400">{t('taborganisedialogs.no-document-matches')}</p>
       ) : (
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
           {visible.map((d) => (

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { CheckIcon, Glyph, useMenu, type MenuInitialFocus } from '@livediagram/ui';
 import { useHoverCloseTimer } from '@/hooks/ui/useHoverCloseTimer';
@@ -27,6 +28,7 @@ type ZoomMenuProps = {
 };
 
 export function ZoomMenu({ zoom, onSetZoom, onFitToScreen }: ZoomMenuProps) {
+  const { t } = useTranslation();
   const percent = Math.round(zoom * 100);
   // How it opened decides focus (docs/specs/004-interface-design/menus.md): a hover asks nothing
   // of the keyboard, so focus stays put; an arrow key on the button moves focus in.
@@ -69,7 +71,7 @@ export function ZoomMenu({ zoom, onSetZoom, onFitToScreen }: ZoomMenuProps) {
           e.preventDefault();
           openNow(e.key === 'ArrowDown' ? 'checked' : 'last');
         }}
-        aria-label="Fit to screen"
+        aria-label={t('zoommenu.fit-to-screen')}
         aria-haspopup="menu"
         aria-expanded={open !== null}
         className="flex h-9 min-w-[3.5rem] items-center justify-center rounded-md px-2 text-center text-xs font-semibold tabular-nums text-slate-700 transition hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
@@ -107,11 +109,12 @@ function ZoomPresets({
   onSetZoom: (zoom: number) => void;
   onFitToScreen: () => void;
 }) {
+  const { t } = useTranslation();
   const { attach, surfaceProps } = useMenu({
     onClose,
     trigger: button,
     initialFocus,
-    label: 'Zoom level',
+    label: t('zoommenu.zoom-level'),
   });
   return (
     // pb-2.5 bridges the visual gap so the pointer can travel from
@@ -161,9 +164,7 @@ function ZoomPresets({
             }}
             className="flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
           >
-            <FitGlyph />
-            Fit to screen
-          </button>
+            <FitGlyph />{t('zoommenu.fit-to-screen-2')}</button>
         </div>
         {/* Caret pointing back at the percentage button. */}
         <div

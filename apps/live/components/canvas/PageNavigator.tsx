@@ -4,6 +4,7 @@
 // bar under each page, while there are two pages or more: previous, the page's place ("2 of 5"),
 // next. An arrow fits the neighbouring page in the view, as a press on its label does. Held at one
 // screen size; for everyone who can see the pages.
+import { useTranslation } from '@/lib/i18n';
 import { lucideChevronLeft, lucideChevronRight } from '@livediagram/icons/lucide';
 import { lucideGlyph, Tooltip } from '@livediagram/ui';
 import { TOOLBAR_CARD } from '@/components/chrome/toolbar-surface';
@@ -23,6 +24,7 @@ export function PageNavigator({
   // Fits the page at this index (0 first) in the view.
   onGo: (index: number) => void;
 }) {
+  const { t } = useTranslation();
   const arrow = (label: string, to: number, children: React.ReactNode) => {
     const off = to < 0 || to >= count;
     return (
@@ -56,7 +58,7 @@ export function PageNavigator({
       <div className={`pointer-events-auto ${TOOLBAR_CARD} !p-0.5`}>
         {arrow('Previous page', index - 1, <Prev />)}
         <span className="min-w-[4.5rem] px-1 text-center text-xs tabular-nums text-slate-600 dark:text-slate-300">
-          {index + 1} of {count}
+          {index + 1}{t('pagenavigator.of')}{count}
         </span>
         {arrow('Next page', index + 1, <Next />)}
       </div>

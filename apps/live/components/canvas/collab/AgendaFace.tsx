@@ -3,6 +3,7 @@
 // through the same entry point the Current Tab menu and the session button
 // already use. Built in the behaviour elements' current look ("The face").
 
+import { useTranslation } from '@/lib/i18n';
 import {
   agendaTotalMinutes,
   clampAgendaMinutes,
@@ -44,6 +45,7 @@ export function AgendaFace({
   timer: TabTimer | undefined;
   onPressItem?: (index: number) => void;
 }) {
+  const { t } = useTranslation();
   const items = element.agendaItems ?? [];
   const current = element.agendaCurrent;
   // 4x a second while a countdown runs, as the TimerWidget does; a paused or
@@ -77,9 +79,7 @@ export function AgendaFace({
         aside={items.length ? formatMinutes(total) : undefined}
       >
         {items.length === 0 ? (
-          <EmptyRows textColor={textColor} title="No segments yet">
-            Add them from the element’s menu, under Segments.
-          </EmptyRows>
+          <EmptyRows textColor={textColor} title={t('agendaface.no-segments-yet')}>{t('agendaface.add-them-from-the-element-s')}</EmptyRows>
         ) : (
           <>
             <span

@@ -8,6 +8,7 @@
 // and the multi-select Style flyout (MultiStyleSections), so both surfaces
 // stay pixel-identical.
 
+import { useTranslation } from '@/lib/i18n';
 import { MenuSliderRow } from '@/components/primitives/MenuSliderRow';
 import {
   DEFAULT_SHADOW,
@@ -99,18 +100,19 @@ export function ShadowSection({
   onPreviewPreset: (shadow: ElementShadow | null) => void;
   onPreviewEnd: () => void;
 }) {
+  const { t } = useTranslation();
   // Sliders display DEFAULT_SHADOW at rest and seed from it on the first
   // drag (docs/specs/008-canvas/element-shadows.md), so dragging any single axis yields a visible shadow.
   const current = shadow ?? DEFAULT_SHADOW;
   const patch = (field: keyof ElementShadow) => (v: number) =>
     onSetShadow({ ...current, [field]: v });
   return (
-    <MenuAccordionSection title="Shadow" icon={<ShadowMenuGlyph />} {...section}>
+    <MenuAccordionSection title={t('shadowsection.shadow')} icon={<ShadowMenuGlyph />} {...section}>
       <div className="px-2 py-1">
-        <BorderGrid label="Presets" cols={5}>
+        <BorderGrid label={t('shadowsection.presets')} cols={5}>
           <SizeButton
             active={shadow === undefined}
-            label="None"
+            label={t('shadowsection.none')}
             onClick={() => onCommitPreset(null)}
             onPointerEnter={onMouseHover(() => onPreviewPreset(null))}
             onPointerLeave={onMouseHover(onPreviewEnd)}
@@ -132,7 +134,7 @@ export function ShadowSection({
         </BorderGrid>
       </div>
       <ShadowSliderRow
-        label="Offset X"
+        label={t('shadowsection.offset-x')}
         min={-SHADOW_LIMITS.offset}
         max={SHADOW_LIMITS.offset}
         value={current.offsetX}
@@ -140,7 +142,7 @@ export function ShadowSection({
         onChange={patch('offsetX')}
       />
       <ShadowSliderRow
-        label="Offset Y"
+        label={t('shadowsection.offset-y')}
         min={-SHADOW_LIMITS.offset}
         max={SHADOW_LIMITS.offset}
         value={current.offsetY}
@@ -148,7 +150,7 @@ export function ShadowSection({
         onChange={patch('offsetY')}
       />
       <ShadowSliderRow
-        label="Blur"
+        label={t('shadowsection.blur')}
         min={0}
         max={SHADOW_LIMITS.blur}
         value={current.blur}
@@ -156,7 +158,7 @@ export function ShadowSection({
         onChange={patch('blur')}
       />
       <ShadowSliderRow
-        label="Opacity"
+        label={t('shadowsection.opacity')}
         min={0}
         max={100}
         value={Math.round(current.opacity * 100)}

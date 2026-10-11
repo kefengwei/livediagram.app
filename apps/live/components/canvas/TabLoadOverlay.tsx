@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { ApiErrorPage } from '@/components/chrome/ApiErrorPage';
 import { Glyph } from '@livediagram/ui';
 
@@ -30,6 +31,7 @@ export function TabLoadOverlay({
   state: 'loading' | 'error';
   onRetry: () => void;
 }) {
+  const { t } = useTranslation();
   if (state === 'error') {
     // The opaque backdrop both hides the misleading empty canvas behind
     // it and captures pointer events (default pointer-events: auto), so
@@ -39,7 +41,7 @@ export function TabLoadOverlay({
       <div className="absolute inset-0 z-[var(--z-overlay)] bg-slate-50 dark:bg-slate-950">
         <ApiErrorPage
           onRetry={onRetry}
-          title="Couldn’t load this tab"
+          title={t('tabloadoverlay.couldn-t-load-this-tab')}
           message="We couldn’t reach the server to load this tab’s contents. Your work is safe. Check your connection and try again."
           retryLabel="Retry"
         />
@@ -58,7 +60,7 @@ export function TabLoadOverlay({
           <circle cx="16" cy="16" r="12" strokeOpacity="0.18" />
           <path d="M28 16a12 12 0 0 0-12-12" />
         </Glyph>
-        <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Loading tab…</p>
+        <p className="text-sm font-medium text-slate-600 dark:text-slate-400">{t('tabloadoverlay.loading-tab')}</p>
       </div>
     </div>
   );

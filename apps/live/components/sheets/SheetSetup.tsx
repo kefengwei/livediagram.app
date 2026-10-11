@@ -4,6 +4,7 @@
 // its grid while it awaits setup and has no cells. Steps Start From and Style, with Cards and Columns between them for
 // Plan Cards; Create Sheet writes the start, the look, the freeze and the sizes as one change. Start Blank and Import
 // CSV end setup without a style.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useMemo, useState } from 'react';
 import { Button, CheckIcon, ChevronLeftIcon } from '@livediagram/ui';
 import { cardSourceOf, findCards, type BoardStatusTypes } from '@livediagram/items';
@@ -73,6 +74,7 @@ export function importType(
 }
 
 export function SheetSetup({ onImportCsv }: { onImportCsv: () => void }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const plan = usePlan();
   const dark = useCanvasSurface() === 'dark';
@@ -157,13 +159,13 @@ export function SheetSetup({ onImportCsv }: { onImportCsv: () => void }) {
   const chosen = columns.filter((x) => offered.includes(x));
   const nextLabel =
     start === 'csv' && current === 'start'
-      ? 'Choose File…'
+      ? t('sheetsetup.choose-file')
       : `Next: ${STEP_LABELS[steps[at + 1] ?? 'style']}`;
 
   return (
     <SetupCard
       titleId={`setup-sheet-${c.sheet.id}`}
-      title="Setup Sheet"
+      title={t('sheetsetup.setup-sheet')}
       line="Start from a layout, your cards or a blank grid. Everything can change later from its cog."
       icon={<SheetArt size={20} />}
       help="planSheets"
@@ -175,9 +177,7 @@ export function SheetSetup({ onImportCsv }: { onImportCsv: () => void }) {
         <>
           {at > 0 ? (
             <Button variant="secondary" size="sm" onClick={() => setStep(at - 1)}>
-              <ChevronLeftIcon size={12} />
-              Back
-            </Button>
+              <ChevronLeftIcon size={12} />{t('sheetsetup.back')}</Button>
           ) : (
             <Button
               variant="ghost"
@@ -187,9 +187,7 @@ export function SheetSetup({ onImportCsv }: { onImportCsv: () => void }) {
                 done();
                 c.focusGrid();
               }}
-            >
-              Start Blank
-            </Button>
+            >{t('sheetsetup.start-blank')}</Button>
           )}
           {current !== 'style' ? (
             <Button variant="primary" size="sm" disabled={cardsEmpty} onClick={next}>
@@ -197,9 +195,7 @@ export function SheetSetup({ onImportCsv }: { onImportCsv: () => void }) {
             </Button>
           ) : (
             <Button variant="primary" size="sm" onClick={create}>
-              <CheckIcon size={12} />
-              Create Sheet
-            </Button>
+              <CheckIcon size={12} />{t('sheetsetup.create-sheet')}</Button>
           )}
         </>
       }

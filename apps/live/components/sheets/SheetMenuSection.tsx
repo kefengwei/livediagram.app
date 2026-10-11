@@ -3,6 +3,7 @@
 // A Sheet's settings in its element menu (docs/specs/029-sheets/sheet.md "Sheet Settings"): one Sheet flyout holding
 // the same sections as the header's cog, drawn with the Sheet's own controller (sheet-settings-registry). Loaded with
 // the sheet chunk; nothing shows for a Sheet not drawn here.
+import { useTranslation } from '@/lib/i18n';
 import type { ComponentProps } from 'react';
 import type { ShapeElement } from '@livediagram/document';
 import { MenuFlyoutSection } from '@/components/primitives/MenuFlyoutSection';
@@ -22,10 +23,11 @@ export function SheetMenuSection({
   flyoutProps: Omit<ComponentProps<typeof MenuFlyoutSection>, 'title' | 'icon' | 'children'>;
   onClose?: (() => void) | undefined;
 }) {
+  const { t } = useTranslation();
   const entry = useSheetSettingsEntry(element.id);
   if (!entry) return null;
   return (
-    <MenuFlyoutSection title="Sheet" icon={<SheetArt size={16} />} panel {...flyoutProps}>
+    <MenuFlyoutSection title={t('sheetmenusection.sheet')} icon={<SheetArt size={16} />} panel {...flyoutProps}>
       <div className="flex flex-col py-1">
         <SheetControllerProvider value={entry.controller}>
           <SheetSettingsPanel

@@ -1,3 +1,5 @@
+
+import { useTranslation } from '@/lib/i18n';
 import { type ReactNode } from 'react';
 
 import { ArrowIcon, TrashIcon } from '@/components/canvas/table-icons';
@@ -32,11 +34,12 @@ export function Trigger({
   // menu to this trigger's screen rect.
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <button
       type="button"
       data-table-ui
-      aria-label={vertical ? 'Row options' : 'Column options'}
+      aria-label={vertical ? t('table-menu-controls.row-options') : t('table-menu-controls.column-options')}
       onPointerDown={(e) => e.stopPropagation()}
       onClick={(e) => {
         e.stopPropagation();
@@ -125,15 +128,16 @@ export function TableHeaderMenu({
   onMove: (from: number, to: number) => void;
   onDelete: (i: number) => void;
 }) {
+  const { t } = useTranslation();
   const isCol = axis === 'col';
   const beforeDir = isCol ? 'left' : 'up';
   const afterDir = isCol ? 'right' : 'down';
   return (
     <>
-      <MenuButton label={isCol ? 'Insert Left' : 'Insert Above'} onClick={() => onAdd(index)}>
+      <MenuButton label={isCol ? t('table-menu-controls.insert-left') : t('table-menu-controls.insert-above')} onClick={() => onAdd(index)}>
         <ArrowIcon dir={beforeDir} />
       </MenuButton>
-      <MenuButton label={isCol ? 'Insert Right' : 'Insert Below'} onClick={() => onAdd(index + 1)}>
+      <MenuButton label={isCol ? t('table-menu-controls.insert-right') : t('table-menu-controls.insert-below')} onClick={() => onAdd(index + 1)}>
         <ArrowIcon dir={afterDir} />
       </MenuButton>
       <MenuSeparator />
@@ -153,7 +157,7 @@ export function TableHeaderMenu({
       </MenuButton>
       <MenuSeparator />
       <MenuButton
-        label={isCol ? 'Delete Column' : 'Delete Row'}
+        label={isCol ? t('table-menu-controls.delete-column') : t('table-menu-controls.delete-row')}
         disabled={count <= 1}
         onClick={() => onDelete(index)}
       >

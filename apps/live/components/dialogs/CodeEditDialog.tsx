@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState } from 'react';
 import { Button, CloseIcon, DialogHeader } from '@livediagram/ui';
 import { CODE_LANGUAGES, CODE_MAX_LENGTH, type CodeLanguage } from '@livediagram/document';
@@ -19,6 +20,7 @@ export function CodeEditDialog({
   onCommit: (code: string, language: CodeLanguage) => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState(code);
   const [lang, setLang] = useState<CodeLanguage>(language);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -45,13 +47,13 @@ export function CodeEditDialog({
   return (
     <Dialog open onClose={onClose} ariaLabel="Edit code" size="lg" className="max-h-[90vh]">
       <DialogHeader
-        title="Code"
+        title={t('codeeditdialog.code')}
         subtitle="Paste or type the snippet; pick a language for highlighting."
       >
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t('codeeditdialog.close')}
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-200"
         >
           <CloseIcon size={18} />
@@ -71,25 +73,21 @@ export function CodeEditDialog({
           className="w-full resize-y rounded-lg border border-slate-200 bg-slate-900 p-3 font-mono text-xs leading-4 text-slate-200 outline-none focus:border-brand-400 dark:border-slate-700"
         />
         <div className="flex items-center justify-between gap-3">
-          <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
-            Language
-            <select
+          <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">{t('codeeditdialog.language')}<select
               value={lang}
               onChange={(e) => setLang(e.target.value as CodeLanguage)}
               className="rounded-md border border-slate-200 bg-white px-2 py-1.5 text-sm text-slate-700 outline-none focus:border-brand-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
             >
               {CODE_LANGUAGES.map((l) => (
                 <option key={l} value={l}>
-                  {l === 'plain' ? 'Plain text' : l}
+                  {l === 'plain' ? t('codeeditdialog.plain-text') : l}
                 </option>
               ))}
             </select>
           </label>
           <div className="flex items-center gap-2">
-            <Button variant="secondary" onClick={onClose}>
-              Cancel
-            </Button>
-            <Button onClick={save}>Save</Button>
+            <Button variant="secondary" onClick={onClose}>{t('codeeditdialog.cancel')}</Button>
+            <Button onClick={save}>{t('codeeditdialog.save')}</Button>
           </div>
         </div>
       </div>

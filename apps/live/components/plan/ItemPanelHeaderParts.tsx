@@ -2,6 +2,7 @@
 
 // The current card's part of the item panel header (docs/specs/026-plan/plan-board.md "The header reads part by
 // part"): its Card Type picker as a bordered pill, and its number as a quiet tag that copies "#12".
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useState } from 'react';
 import type { ItemTypeDef } from '@livediagram/items';
 import { ChevronDownIcon, Tooltip } from '@livediagram/ui';
@@ -25,6 +26,7 @@ export function ItemTypePill({
   canEdit: boolean;
   onType: (typeId: string) => void;
 }) {
+  const { t } = useTranslation();
   const glyph = (
     <span className={`shrink-0 ${ACCENT_TEXT}`} style={accentVars(type.color)}>
       <PlanTypeGlyph glyph={type.glyph} size={15} />
@@ -46,7 +48,7 @@ export function ItemTypePill({
       </span>
       {/* The native select covers the pill, so the system picker opens wherever it is pressed. */}
       <select
-        aria-label="Card Type"
+        aria-label={t('itempanelheaderparts.card-type')}
         className="absolute inset-0 cursor-pointer opacity-0"
         value={value}
         onChange={(e) => onType(e.target.value)}
@@ -63,6 +65,7 @@ export function ItemTypePill({
 }
 
 export function ItemKeyTag({ itemKey }: { itemKey: number }) {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   useEffect(() => {
     if (!copied) return;
@@ -71,7 +74,7 @@ export function ItemKeyTag({ itemKey }: { itemKey: number }) {
   }, [copied]);
   const text = `#${itemKey}`;
   return (
-    <Tooltip label={copied ? 'Copied' : 'Copy Card Number'}>
+    <Tooltip label={copied ? 'Copied' : t('itempanelheaderparts.copy-card-number')}>
       <button
         type="button"
         aria-label={copied ? `Copied ${text}` : `Copy card number ${text}`}

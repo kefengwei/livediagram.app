@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { ICON_CATEGORIES, ICON_DND_MIME, iconsInCategory, type IconDef } from '@/lib/icons';
 import { IconButton } from '@/components/palette/palette-controls';
 import { CatalogIconThumb } from '@/components/primitives/icon-glyph';
@@ -20,10 +21,11 @@ type IconPickerTabProps = {
 // shape tinted by the element stroke; dragging drops it at the pointer, or
 // onto a shape to become that shape's inline icon. See docs/specs/008-canvas/canvas-and-palette.md "Icons".
 function IconTile({ icon, onAdd }: { icon: IconDef; onAdd: (id: string) => void }) {
+  const { t } = useTranslation();
   return (
     <IconButton
       label={`Add ${icon.label}`}
-      description="Click to add, or drag onto a shape to set its icon."
+      description={t('iconpickertab.click-to-add-or-drag-onto')}
       hint="tooltip"
       hideCaption
       onClick={() => onAdd(icon.id)}
@@ -57,6 +59,7 @@ export function IconPickerTab({
   iconResults,
   loading = false,
 }: IconPickerTabProps) {
+  const { t } = useTranslation();
   // Category artwork = the category's first glyph, mirroring the Tools tab's
   // "a category looks like what it holds".
   const categories = ICON_CATEGORIES.map((cat) => {
@@ -93,7 +96,7 @@ export function IconPickerTab({
       query={iconQuery}
       onQueryChange={setIconQuery}
       searchInput={{
-        placeholder: 'Search icons',
+        placeholder: t('iconpickertab.search-icons'),
         ariaLabel: 'Search icons',
         clearAriaLabel: 'Clear icon search',
         clearDescription: 'Clear the icon search query.',

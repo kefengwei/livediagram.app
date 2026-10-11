@@ -5,6 +5,7 @@
 // the rest are missing) and Swimlanes (the board's grid), then, while the chart has its own row order, a Sort by
 // Date action that clears it (plan-views.md "Row order").
 // Each change is one element edit, through PlanContext.
+import { useTranslation } from '@/lib/i18n';
 import type { ComponentProps } from 'react';
 import type { ShapeElement } from '@livediagram/document';
 import { PlanIcon } from '@livediagram/ui';
@@ -37,6 +38,7 @@ export function PlanViewMenuSection({
   // Each row's open state, from the menu scaffold, so it survives the menu retargeting.
   sectionProps: (id: string) => SectionProps;
 }) {
+  const { t } = useTranslation();
   const plan = usePlan();
   // The old Parent grouping reads as the Parent field (legacy-parent).
   const settings = element.planView ? readPlanViewSettings(element.planView) : undefined;
@@ -49,9 +51,9 @@ export function PlanViewMenuSection({
   const shown = plan.types.filter((t) => viewShownTypes(view, settings, plan.types).includes(t.id));
   const grouping = view === 'workload' ? breakdownGroupingOf(settings) : null;
   return (
-    <MenuFlyoutSection title="View" icon={<PlanIcon size={16} />} {...flyoutProps}>
+    <MenuFlyoutSection title={t('planviewmenusection.view')} icon={<PlanIcon size={16} />} {...flyoutProps}>
       <MenuAccordionSection
-        title="Card Types"
+        title={t('planviewmenusection.card-types')}
         icon={<PlanIcon size={16} />}
         {...sectionProps('plan-view-types')}
       >
@@ -78,11 +80,11 @@ export function PlanViewMenuSection({
       </MenuAccordionSection>
       {grouping ? (
         <MenuAccordionSection
-          title="Group By"
+          title={t('planviewmenusection.group-by')}
           icon={<PlanIcon size={16} />}
           {...sectionProps('plan-view-grouping')}
         >
-          <InfoNote>The field this chart gives a bar to each value of.</InfoNote>
+          <InfoNote>{t('planviewmenusection.the-field-this-chart-gives-a')}</InfoNote>
           <SwimlaneOptions
             by={grouping.by}
             field={grouping.field}
@@ -104,7 +106,7 @@ export function PlanViewMenuSection({
       ) : null}
       {gantt ? (
         <MenuAccordionSection
-          title="Swimlanes"
+          title={t('planviewmenusection.swimlanes')}
           icon={<PlanIcon size={16} />}
           {...sectionProps('plan-view-swimlanes')}
         >
@@ -128,7 +130,7 @@ export function PlanViewMenuSection({
       ) : null}
       {gantt && settings.rowOrder ? (
         <MenuActionRow
-          label="Sort by Date"
+          label={t('planviewmenusection.sort-by-date')}
           icon={<PlanTypeGlyph glyph="calendar" size={16} />}
           onClick={() => {
             const { rowOrder: _order, ...rest } = settings;
@@ -152,8 +154,9 @@ const NEED_LABELS: Record<string, string> = {
 
 // Which card types the view charts, and why some are missing: the view reads fields a type must offer.
 function ViewTypesNote({ needs }: { needs: readonly string[] }) {
-  if (needs.length === 0) return <InfoNote>The card types this view charts.</InfoNote>;
+  const { t } = useTranslation();
+  if (needs.length === 0) return <InfoNote>{t('planviewmenusection.the-card-types-this-view-charts')}</InfoNote>;
   const names = needs.map((f) => NEED_LABELS[f] ?? f);
   const list = names.length === 1 ? `a ${names[0]} field` : `${names.join(' and ')} fields`;
-  return <InfoNote>The card types this view charts; only those with {list} are listed.</InfoNote>;
+  return <InfoNote>{t('planviewmenusection.the-card-types-this-view-charts-2')}{list}{t('planviewmenusection.are-listed')}</InfoNote>;
 }

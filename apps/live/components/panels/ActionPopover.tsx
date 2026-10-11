@@ -2,6 +2,7 @@
 
 // The docs/specs/012-collaboration/assigned-actions.md clipboard-with-tick action glyph, shared with the context
 // menu's Assign Action tile so the two surfaces can't drift.
+import { useTranslation } from '@/lib/i18n';
 import { ActionMenuIcon as ClipboardIcon } from '@/components/palette/context-menu-icons';
 import {
   CloseIcon,
@@ -55,6 +56,7 @@ export function ActionPopover({
   readOnly = false,
   selfUserId,
 }: ActionPopoverProps) {
+  const { t } = useTranslation();
   const now = useRelativeNow();
   const ref = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
@@ -104,19 +106,15 @@ export function ActionPopover({
           <h3 className="flex items-center gap-1.5 text-xs font-semibold text-slate-800 dark:text-slate-100">
             <span className="text-slate-400">
               <ClipboardIcon />
-            </span>
-            Action
-          </h3>
+            </span>{t('actionpopover.action')}</h3>
           <div className="flex items-center gap-1">
             {done ? (
               <span className="inline-flex items-center gap-1 rounded bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300">
-                <CheckIcon size={9} />
-                Done
-              </span>
+                <CheckIcon size={9} />{t('actionpopover.done')}</span>
             ) : null}
             <button
               type="button"
-              aria-label="Close action"
+              aria-label={t('actionpopover.close-action')}
               onClick={onClose}
               className="rounded p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
             >
@@ -146,7 +144,7 @@ export function ActionPopover({
             </GlyphDisc>
             <span className="min-w-0 flex-1">
               <span className="block truncate text-xs font-medium text-slate-700 dark:text-slate-200">
-                {mine ? 'Assigned to you' : `Assigned to ${assigneeName}`}
+                {mine ? t('actionpopover.assigned-to-you') : `Assigned to ${assigneeName}`}
               </span>
               <span className="block truncate text-[10px] text-slate-400">
                 {assignerName ? `by ${assignerName} · ` : ''}
@@ -159,18 +157,16 @@ export function ActionPopover({
         {!readOnly ? (
           <footer className="flex items-center gap-1.5 border-t border-slate-100 px-3 py-2 dark:border-slate-800">
             {done ? (
-              <FooterButton onClick={onReopen} icon={<ReopenIcon />} label="Reopen" />
+              <FooterButton onClick={onReopen} icon={<ReopenIcon />} label={t('actionpopover.reopen')} />
             ) : (
               <button
                 type="button"
                 onClick={onComplete}
                 className="inline-flex items-center gap-1.5 rounded-md bg-emerald-600 px-2.5 py-1.5 text-[11px] font-medium text-white transition hover:bg-emerald-700"
               >
-                <CheckIcon size={11} />
-                Complete
-              </button>
+                <CheckIcon size={11} />{t('actionpopover.complete')}</button>
             )}
-            <FooterButton onClick={onEdit} icon={<PencilIcon />} label="Edit" />
+            <FooterButton onClick={onEdit} icon={<PencilIcon />} label={t('actionpopover.edit')} />
             <span className="flex-1" />
             {confirmingDelete ? (
               <button
@@ -178,13 +174,11 @@ export function ActionPopover({
                 onClick={onDelete}
                 className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 px-2.5 py-1.5 text-[11px] font-medium text-slate-600 transition hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
               >
-                <TrashIcon size={11} />
-                Confirm
-              </button>
+                <TrashIcon size={11} />{t('actionpopover.confirm')}</button>
             ) : (
               <button
                 type="button"
-                aria-label="Delete action"
+                aria-label={t('actionpopover.delete-action')}
                 onClick={() => setConfirmingDelete(true)}
                 className="inline-flex items-center gap-1.5 rounded-md px-2 py-1.5 text-[11px] font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
               >

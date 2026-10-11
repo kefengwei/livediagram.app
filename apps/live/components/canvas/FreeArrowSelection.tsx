@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { PointerEvent as ReactPointerEvent } from 'react';
 import type { FrameHandle } from '@livediagram/document';
 import type { DragMode } from '@/lib/canvas';
@@ -35,6 +36,7 @@ export function FreeArrowSelection({
   onBeginMove: (e: ReactPointerEvent) => void;
   onBeginScale: (handle: FrameHandle, e: ReactPointerEvent) => void;
 }) {
+  const { t } = useTranslation();
   if (points.length === 0) return null;
   const xs = points.map((p) => p.x);
   const ys = points.map((p) => p.y);
@@ -65,7 +67,7 @@ export function FreeArrowSelection({
       {EDGES.map((side) => (
         <div
           key={side}
-          aria-label="Move arrow"
+          aria-label={t('freearrowselection.move-arrow')}
           role="button"
           className="pointer-events-auto absolute cursor-move"
           style={bandStyle[side]}

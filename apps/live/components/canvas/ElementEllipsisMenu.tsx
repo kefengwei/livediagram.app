@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 
 import { useMenuItemProps } from '@/components/primitives/menu-item-props';
@@ -316,13 +317,14 @@ export function ElementSettingsButton({
  * popover from being a dead end when the setting you want is not one of them.
  */
 export function ElementMenuSettingsRow({ onOpen }: { onOpen: () => void }) {
+  const { t } = useTranslation();
   return (
     <>
       <span
         role="separator"
         className="my-1 block border-t border-slate-100 dark:border-slate-800"
       />
-      <ElementMenuItem onPress={onOpen}>All settings…</ElementMenuItem>
+      <ElementMenuItem onPress={onOpen}>{t('elementellipsismenu.all-settings')}</ElementMenuItem>
     </>
   );
 }

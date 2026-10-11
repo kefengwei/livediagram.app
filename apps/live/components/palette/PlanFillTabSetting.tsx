@@ -3,6 +3,7 @@
 // Fill Tab in a board's Board Setup section (docs/specs/026-plan/plan-board.md "Fill Tab"): two rows, On Canvas and
 // Fill Tab. Turning it on deletes everything else on the tab's canvas, so when there is anything a confirm says how
 // much first; the deletion and the setting are one change (PlanContext.fillTab), one undo step.
+import { useTranslation } from '@/lib/i18n';
 import type { PlanBoardSetup } from '@livediagram/items';
 import { OptionRows } from '@/components/plan/OptionRows';
 import { usePlan } from '@/components/plan/PlanContext';
@@ -26,6 +27,7 @@ export function PlanFillTabSetting({
   // settings sheet sits above dialogs).
   onClose?: (() => void) | undefined;
 }) {
+  const { t } = useTranslation();
   const plan = usePlan();
   const confirm = useConfirm();
   if (!plan?.canEdit) return null;
@@ -47,15 +49,15 @@ export function PlanFillTabSetting({
     plan.fillTab(boardId, (current) => withFillTab(current, true));
   };
   return (
-    <MenuGroup title="Fill Tab" hint={FILL_TAB_HINT}>
+    <MenuGroup title={t('planfilltabsetting.fill-tab')} hint={FILL_TAB_HINT}>
       <OptionRows
         kind="single"
-        label="Fill Tab"
+        label={t('planfilltabsetting.fill-tab-2')}
         className="mx-3 my-1.5"
         selected={on ? 'fill' : 'canvas'}
         rows={[
-          { id: 'canvas', label: 'On Canvas', icon: <FillTabArt fill={false} /> },
-          { id: 'fill', label: 'Fill Tab', icon: <FillTabArt fill /> },
+          { id: 'canvas', label: t('planfilltabsetting.on-canvas'), icon: <FillTabArt fill={false} /> },
+          { id: 'fill', label: t('planfilltabsetting.fill-tab-3'), icon: <FillTabArt fill /> },
         ]}
         onPick={(id) => (id === 'fill' ? void turnOn() : turnOff())}
       />

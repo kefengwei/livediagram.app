@@ -27,6 +27,7 @@
 // ClerkProvider would throw, so the disabled branch never touches
 // Clerk.
 
+import { useTranslation } from '@/lib/i18n';
 import { useSyncExternalStore } from 'react';
 import { buttonClassName, CloseIcon, ButtonContent } from '@livediagram/ui';
 import { useDeferredAuth } from '@/components/providers/deferred-auth';
@@ -66,12 +67,13 @@ function PromptShell({
   action?: React.ReactNode;
   onDismiss: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="relative rounded-md border border-dashed border-slate-200 bg-slate-50/60 px-3 py-3 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-200">
       <button
         type="button"
         onClick={onDismiss}
-        aria-label="Dismiss"
+        aria-label={t('signinprompt.dismiss')}
         className="absolute right-1.5 top-1.5 flex h-5 w-5 touch-target items-center justify-center rounded text-slate-400 transition hover:bg-slate-200/70 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-100"
       >
         <CloseIcon size={12} />
@@ -94,6 +96,7 @@ function PromptShell({
 type SignInPromptProps = { fallback?: React.ReactNode };
 
 function SignInPromptEnabled({ fallback }: SignInPromptProps) {
+  const { t } = useTranslation();
   const { authLoaded: isLoaded, isSignedIn } = useDeferredAuth();
   const { dismissed, dismiss } = usePromptDismissed();
   const { signInHref } = useAuthHrefs();
@@ -101,7 +104,7 @@ function SignInPromptEnabled({ fallback }: SignInPromptProps) {
   if (isSignedIn || dismissed) return <>{fallback ?? null}</>;
   return (
     <PromptShell
-      title="Sign in to keep your content"
+      title={t('signinprompt.sign-in-to-keep-your-content')}
       body="A free account keeps your documents and content across sessions and devices."
       onDismiss={dismiss}
       action={
@@ -109,7 +112,7 @@ function SignInPromptEnabled({ fallback }: SignInPromptProps) {
           href={signInHref}
           className={buttonClassName({ size: 'xs', className: 'w-full shadow-sm' })}
         >
-          <ButtonContent>Sign in</ButtonContent>
+          <ButtonContent>{t('signinprompt.sign-in')}</ButtonContent>
         </Link>
       }
     />
@@ -117,12 +120,13 @@ function SignInPromptEnabled({ fallback }: SignInPromptProps) {
 }
 
 function SignInPromptDisabled({ fallback }: SignInPromptProps) {
+  const { t } = useTranslation();
   const { dismissed, dismiss } = usePromptDismissed();
   if (dismissed === null) return null;
   if (dismissed) return <>{fallback ?? null}</>;
   return (
     <PromptShell
-      title="Documents saved to this browser"
+      title={t('signinprompt.documents-saved-to-this-browser')}
       body="Sign-in isn't enabled on this deployment, so documents stay local to this browser. Clear your storage and they're gone."
       onDismiss={dismiss}
     />

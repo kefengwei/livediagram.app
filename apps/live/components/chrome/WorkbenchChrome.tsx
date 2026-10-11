@@ -5,6 +5,7 @@
 // Search and Settings, where no docked panel can cover it, that opens the document in a full tab; and,
 // once the session has ended unrenewed or revoked, the line at the top centre that says how to edit
 // again.
+import { useTranslation } from '@/lib/i18n';
 import type { WorkbenchEndReason } from '@livediagram/api-schema';
 import { HoverCard } from '@livediagram/ui';
 import { CHROME_BTN, CHROME_BTN_LABELLED, ChromeLabel } from './chrome-button';
@@ -22,17 +23,18 @@ export function WorkbenchOpenLink({
   documentId: string;
   labelled: boolean;
 }) {
+  const { t } = useTranslation();
   return (
-    <HoverCard title="Open in livediagram" description="Opens this document in a full tab.">
+    <HoverCard title={t('workbenchchrome.open-in-livediagram')} description={t('workbenchchrome.opens-this-document-in-a-full')}>
       <a
         href={`/document/${encodeURIComponent(documentId)}`}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Open in livediagram (opens in a new tab)"
+        aria-label={t('workbenchchrome.open-in-livediagram-opens-in-a')}
         className={labelled ? `${CHROME_BTN} ${CHROME_BTN_LABELLED}` : CHROME_BTN}
       >
         <OpenExternalIcon />
-        <ChromeLabel show={labelled}>Open in livediagram</ChromeLabel>
+        <ChromeLabel show={labelled}>{t('workbenchchrome.open-in-livediagram-2')}</ChromeLabel>
       </a>
     </HoverCard>
   );

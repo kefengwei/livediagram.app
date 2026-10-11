@@ -5,6 +5,7 @@
 // per browser elected to run the engine while it is open, the others relaying
 // their api writes to it and showing its status.
 
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { DRIVE_CONNECT_FAILED } from '@/lib/drive/cloud-sync-copy';
 import { usePathname } from 'next/navigation';
@@ -106,6 +107,7 @@ const VIEW_CHECK_MIN_AGE_MS = DRIVE_FOCUS_POLL_MIN_GAP_MS;
 const CHECKING_MAX_MS = DRIVE_CHECK_ANSWER_MS;
 
 export function DriveMirrorProvider({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
   const pathname = usePathname() ?? '';
   const { isSignedIn, authLoaded, clerkUserId } = useClerkApiBootstrap();
   const { user } = useDeferredAuth();
@@ -447,8 +449,8 @@ export function DriveMirrorProvider({ children }: { children: ReactNode }) {
   const disconnect = useCallback(async () => {
     if (!clerkUserId) return;
     const ok = await confirm({
-      title: 'Disconnect Google Drive?',
-      message: 'Your files stay in Drive; livediagram stops updating them.',
+      title: t('drivemirrorprovider.disconnect-google-drive'),
+      message: t('drivemirrorprovider.your-files-stay-in-drive-livediagram'),
       confirmLabel: 'Disconnect',
     });
     if (!ok) return;

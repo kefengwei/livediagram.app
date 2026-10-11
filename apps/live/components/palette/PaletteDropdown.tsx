@@ -1,4 +1,6 @@
+
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useTranslation, type MessageKey } from '@/lib/i18n';
 import { ChevronDownIcon, HoverCard, Portal } from '@livediagram/ui';
 import { VIEWPORT_EDGE_MARGIN as EDGE } from '@/lib/clamp-to-viewport';
 
@@ -10,6 +12,9 @@ export const DROPDOWN_HOVER_CLOSE_MS = 250;
 export type PaletteDropdownOption = {
   id: string;
   label: string;
+  // The KEY to render; `label` is the English fallback for options whose table has no key
+  // yet (docs/specs/004-interface-design/localization.md).
+  labelKey?: MessageKey;
   // Optional leading glyph shown both in the trigger (when this option is
   // selected) and beside the option in the menu. Any size of <svg> is
   // normalised to 14px by the wrapper so mixed icon sets line up.
@@ -153,6 +158,11 @@ export function PaletteDropdown({
   // the keyboard keep click-to-open. A click then opens rather than toggles.
   openOnHover?: boolean;
 }) {
+  const { t } = useTranslation();
+  // An option renders its key when it has one; `label` stays as the English fallback for
+  // options whose table has no key yet (docs/specs/004-interface-design/localization.md).
+  const labelOf = (option: { label: string; labelKey?: MessageKey }) =>
+    option.labelKey ? t(option.labelKey) : option.label;
   const [open, setOpen] = useState(false);
   const hoverTimer = useRef<number | null>(null);
   const clearHover = () => {
@@ -288,7 +298,9 @@ export function PaletteDropdown({
     >
       {triggerLeading}
       {selected?.icon ? <span className={ICON_WRAP}>{selected.icon}</span> : null}
-      {iconOnly ? null : <span className="truncate">{selected?.label}</span>}
+      {iconOnly ? null : (
+            <span className="truncate">{selected ? labelOf(selected) : null}</span>
+          )}
       <ChevronDownIcon className="shrink-0" />
     </button>
   );
@@ -450,7 +462,7 @@ export function PaletteDropdown({
                           </span>
                         ) : null}
                         <span className={opt.fullWidth ? 'truncate' : 'w-full truncate'}>
-                          {opt.label}
+                          {labelOf(opt)}
                         </span>
                         {/* Kept, but tucked into the corner: the shortcut is
                               worth discovering and worth nothing at the cost of
@@ -508,7 +520,7 @@ export function PaletteDropdown({
                         }`}
                       >
                         {opt.icon ? <span className={ICON_WRAP}>{opt.icon}</span> : null}
-                        <span className="flex-1 truncate">{opt.label}</span>
+                        <span className="flex-1 truncate">{labelOf(opt)}</span>
                         {opt.shortcut ? (
                           <kbd className="inline-flex items-center rounded-[3px] border border-slate-300 bg-white px-1 text-[8px] font-semibold leading-[1.4] text-slate-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-400">
                             <span className="text-optical-line text-optical-caps [--optical-tracking:0em]">

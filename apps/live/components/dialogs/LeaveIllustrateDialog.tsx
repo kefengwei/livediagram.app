@@ -2,6 +2,7 @@
 
 // Leaving Illustrate on a tab with articles (docs/specs/007-editor/article-pages.md "Leaving
 // Illustrate"): turn the articles into Page elements, keep them as articles, or stay.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef } from 'react';
 import { editorModeLabel } from '@livediagram/document';
 import { Button } from '@livediagram/ui';
@@ -10,6 +11,7 @@ import { DialogFooter } from '@/components/dialogs/DialogFooter';
 import type { LeaveIllustrate } from '@/hooks/editor/useLeaveIllustrate';
 
 export function LeaveIllustrateDialog({ leave }: { leave: LeaveIllustrate }) {
+  const { t } = useTranslation();
   const convertRef = useRef<HTMLButtonElement>(null);
   const open = leave.pending !== null;
   useEffect(() => {
@@ -22,9 +24,7 @@ export function LeaveIllustrateDialog({ leave }: { leave: LeaveIllustrate }) {
         <h2
           id="leave-illustrate-title"
           className="text-lg font-semibold text-slate-900 dark:text-slate-50"
-        >
-          Turn Articles Into Pages?
-        </h2>
+        >{t('leaveillustratedialog.turn-articles-into-pages')}</h2>
         <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
           {mode} mode does not show the writing on article pages. Turn each article page into a Page
           you can keep writing in on the canvas, or keep them as articles to come back to in
@@ -32,15 +32,9 @@ export function LeaveIllustrateDialog({ leave }: { leave: LeaveIllustrate }) {
         </p>
       </div>
       <DialogFooter>
-        <Button variant="secondary" onClick={leave.cancel}>
-          Cancel
-        </Button>
-        <Button variant="secondary" onClick={leave.keep}>
-          Keep as Articles
-        </Button>
-        <Button ref={convertRef} variant="primary" onClick={leave.convert}>
-          Turn Into Pages
-        </Button>
+        <Button variant="secondary" onClick={leave.cancel}>{t('leaveillustratedialog.cancel')}</Button>
+        <Button variant="secondary" onClick={leave.keep}>{t('leaveillustratedialog.keep-as-articles')}</Button>
+        <Button ref={convertRef} variant="primary" onClick={leave.convert}>{t('leaveillustratedialog.turn-into-pages')}</Button>
       </DialogFooter>
     </Dialog>
   );

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { mirroredLogoPages } from '@/hooks/editor/useLogoTools';
 import { useViewportStore } from '@/hooks/canvas/useViewportStore';
 import { ViewZoomControls } from '@/components/canvas/view-readers';
@@ -199,6 +200,7 @@ const DOCK_CORNER_CLASS: Record<PanelCorner, string> = {
 // Canvas's props plus the computed ChromeExtras.
 
 export function CanvasChrome(props: CanvasChromeProps) {
+  const { t } = useTranslation();
   const {
     activeDockPanel,
     canRedo,
@@ -676,14 +678,14 @@ export function CanvasChrome(props: CanvasChromeProps) {
                 className={CLUSTER_STRIP}
               >
                 <HoverCard
-                  title="Theme & canvas"
-                  description="Change this tab's theme and canvas background."
+                  title={t('canvaschrome.theme-canvas')}
+                  description={t('canvaschrome.change-this-tab-s-theme-and')}
                 >
                   <button
                     type="button"
                     onPointerDown={(e) => e.stopPropagation()}
                     onClick={onOpenCanvasTheme}
-                    aria-label="Theme and canvas"
+                    aria-label={t('canvaschrome.theme-and-canvas')}
                     className="flex h-11 w-11 items-center justify-center text-slate-600 transition hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
                   >
                     <ThemeBrushIcon />

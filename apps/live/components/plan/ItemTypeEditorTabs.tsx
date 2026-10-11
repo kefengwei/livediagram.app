@@ -3,6 +3,7 @@
 // The type editor's tabs (docs/specs/026-plan/item-types.md "Editing a type"): Configuration, States and Display, one
 // panel showing at a time, the underline sliding to the chosen tab. A tab holding what stops Save carries a red dot. Arrow keys move between tabs, Home and
 // End go to the ends, as a tablist does.
+import { useTranslation } from '@/lib/i18n';
 import { useId, useRef, type KeyboardEvent, type ReactNode } from 'react';
 import { SlidingTabUnderline } from '@/components/primitives/SlidingTabUnderline';
 
@@ -27,6 +28,7 @@ export function ItemTypeEditorTabs({
   flagged: ReadonlySet<TypeEditorTab>;
   panels: Record<TypeEditorTab, ReactNode>;
 }) {
+  const { t } = useTranslation();
   const base = useId();
   const listRef = useRef<HTMLDivElement>(null);
   const tabId = (t: TypeEditorTab) => `${base}-tab-${t}`;
@@ -55,7 +57,7 @@ export function ItemTypeEditorTabs({
       <div
         ref={listRef}
         role="tablist"
-        aria-label="Card type settings"
+        aria-label={t('itemtypeeditortabs.card-type-settings')}
         className="relative flex gap-1 border-b border-slate-100 px-5 dark:border-slate-800"
         onKeyDown={onKey}
       >

@@ -2,6 +2,8 @@
 // document's exposure in one phrase, with a dot that is slate while only the
 // owner can get in, emerald once any pass is live, and pink while it is listed in the public Community
 // (docs/specs/025-community/community.md), the widest exposure, which wins.
+
+import { useTranslation } from '@/lib/i18n';
 export function ShareStatus({
   passes,
   password,
@@ -11,12 +13,13 @@ export function ShareStatus({
   password: boolean;
   community?: boolean;
 }) {
+  const { t } = useTranslation();
   const open = passes > 0 || community;
   const holders = passes === 1 ? 'the pass' : `one of the ${passes} passes`;
   const text = community
     ? 'Public: in the Community, where anyone can find it, view it and make a copy.'
     : open
-      ? `Shared: anyone holding ${holders} can get in${password ? ', with the password' : ''}.`
+      ? `Shared: anyone holding ${holders} can get in${password ? t('sharestatus.with-the-password') : ''}.`
       : 'Private: only you can open it.';
   const dot = community ? 'bg-pink-500' : open ? 'bg-emerald-500' : 'bg-slate-400';
   const ping = community ? 'bg-pink-400' : 'bg-emerald-400';

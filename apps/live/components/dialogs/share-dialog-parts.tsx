@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { ShareLinkExpiry, ShareRole } from '@/lib/api-client';
 import { Glyph, lucideGlyph } from '@livediagram/ui';
 import { lucideClock, lucideEye, lucidePencilLine } from '@livediagram/icons/lucide';
@@ -95,9 +96,10 @@ export function CodeGlyph() {
 // The options of a link-scope picker (docs/specs/013-workspace/tab-scoped-share-links.md): All tabs, then
 // every tab by name in bar order. '' stands for All tabs.
 export function ScopeOptions({ tabs }: { tabs: { id: string; name: string }[] }) {
+  const { t } = useTranslation();
   return (
     <>
-      <option value="">All tabs</option>
+      <option value="">{t('share-dialog-parts.all-tabs')}</option>
       {tabs.map((t) => (
         <option key={t.id} value={t.id}>
           {t.name}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useId } from 'react';
+import { useTranslation, type MessageKey } from '@/lib/i18n';
 import { PencilIcon, Tooltip } from '@livediagram/ui';
 import { EyeIcon } from '@/components/panels/layers-panel-icons';
 
@@ -11,10 +12,14 @@ import { EyeIcon } from '@/components/panels/layers-panel-icons';
 
 export type Role = 'edit' | 'view';
 
-const ROLE_WORD: Record<Role, string> = { edit: 'Editing', view: 'Viewing' };
-const TOGGLE_HINT: Record<Role, string> = {
-  edit: 'Switch to viewing (read-only)',
-  view: 'Switch to editing',
+// KEYS: the module scope has no `t`, so the render sites translate (docs/specs/004-interface-design/localization.md).
+const ROLE_WORD: Record<Role, MessageKey> = {
+  edit: 'roleindicator.editing',
+  view: 'roleindicator.viewing',
+};
+const TOGGLE_HINT: Record<Role, MessageKey> = {
+  edit: 'roleindicator.switch-to-viewing',
+  view: 'roleindicator.switch-to-editing',
 };
 
 // The word sits in text-optical-line + text-optical-caps (optical-alignment.md), so the pill carries no case.
@@ -45,8 +50,9 @@ export function RolePill({
   onToggle?: () => void;
 }) {
   const hintId = useId();
+  const { t } = useTranslation();
   const owner = roleOwnerLabel(ownerName, isSelf);
-  const word = ROLE_WORD[role];
+  const word = t(ROLE_WORD[role]);
   const pill = onToggle ? (
     <button
       type="button"
@@ -58,7 +64,7 @@ export function RolePill({
     >
       <span className="text-optical-line text-optical-caps">{word}</span>
       <span id={hintId} className="sr-only">
-        {TOGGLE_HINT[role]}
+        {t(TOGGLE_HINT[role])}
       </span>
     </button>
   ) : (
@@ -72,7 +78,10 @@ export function RolePill({
   return owner ? <Tooltip label={owner}>{pill}</Tooltip> : pill;
 }
 
-const ICON_LABEL: Record<Role, string> = { edit: 'Editing', view: 'Viewing (read-only)' };
+const ICON_LABEL: Record<Role, MessageKey> = {
+  edit: 'roleindicator.editing',
+  view: 'roleindicator.viewing-readonly',
+};
 // The status bar control's box (chrome-button's CHROME_BTN), in the role's own
 // colour rather than the bar's slate.
 const ICON_BOX =
@@ -84,7 +93,8 @@ const ICON_TONE: Record<Role, string> = {
 
 // Minimal chrome's stand-in for the pill: first in the status bar.
 export function RoleStatusIcon({ role, onToggle }: { role: Role; onToggle?: () => void }) {
-  const label = ICON_LABEL[role];
+  const { t } = useTranslation();
+  const label = t(ICON_LABEL[role]);
   const glyph = role === 'edit' ? <PencilIcon size={14} /> : <EyeIcon />;
   const content = onToggle ? (
     <button

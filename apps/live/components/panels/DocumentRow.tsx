@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { EllipsisTriggerButton } from '@/components/primitives/EllipsisTriggerButton';
 import { useRowMenu } from '@/components/primitives/useRowMenu';
@@ -66,6 +67,7 @@ export function DocumentRow({
   // dragged.
   draggable?: boolean;
 }) {
+  const { t } = useTranslation();
   const [editing, setEditing] = useState(false);
   const hasMenu = Boolean(onRename || onDelete || onDuplicate || onMoveRequest);
   // Right-click opens the menu too, except mid-rename or on a row without one.
@@ -126,8 +128,7 @@ export function DocumentRow({
               ? 'truncate text-[10px] font-normal text-brand-700/80 dark:text-brand-200/80'
               : 'truncate text-[10px] text-slate-400 dark:text-white'
           }
-        >
-          Updated {relative}
+        >{t('documentrow.updated')}{relative}
         </span>
       </span>
     </>
@@ -165,7 +166,7 @@ export function DocumentRow({
           size="md"
           reveal
           className="mr-1 self-center"
-          label="Document menu"
+          label={t('documentrow.document-menu')}
         />
       ) : null}
       {/* The same actions menu as the Explorer page's rows and cards

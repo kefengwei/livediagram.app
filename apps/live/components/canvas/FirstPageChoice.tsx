@@ -5,6 +5,7 @@
 // the add-a-page popover. Infographic keeps the page and puts the choice away; Article makes it the
 // first page of an article, the caret in its title; Slide turns it into a 16:9 landscape slide;
 // Logo into the 1024 artboard. Held at one screen size, centred on the page.
+import { useTranslation } from '@/lib/i18n';
 import type { PageKind } from '@livediagram/document';
 import { useRef } from 'react';
 import { moveBetweenKindCards, PAGE_KINDS, PageKindCard } from './page-kind-cards';
@@ -16,6 +17,7 @@ export function FirstPageChoice({
   zoom: number;
   onChoose: (kind: PageKind) => void;
 }) {
+  const { t } = useTranslation();
   const cards = useRef<(HTMLButtonElement | null)[]>([]);
   return (
     <div className="absolute inset-0 flex items-center justify-center">
@@ -31,12 +33,8 @@ export function FirstPageChoice({
         <p
           id="first-page-choice-title"
           className="px-0.5 text-sm font-semibold text-slate-900 dark:text-slate-100"
-        >
-          What Is This Page For?
-        </p>
-        <p className="mb-2.5 mt-0.5 px-0.5 text-xs text-slate-500 dark:text-slate-400">
-          Choose now: a page keeps its kind once you start.
-        </p>
+        >{t('firstpagechoice.what-is-this-page-for')}</p>
+        <p className="mb-2.5 mt-0.5 px-0.5 text-xs text-slate-500 dark:text-slate-400">{t('firstpagechoice.choose-now-a-page-keeps-its')}</p>
         <div
           className="grid grid-cols-2 gap-2"
           // Arrow keys move between the cards, as in the Add a Page popover.

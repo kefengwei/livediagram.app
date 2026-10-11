@@ -13,6 +13,7 @@
 // Nothing here is a document edit: the pen is device-local (see
 // lib/laser-config) and rides your laser samples so peers see the same beam.
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useState } from 'react';
 import {
   laserLifetimeMs,
@@ -87,16 +88,17 @@ export function LaserPanel({
   // The local participant's colour, so "Your colour" previews as itself.
   selfColour: string;
 } & ModePanelProps) {
+  const { t } = useTranslation();
   const [openRow, setOpenRow] = useState<Row | null>(null);
   const toggle = (row: Row) => setOpenRow((r) => (r === row ? null : row));
 
   return (
-    <ModePanel helpArticle="laser" title="Laser" {...placement}>
+    <ModePanel helpArticle="laser" title={t('laserpanel.laser')} {...placement}>
       <div className="flex flex-col px-2 pb-2">
         <PenPreview config={config} colour={selfColour} />
         <div className="divide-y divide-slate-100 dark:divide-slate-800">
           <ToolOptionRow
-            label="Width"
+            label={t('laserpanel.width')}
             options={LASER_WIDTHS}
             value={config.width}
             open={openRow === 'width'}
@@ -110,7 +112,7 @@ export function LaserPanel({
             onPick={(colour) => onChange('colour', colour)}
           />
           <ToolOptionRow
-            label="Trail"
+            label={t('laserpanel.trail')}
             options={LASER_TRAILS}
             value={config.trail}
             open={openRow === 'trail'}
@@ -118,7 +120,7 @@ export function LaserPanel({
             onPick={(id) => onChange('trail', id)}
           />
           <ToolOptionRow
-            label="Effect"
+            label={t('laserpanel.effect')}
             options={LASER_EFFECTS}
             value={config.effect}
             open={openRow === 'effect'}
@@ -126,10 +128,8 @@ export function LaserPanel({
             onPick={(id) => onChange('effect', id)}
           />
         </div>
-        <p className="px-1 pt-1.5 text-[10px] leading-snug text-slate-400">
-          Everyone in the room sees your pen, and it is remembered on this device:{' '}
-          {laserStrokeWidth(config)}px, fading over {(laserLifetimeMs(config) / 1000).toFixed(1)}s.
-        </p>
+        <p className="px-1 pt-1.5 text-[10px] leading-snug text-slate-400">{t('laserpanel.everyone-in-the-room-sees-your')}{' '}
+          {laserStrokeWidth(config)}{t('laserpanel.px-fading-over')}{(laserLifetimeMs(config) / 1000).toFixed(1)}{t('laserpanel.s')}</p>
       </div>
     </ModePanel>
   );

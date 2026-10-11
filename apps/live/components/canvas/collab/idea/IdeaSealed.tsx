@@ -7,12 +7,14 @@
 // keyed on the count, so each new idea remounts them and replays the
 // animation; the count the box first painted with doesn't animate.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { GlyphDisc } from '@livediagram/ui';
 import { tint } from '../collab-chrome';
 import { LockGlyph, QA_ACCENT, QA_ACCENT_INK } from '../qa/qa-parts';
 
 export function IdeaSealed({ count, textColor }: { count: number; textColor: string }) {
+  const { t } = useTranslation();
   const [initial] = useState(count);
   const bumped = count > initial;
   return (
@@ -48,9 +50,7 @@ export function IdeaSealed({ count, textColor }: { count: number; textColor: str
       <span className="text-[11px] font-semibold" style={{ color: textColor }}>
         {count === 1 ? 'idea sealed' : 'ideas sealed'}
       </span>
-      <span className="text-[10.5px] leading-snug" style={{ color: textColor, opacity: 0.55 }}>
-        Hidden from everyone until the box is opened.
-      </span>
+      <span className="text-[10.5px] leading-snug" style={{ color: textColor, opacity: 0.55 }}>{t('ideasealed.hidden-from-everyone-until-the-box')}</span>
     </div>
   );
 }

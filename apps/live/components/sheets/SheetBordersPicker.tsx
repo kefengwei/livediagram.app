@@ -3,6 +3,7 @@
 // The toolbar's Borders menu (docs/specs/029-sheets/sheet.md "Toolbar"): which borders, as a compact grid of drawn
 // squares (the lines it sets in ink, the rest faint), then the line as drawn swatches (thin, medium, thick, dashed,
 // dotted), the chosen one marked. Each is named by the shared tooltip and its accessible name.
+import { useTranslation } from '@/lib/i18n';
 import type { BorderMode, BorderStyle } from '@livediagram/sheets';
 import { Glyph, Tooltip } from '@livediagram/ui';
 
@@ -88,9 +89,10 @@ export function SheetBordersPicker({
   onLine: (line: BorderLine) => void;
   onPick: (mode: BorderMode) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="flex w-[11.5rem] flex-col gap-2 p-2">
-      <div role="group" aria-label="Borders" className="grid grid-cols-4 gap-1">
+      <div role="group" aria-label={t('sheetborderspicker.borders')} className="grid grid-cols-4 gap-1">
         {MODES.map((m) => (
           <Tooltip key={m.mode} label={m.label}>
             <button
@@ -106,7 +108,7 @@ export function SheetBordersPicker({
         ))}
       </div>
       <div className="h-px bg-slate-200 dark:bg-slate-700" />
-      <div role="radiogroup" aria-label="Line" className="grid grid-cols-5 gap-1">
+      <div role="radiogroup" aria-label={t('sheetborderspicker.line')} className="grid grid-cols-5 gap-1">
         {BORDER_LINES.map((l) => {
           const on = l.label === line.label;
           return (

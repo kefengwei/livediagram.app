@@ -6,6 +6,7 @@
 // (or **Import as new document** for a copy of a mirrored file), or says the
 // file cannot be opened.
 
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { Button } from '@livediagram/ui';
 import { ApiError, apiDriveToken } from '@/lib/api-client';
@@ -52,6 +53,7 @@ type Phase =
   | { kind: 'import-failed' };
 
 export function DriveOpen() {
+  const { t } = useTranslation();
   const { authLoaded, isSignedIn, clerkUserId } = useClerkApiBootstrap();
   const drive = useDriveMirror();
   const state = useSyncExternalStore(noSubscription, readState, beforeHydration);
@@ -146,11 +148,9 @@ export function DriveOpen() {
     const back = encodeURIComponent(here);
     return (
       <LandingCard>
-        <Heading>Sign in to open this document</Heading>
-        <Body>
-          Files from Google Drive open in your livediagram account. We&apos;ll bring you right back.
-        </Body>
-        <PrimaryLink href={`/sign-in/?redirect_url=${back}`}>Sign in</PrimaryLink>
+        <Heading>{t('driveopen.sign-in-to-open-this-document')}</Heading>
+        <Body>{t('driveopen.files-from-google-drive-open-in')}</Body>
+        <PrimaryLink href={`/sign-in/?redirect_url=${back}`}>{t('driveopen.sign-in')}</PrimaryLink>
       </LandingCard>
     );
   }
@@ -163,12 +163,10 @@ export function DriveOpen() {
   if (phase.kind === 'needs-access') {
     return (
       <LandingCard>
-        <Heading>Allow livediagram to read this file</Heading>
-        <Body>Connect Google Drive once, and files open straight from Drive.</Body>
+        <Heading>{t('driveopen.allow-livediagram-to-read-this-file')}</Heading>
+        <Body>{t('driveopen.connect-google-drive-once-and-files')}</Body>
         <div className="mt-5 flex justify-center">
-          <Button size="md" onClick={() => void allowAccess()}>
-            Allow access
-          </Button>
+          <Button size="md" onClick={() => void allowAccess()}>{t('driveopen.allow-access')}</Button>
         </div>
       </LandingCard>
     );
@@ -184,12 +182,12 @@ export function DriveOpen() {
         <Heading>{name}</Heading>
         <Body>
           {copy
-            ? 'This is a copy made in Google Drive. Import it as a new document to open it here; the original stays as it is.'
-            : "This document isn't in your livediagram. Import a copy to open it here."}
+            ? t('driveopen.this-is-a-copy-made-in')
+            : t('driveopen.this-document-isn-t-in-your')}
         </Body>
         <div className="mt-5 flex justify-center">
           <Button size="md" onClick={() => void importCopy(reason)}>
-            {copy ? 'Import as new document' : 'Import a copy'}
+            {copy ? t('driveopen.import-as-new-document') : t('driveopen.import-a-copy')}
           </Button>
         </div>
       </LandingCard>
@@ -198,25 +196,26 @@ export function DriveOpen() {
   if (phase.kind === 'import-failed') {
     return (
       <LandingCard>
-        <Heading>The copy couldn&apos;t be made</Heading>
-        <Body>The file isn&apos;t a readable livediagram document.</Body>
-        <PrimaryLink href="/explorer">Go to Explorer</PrimaryLink>
+        <Heading>{t('driveopen.the-copy-couldn-t-be-made')}</Heading>
+        <Body>{t('driveopen.the-file-isn-t-a-readable')}</Body>
+        <PrimaryLink href="/explorer">{t('driveopen.go-to-explorer')}</PrimaryLink>
       </LandingCard>
     );
   }
   return (
     <LandingCard>
-      <Body>{phase.kind === 'importing' ? 'Importing…' : 'Opening from Google Drive…'}</Body>
+      <Body>{phase.kind === 'importing' ? 'Importing…' : t('driveopen.opening-from-google-drive')}</Body>
     </LandingCard>
   );
 }
 
 function CannotOpen() {
+  const { t } = useTranslation();
   return (
     <LandingCard>
-      <Heading>This file can&apos;t be opened in livediagram</Heading>
-      <Body>It isn&apos;t a livediagram file, or livediagram can&apos;t read it.</Body>
-      <PrimaryLink href="/explorer">Go to Explorer</PrimaryLink>
+      <Heading>{t('driveopen.this-file-can-t-be-opened')}</Heading>
+      <Body>{t('driveopen.it-isn-t-a-livediagram-file')}</Body>
+      <PrimaryLink href="/explorer">{t('driveopen.go-to-explorer-2')}</PrimaryLink>
     </LandingCard>
   );
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState } from 'react';
 import { Button } from '@livediagram/ui';
 import type { TeamInviteLink } from '@livediagram/api-schema';
@@ -45,6 +46,7 @@ export function TeamInviteLinkDialog({
   inviteLink: TeamInviteLink | null;
   onInviteLinkChange: (link: TeamInviteLink | null) => void;
 }) {
+  const { t } = useTranslation();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -120,9 +122,7 @@ export function TeamInviteLinkDialog({
         <h2
           id="invite-link-title"
           className="text-lg font-semibold text-slate-900 dark:text-slate-50"
-        >
-          Invite by link
-        </h2>
+        >{t('teaminvitelinkdialog.invite-by-link')}</h2>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           Anyone signed in who opens this link can join the team as a member. The link expires after
           a week, and you can turn it off any time.
@@ -130,9 +130,7 @@ export function TeamInviteLinkDialog({
 
         {inviteLink ? (
           <div className="mt-4">
-            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">
-              Invite link
-            </span>
+            <span className="text-xs font-medium uppercase tracking-wider text-slate-500">{t('teaminvitelinkdialog.invite-link')}</span>
             {/* Stacks on narrow screens so the URL field keeps its
                     width on mobile and the Copy button drops below it. */}
             <div className="mt-1 flex flex-col gap-2 sm:flex-row">
@@ -145,7 +143,7 @@ export function TeamInviteLinkDialog({
                 className="min-w-0 flex-1 truncate rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
               />
               <Button size="md" onClick={() => void copy()} className="shrink-0 sm:py-1.5">
-                {copied ? 'Copied' : 'Copy link'}
+                {copied ? 'Copied' : t('teaminvitelinkdialog.copy-link')}
               </Button>
             </div>
             <p className="mt-2 text-xs text-slate-400 dark:text-slate-400">
@@ -156,7 +154,7 @@ export function TeamInviteLinkDialog({
           <div className="mt-4">
             <Button size="md" onClick={() => void generate()} disabled={busy}>
               <LinkIcon />
-              {busy ? 'Turning on…' : 'Turn on invite link'}
+              {busy ? t('teaminvitelinkdialog.turning-on') : t('teaminvitelinkdialog.turn-on-invite-link')}
             </Button>
           </div>
         )}
@@ -171,15 +169,11 @@ export function TeamInviteLinkDialog({
             onClick={() => void revoke()}
             disabled={busy}
             className="rounded-md px-2.5 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-800 disabled:opacity-50 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-          >
-            Turn off
-          </button>
+          >{t('teaminvitelinkdialog.turn-off')}</button>
         ) : (
           <span />
         )}
-        <Button variant="secondary" onClick={onClose}>
-          Done
-        </Button>
+        <Button variant="secondary" onClick={onClose}>{t('teaminvitelinkdialog.done')}</Button>
       </div>
     </Dialog>
   );

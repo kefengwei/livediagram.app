@@ -7,6 +7,7 @@
 // competing on-canvas button. The first of a planned family of composite "rail"
 // components, so the geometry stays simple + declarative.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { RAIL_DEFAULT_POINTS } from '@livediagram/document';
 import type { ShapeElement } from '@livediagram/document';
@@ -112,6 +113,7 @@ function RailLabel({
   onCommit: (text: string) => void;
   style: React.CSSProperties;
 }) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState(value);
   const [seededFrom, setSeededFrom] = useState(value);
   if (value !== seededFrom) {
@@ -134,7 +136,7 @@ function RailLabel({
       className="pointer-events-auto resize-none rounded border border-transparent bg-transparent text-center font-medium leading-tight outline-none transition focus:border-brand-300 focus:bg-white/80 dark:focus:bg-slate-900/70"
       style={style}
       value={draft}
-      placeholder="Label"
+      placeholder={t('railview.label')}
       rows={2}
       onPointerDown={(e) => e.stopPropagation()}
       onChange={(e) => setDraft(e.target.value)}

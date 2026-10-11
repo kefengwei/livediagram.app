@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useAuthHrefs } from '@/components/chrome/auth-shared';
 import { sessionsEnabled } from '@/lib/clerk-config';
 
@@ -9,6 +10,7 @@ import { sessionsEnabled } from '@/lib/clerk-config';
 // the page the dialog was opened on. Absent where the deployment has no
 // sign-in, since there would be nowhere for it to go.
 export function SettingsSignInLink() {
+  const { t } = useTranslation();
   const { signInHref } = useAuthHrefs();
   if (!sessionsEnabled) return null;
   return (
@@ -17,9 +19,7 @@ export function SettingsSignInLink() {
       <a
         href={signInHref}
         className="font-medium text-brand-600 underline-offset-2 hover:underline dark:text-brand-400"
-      >
-        Sign In
-      </a>
+      >{t('settingssigninlink.sign-in')}</a>
     </>
   );
 }

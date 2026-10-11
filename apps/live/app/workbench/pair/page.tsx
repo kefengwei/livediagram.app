@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { OauthShell } from '../../oauth/oauth-shell';
@@ -15,9 +16,7 @@ export default function Page() {
     <Suspense
       fallback={
         <OauthShell>
-          <p role="status" className="text-sm text-slate-500 dark:text-slate-400">
-            Loading…
-          </p>
+          <p role="status" className="text-sm text-slate-500 dark:text-slate-400">{'Loading…'}</p>
         </OauthShell>
       }
     >

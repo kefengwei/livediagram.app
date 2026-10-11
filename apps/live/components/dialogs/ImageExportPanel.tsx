@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useMemo, useState, type ReactNode } from 'react';
 import { BackBar } from '@/components/primitives/BackBar';
 import { Button } from '@livediagram/ui';
@@ -54,6 +55,7 @@ export function ImageExportPanel({
   // The preview sits on a checkerboard: its paper is see-through.
   checkerboard?: boolean;
 }) {
+  const { t } = useTranslation();
   // Isometric export (docs/specs/008-canvas/isometric-view.md / 48): tilt the rendered image into the editor's
   // isometric projection. Off by default — the standard export is flat top-down.
   const [isometric, setIsometric] = useState(false);
@@ -76,7 +78,7 @@ export function ImageExportPanel({
           style), the same control the New Document wizard's location step
           uses — not a small text link buried in the footer beside the
           commit button, where the way back sat next to the way forward. */}
-      <BackBar label="All formats" current={label} onClick={onBack} disabled={busy} />
+      <BackBar label={t('imageexportpanel.all-formats')} current={label} onClick={onBack} disabled={busy} />
       {pagePicker ? <div className="mt-3">{pagePicker}</div> : null}
       {/* Live preview — exactly what Download produces under the current
           options. The injected SVG is our own export output (no external
@@ -90,7 +92,7 @@ export function ImageExportPanel({
             dangerouslySetInnerHTML={{ __html: previewSvg }}
           />
         ) : (
-          <span className="text-xs text-slate-400">Preparing preview…</span>
+          <span className="text-xs text-slate-400">{t('imageexportpanel.preparing-preview')}</span>
         )}
       </div>
       {/* Isometric toggle. The help `?` sits beside the LABEL, not at the
@@ -118,20 +120,16 @@ export function ImageExportPanel({
               aria-pressed={isometric}
               // The label lives outside this button (so the `?` can sit in it),
               // so the button names itself.
-              aria-label="Isometric view"
+              aria-label={t('imageexportpanel.isometric-view')}
               className="absolute inset-0 cursor-pointer rounded-lg"
             />
             <span className="pointer-events-none relative flex flex-col">
-              <span className="flex items-center gap-0.5 text-xs font-semibold text-slate-900 dark:text-slate-100">
-                Isometric view
-                <HelpArticleLink article="isometricMode" className="pointer-events-auto" />
+              <span className="flex items-center gap-0.5 text-xs font-semibold text-slate-900 dark:text-slate-100">{t('imageexportpanel.isometric-view-2')}<HelpArticleLink article="isometricMode" className="pointer-events-auto" />
               </span>
-              <span className="mt-0.5 text-[11px] leading-snug text-slate-500 dark:text-slate-400">
-                Tilt the export into the isometric projection.
-              </span>
+              <span className="mt-0.5 text-[11px] leading-snug text-slate-500 dark:text-slate-400">{t('imageexportpanel.tilt-the-export-into-the-isometric')}</span>
             </span>
             <span className="pointer-events-none relative">
-              <ToggleSwitch presentational checked={isometric} label="Export isometric view" />
+              <ToggleSwitch presentational checked={isometric} label={t('imageexportpanel.export-isometric-view')} />
             </span>
           </div>
           {/* Background-pattern toggle. */}
@@ -145,14 +143,10 @@ export function ImageExportPanel({
             className="mt-2 flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-left transition hover:border-brand-300 hover:bg-brand-50/40 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/10"
           >
             <span className="flex flex-col">
-              <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">
-                Background pattern
-              </span>
-              <span className="mt-0.5 text-[11px] leading-snug text-slate-500 dark:text-slate-400">
-                Paint the tab's grid / dots / texture behind what's on the canvas.
-              </span>
+              <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('imageexportpanel.background-pattern')}</span>
+              <span className="mt-0.5 text-[11px] leading-snug text-slate-500 dark:text-slate-400">{t('imageexportpanel.paint-the-tab-s-grid-dots')}</span>
             </span>
-            <ToggleSwitch presentational checked={pattern} label="Export background pattern" />
+            <ToggleSwitch presentational checked={pattern} label={t('imageexportpanel.export-background-pattern')} />
           </button>
         </>
       )}
@@ -169,14 +163,10 @@ export function ImageExportPanel({
           className="mt-2 flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-left transition hover:border-brand-300 hover:bg-brand-50/40 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/10"
         >
           <span className="flex flex-col">
-            <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">
-              Hidden layers
-            </span>
-            <span className="mt-0.5 text-[11px] leading-snug text-slate-500 dark:text-slate-400">
-              Include layers you've hidden in the Layers panel.
-            </span>
+            <span className="text-xs font-semibold text-slate-900 dark:text-slate-100">{t('imageexportpanel.hidden-layers')}</span>
+            <span className="mt-0.5 text-[11px] leading-snug text-slate-500 dark:text-slate-400">{t('imageexportpanel.include-layers-you-ve-hidden-in')}</span>
           </span>
-          <ToggleSwitch presentational checked={hiddenLayers} label="Export hidden layers" />
+          <ToggleSwitch presentational checked={hiddenLayers} label={t('imageexportpanel.export-hidden-layers')} />
         </button>
       ) : null}
       {error ? (

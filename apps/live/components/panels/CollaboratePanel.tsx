@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { elementActions, elementDisplayLabel, type BoxedElement } from '@livediagram/document';
 import { MovablePanel } from '@/components/primitives/MovablePanel';
@@ -100,6 +101,7 @@ export function CollaboratePanel({
   dismissOnOutside,
   onPopoverClose,
 }: CollaboratePanelProps) {
+  const { t } = useTranslation();
   const [kind, setKind] = useState<CollaborateKind>('all');
   const openAll = kindCounts('open', commentRows, actionRows).all;
   const resolvedAll = kindCounts('resolved', commentRows, actionRows).all;
@@ -117,7 +119,7 @@ export function CollaboratePanel({
   return (
     <MovablePanel
       helpArticle="comments"
-      title="Collaborate"
+      title={t('collaboratepanel.collaborate')}
       titleAdornment={openAll > 0 ? <CountBadge count={openAll} tone="brand" /> : undefined}
       position={position}
       // Always a popover hanging above its cluster button (docs/specs/012-collaboration/assigned-actions.md §5).

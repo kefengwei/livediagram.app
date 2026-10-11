@@ -12,6 +12,7 @@
 // Escape and the backdrop both decline, like the poll's Skip: dismissing is a
 // real answer, not a silent drop.
 
+import { useTranslation } from '@/lib/i18n';
 import { Dialog } from '@/components/dialogs/Dialog';
 import { SOLID_BRAND_DARK_CONTROL } from '@livediagram/ui';
 
@@ -26,38 +27,29 @@ export function FocusInviteDialog({
   onAccept: () => void;
   onDismiss: () => void;
 }) {
+  const { t } = useTranslation();
   if (!from) return null;
   return (
     <Dialog open onClose={onDismiss} ariaLabel="Someone wants you to look at something" size="sm">
       <div className="flex flex-col gap-3 p-4">
         <div className="flex flex-col gap-1">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-300">
-            Bring Focus
-          </span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-300">{t('focusinvitedialog.bring-focus')}</span>
           <h2 className="text-base font-semibold leading-snug text-slate-800 dark:text-slate-100">
-            {from} wants you to look at something
-          </h2>
-          <p className="text-[13px] leading-snug text-slate-500 dark:text-slate-400">
-            This will move your view to where they are pointing, at their zoom. Your view is your
-            own again straight afterwards.
-          </p>
+            {from}{t('focusinvitedialog.wants-you-to-look-at-something')}</h2>
+          <p className="text-[13px] leading-snug text-slate-500 dark:text-slate-400">{t('focusinvitedialog.this-will-move-your-view-to')}</p>
         </div>
         <div className="flex items-center justify-end gap-2">
           <button
             type="button"
             onClick={onDismiss}
             className="cursor-pointer rounded-lg px-3 py-1.5 text-[13px] font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-          >
-            Not now
-          </button>
+          >{t('focusinvitedialog.not-now')}</button>
           <button
             type="button"
             autoFocus
             onClick={onAccept}
             className={`cursor-pointer rounded-lg bg-brand-500 px-4 py-1.5 text-[13px] font-semibold text-white transition hover:bg-brand-600 ${SOLID_BRAND_DARK_CONTROL}`}
-          >
-            Take me there
-          </button>
+          >{t('focusinvitedialog.take-me-there')}</button>
         </div>
       </div>
     </Dialog>

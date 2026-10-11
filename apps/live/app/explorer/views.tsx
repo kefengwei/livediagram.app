@@ -7,6 +7,7 @@
 // component that takes its data and callbacks via props: no module-
 // level state, no api calls. The page wires them together.
 
+import { useTranslation } from '@/lib/i18n';
 import Link from 'next/link';
 import type { ExplorerViewProps } from '@/app/explorer/explorer-view-props';
 import type { DocumentListItem, SharedWithItem } from '@/lib/api-client';
@@ -92,6 +93,7 @@ export type SelectedNode =
 // ---------- Right pane primitives ---------------------------------
 
 export function ListView(props: ExplorerViewProps) {
+  const { t } = useTranslation();
   const {
     folders,
     documents: liveDocs,
@@ -129,10 +131,10 @@ export function ListView(props: ExplorerViewProps) {
             : 'sm:grid-cols-[1fr_90px_140px_40px]')
         }
       >
-        <span>Name</span>
-        {showOwner ? <span className="hidden sm:block">Owner</span> : null}
-        <span className="hidden sm:block">Visibility</span>
-        <span>Updated</span>
+        <span>{t('views.name')}</span>
+        {showOwner ? <span className="hidden sm:block">{t('views.owner')}</span> : null}
+        <span className="hidden sm:block">{t('views.visibility')}</span>
+        <span>{t('views.updated')}</span>
         <span aria-hidden></span>
       </div>
       <ul className="lvd-cascade divide-y divide-slate-100 dark:divide-slate-700/60">
@@ -188,16 +190,17 @@ export function SharedList({
   ownerId: string | null;
   onDismiss: (id: string) => void;
 }) {
+  const { t } = useTranslation();
   if (shared.length === 0) {
     return <EmptyPane selected={{ kind: 'shared' }} />;
   }
   return (
     <div className={LIST_CARD}>
       <div className="grid grid-cols-[1fr_60px_140px_40px] items-center gap-2 border-b border-slate-200 bg-slate-50/70 px-4 py-2 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:border-slate-700 dark:bg-slate-900/40 dark:text-slate-400 sm:grid-cols-[1fr_110px_60px_140px_40px]">
-        <span>Name</span>
-        <span className="hidden sm:block">Owner</span>
-        <span>Role</span>
-        <span>Updated</span>
+        <span>{t('views.name-2')}</span>
+        <span className="hidden sm:block">{t('views.owner-2')}</span>
+        <span>{t('views.role')}</span>
+        <span>{t('views.updated-2')}</span>
         <span aria-hidden></span>
       </div>
       <ul className="divide-y divide-slate-100 dark:divide-slate-700/60">
@@ -220,7 +223,7 @@ export function SharedList({
               <span className="truncate">{s.name}</span>
             </Link>
             <span className="hidden truncate text-xs text-slate-500 sm:block dark:text-slate-400">
-              {s.ownerName || 'Unknown owner'}
+              {s.ownerName || t('views.unknown-owner')}
             </span>
             <span className="inline-flex w-fit items-center rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/30">
               {s.role === 'edit' ? 'Edit' : 'View'}

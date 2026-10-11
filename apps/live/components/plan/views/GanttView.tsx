@@ -7,6 +7,7 @@
 // bar's ends and a diamond drag their dates (gantt-drag.tsx), and the names column resizes
 // (gantt-names-resize.tsx). Rows may sit in swimlanes, laid out top down in one pass (ganttLayout), in the chart's
 // own row order when it has one; a row's grip drags it to a new place (useGanttRowReorder).
+import { useTranslation } from '@/lib/i18n';
 import { useMemo, useRef, useState } from 'react';
 import { IDENTITY_FILL, identityVars } from '@livediagram/ui';
 import {
@@ -55,6 +56,7 @@ export function GanttView({
   elementId,
   settings,
 }: PlanViewProps) {
+  const { t } = useTranslation();
   const phases = plan?.statusPhases ?? NO_PHASES;
   const types = plan?.types ?? ITEM_TYPES;
   const now = new Date();
@@ -171,7 +173,7 @@ export function GanttView({
   const liftOf = (id: string) => (lifted?.itemId === id ? lifted.dy : undefined);
   return (
     <ViewFrame
-      title="Gantt Chart"
+      title={t('ganttview.gantt-chart')}
       count={n}
       countLabel={`${n} ${n === 1 ? 'card' : 'cards'}`}
       palette={palette}
@@ -333,9 +335,7 @@ export function GanttView({
               backgroundColor: OVERDUE_RED,
               color: '#ffffff',
             }}
-          >
-            Today
-          </span>
+          >{t('ganttview.today')}</span>
         </div>
         {editable ? (
           <GanttNamesResizer

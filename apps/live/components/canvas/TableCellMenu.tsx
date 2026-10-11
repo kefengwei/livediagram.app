@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { TableCellStyle, TableElement, TextSize } from '@livediagram/document';
@@ -57,6 +58,7 @@ export function TableCellMenu({
   onLinkCell?: (tableId: string, r: number, c: number) => void;
   textColor: string;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState<string | null>(null);
   const section = (key: string) => ({
     open: open === key,
@@ -79,11 +81,11 @@ export function TableCellMenu({
         : 'text-slate-600 hover:bg-brand-50 dark:text-slate-200 dark:hover:bg-slate-700'
     }`;
   return createPortal(
-    <ContextMenu position={position} label="Cell menu" onClose={onClose} flush>
+    <ContextMenu position={position} label={t('tablecellmenu.cell-menu')} onClose={onClose} flush>
       <p className="px-3 pb-0.5 pt-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-        {single ? 'Selected Cell' : `${cells.length} Cells`}
+        {single ? t('tablecellmenu.selected-cell') : `${cells.length} Cells`}
       </p>
-      <MenuAccordionSection title="Text" icon={<TextGlyph />} {...section('text')}>
+      <MenuAccordionSection title={t('tablecellmenu.text')} icon={<TextGlyph />} {...section('text')}>
         <div className="flex gap-1 px-2 py-1.5">
           <button
             type="button"
@@ -110,7 +112,7 @@ export function TableCellMenu({
             <span className="underline">U</span>
           </button>
         </div>
-        <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">Size</p>
+        <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('tablecellmenu.size')}</p>
         <TextSizeTiles
           current={(sc?.textSize ?? element.textSize ?? 'md') as TextSize}
           onSet={(size) => applyStyle({ textSize: size })}
@@ -118,9 +120,9 @@ export function TableCellMenu({
       </MenuAccordionSection>
       {/* The SAME colour picker every other element gets (docs/specs/004-interface-design/colour-picker.md):
           the theme's colours, the standard colours and Custom colours. */}
-      <MenuAccordionSection title="Colours" icon={<PaletteMenuIcon />} {...section('colours')}>
+      <MenuAccordionSection title={t('tablecellmenu.colours')} icon={<PaletteMenuIcon />} {...section('colours')}>
         <ColourRow
-          label="Background"
+          label={t('tablecellmenu.background')}
           tone="soft"
           icon={<FillColourIcon />}
           value={sc?.bg ?? 'transparent'}
@@ -136,7 +138,7 @@ export function TableCellMenu({
           {...swatches}
         />
         <ColourRow
-          label="Text"
+          label={t('tablecellmenu.text-2')}
           icon={<TextColourIcon />}
           value={sc?.textColor ?? textColor}
           open={openColour === 'text'}
@@ -152,7 +154,7 @@ export function TableCellMenu({
         />
       </MenuAccordionSection>
       <MenuAccordionSection
-        title="Text Alignment"
+        title={t('tablecellmenu.text-alignment')}
         icon={<AlignIcon dir={sc?.alignX ?? element.textAlignX ?? 'center'} />}
         {...section('align')}
       >
@@ -173,7 +175,7 @@ export function TableCellMenu({
         {onLinkCell && single ? (
           <MenuTile
             icon={<CellLinkIcon />}
-            label={sc?.link ? 'Edit Link' : 'Link Cell'}
+            label={sc?.link ? t('tablecellmenu.edit-link') : t('tablecellmenu.link-cell')}
             onClick={() => {
               onLinkCell(element.id, anchor.r, anchor.c);
               onClose();
@@ -182,7 +184,7 @@ export function TableCellMenu({
         ) : null}
         <MenuTile
           icon={<RemoveIconGlyph />}
-          label={single ? 'Clear Cell' : 'Clear Cells'}
+          label={single ? t('tablecellmenu.clear-cell') : t('tablecellmenu.clear-cells')}
           onClick={() => {
             onClear();
             onClose();

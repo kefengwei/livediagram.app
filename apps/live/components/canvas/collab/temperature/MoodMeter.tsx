@@ -4,6 +4,7 @@
 // quiet with no marker, rather than an average of zero, which would read as a
 // very unhappy room.
 
+import { useTranslation } from '@/lib/i18n';
 import { TEMPERATURE_COLORS, temperaturePosition } from '@livediagram/document';
 import { tint } from '../collab-chrome';
 import { MOOD_GRID } from './mood-grid';
@@ -19,6 +20,7 @@ export function MoodMeter({
   count: number;
   textColor: string;
 }) {
+  const { t } = useTranslation();
   const empty = average === null || count === 0;
   const pos = empty ? 0 : temperaturePosition(average);
   const hue = empty ? textColor : TEMPERATURE_COLORS[Math.round(pos * 4)]!;
@@ -50,14 +52,13 @@ export function MoodMeter({
       </div>
       {empty ? (
         <p className="flex items-baseline gap-2 leading-none" style={{ color: textColor }}>
-          <span className="text-[12.5px] font-semibold">No readings yet</span>
-          <span className="text-[11px] opacity-55">Tap the face that fits.</span>
+          <span className="text-[12.5px] font-semibold">{t('moodmeter.no-readings-yet')}</span>
+          <span className="text-[11px] opacity-55">{t('moodmeter.tap-the-face-that-fits')}</span>
         </p>
       ) : (
         <p className="flex items-baseline gap-2 leading-none" style={{ color: textColor }}>
           <span className="text-[22px] font-bold tabular-nums">{average.toFixed(1)}</span>
-          <span className="ml-auto text-[10.5px] opacity-55">
-            from {count} {count === 1 ? 'person' : 'people'}
+          <span className="ml-auto text-[10.5px] opacity-55">{t('moodmeter.from')}{count} {count === 1 ? 'person' : 'people'}
           </span>
         </p>
       )}

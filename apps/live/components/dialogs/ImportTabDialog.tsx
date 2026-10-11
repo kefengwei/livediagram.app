@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs/Dialog';
 import { FormatCard } from './FormatCard';
@@ -111,6 +112,7 @@ export function ImportTabDialog({
   onClose,
   formats,
 }: ImportTabDialogProps) {
+  const { t } = useTranslation();
   const offered = formats ? FORMATS.filter((f) => formats.includes(f.key)) : FORMATS;
   const [active, setActive] = useState<Format | null>(null);
   // Set once an import that met images, or brought a board across with changes, has landed: the
@@ -121,17 +123,17 @@ export function ImportTabDialog({
   return (
     <Dialog open onClose={onClose} ariaLabel="Import into tab" size="xl" className="max-h-[90vh]">
       <DialogHeader
-        title="Import to tab"
+        title={t('importtabdialog.import-to-tab')}
         subtitle={
           report
             ? report.scene
-              ? "Here's how your board came across."
+              ? t('importtabdialog.here-s-how-your-board-came')
               : report.images
-                ? "Here's how your images came across."
-                : "Here's how your import came across."
+                ? t('importtabdialog.here-s-how-your-images-came')
+                : t('importtabdialog.here-s-how-your-import-came')
             : activeFormat
               ? `Paste your ${activeFormat.title}, or import a file.`
-              : 'Pick a format to import into the current tab.'
+              : t('importtabdialog.pick-a-format-to-import-into')
         }
       >
         <HelpArticleLink article="importTabs" size="md" />
@@ -180,6 +182,7 @@ function ImportChooser({
   onImportText: ImportTabDialogProps['onImportText'];
   onDone: (outcome: Extract<ImportOutcome, { status: 'done' }>) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <>
       {/* Destructive-action warning — this overwrites the tab. */}
@@ -187,11 +190,8 @@ function ImportChooser({
         <span className="mt-0.5 shrink-0">
           <WarningIcon />
         </span>
-        <span>
-          This replaces everything on{' '}
-          <strong className="font-semibold">{tabName || 'this tab'}</strong> with the imported
-          content. Undo (⌘Z / Ctrl&#8209;Z) brings it back.
-        </span>
+        <span>{t('importtabdialog.this-replaces-everything-on')}{' '}
+          <strong className="font-semibold">{tabName || 'this tab'}</strong>{t('importtabdialog.with-the-imported-content-undo-z')}</span>
       </div>
       {activeFormat ? (
         <TextImportPanel

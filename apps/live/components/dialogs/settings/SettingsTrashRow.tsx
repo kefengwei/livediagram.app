@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { SettingsRowShell } from './SettingsRowShell';
 import type { SettingsTrashRowSpec } from './settings-catalogue';
 import { track } from '@/lib/telemetry';
@@ -8,6 +9,7 @@ import { track } from '@/lib/telemetry';
 // than a list: the Trash view has the room for its groups and confirmations,
 // and Settings only has to say it exists. For everyone, guests included.
 export function SettingsTrashRow({ row }: { row: SettingsTrashRowSpec }) {
+  const { t } = useTranslation();
   return (
     <SettingsRowShell
       row={row}
@@ -21,9 +23,7 @@ export function SettingsTrashRow({ row }: { row: SettingsTrashRowSpec }) {
             onClick={() => track('Trash', 'Opened', 'Settings')}
             aria-describedby={`${row.key}-description`}
             className="shrink-0 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-700 transition hover:border-brand-300 hover:bg-brand-50/40 dark:border-slate-600 dark:text-slate-200 dark:hover:border-brand-500/60"
-          >
-            Open Trash
-          </a>
+          >{t('settingstrashrow.open-trash')}</a>
         </div>
       )}
     />

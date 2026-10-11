@@ -3,6 +3,7 @@
 // The page panel's sections (docs/specs/007-editor/illustrate-pages.md "Sizes"): size tiles and
 // the orientation switch (the Background section is page-background-section.tsx). Each hover previews on the page
 // itself (`onPreview`), and a press commits; leaving the section drops the preview.
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import {
   PAGE_SIZES,
@@ -78,6 +79,7 @@ export function SizeSection({
   page: IllustratePage;
   onSize: (size: PageSizeId) => void;
 }) {
+  const { t } = useTranslation();
   const current = page.size ?? 'a4';
   // A slide page offers only the slide sizes; the tiles sit four to a row. A logo page has its
   // one artboard, so no choice to show. Fit to Content is offered only on a page already in it,
@@ -85,8 +87,8 @@ export function SizeSection({
   const sizes = pageSizeChoices(page);
   if (sizes.length < 2) return null;
   return (
-    <PanelSection title="Size">
-      <div role="radiogroup" aria-label="Page size" className="grid grid-cols-4 gap-1">
+    <PanelSection title={t('illustrate-page-panel-sections.size')}>
+      <div role="radiogroup" aria-label={t('illustrate-page-panel-sections.page-size')} className="grid grid-cols-4 gap-1">
         {sizes.map((id) => (
           <Tooltip key={id} label={SIZE_TILE[id].hint}>
             <button
@@ -116,12 +118,13 @@ export function OrientationSection({
   page: IllustratePage;
   onOrientation: (o: PageOrientation) => void;
 }) {
+  const { t } = useTranslation();
   if (!pageHasOrientation(page)) return null;
   return (
-    <PanelSection title="Orientation">
+    <PanelSection title={t('illustrate-page-panel-sections.orientation')}>
       <div
         role="radiogroup"
-        aria-label="Orientation"
+        aria-label={t('illustrate-page-panel-sections.orientation-2')}
         className={`relative grid grid-cols-2 rounded-lg p-0.5 ${SEGMENT_TRACK}`}
       >
         <SegmentSlider

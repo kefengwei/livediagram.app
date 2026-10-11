@@ -3,6 +3,7 @@
 // members. The single-element menu passes one element; the multi-select menu passes the whole
 // selection, so the two menus cannot drift.
 
+import { useTranslation } from '@/lib/i18n';
 import {
   ANIMATION_SET_NAME,
   DEFAULT_ANIMATION_SPEED,
@@ -96,6 +97,7 @@ export function AnimationSections({
   flyoutProps: (id: string) => SectionProps;
   handlers: Handlers;
 }) {
+  const { t } = useTranslation();
   const categories = animationCategoriesOf(elements);
   if (categories.length === 0) return null;
   const sections = categories.map((c) => (
@@ -112,7 +114,7 @@ export function AnimationSections({
   if (sections.length === 1) return sections[0]!;
   return (
     <MenuFlyoutSection
-      title="Animation"
+      title={t('animationsections.animation')}
       icon={<AnimationMenuGlyph />}
       {...flyoutProps(`${keyPrefix}animation`)}
     >

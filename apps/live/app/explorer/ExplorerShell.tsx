@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import dynamic from 'next/dynamic';
 import { dropSettingsLink } from '@/lib/settings-link';
 import { usePathname } from 'next/navigation';
@@ -71,6 +72,7 @@ export function ExplorerShell({ children }: { children: ReactNode }) {
 }
 
 function ShellChrome({ children }: { children: ReactNode }) {
+  const { t } = useTranslation();
   const {
     documents: liveDocs,
     folders,
@@ -172,7 +174,7 @@ function ShellChrome({ children }: { children: ReactNode }) {
         <aside
           className="hidden shrink-0 self-start sm:block"
           style={{ width: SIDEBAR_WIDTH }}
-          aria-label="Sections"
+          aria-label={t('explorershell.sections')}
         >
           <div className="sticky top-20 rounded-xl border border-slate-200 bg-white px-3 py-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
             <AreaErrorBoundary area="ExplorerSidebar" fallback="panel">
@@ -193,13 +195,11 @@ function ShellChrome({ children }: { children: ReactNode }) {
             />
             <div className="absolute inset-y-0 left-0 flex w-72 max-w-[85%] animate-slide-in-left flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 shadow-xl dark:border-slate-700 dark:bg-slate-800">
               <div className="mb-1 flex items-center justify-between pl-1">
-                <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                  Sections
-                </span>
+                <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{t('explorershell.sections-2')}</span>
                 <button
                   type="button"
                   onClick={() => setMobileNavOpen(false)}
-                  aria-label="Close"
+                  aria-label={t('explorershell.close')}
                   className="flex h-8 w-8 items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
                 >
                   <CloseIcon size={11} />
@@ -290,7 +290,7 @@ function ShellChrome({ children }: { children: ReactNode }) {
         : null}
       <TeamFormModal
         open={teamModalOpen}
-        title="New Team"
+        title={t('explorershell.new-team')}
         submitLabel="Create team"
         onSubmit={(values) => {
           setTeamModalOpen(false);

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { Element, Layer } from '@livediagram/document';
 import { LayersGlyph } from '@/components/palette/context-menu-icons';
 import { MenuTile, MenuTileGrid } from '@/components/primitives/MenuTiles';
@@ -30,13 +31,12 @@ export function MoveToLayerRow({
   currentLayerId: string | null;
   onMove: (layerId: string) => void;
 }) {
+  const { t } = useTranslation();
   const { thumbMarkup, thumbViewBox } = useLayerThumbnails(elements, layers, tabFont);
   if (layers.length <= 1) return null;
   return (
     <div className="px-2 py-1.5">
-      <p className="px-1 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-        Move to layer
-      </p>
+      <p className="px-1 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('movetolayerrow.move-to-layer')}</p>
       <MenuTileGrid cols={2}>
         {[...layers].reverse().map((layer) => (
           <MenuTile

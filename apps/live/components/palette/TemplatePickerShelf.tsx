@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { scrollToTopWithin } from '@/lib/scroll-within';
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import type { TemplateCategory, TemplateDescriptor, TemplateKind } from '@livediagram/templates';
@@ -63,6 +64,7 @@ export function TemplatePickerShelf({
   templateKind: TemplateKind;
   onTemplateCommit: (kind: TemplateKind) => void;
 }) {
+  const { t } = useTranslation();
   const desktop = useMediaQuery(EXPAND_MEDIA_QUERY);
   const expanded = expandedFlag && desktop;
 
@@ -146,14 +148,11 @@ export function TemplatePickerShelf({
   ];
 
   const moreHeading = (
-    <h3 className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-      Explore More Categories
-    </h3>
+    <h3 className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('templatepickershelf.explore-more-categories')}</h3>
   );
   const moreSummary = (
     <p className="text-[11px] text-slate-500 dark:text-slate-400">
-      {folded.length} more categories, {foldedCount} more templates
-    </p>
+      {folded.length}{t('templatepickershelf.more-categories')}{foldedCount}{t('templatepickershelf.more-templates')}</p>
   );
 
   return (
@@ -216,7 +215,7 @@ export function TemplatePickerShelf({
       {expanded ? (
         <SnapCarousel
           className="mt-6"
-          label="more"
+          label={t('templatepickershelf.more')}
           itemNoun="categories"
           itemsKey={open?.id ?? 'popular'}
           heading={
@@ -246,6 +245,7 @@ export function TemplatePickerShelf({
 
 // The open shelf's name, count badge and one-line description.
 function ShelfHeading({ shelf }: { shelf: Shelf }): ReactNode {
+  const { t } = useTranslation();
   return (
     <>
       <h3 className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
@@ -258,7 +258,7 @@ function ShelfHeading({ shelf }: { shelf: Shelf }): ReactNode {
       <span className="relative top-[0.5px] inline-flex h-3.5 shrink-0 items-center justify-center rounded-full bg-white px-1.5 text-[10px] font-semibold leading-none tabular-nums text-slate-500 dark:bg-slate-700 dark:text-slate-300">
         <span className="text-optical-centre">{shelf.items.length}</span>
       </span>
-      <span className="sr-only"> templates</span>
+      <span className="sr-only">{t('templatepickershelf.templates')}</span>
       <span className="hidden truncate text-xs text-slate-500 sm:inline dark:text-slate-400">
         {shelf.description}
       </span>
@@ -278,7 +278,8 @@ function ExpandToggle({
   animate: boolean;
   onToggle: () => void;
 }) {
-  const label = expanded ? 'Show Fewer Templates' : 'Show All Templates';
+  const { t } = useTranslation();
+  const label = expanded ? t('templatepickershelf.show-fewer-templates') : t('templatepickershelf.show-all-templates');
   return (
     <Tooltip label={label}>
       <button

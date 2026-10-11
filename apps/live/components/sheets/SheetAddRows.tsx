@@ -2,6 +2,7 @@
 
 // Below the last row (docs/specs/029-sheets/sheet.md "The grid"): **Add 100 Rows**, with a field to change the
 // number, growing the grid up to its limit. Only for someone who may edit, and gone at the limit.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { SHEET_ROWS_MAX } from '@livediagram/sheets';
 import { useSheetController } from './sheet-controller';
@@ -10,6 +11,7 @@ export const ADD_ROWS_PX = 44;
 const ADD_ROWS_DEFAULT = 100;
 
 export function SheetAddRows({ top, onAdd }: { top: number; onAdd: (count: number) => void }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const [count, setCount] = useState(String(ADD_ROWS_DEFAULT));
   const room = SHEET_ROWS_MAX - c.sheet.layout.rows.length;
@@ -40,11 +42,9 @@ export function SheetAddRows({ top, onAdd }: { top: number; onAdd: (count: numbe
           backgroundColor: c.palette.surface,
         }}
         onClick={add}
-      >
-        Add
-      </button>
+      >{t('sheetaddrows.add')}</button>
       <input
-        aria-label="Rows to add"
+        aria-label={t('sheetaddrows.rows-to-add')}
         inputMode="numeric"
         className="h-7 w-16 rounded-md border bg-transparent px-2 text-right tabular-nums outline-none"
         style={{ borderColor: c.palette.border, color: c.palette.text }}
@@ -55,7 +55,7 @@ export function SheetAddRows({ top, onAdd }: { top: number; onAdd: (count: numbe
           if (e.key === 'Enter') add();
         }}
       />
-      <span>more rows at the bottom</span>
+      <span>{t('sheetaddrows.more-rows-at-the-bottom')}</span>
     </div>
   );
 }

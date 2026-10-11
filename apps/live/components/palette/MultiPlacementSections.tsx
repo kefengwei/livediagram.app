@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { CombineOpGlyph, CombineTiles } from '@/components/canvas/CombineMenu';
 import { MirrorCopyGlyph } from '@/components/canvas/logo-glyphs';
 import type { BoxedElement, Element, ShapeElement } from '@livediagram/document';
@@ -51,6 +52,7 @@ export function MultiPlacementSections({
   sectionProps: Scaffold['sectionProps'];
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const morphSrc = morphable[0];
   const morphIds = morphable.map((el) => el.id);
   return (
@@ -58,7 +60,7 @@ export function MultiPlacementSections({
       {/* Combine (docs/specs/007-editor/logo-pages.md "Combine"): shapes on a logo page into one. */}
       {props.onCombine ? (
         <MenuAccordionSection
-          title="Combine"
+          title={t('multiplacementsections.combine')}
           icon={<CombineOpGlyph op="unite" size={16} />}
           {...sectionProps('m-combine')}
         >
@@ -74,7 +76,7 @@ export function MultiPlacementSections({
       {props.onMirrorCopy ? (
         <MenuActionRow
           icon={<MirrorCopyGlyph />}
-          label="Mirror Copy"
+          label={t('multiplacementsections.mirror-copy')}
           onClick={() => {
             onClose();
             props.onMirrorCopy!();
@@ -84,10 +86,10 @@ export function MultiPlacementSections({
       {/* Layer — front/back, opacity and (for boxed members) the
                   aspect-ratio lock, selection-wide, mirroring the single
                   menu's pinned-first Layer section. */}
-      <MenuAccordionSection title="Layer" icon={<LayersGlyph />} {...sectionProps('m-layer')}>
+      <MenuAccordionSection title={t('multiplacementsections.layer')} icon={<LayersGlyph />} {...sectionProps('m-layer')}>
         <MenuTileGrid cols={2}>
-          <MenuTile icon={<LayerUpIcon />} label="Bring to Front" onClick={props.onBringToFront} />
-          <MenuTile icon={<LayerDownIcon />} label="Send to Back" onClick={props.onSendToBack} />
+          <MenuTile icon={<LayerUpIcon />} label={t('multiplacementsections.bring-to-front')} onClick={props.onBringToFront} />
+          <MenuTile icon={<LayerDownIcon />} label={t('multiplacementsections.send-to-back')} onClick={props.onSendToBack} />
         </MenuTileGrid>
         {/* Move the whole selection to a named layer (docs/specs/006-document/layers.md). */}
         {props.onMoveSelectionToLayer ? (
@@ -116,13 +118,11 @@ export function MultiPlacementSections({
               <span className="flex items-center gap-2">
                 <span className="text-slate-400 dark:text-slate-400">
                   <AspectLockMenuIcon />
-                </span>
-                Lock aspect ratio
-              </span>
+                </span>{t('multiplacementsections.lock-aspect-ratio')}</span>
               <ToggleSwitch
                 presentational
                 checked={!!boxedSel[0]!.aspectLocked}
-                label="Lock aspect ratio"
+                label={t('multiplacementsections.lock-aspect-ratio-2')}
               />
             </button>
           </>
@@ -130,7 +130,7 @@ export function MultiPlacementSections({
       </MenuAccordionSection>
       {/* Shape — morph every morphable member to a common kind. */}
       {morphSrc ? (
-        <MenuAccordionSection title="Shape" icon={<SquareMenuIcon />} {...sectionProps('m-shape')}>
+        <MenuAccordionSection title={t('multiplacementsections.shape')} icon={<SquareMenuIcon />} {...sectionProps('m-shape')}>
           <div className="grid grid-cols-4 gap-1 px-2 py-1.5">
             {COMMON_SHAPES.map((kind) => (
               <SizeButton
@@ -147,7 +147,7 @@ export function MultiPlacementSections({
           </div>
           <div className="px-2 pb-1.5 pt-0.5">
             <MenuActionButton
-              label="Reset aspect ratio"
+              label={t('multiplacementsections.reset-aspect-ratio')}
               onClick={() => {
                 props.onResetAspectRatio();
                 onClose();
@@ -159,7 +159,7 @@ export function MultiPlacementSections({
       {/* Rotation — snap angles for every boxed member. */}
       {boxedSel.length ? (
         <MenuAccordionSection
-          title="Rotation"
+          title={t('multiplacementsections.rotation')}
           icon={<RotationMenuIcon />}
           {...sectionProps('m-rotation')}
         >

@@ -19,6 +19,7 @@
 //   - There is still no close button. Skip IS the escape, and it is a real
 //     answer (counted separately in the results) rather than a silent dodge.
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useState } from 'react';
 import { POLL_TEXT_ANSWER_MAX, pollOptionTokens, type LivePoll } from '@livediagram/api-schema';
 import { anyModalOpen } from '@/lib/modal-guard';
@@ -33,6 +34,7 @@ export function PollPromptSheet({
   // `null` is a skip.
   onAnswer: (value: string | null) => void;
 }) {
+  const { t } = useTranslation();
   const [text, setText] = useState('');
 
   useEffect(() => {
@@ -69,7 +71,7 @@ export function PollPromptSheet({
     <Portal>
       <div
         role="dialog"
-        aria-label="Poll"
+        aria-label={t('pollpromptsheet.poll')}
         aria-modal={false}
         // Bottom-centred, full-bleed on a phone and a card on a desktop.
         // `inset-x-0` + `mx-auto` rather than a left-1/2 translate, because the
@@ -98,9 +100,7 @@ export function PollPromptSheet({
 
         <div className="flex flex-col gap-3 p-4">
           <div className="flex flex-col gap-1">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-300">
-              Quick poll
-            </span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-300">{t('pollpromptsheet.quick-poll')}</span>
             <h2 className="text-base font-semibold leading-snug text-slate-800 dark:text-slate-100">
               {poll.question}
             </h2>
@@ -112,8 +112,8 @@ export function PollPromptSheet({
                 value={text}
                 onChange={(e) => setText(e.target.value.slice(0, POLL_TEXT_ANSWER_MAX))}
                 rows={3}
-                aria-label="Your answer"
-                placeholder="Your answer"
+                aria-label={t('pollpromptsheet.your-answer')}
+                placeholder={t('pollpromptsheet.your-answer-2')}
                 className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 outline-none transition focus:border-brand-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
               />
               <span className="self-end text-[10px] tabular-nums text-slate-400">
@@ -124,9 +124,7 @@ export function PollPromptSheet({
                 disabled={text.trim().length === 0}
                 onClick={() => onAnswer(text.trim())}
                 className={`w-full rounded-lg bg-brand-500 px-3 py-2 text-sm font-semibold text-white transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-40 ${SOLID_BRAND_DARK_CONTROL}`}
-              >
-                Send answer
-              </button>
+              >{t('pollpromptsheet.send-answer')}</button>
             </div>
           ) : (
             <div
@@ -150,16 +148,12 @@ export function PollPromptSheet({
           )}
 
           <div className="flex items-center justify-between gap-2 border-t border-slate-100 pt-2 dark:border-slate-800">
-            <span className="text-[10px] leading-snug text-slate-400">
-              Answers aren&apos;t shown against names.
-            </span>
+            <span className="text-[10px] leading-snug text-slate-400">{t('pollpromptsheet.answers-aren-t-shown-against-names')}</span>
             <button
               type="button"
               onClick={() => onAnswer(null)}
               className="rounded-md px-2 py-1 text-[11px] font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
-            >
-              Skip
-            </button>
+            >{t('pollpromptsheet.skip')}</button>
           </div>
         </div>
       </div>

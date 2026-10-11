@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useMemo, useRef } from 'react';
 import { useDefaultFolderMenus } from '@/hooks/persistence/useDefaultFolderMenus';
 import type { DocumentListItem, SharedWithItem } from '@/lib/api-client';
@@ -36,6 +37,7 @@ export function PanelExplorerTree({
   foldersByTeam: Map<string, PanelFolder[]>;
   documentsByTeam: Map<string, DocumentListItem[]>;
 }) {
+  const { t } = useTranslation();
   // The reader's default folders (docs/specs/013-workspace/default-folders.md): the panel's folder
   // menus and My documents' menu check and set them; its rows show the marker.
   const defaultFolders = useDefaultFolderMenus(
@@ -65,7 +67,7 @@ export function PanelExplorerTree({
     <PanelTreeProvider value={{ ...tree, defaultFolders }}>
       <nav
         ref={navRef}
-        aria-label="Explorer"
+        aria-label={t('panelexplorertree.explorer')}
         aria-busy={busy || undefined}
         {...keyboard}
         // Down only: a row's ⋯ tap area (touch-target) reaches past the right edge, and a free x

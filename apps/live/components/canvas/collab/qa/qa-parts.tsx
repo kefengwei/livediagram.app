@@ -2,6 +2,7 @@
 // vote pill and the relative-time label. Shared by the spotlight, the queue
 // rows and the Discussed drawer so the three read as one object.
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import type { QaNote } from '@livediagram/document';
 import { usePressWithoutDrag } from '@/hooks/ui/usePressWithoutDrag';
@@ -106,6 +107,7 @@ export function AuthorChip({
   textColor: string;
   size?: number;
 }) {
+  const { t } = useTranslation();
   if (!author) {
     return (
       <span className="inline-flex min-w-0 items-center gap-1" style={{ color: textColor }}>
@@ -115,7 +117,7 @@ export function AuthorChip({
         >
           <MaskGlyph size={size * 0.7} />
         </span>
-        <span className="truncate opacity-60">Anonymous</span>
+        <span className="truncate opacity-60">{t('qa-parts.anonymous')}</span>
       </span>
     );
   }

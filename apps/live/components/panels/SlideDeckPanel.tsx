@@ -18,6 +18,7 @@
 // An empty deck stays empty. No seeded slides, no "one per tab" starter: a
 // generated deck is one you have to read and prune before you can trust it.
 
+import { useTranslation } from '@/lib/i18n';
 import { ITEM_TYPES, itemTitle, typeIn } from '@livediagram/items';
 import { usePlan } from '@/components/plan/PlanContext';
 import { useSelectionOf } from '@/hooks/canvas/useSelectionStore';
@@ -92,6 +93,7 @@ function SlideRow({
   onPointerMove: (e: React.PointerEvent) => void;
   onPointerUp: (e: React.PointerEvent) => void;
 }) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState('');
   const inputRef = useRef<HTMLInputElement | null>(null);
   // The draft is seeded during render from the name it is renaming (null while not renaming), and
@@ -144,11 +146,11 @@ function SlideRow({
           under Visibility, so the row stays one press = open this slide. */}
       {slide.hidden ? (
         <HoverCard
-          title="Hidden from the presentation"
-          description="This slide is skipped when you present. Show it again from its menu."
+          title={t('slidedeckpanel.hidden-from-the-presentation')}
+          description={t('slidedeckpanel.this-slide-is-skipped-when-you')}
         >
           <span
-            aria-label="Hidden from the presentation"
+            aria-label={t('slidedeckpanel.hidden-from-the-presentation-2')}
             className="flex h-5 w-5 shrink-0 items-center justify-center text-slate-300 dark:text-slate-600"
           >
             <EyeOffIcon />
@@ -222,18 +224,18 @@ function SlideRow({
             {/* The tab is named because a deck spans tabs: "3 elements" on its
                 own does not say which tab they are on. A slide whose tab has
                 been deleted says so rather than showing a blank. */}
-            {tabName ?? 'Tab deleted'} ·{' '}
+            {tabName ?? t('slidedeckpanel.tab-deleted')} ·{' '}
             {slide.itemId
               ? card
                 ? 'Card'
-                : 'Card deleted'
+                : t('slidedeckpanel.card-deleted')
               : slide.pageId
-                ? (pageName ?? 'Page deleted')
+                ? (pageName ?? t('slidedeckpanel.page-deleted'))
                 : slide.elementIds.length === 1
-                  ? '1 element'
+                  ? t('slidedeckpanel.1-element')
                   : `${slide.elementIds.length} elements`}
-            {slide.notes ? ' · notes' : ''}
-            {slide.hidden ? ' · hidden' : ''}
+            {slide.notes ? t('slidedeckpanel.notes-2') : ''}
+            {slide.hidden ? t('slidedeckpanel.hidden') : ''}
           </span>
         </button>
       )}
@@ -262,6 +264,7 @@ export function SlideDeckPanel({
   // a time (PageSlidePicker) rather than from a selection.
   pages?: readonly { id: string; label: string }[];
 } & ModePanelProps) {
+  const { t } = useTranslation();
   // An item slide's card, read live from the items (docs/specs/012-collaboration/presentation-mode.md
   // "Item slides").
   const plan = usePlan();
@@ -398,7 +401,7 @@ export function SlideDeckPanel({
 
   return (
     <ModePanel
-      title="Slide Deck"
+      title={t('slidedeckpanel.slide-deck')}
       helpArticle="slideDeck"
       // The SAME presenter settings the HUD's cog carries, reachable BEFORE
       // you start. Discovering "Actual size" or "Auto-advance" mid-talk means
@@ -422,10 +425,10 @@ export function SlideDeckPanel({
           <p className="px-1 py-3 text-center text-[11px] leading-snug text-slate-400 dark:text-slate-400">
             {/* Each way in names the button it has: an Illustrate tab adds a page at a time. */}
             {pages
-              ? 'No slides yet. Pick a page, then press'
-              : 'No slides yet. Select what you want on the first slide, then press'}{' '}
+              ? t('slidedeckpanel.no-slides-yet-pick-a-page')
+              : t('slidedeckpanel.no-slides-yet-select-what-you')}{' '}
             <span className="font-medium text-slate-500 dark:text-slate-300">
-              {pages ? 'Add as slide' : 'New slide'}
+              {pages ? t('slidedeckpanel.add-as-slide') : t('slidedeckpanel.new-slide')}
             </span>
             .
           </p>
@@ -485,8 +488,7 @@ export function SlideDeckPanel({
         {notesSlide && !isReadOnly ? (
           <label className="flex flex-col gap-1">
             <span className="flex items-center justify-between px-0.5">
-              <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-400">
-                Notes · {slideName(notesSlide, deck.slides.indexOf(notesSlide))}
+              <span className="text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-400">{t('slidedeckpanel.notes')}{slideName(notesSlide, deck.slides.indexOf(notesSlide))}
               </span>
               <button
                 type="button"
@@ -495,9 +497,7 @@ export function SlideDeckPanel({
                   notesTracked.current = null;
                 }}
                 className="cursor-pointer text-[10px] font-medium text-slate-400 transition hover:text-slate-700 dark:hover:text-slate-200"
-              >
-                Done
-              </button>
+              >{t('slidedeckpanel.done')}</button>
             </span>
             {/* The SLIDE's notes: what you mean to say over it. Not the
                 elements' own note field, which is about a thing rather than
@@ -515,14 +515,14 @@ export function SlideDeckPanel({
               onKeyDown={(e) => e.stopPropagation()}
               onPointerDown={(e) => e.stopPropagation()}
               rows={3}
-              placeholder="What you'll say over this slide…"
+              placeholder={t('slidedeckpanel.what-you-ll-say-over-this')}
               className="w-full resize-none rounded-md border border-slate-200 bg-white px-2 py-1.5 text-[11px] leading-snug text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-brand-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
             />
             {/* The slide's time budget, beside its notes because both are
                 decided while WRITING the talk rather than while giving it.
                 Blank means no target, which is most slides. */}
             <span className="flex items-center gap-2 px-0.5 pt-0.5">
-              <span className="text-[10px] text-slate-400">Budget</span>
+              <span className="text-[10px] text-slate-400">{t('slidedeckpanel.budget')}</span>
               <input
                 type="number"
                 min={0}
@@ -535,9 +535,7 @@ export function SlideDeckPanel({
                 aria-label={`Minutes budgeted for ${slideName(notesSlide, deck.slides.indexOf(notesSlide))}`}
                 className="w-14 rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[11px] tabular-nums text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-brand-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
               />
-              <span className="text-[10px] text-slate-400">
-                min · shown in the HUD if you turn the budget on
-              </span>
+              <span className="text-[10px] text-slate-400">{t('slidedeckpanel.min-shown-in-the-hud-if')}</span>
             </span>
           </label>
         ) : null}
@@ -552,8 +550,8 @@ export function SlideDeckPanel({
             className="w-full cursor-pointer rounded-md border border-slate-200 bg-white px-2 py-1.5 text-[11px] font-medium text-slate-600 transition hover:border-brand-300 hover:text-brand-700 disabled:cursor-default disabled:opacity-40 disabled:hover:border-slate-200 disabled:hover:text-slate-600 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300"
           >
             {selectionCount === 0
-              ? 'Select elements to make a slide'
-              : `New slide from ${selectionCount === 1 ? '1 element' : `${selectionCount} elements`}`}
+              ? t('slidedeckpanel.select-elements-to-make-a-slide')
+              : `New slide from ${selectionCount === 1 ? t('slidedeckpanel.1-element-2') : `${selectionCount} elements`}`}
           </button>
         ) : null}
 
@@ -577,10 +575,10 @@ export function SlideDeckPanel({
           anchor={confirmDelete.anchor}
           message={`Delete “${slideName(deleting, deck.slides.indexOf(deleting))}”? ${
             deleting.pageId
-              ? 'The page stays.'
+              ? t('slidedeckpanel.the-page-stays')
               : deleting.elementIds.length === 1
-                ? 'The element stays on the canvas.'
-                : 'The elements stay on the canvas.'
+                ? t('slidedeckpanel.the-element-stays-on-the-canvas')
+                : t('slidedeckpanel.the-elements-stay-on-the-canvas')
           }`}
           confirmLabel="Delete slide"
           onConfirm={() => {

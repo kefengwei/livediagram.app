@@ -1,4 +1,6 @@
+
 import type { ReactNode } from 'react';
+import { useTranslation, type MessageKey } from '@/lib/i18n';
 import { GAP, H, REM_PER_UNIT, StateFrame, W, pickable } from './settings-illustration-kit';
 
 // One small drawing per OPTION of a pick-one setting, side by side, the one
@@ -14,7 +16,10 @@ export type ChoiceIllustrationId = 'appearance';
 type ChoiceDrawing = {
   // In the order the row offers its options. Keyed by option id so the ring
   // follows the value, and so a test can check every option is drawn.
-  states: { id: string; caption: string; art: ReactNode }[];
+  // `captionKey` is what renders (docs/specs/004-interface-design/localization.md); the
+  // English `caption` stays beside it as the fallback and as what the catalogue test
+  // compares against, since a module-scope table has no `t` to call.
+  states: { id: string; caption: string; captionKey: MessageKey; art: ReactNode }[];
   label: string;
   // Keep every state at full strength (see StateFrame's `fade`).
   fullColour?: boolean;
@@ -77,9 +82,14 @@ const SystemArt = (
 export const CHOICE_ILLUSTRATIONS: Record<ChoiceIllustrationId, ChoiceDrawing> = {
   appearance: {
     states: [
-      { id: 'light', caption: 'Light', art: <ModeWindow dark={false} /> },
-      { id: 'dark', caption: 'Dark', art: <ModeWindow dark /> },
-      { id: 'system', caption: 'System', art: SystemArt },
+      {
+        id: 'light',
+        caption: 'Light',
+        captionKey: 'settings.appearance.light',
+        art: <ModeWindow dark={false} />,
+      },
+      { id: 'dark', caption: 'Dark', captionKey: 'settings.appearance.dark', art: <ModeWindow dark /> },
+      { id: 'system', caption: 'System', captionKey: 'settings.appearance.system', art: SystemArt },
     ],
     label:
       'The editor in light mode, in dark mode, and following the device, drawn half light and half dark.',
@@ -99,6 +109,7 @@ export function ChoiceStates({
   onPick?: (id: string) => void;
   disabledIds?: readonly string[];
 }) {
+  const { t } = useTranslation();
   const drawing = CHOICE_ILLUSTRATIONS[id];
   const n = drawing.states.length;
   // A tighter gap than the toggle pair's: there is no arrow to fit between.
@@ -126,7 +137,7 @@ export function ChoiceStates({
         >
           <StateFrame
             art={state.art}
-            caption={state.caption}
+            caption={t(state.captionKey)}
             current={state.id === value}
             fade={!drawing.fullColour}
           />

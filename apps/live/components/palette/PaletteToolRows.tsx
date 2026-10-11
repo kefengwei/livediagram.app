@@ -12,6 +12,7 @@
 // screen, which the drill-in categories already made affordable: you arrive
 // here having chosen a group of three to eight tools, not facing all 28.
 
+
 import { useEffect, useRef } from 'react';
 import { setPaletteDragPreview } from '@/lib/palette-drag-preview';
 import type { PendingDraw } from '@/lib/draw-mode';

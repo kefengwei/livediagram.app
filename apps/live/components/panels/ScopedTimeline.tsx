@@ -12,6 +12,7 @@
 // nothing from February; the team's own scope carries the whole history
 // and is readable by any joined member.
 
+import { useTranslation } from '@/lib/i18n';
 import { Timeline, TimelineControls } from '@livediagram/ui';
 import type { TimelineScopeRef } from '@livediagram/api-schema';
 import { track } from '@/lib/telemetry';
@@ -70,22 +71,24 @@ export function ScopedTimeline({
 // Convenience wrappers so call sites don't re-type the scope shape or
 // the empty copy.
 export function TeamTimeline({ ownerId, teamId }: { ownerId: string; teamId: string }) {
+  const { t } = useTranslation();
   return (
     <ScopedTimeline
       ownerId={ownerId}
       scope={{ scopeType: 'team', scopeId: teamId }}
-      title="Team Activity"
+      title={t('scopedtimeline.team-activity')}
       emptyMessage="Nothing has happened in this team yet."
     />
   );
 }
 
 export function DocumentTimeline({ ownerId, documentId }: { ownerId: string; documentId: string }) {
+  const { t } = useTranslation();
   return (
     <ScopedTimeline
       ownerId={ownerId}
       scope={{ scopeType: 'document', scopeId: documentId }}
-      title="History"
+      title={t('scopedtimeline.history')}
       emptyMessage="Nothing has happened to this document yet."
     />
   );

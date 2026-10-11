@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import {
   QUIZ_CORRECT_GREEN,
   QUIZ_DESIGN_SIZE,
@@ -50,6 +51,7 @@ export function QuizOption({
   // Absent when this viewer may not pick, or the round is not open.
   onPress?: () => void;
 }) {
+  const { t } = useTranslation();
   const press = usePressWithoutDrag(() => onPress?.());
   const c = QUIZ_DESIGN_SIZE / 2;
   const right = state === 'right';
@@ -75,7 +77,7 @@ export function QuizOption({
       // stop above and select the quiz after all.
       aria-disabled={!onPress}
       aria-pressed={state === 'open' || state === 'locked' ? mine : undefined}
-      aria-label={`${letterLabel}: ${text}${right ? ', correct' : ''}${
+      aria-label={`${letterLabel}: ${text}${right ? t('quizoption.correct') : ''}${
         count !== null ? `, ${count} picked` : ''
       }`}
       className={`lvd-quiz-fan pointer-events-auto absolute flex items-center gap-2 rounded-2xl border-2 px-2.5 text-left transition-[opacity,background-color,border-color] duration-150 ${
@@ -128,9 +130,7 @@ export function QuizOption({
             color: right ? QUIZ_CORRECT_GREEN : surface,
             backgroundColor: right ? '#ffffff' : textColor,
           }}
-        >
-          You
-        </span>
+        >{t('quizoption.you')}</span>
       ) : null}
     </button>
   );

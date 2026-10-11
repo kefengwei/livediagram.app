@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 // Renders the open item panel or the type editor (docs/specs/026-plan/plan-board.md) beside the canvas,
 // from the editor's Plan slice: the document's boards give the status picker its names.
@@ -24,6 +25,7 @@ import { ItemTypeEditor } from './ItemTypeEditor';
 import { track } from '@/lib/telemetry';
 
 export function PlanSheetsHost({ plan }: { plan: PlanSlice }) {
+  const { t } = useTranslation();
   const ctx = plan.context;
   // Every column of the document, the open tab's first (docs/specs/026-plan/plan-templates.md "Hand-offs").
   const statuses = useMemo(
@@ -145,7 +147,7 @@ export function PlanSheetsHost({ plan }: { plan: PlanSlice }) {
         onArchive={() => {
           const was = isArchived(item);
           ctx.patchItem(item.id, was ? { clear: ['archived'] } : { set: { archived: true } });
-          ctx.announce(was ? 'Card restored' : 'Card archived');
+          ctx.announce(was ? t('plansheetshost.card-restored') : t('plansheetshost.card-archived'));
           if (was) track('Plan', 'Restored', 'Card');
           else track('Plan', 'Moved', 'Archive');
         }}

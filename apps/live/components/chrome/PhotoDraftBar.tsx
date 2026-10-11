@@ -13,6 +13,7 @@
 
 // What each reader failure MEANS, in the bar's own voice: short enough for the
 // line, specific enough that the author knows whether retrying will help.
+import { useTranslation } from '@/lib/i18n';
 import { SOLID_BRAND_DARK_CONTROL } from '@livediagram/ui';
 const READ_ERROR_LINES: Record<string, string> = {
   ai_quota: 'the model key has used up its quota',
@@ -45,6 +46,7 @@ export function PhotoDraftBar({
   onAccept: () => void;
   onDiscard: () => void;
 }) {
+  const { t } = useTranslation();
   if (draftCount === 0) return null;
   const line = readError
     ? `${read} found · ${READ_ERROR_LINES[readError] ?? READ_ERROR_LINES.ai_error} · type the words in yourself`
@@ -68,16 +70,13 @@ export function PhotoDraftBar({
           onClick={onDiscard}
           disabled={busy}
           className="rounded-full border border-slate-300 px-2.5 py-1 text-[11px] font-medium text-slate-700 transition hover:bg-slate-50 disabled:opacity-50 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800"
-        >
-          Discard
-        </button>
+        >{t('photodraftbar.discard')}</button>
         <button
           type="button"
           onClick={onAccept}
           disabled={busy || draftCount === 0}
           className={`rounded-full bg-brand-500 px-3 py-1 text-[11px] font-semibold text-white transition hover:bg-brand-600 disabled:opacity-50 ${SOLID_BRAND_DARK_CONTROL}`}
-        >
-          Add {draftCount} {draftCount === 1 ? 'note' : 'notes'}
+        >{t('photodraftbar.add')}{draftCount} {draftCount === 1 ? 'note' : 'notes'}
         </button>
       </div>
     </div>

@@ -3,6 +3,7 @@
 // A board's ⋯ menu (docs/specs/026-plan/plan-board.md "The board set-up"): in its header, left of the settings cog,
 // the board's actions as icon-left rows; for now **Add to Slides**, which puts the board in the document's slide
 // deck. Shown only when it has something to offer.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { EllipsisTriggerButton } from '@/components/primitives/EllipsisTriggerButton';
 import { MenuActionRow, PortalMenu } from '@/components/primitives/PortalMenu';
@@ -12,6 +13,7 @@ import { usePlan } from './PlanContext';
 const stop = (e: { stopPropagation: () => void }) => e.stopPropagation();
 
 export function BoardMoreMenu({ boardId, title }: { boardId: string; title: string }) {
+  const { t } = useTranslation();
   const plan = usePlan();
   const [open, setOpen] = useState(false);
   // Held in state so the menu anchors on its first render.
@@ -31,7 +33,7 @@ export function BoardMoreMenu({ boardId, title }: { boardId: string; title: stri
         <PortalMenu anchor={button} placement="below" onClose={() => setOpen(false)}>
           <MenuActionRow
             plain
-            label="Add to Slides"
+            label={t('boardmoremenu.add-to-slides')}
             icon={<SlideDeckIcon />}
             onClick={() => {
               setOpen(false);

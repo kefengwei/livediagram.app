@@ -11,6 +11,7 @@
 // rename or delete a team folder) simply leaves it out rather than
 // showing a row that does nothing.
 
+import { useTranslation } from '@/lib/i18n';
 import { CloseIcon } from '@livediagram/ui';
 import {
   FolderOutlineIcon,
@@ -59,6 +60,7 @@ export function FolderActionsMenu({
   // on a folder the reader may not file into.
   defaults?: DefaultFolderMenu;
 }) {
+  const { t } = useTranslation();
   // Run a verb, then close: every row does this, so it's one wrapper.
   const then = (fn: () => void) => () => {
     fn();
@@ -73,7 +75,7 @@ export function FolderActionsMenu({
           <MenuActionRow
             plain
             icon={<OpenIcon />}
-            label="Show in Explorer"
+            label={t('folder-actions-menu.show-in-explorer')}
             onClick={then(onShowInExplorer)}
           />
           {verbs || onDelete ? <MenuGroupSeparator /> : null}
@@ -83,7 +85,7 @@ export function FolderActionsMenu({
         <MenuActionRow
           plain
           icon={<PencilIcon size={12} />}
-          label="Rename"
+          label={t('folder-actions-menu.rename')}
           onClick={then(onRename)}
         />
       ) : null}
@@ -91,7 +93,7 @@ export function FolderActionsMenu({
         <MenuActionRow
           plain
           icon={<PlusIcon />}
-          label="New Subfolder"
+          label={t('folder-actions-menu.new-subfolder')}
           onClick={then(onNewSubfolder)}
         />
       ) : null}
@@ -99,7 +101,7 @@ export function FolderActionsMenu({
         <MenuActionRow
           plain
           icon={<FolderOutlineIcon />}
-          label="Change Folder"
+          label={t('folder-actions-menu.change-folder')}
           onClick={then(onMove)}
         />
       ) : null}
@@ -108,7 +110,7 @@ export function FolderActionsMenu({
         <MenuActionRow
           plain
           icon={<CloseIcon size={11} />}
-          label="Remove from Timeline"
+          label={t('folder-actions-menu.remove-from-timeline')}
           onClick={then(onRemoveFromTimeline)}
         />
       ) : null}
@@ -118,7 +120,7 @@ export function FolderActionsMenu({
           <MenuActionRow
             plain
             icon={<TrashIcon size={12} />}
-            label="Delete"
+            label={t('folder-actions-menu.delete')}
             onClick={then(onDelete)}
           />
         </>

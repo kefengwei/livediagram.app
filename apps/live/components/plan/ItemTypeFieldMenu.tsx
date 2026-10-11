@@ -3,6 +3,7 @@
 // A field's ⋯ menu in the type editor (docs/specs/026-plan/item-types.md "Editing a type"): Move Up and Move Down
 // (the keyboard's way to reorder; a pointer or a finger drags the handle), Move to each other group, and Remove,
 // as icon-left rows, so a field's row keeps only its handle, name and the menu.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { ArrowDownIcon, ArrowUpIcon, TabsLabelIcon, TrashIcon, lucideGlyph } from '@livediagram/ui';
 import { lucideGripVertical } from '@livediagram/icons/lucide';
@@ -37,6 +38,7 @@ export function FieldMenu({
   // Absent for a field the type always keeps.
   onRemove?: (() => void) | undefined;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   // Held in state so the menu anchors on its first render.
   const [button, setButton] = useState<HTMLButtonElement | null>(null);
@@ -61,14 +63,14 @@ export function FieldMenu({
             <>
               <MenuActionRow
                 plain
-                label="Move Up"
+                label={t('itemtypefieldmenu.move-up')}
                 icon={<ArrowUpIcon size={14} />}
                 disabled={!canUp}
                 onClick={run(() => onMove(-1))}
               />
               <MenuActionRow
                 plain
-                label="Move Down"
+                label={t('itemtypefieldmenu.move-down')}
                 icon={<ArrowDownIcon size={14} />}
                 disabled={!canDown}
                 onClick={run(() => onMove(1))}
@@ -88,7 +90,7 @@ export function FieldMenu({
           {onRemove ? (
             <>
               {reorder || moveTargets.length > 0 ? <MenuGroupSeparator /> : null}
-              <MenuActionRow plain label="Remove" icon={<TrashIcon />} onClick={run(onRemove)} />
+              <MenuActionRow plain label={t('itemtypefieldmenu.remove')} icon={<TrashIcon />} onClick={run(onRemove)} />
             </>
           ) : null}
         </PortalMenu>

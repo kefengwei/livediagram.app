@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import {
   ACCENT_BAR_TEXT,
   heroCaptionLayout,
@@ -26,6 +27,7 @@ export function HeroCaptionCard({
   fontFamily: string | undefined;
   onSetLine?: (field: keyof HeroCaption, value: string) => void;
 }) {
+  const { t } = useTranslation();
   const zoom = useCanvasZoom();
   const l = heroCaptionLayout(element.width, element.height);
   const color = element.textColor ?? ACCENT_BAR_TEXT;
@@ -43,7 +45,7 @@ export function HeroCaptionCard({
       <div className="absolute" style={{ ...rectStyle(l.title), fontFamily }}>
         <InlineTextLine
           value={caption.title}
-          placeholder="Title"
+          placeholder={t('herocaptioncard.title')}
           editable={canEdit}
           onCommit={(v) => onSetLine?.('title', v)}
           zoom={zoom}
@@ -56,7 +58,7 @@ export function HeroCaptionCard({
       <div className="absolute" style={{ ...rectStyle(l.subtitle), fontFamily }}>
         <InlineTextLine
           value={caption.subtitle}
-          placeholder="Supporting line"
+          placeholder={t('herocaptioncard.supporting-line')}
           editable={canEdit}
           onCommit={(v) => onSetLine?.('subtitle', v)}
           zoom={zoom}

@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 import dynamic from 'next/dynamic';
 import { useState, useCallback } from 'react';
@@ -96,6 +97,7 @@ const ActivityPane = dynamic(
 // drift apart visually — each page under /explorer just renders this;
 // the section itself is derived from the URL in useExplorerState.
 export function ExplorerPane() {
+  const { t } = useTranslation();
   const {
     prefs,
     folderById,
@@ -236,7 +238,7 @@ export function ExplorerPane() {
             ? () => createFolder(selected.kind === 'folder' ? selected.id : null)
             : undefined
         }
-        folderLabel={selected.kind === 'folder' ? 'New Subfolder' : 'New Folder'}
+        folderLabel={selected.kind === 'folder' ? t('explorerpane.new-subfolder') : t('explorerpane.new-folder')}
       />
 
       {/* A view the app gathers explains itself under the breadcrumb. */}

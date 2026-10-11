@@ -1,4 +1,6 @@
+
 import type { ReactNode } from 'react';
+import { useTranslation } from '@/lib/i18n';
 import {
   CHOICE_ILLUSTRATIONS,
   ChoiceStates,
@@ -45,7 +47,7 @@ function StatePair({
   off,
   on,
   active,
-  labels = ['Off', 'On'],
+  labels,
   label,
   onPick,
 }: {
@@ -57,9 +59,12 @@ function StatePair({
   labels?: [string, string];
   label: string;
 }) {
+  const { t } = useTranslation();
+  // Resolved here, not as a default parameter: `t` is not in scope in the signature.
+  const captions = labels ?? [t('settingsillustrations.off'), t('settingsillustrations.on')];
   const halves: [ReactNode, string, boolean][] = [
-    [off, labels[0], !active],
-    [on, labels[1], active],
+    [off, captions[0]!, !active],
+    [on, captions[1]!, active],
   ];
   return (
     <svg

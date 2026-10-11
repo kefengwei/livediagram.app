@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { CSSProperties, PointerEvent as ReactPointerEvent, RefObject } from 'react';
 import { renderUnits } from './animated-words';
 import type { TextAnimView } from './useTextAnimation';
@@ -97,6 +98,7 @@ export function TableCellView({
   text: string;
   ctx: TableCellCtx;
 }) {
+  const { t } = useTranslation();
   const {
     element,
     animated,
@@ -302,7 +304,7 @@ export function TableCellView({
           Clicking it follows the link (works in view + edit
           sessions) without selecting / editing the cell. */}
       {cs?.link && !isEditingCell ? (
-        <HoverCard title="Follow link" description={describeLink(cs.link, tabSummaries)}>
+        <HoverCard title={t('tablecellview.follow-link')} description={describeLink(cs.link, tabSummaries)}>
           <button
             type="button"
             onPointerDown={(e) => e.stopPropagation()}
@@ -310,7 +312,7 @@ export function TableCellView({
               e.stopPropagation();
               if (cs.link) onFollowLink?.(cs.link);
             }}
-            aria-label="Follow cell link"
+            aria-label={t('tablecellview.follow-cell-link')}
             className="pointer-events-auto absolute right-0.5 top-0.5 z-[var(--z-panel)] flex h-4 w-4 items-center justify-center rounded text-brand-600 transition hover:bg-brand-50 dark:text-brand-300 dark:hover:bg-brand-500/15"
           >
             <CellLinkIcon />

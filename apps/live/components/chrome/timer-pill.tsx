@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { formatTimerClock, timerDone, timerDisplayMs, type TabTimer } from '@livediagram/document';
 import { Glyph } from '@livediagram/ui';
 
@@ -108,6 +109,7 @@ export function TimerPillBody({
   // element surface passes a stopPropagation here. The chrome passes nothing.
   onPointerDownCapture?: (e: React.PointerEvent) => void;
 }) {
+  const { t } = useTranslation();
   const ms = timerDisplayMs(timer, now);
   return (
     <>
@@ -126,7 +128,7 @@ export function TimerPillBody({
           {timer.running ? (
             <button
               type="button"
-              aria-label="Pause timer"
+              aria-label={t('timer-pill.pause-timer')}
               onClick={onPause}
               className={TIMER_BUTTON_CLASS}
             >
@@ -135,7 +137,7 @@ export function TimerPillBody({
           ) : (
             <button
               type="button"
-              aria-label="Resume timer"
+              aria-label={t('timer-pill.resume-timer')}
               onClick={onResume}
               className={TIMER_BUTTON_CLASS}
             >
@@ -144,7 +146,7 @@ export function TimerPillBody({
           )}
           <button
             type="button"
-            aria-label="Reset timer"
+            aria-label={t('timer-pill.reset-timer')}
             onClick={onReset}
             className={TIMER_BUTTON_CLASS}
           >
@@ -152,7 +154,7 @@ export function TimerPillBody({
           </button>
           <button
             type="button"
-            aria-label="Remove timer"
+            aria-label={t('timer-pill.remove-timer')}
             onClick={onClear}
             className={TIMER_BUTTON_CLASS}
           >

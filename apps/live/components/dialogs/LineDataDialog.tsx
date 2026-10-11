@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Button, CloseIcon, DialogHeader } from '@livediagram/ui';
 import type { LineSeries } from '@livediagram/document';
@@ -24,6 +25,7 @@ export function LineDataDialog({
   onCommit: (categories: string[], series: LineSeries[]) => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   // Seeded once on mount; the dialog owns the draft while open (re-seeding on
   // every external commit would fight the user's typing).
   const [cats, setCats] = useState<string[]>(categories);
@@ -50,14 +52,14 @@ export function LineDataDialog({
   return (
     <Dialog open onClose={onClose} ariaLabel="Edit chart data" size="xl" className="max-h-[90vh]">
       <DialogHeader
-        title="Chart data"
+        title={t('linedatadialog.chart-data')}
         subtitle="A row per category, a column per series. Or import a CSV (header = series names, first column = categories)."
       >
         <HelpArticleLink article="dataElements" size="md" />
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t('linedatadialog.close')}
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-200"
         >
           <CloseIcon size={18} />
@@ -65,9 +67,7 @@ export function LineDataDialog({
       </DialogHeader>
 
       <div className="flex items-center gap-2 px-6 pt-4">
-        <label className={`${addBtn} cursor-pointer`}>
-          Import CSV
-          <input
+        <label className={`${addBtn} cursor-pointer`}>{t('linedatadialog.import-csv')}<input
             type="file"
             accept=".csv,text/csv"
             className="hidden"
@@ -91,7 +91,7 @@ export function LineDataDialog({
                     <input
                       className={`${cell} w-full font-medium`}
                       value={s.name}
-                      aria-label="Series name"
+                      aria-label={t('linedatadialog.series-name')}
                       onChange={(e) =>
                         setRows((r) =>
                           r.map((x, j) => (j === si ? { ...x, name: e.target.value } : x)),
@@ -101,7 +101,7 @@ export function LineDataDialog({
                     />
                     <button
                       type="button"
-                      aria-label="Remove series"
+                      aria-label={t('linedatadialog.remove-series')}
                       disabled={rows.length <= 1}
                       onClick={() =>
                         commit(
@@ -119,7 +119,7 @@ export function LineDataDialog({
               <th className="w-8 align-bottom">
                 <button
                   type="button"
-                  aria-label="Add series"
+                  aria-label={t('linedatadialog.add-series')}
                   onClick={() =>
                     commit(cats, [
                       ...rows,
@@ -140,7 +140,7 @@ export function LineDataDialog({
                   <input
                     className={`${cell} w-28`}
                     value={c}
-                    aria-label="Category"
+                    aria-label={t('linedatadialog.category')}
                     onChange={(e) =>
                       setCats((cc) => cc.map((v, j) => (j === i ? e.target.value : v)))
                     }
@@ -176,7 +176,7 @@ export function LineDataDialog({
                 <td className="text-center">
                   <button
                     type="button"
-                    aria-label="Remove row"
+                    aria-label={t('linedatadialog.remove-row')}
                     disabled={cats.length <= 1}
                     onClick={() =>
                       commit(
@@ -205,12 +205,8 @@ export function LineDataDialog({
             )
           }
           className={addBtn}
-        >
-          + Add row
-        </button>
-        <Button variant="primary" size="md" onClick={onClose}>
-          Done
-        </Button>
+        >{t('linedatadialog.add-row')}</button>
+        <Button variant="primary" size="md" onClick={onClose}>{t('linedatadialog.done')}</Button>
       </div>
     </Dialog>
   );

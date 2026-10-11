@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import {
   CloseIcon,
   Select,
@@ -38,6 +39,7 @@ function prettifyEmailLocalPart(email: string): string {
 }
 
 function RolePill({ member, pinned }: { member: TeamMember; pinned: boolean }) {
+  const { t } = useTranslation();
   const pill = (
     <span
       className={`inline-flex w-fit shrink-0 items-center rounded-full px-1.5 py-0.5 text-[10px] font-medium ring-1 ${
@@ -53,7 +55,7 @@ function RolePill({ member, pinned }: { member: TeamMember; pinned: boolean }) {
   // The only Admin: explain why there's no role select here.
   return (
     <HoverCard
-      title="Last Admin"
+      title={t('team-pane-parts.last-admin')}
       description="A team always needs at least one Admin. Promote someone else before changing this role, removing this member, or leaving."
     >
       {pill}
@@ -92,6 +94,7 @@ export function TeamMemberRow({
   onChangeRole: (member: TeamMember, role: TeamRole) => void;
   onRemove: (member: TeamMember) => void;
 }) {
+  const { t } = useTranslation();
   const isSelf = m.userId !== null && m.userId === clerkUserId;
   const name = memberName(m, isSelf, clerkDisplayName);
   // Pending = hasn't accepted (docs/specs/013-workspace/teams.md handshake), regardless
@@ -122,14 +125,10 @@ export function TeamMemberRow({
             {name}
           </span>
           {isSelf ? (
-            <span className="shrink-0 rounded-full bg-slate-100 px-1.5 text-[10px] font-medium text-slate-500 ring-1 ring-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:ring-slate-600">
-              you
-            </span>
+            <span className="shrink-0 rounded-full bg-slate-100 px-1.5 text-[10px] font-medium text-slate-500 ring-1 ring-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:ring-slate-600">{t('team-pane-parts.you')}</span>
           ) : null}
           {pending ? (
-            <span className="shrink-0 rounded-full bg-amber-100 px-1.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-200">
-              Invited
-            </span>
+            <span className="shrink-0 rounded-full bg-amber-100 px-1.5 text-[10px] font-medium text-amber-700 ring-1 ring-amber-200">{t('team-pane-parts.invited')}</span>
           ) : null}
         </span>
         {/* Email under the name for every member (docs/specs/013-workspace/teams.md) — the
@@ -142,9 +141,7 @@ export function TeamMemberRow({
             {m.email}
           </span>
         ) : pending ? (
-          <span className="block truncate text-xs text-slate-400 dark:text-slate-400">
-            Waiting for them to accept
-          </span>
+          <span className="block truncate text-xs text-slate-400 dark:text-slate-400">{t('team-pane-parts.waiting-for-them-to-accept')}</span>
         ) : null}
       </span>
       {isAdmin && !pinnedAdmin ? (
@@ -155,8 +152,8 @@ export function TeamMemberRow({
           aria-label={`Role for ${name}`}
           className="shrink-0"
         >
-          <option value="admin">Admin</option>
-          <option value="member">Member</option>
+          <option value="admin">{t('team-pane-parts.admin')}</option>
+          <option value="member">{t('team-pane-parts.member')}</option>
         </Select>
       ) : (
         <RolePill member={m} pinned={pinnedAdmin && isAdmin} />

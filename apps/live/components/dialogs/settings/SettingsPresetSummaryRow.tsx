@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useId } from 'react';
 import { SettingsRowShell } from './SettingsRowShell';
 import { presetSummaryLines } from './power-user-preset-rows';
@@ -22,6 +23,7 @@ export function SettingsPresetSummaryRow({
   offered?: ReadonlySet<string>;
   onGoToRow?: (categoryId: SettingsCategoryId, rowKey: string) => void;
 }) {
+  const { t } = useTranslation();
   const titleId = useId();
   const lines = presetSummaryLines(settings, offered ?? new Set(presetKeys(settings)));
   return (
@@ -56,7 +58,7 @@ export function SettingsPresetSummaryRow({
                     >
                       {line.changed
                         ? 'Changed: kept when you switch off'
-                        : 'Restored when you switch off'}
+                        : t('settingspresetsummaryrow.restored-when-you-switch-off')}
                     </span>
                   ) : null}
                 </div>
@@ -66,9 +68,7 @@ export function SettingsPresetSummaryRow({
                     onClick={() => onGoToRow(line.categoryId, line.rowKey)}
                     aria-label={`Change ${line.label} in ${line.categoryLabel}`}
                     className="shrink-0 rounded-md px-2 py-1 text-xs font-medium text-brand-700 transition hover:bg-brand-50 dark:text-brand-300 dark:hover:bg-brand-500/15"
-                  >
-                    Change
-                  </button>
+                  >{t('settingspresetsummaryrow.change')}</button>
                 ) : null}
               </li>
             ))}

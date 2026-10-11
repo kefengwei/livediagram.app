@@ -1,8 +1,10 @@
 'use client';
 
+
 import { HoverCard } from '@livediagram/ui';
 import { SettingsPopover, SettingsPopoverResetRow } from '@/components/primitives/SettingsPopover';
 import { SettingsToggleRow } from '@/components/panels/SettingsToggleRow';
+import { useTranslation } from '@/lib/i18n';
 import {
   AUTO_ADVANCE_CHOICES,
   SLIDE_SPEEDS,
@@ -39,6 +41,7 @@ function ChoiceRow<T extends string | number>({
   value: T;
   onPick: (id: T) => void;
 }) {
+  
   return (
     <div className="flex flex-col gap-1 px-2 py-1.5">
       <span className="text-[11px] font-medium text-slate-700 dark:text-slate-200">{label}</span>
@@ -76,17 +79,19 @@ export function SlideDeckSettingsPopover({
   onResetPosition: () => void;
   resettable: boolean;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <SettingsPopover
-      label="Presentation"
-      description="How the deck behaves when you present it."
+      label={t('slidedecksettingspopover.presentation')}
+      description={t('slidedecksettingspopover.how-the-deck-behaves-when-you')}
       triggerAttr="data-slide-deck-settings-trigger"
       width={248}
     >
       {(close) => (
         <>
           <ChoiceRow
-            label="Transition"
+            label={t('slidedecksettingspopover.transition')}
             options={SLIDE_TRANSITIONS}
             value={config.transition}
             onPick={(id) => onChange({ transition: id })}
@@ -95,21 +100,21 @@ export function SlideDeckSettingsPopover({
               it rather than sitting there greyed out. */}
           {config.transition !== 'none' ? (
             <ChoiceRow
-              label="Speed"
+              label={t('slidedecksettingspopover.speed')}
               options={SLIDE_SPEEDS}
               value={config.speed}
               onPick={(id) => onChange({ speed: id })}
             />
           ) : null}
           <ChoiceRow
-            label="Auto-advance"
+            label={t('slidedecksettingspopover.auto-advance')}
             hint="Move on by itself. With Loop, this runs a deck unattended."
             options={AUTO_ADVANCE_CHOICES.map((c) => ({ id: c.seconds, label: c.label }))}
             value={config.autoAdvanceSeconds}
             onPick={(seconds) => onChange({ autoAdvanceSeconds: seconds })}
           />
           <ChoiceRow
-            label="Slide size"
+            label={t('slidedecksettingspopover.slide-size')}
             options={SLIDE_ZOOMS}
             value={config.zoom}
             onPick={(id) => onChange({ zoom: id })}
@@ -117,31 +122,31 @@ export function SlideDeckSettingsPopover({
           <SettingsToggleRow
             checked={config.advanceOnClick}
             onToggle={() => onChange({ advanceOnClick: !config.advanceOnClick })}
-            label="Click to advance"
+            label={t('slidedecksettingspopover.click-to-advance')}
             hint="Off if you'd rather only the keys and buttons move the deck."
           />
           <SettingsToggleRow
             checked={config.loop}
             onToggle={() => onChange({ loop: !config.loop })}
-            label="Loop the deck"
+            label={t('slidedecksettingspopover.loop-the-deck')}
             hint="After the last slide, start again rather than ending."
           />
           <SettingsToggleRow
             checked={config.showPosition}
             onToggle={() => onChange({ showPosition: !config.showPosition })}
-            label="Show position"
+            label={t('slidedecksettingspopover.show-position')}
             hint="The 7 / 23 counter and the slide's name, while presenting."
           />
           <SettingsToggleRow
             checked={config.keepControls}
             onToggle={() => onChange({ keepControls: !config.keepControls })}
-            label="Keep controls visible"
+            label={t('slidedecksettingspopover.keep-controls-visible')}
             hint="Stop them fading out when the pointer rests."
           />
           <SettingsToggleRow
             checked={config.hidePointer}
             onToggle={() => onChange({ hidePointer: !config.hidePointer })}
-            label="Hide the pointer"
+            label={t('slidedecksettingspopover.hide-the-pointer')}
             hint="A still cursor left on a projector is a distraction."
           />
           <SettingsPopoverResetRow

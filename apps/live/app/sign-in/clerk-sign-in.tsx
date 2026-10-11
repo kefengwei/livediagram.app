@@ -17,6 +17,7 @@
 // (`{ signIn, errors, fetchStatus }`) — porting to it is a separate
 // effort. `/legacy` doesn't pull in any Server Actions, so static
 // export still builds.
+import { useTranslation } from '@/lib/i18n';
 import { StaticClerkProvider } from '@/components/providers/StaticClerkProvider';
 import { useAuth } from '@clerk/react';
 import { useSignIn } from '@clerk/react/legacy';
@@ -42,6 +43,7 @@ import { Button } from '@livediagram/ui';
 import { clerkEnabled, googleOAuthEnabled } from '@/lib/clerk-config';
 
 function SignInContent() {
+  const { t } = useTranslation();
   // Full page loads once a newer build is live (docs/specs/016-platform/stale-builds.md).
   const router = useAppNavigation();
   const searchParams = useSearchParams();
@@ -222,14 +224,11 @@ function SignInContent() {
       subtitle="Sign in to keep your documents and work across multiple devices."
       error={error}
       footer={
-        <>
-          New to livediagram?{' '}
+        <>{t('clerk-sign-in.new-to-livediagram')}{' '}
           <Link
             href={authHrefWithReturn('/get-started/', searchParams.get('redirect_url'))}
             className="font-medium text-brand-600 hover:underline dark:text-brand-400"
-          >
-            Create an account
-          </Link>
+          >{t('clerk-sign-in.create-an-account')}</Link>
         </>
       }
     >
@@ -250,7 +249,7 @@ function SignInContent() {
           {googleOAuthEnabled ? (
             <>
               <GoogleAuthButton
-                label="Continue with Google"
+                label={t('clerk-sign-in.continue-with-google')}
                 loading={googleLoading}
                 disabled={!signInLoaded || googleLoading}
                 onClick={() => void handleSignInWithGoogle()}
@@ -260,7 +259,7 @@ function SignInContent() {
           ) : null}
           <AuthEmailField value={email} onChange={setEmail} />
           <Button type="submit" size="md" disabled={loading} className="w-full shadow-sm">
-            {loading ? 'Sending code…' : 'Continue with email'}
+            {loading ? t('clerk-sign-in.sending-code') : t('clerk-sign-in.continue-with-email')}
           </Button>
         </form>
       )}

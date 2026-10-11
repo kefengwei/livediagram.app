@@ -3,6 +3,7 @@
 // The status bar (docs/specs/029-sheets/sheet.md "Selection"): for a selection of more than one number, its Sum,
 // Average and Count (and Min and Max, picked in its menu), over the cells that show (rows a filter hides are left
 // out), as a spreadsheet's does. The pick is the viewer's own, kept in their browser.
+import { useTranslation } from '@/lib/i18n';
 import { useMemo, useState } from 'react';
 import { formatNumber } from '@livediagram/sheets';
 import { useSheetController, type SheetController } from './sheet-controller';
@@ -65,6 +66,7 @@ export function statValue(stat: Stat, s: SelectionStats): number {
 const STATS_MENU_PX = 208;
 
 export function SheetStatusBar() {
+  const { t } = useTranslation();
   const c = useSheetController();
   const pick = useStatusPick();
   // The totals button while its menu is open (the menu anchors to it).
@@ -88,7 +90,7 @@ export function SheetStatusBar() {
         type="button"
         aria-haspopup="true"
         aria-expanded={!!open}
-        aria-label="Selection totals"
+        aria-label={t('sheetstatusbar.selection-totals')}
         className="flex h-[20px] cursor-pointer items-center gap-3 rounded-md px-2 transition hover:bg-black/5 dark:hover:bg-white/10"
         onClick={(e) => {
           const at = e.currentTarget;
@@ -117,7 +119,7 @@ export function SheetStatusBar() {
         >
           <OptionRows
             kind="multiple"
-            label="Show in the status bar"
+            label={t('sheetstatusbar.show-in-the-status-bar')}
             selected={pick}
             onPick={(stat) => toggleStatusPick(stat as Stat)}
             rows={STATS.map((stat) => ({

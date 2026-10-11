@@ -14,6 +14,7 @@
 
 // See sign-in/page.tsx for why useSignUp comes from @clerk/react/legacy
 // while useAuth comes from the modern entry.
+import { useTranslation } from '@/lib/i18n';
 import { StaticClerkProvider } from '@/components/providers/StaticClerkProvider';
 import { useAuth } from '@clerk/react';
 import { useSignUp } from '@clerk/react/legacy';
@@ -40,6 +41,7 @@ import { clerkEnabled, googleOAuthEnabled } from '@/lib/clerk-config';
 type Phase = 1 | 2;
 
 function GetStartedContent() {
+  const { t } = useTranslation();
   // Full page loads once a newer build is live (docs/specs/016-platform/stale-builds.md).
   const router = useAppNavigation();
   const searchParams = useSearchParams();
@@ -220,19 +222,16 @@ function GetStartedContent() {
     <AuthCard
       subtitle={
         phase === 1
-          ? 'Create a free account to keep your documents and work across multiple devices.'
-          : 'Check your email'
+          ? t('clerk-sign-up.create-a-free-account-to-keep')
+          : t('clerk-sign-up.check-your-email')
       }
       error={error}
       footer={
-        <>
-          Already have an account?{' '}
+        <>{t('clerk-sign-up.already-have-an-account')}{' '}
           <Link
             href={authHrefWithReturn('/sign-in/', searchParams.get('redirect_url'))}
             className="font-medium text-brand-600 hover:underline dark:text-brand-400"
-          >
-            Sign in
-          </Link>
+          >{t('clerk-sign-up.sign-in')}</Link>
         </>
       }
     >
@@ -241,7 +240,7 @@ function GetStartedContent() {
           {googleOAuthEnabled ? (
             <>
               <GoogleAuthButton
-                label="Continue with Google"
+                label={t('clerk-sign-up.continue-with-google')}
                 loading={googleLoading}
                 disabled={!signUpLoaded || googleLoading}
                 onClick={() => void handleSignUpWithGoogle()}
@@ -254,15 +253,13 @@ function GetStartedContent() {
               <label
                 htmlFor="firstName"
                 className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                First name
-              </label>
+              >{t('clerk-sign-up.first-name')}</label>
               <TextInput
                 id="firstName"
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                placeholder="Jane"
+                placeholder={t('clerk-sign-up.jane')}
                 autoComplete="given-name"
               />
             </div>
@@ -270,22 +267,20 @@ function GetStartedContent() {
               <label
                 htmlFor="lastName"
                 className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-              >
-                Last name
-              </label>
+              >{t('clerk-sign-up.last-name')}</label>
               <TextInput
                 id="lastName"
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
-                placeholder="Doe"
+                placeholder={t('clerk-sign-up.doe')}
                 autoComplete="family-name"
               />
             </div>
           </div>
           <AuthEmailField value={email} onChange={setEmail} />
           <Button type="submit" size="md" disabled={loading} className="w-full shadow-sm">
-            {loading ? 'Creating account…' : 'Create account'}
+            {loading ? t('clerk-sign-up.creating-account') : t('clerk-sign-up.create-account')}
           </Button>
         </form>
       ) : (

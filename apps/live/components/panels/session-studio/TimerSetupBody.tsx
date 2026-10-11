@@ -13,6 +13,7 @@
 // pressing Start also runs it now. Those are the same number, which is why one
 // component can do both without a mode flag.
 
+import { useTranslation } from '@/lib/i18n';
 import { formatTimerClock, type TimerMode } from '@livediagram/document';
 import {
   DIAL_LAP_MINUTES,
@@ -51,6 +52,7 @@ export function TimerSetupBody({
    */
   showModeToggle?: boolean;
 }) {
+  const { t } = useTranslation();
   const nudge = (d: number) => onMinutesChange(clampTimerMinutes(minutes + d));
 
   return (
@@ -58,7 +60,7 @@ export function TimerSetupBody({
       {showModeToggle ? (
         <div className="flex justify-center">
           <StudioSegmented
-            label="Timer mode"
+            label={t('timersetupbody.timer-mode')}
             options={MODE_OPTIONS}
             value={mode}
             onChange={onModeChange}
@@ -68,7 +70,7 @@ export function TimerSetupBody({
       {mode === 'countdown' ? (
         <>
           <div className="flex items-center gap-1">
-            <NudgeButton label="One minute less" onClick={() => nudge(-1)} disabled={minutes <= 1}>
+            <NudgeButton label={t('timersetupbody.one-minute-less')} onClick={() => nudge(-1)} disabled={minutes <= 1}>
               −
             </NudgeButton>
             <div className="min-w-0 flex-1">
@@ -81,12 +83,10 @@ export function TimerSetupBody({
                 <span className="text-[22px] font-semibold leading-none tabular-nums text-slate-800 dark:text-slate-100">
                   {formatTimerClock(minutes * 60_000)}
                 </span>
-                <span className="mt-1 text-[9px] font-medium uppercase tracking-wider text-slate-400">
-                  Drag to set
-                </span>
+                <span className="mt-1 text-[9px] font-medium uppercase tracking-wider text-slate-400">{t('timersetupbody.drag-to-set')}</span>
               </TimerDial>
             </div>
-            <NudgeButton label="One minute more" onClick={() => nudge(1)} disabled={minutes >= 120}>
+            <NudgeButton label={t('timersetupbody.one-minute-more')} onClick={() => nudge(1)} disabled={minutes >= 120}>
               +
             </NudgeButton>
           </div>
@@ -95,9 +95,7 @@ export function TimerSetupBody({
             variant="primary"
             icon={<PlayGlyph size={12} />}
             onClick={() => onStartTimer('countdown', minutes * 60_000)}
-          >
-            Start {formatMinutesLabel(minutes)} countdown
-          </StudioButton>
+          >{t('timersetupbody.start')}{formatMinutesLabel(minutes)}{t('timersetupbody.countdown')}</StudioButton>
         </>
       ) : (
         <>
@@ -105,22 +103,16 @@ export function TimerSetupBody({
             <span className="text-[22px] font-semibold leading-none tabular-nums text-slate-800 dark:text-slate-100">
               0:00
             </span>
-            <span className="mt-1 text-[9px] font-medium uppercase tracking-wider text-slate-400">
-              Counts up
-            </span>
+            <span className="mt-1 text-[9px] font-medium uppercase tracking-wider text-slate-400">{t('timersetupbody.counts-up')}</span>
           </TimerDial>
           <StudioButton
             variant="primary"
             icon={<PlayGlyph size={12} />}
             onClick={() => onStartTimer('stopwatch')}
-          >
-            Start stopwatch
-          </StudioButton>
+          >{t('timersetupbody.start-stopwatch')}</StudioButton>
         </>
       )}
-      <p className="text-center text-[10px] leading-snug text-slate-400">
-        Everyone on this tab sees the same clock.
-      </p>
+      <p className="text-center text-[10px] leading-snug text-slate-400">{t('timersetupbody.everyone-on-this-tab-sees-the')}</p>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { DetectedSticky } from '@livediagram/sticky-vision';
 import type { PhotoReview } from '@/hooks/canvas/usePhotoDraft';
@@ -96,6 +97,7 @@ export function PhotoReviewOverlay({
   // Leave this review for a better photo of the same wall (the unread tip).
   onRetake?: () => void;
 }) {
+  const { t } = useTranslation();
   // A modal: the editor's shortcut and paste listeners go quiet behind it, so Delete removes a box here and
   // never a note on the board too.
   useModalGuard(true);
@@ -207,7 +209,7 @@ export function PhotoReviewOverlay({
     } catch (err) {
       setLabelError(
         err instanceof SyntaxError
-          ? 'That file is not a saved label.'
+          ? t('photoreviewoverlay.that-file-is-not-a-saved')
           : err instanceof Error
             ? err.message
             : String(err),
@@ -262,7 +264,7 @@ export function PhotoReviewOverlay({
       className="fixed inset-0 z-[var(--z-modal)] flex items-center justify-center bg-black/80 p-2"
       role="dialog"
       aria-modal="true"
-      aria-label="Review the notes found in your photo"
+      aria-label={t('photoreviewoverlay.review-the-notes-found-in-your')}
       // A saved label dropped on the photo opens it, where labelling is on.
       onDragOver={(e) => {
         if (truthArmed() && e.dataTransfer.types.includes('Files')) e.preventDefault();
@@ -325,7 +327,7 @@ export function PhotoReviewOverlay({
           >
             <img
               src={review.photoUrl}
-              alt="The photographed wall"
+              alt={t('photoreviewoverlay.the-photographed-wall')}
               draggable={false}
               onLoad={() => setPhotoShown(true)}
               // Room at the bottom for the action bar, so it never covers a
@@ -381,9 +383,7 @@ export function PhotoReviewOverlay({
             <span
               aria-hidden
               className="h-3 w-3 shrink-0 animate-spin rounded-full border-2 border-slate-500 border-t-brand-400"
-            />
-            Loading your photo…
-          </div>
+            />{t('photoreviewoverlay.loading-your-photo')}</div>
         )}
         <div className="pointer-events-none absolute right-2 top-2">
           <ZoomControls zoom={view.zoom} onZoomIn={zoomIn} onZoomOut={zoomOut} onFit={fit} />
@@ -422,7 +422,7 @@ export function PhotoReviewOverlay({
         <div className="pointer-events-none flex items-center justify-center gap-3">
           <p className="pointer-events-auto rounded-full bg-slate-900/85 px-3 py-1.5 text-xs text-white shadow-lg backdrop-blur">
             {detecting
-              ? 'Finding the stickies…'
+              ? t('photoreviewoverlay.finding-the-stickies')
               : `${edits.ticked.size} of ${notes.length} · drag the photo to add one`}
           </p>
           {detection ? (
@@ -439,16 +439,13 @@ export function PhotoReviewOverlay({
             type="button"
             onClick={onCancel}
             className="pointer-events-auto rounded-full border border-white/40 bg-slate-900/70 px-4 py-1.5 text-sm text-white shadow-lg backdrop-blur hover:bg-slate-900/90"
-          >
-            Cancel
-          </button>
+          >{t('photoreviewoverlay.cancel')}</button>
           <button
             type="button"
             onClick={confirm}
             disabled={edits.ticked.size === 0}
             className={`pointer-events-auto rounded-full bg-brand-500 px-4 py-1.5 text-sm font-semibold text-white shadow-lg hover:bg-brand-600 disabled:opacity-50 ${SOLID_BRAND_DARK_CONTROL}`}
-          >
-            Add {edits.ticked.size} {edits.ticked.size === 1 ? 'note' : 'notes'}
+          >{t('photoreviewoverlay.add')}{edits.ticked.size} {edits.ticked.size === 1 ? 'note' : 'notes'}
           </button>
         </div>
       </div>

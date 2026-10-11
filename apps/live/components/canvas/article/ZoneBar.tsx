@@ -7,6 +7,7 @@
 // front of the text), where an inline one sits across the text, and Delete (the zone and its
 // elements). Drawn in canvas space at one screen size, so it rides the
 // zone through a pan or a zoom. A drawing's grips (ZoneResizeGrips) size it by pointer or keys.
+
 import type { ReactNode } from 'react';
 import {
   lucideBringToFront,
@@ -20,6 +21,7 @@ import {
 } from '@livediagram/icons/lucide';
 import { lucideGlyph, Tooltip, TrashIcon } from '@livediagram/ui';
 import type { ArticleZoneAlign, ArticleZoneWrap, PageRect } from '@livediagram/document';
+import { useTranslation } from '@/lib/i18n';
 
 const I = (g: Parameters<typeof lucideGlyph>[0]) => lucideGlyph(g, 16);
 // A grip's keyboard step, canvas px, and its focus ring.
@@ -64,10 +66,13 @@ export function ZoneBar({
   // The grip focused and an arrow key pressed: the zone one block up (-1) or down (1).
   onMoveStep?: (by: -1 | 1) => void;
 }) {
+  const { t } = useTranslation();
+  
+  
   return (
     <div
       role="toolbar"
-      aria-label={drawing ? 'Drawing' : 'Object in the text'}
+      aria-label={drawing ? 'Drawing' : t('zonebar.object-in-the-text')}
       data-article-keep-active=""
       data-zone-bar=""
       className="pointer-events-auto absolute flex items-center gap-0.5 rounded-lg border border-slate-200 bg-white p-0.5 shadow-md shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900"
@@ -86,11 +91,11 @@ export function ZoneBar({
     >
       {onMoveStart ? (
         <>
-          <Tooltip label="Drag to Move">
+          <Tooltip label={t('zonebar.drag-to-move')}>
             <button
               type="button"
-              aria-label="Drag to Move"
-              aria-keyshortcuts={onMoveStep ? 'ArrowUp ArrowDown' : undefined}
+              aria-label={t('zonebar.drag-to-move-2')}
+              aria-keyshortcuts={onMoveStep ? t('zonebar.arrowup-arrowdown') : undefined}
               data-zone-grip=""
               onPointerDown={(e) => {
                 e.stopPropagation();
@@ -112,32 +117,32 @@ export function ZoneBar({
           <Sep />
         </>
       ) : null}
-      <Choice label="In Line" pressed={fit === 'inline'} onPress={() => onFit('inline')}>
+      <Choice label={t('zonebar.in-line')} pressed={fit === 'inline'} onPress={() => onFit('inline')}>
         <Inline />
       </Choice>
-      <Choice label="Wrap Left" pressed={fit === 'left'} onPress={() => onFit('left')}>
+      <Choice label={t('zonebar.wrap-left')} pressed={fit === 'left'} onPress={() => onFit('left')}>
         <WrapLeft />
       </Choice>
-      <Choice label="Wrap Right" pressed={fit === 'right'} onPress={() => onFit('right')}>
+      <Choice label={t('zonebar.wrap-right')} pressed={fit === 'right'} onPress={() => onFit('right')}>
         <WrapRight />
       </Choice>
-      <Choice label="Float" pressed={fit === 'float'} onPress={() => onFit('float')}>
+      <Choice label={t('zonebar.float')} pressed={fit === 'float'} onPress={() => onFit('float')}>
         <Float />
       </Choice>
       {fit === 'inline' ? (
         <>
           <Sep />
-          <Choice label="Align Left" pressed={align === 'left'} onPress={() => onAlign('left')}>
+          <Choice label={t('zonebar.align-left')} pressed={align === 'left'} onPress={() => onAlign('left')}>
             <AlignLeft />
           </Choice>
           <Choice
-            label="Align Centre"
+            label={t('zonebar.align-centre')}
             pressed={align === 'center'}
             onPress={() => onAlign('center')}
           >
             <AlignCenter />
           </Choice>
-          <Choice label="Align Right" pressed={align === 'right'} onPress={() => onAlign('right')}>
+          <Choice label={t('zonebar.align-right')} pressed={align === 'right'} onPress={() => onAlign('right')}>
             <AlignRight />
           </Choice>
         </>
@@ -145,7 +150,7 @@ export function ZoneBar({
       {onRemove ? (
         <>
           <Sep />
-          <Choice label={drawing ? 'Delete Drawing' : 'Delete'} onPress={onRemove}>
+          <Choice label={drawing ? t('zonebar.delete-drawing') : 'Delete'} onPress={onRemove}>
             <TrashIcon className="h-4 w-4" />
           </Choice>
         </>
@@ -176,6 +181,7 @@ function Choice({
   onPress: () => void;
   children: ReactNode;
 }) {
+  
   return (
     <Tooltip label={label}>
       <button
@@ -209,6 +215,8 @@ export function ZoneResizeGrips({
   zoom: number;
   onResize: (size: { width?: number; height?: number }) => void;
 }) {
+  const { t } = useTranslation();
+  
   const zoneEl = () =>
     document.querySelector<HTMLElement>(`.article-zone[data-block-id="${CSS.escape(zoneId)}"]`);
   const start = (e: React.PointerEvent<HTMLElement>, axes: { x: boolean; y: boolean }) => {
@@ -286,7 +294,7 @@ export function ZoneResizeGrips({
       <div
         role="separator"
         aria-orientation="horizontal"
-        aria-label="Drawing height"
+        aria-label={t('zonebar.drawing-height')}
         aria-valuenow={Math.round(rect.height)}
         tabIndex={0}
         onKeyDown={(e) => keyed(e, { x: false, y: true })}
@@ -305,7 +313,7 @@ export function ZoneResizeGrips({
       <div
         role="separator"
         aria-orientation="vertical"
-        aria-label="Drawing width"
+        aria-label={t('zonebar.drawing-width')}
         aria-valuenow={Math.round(rect.width)}
         tabIndex={0}
         onKeyDown={(e) => keyed(e, { x: true, y: false })}
@@ -323,7 +331,7 @@ export function ZoneResizeGrips({
       </div>
       <div
         role="separator"
-        aria-label="Drawing size"
+        aria-label={t('zonebar.drawing-size')}
         tabIndex={0}
         onKeyDown={(e) => keyed(e, { x: true, y: true })}
         className={`pointer-events-auto absolute flex cursor-nwse-resize items-center justify-center ${GRIP_FOCUS}`}

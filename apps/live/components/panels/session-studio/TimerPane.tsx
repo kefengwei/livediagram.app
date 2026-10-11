@@ -10,6 +10,7 @@
 // transport underneath and quick "+1 min" extensions for the moment the
 // room needs a little longer.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import {
   formatTimerClock,
@@ -68,11 +69,12 @@ function LiveTimer({
   onClearTimer,
   onExtendTimer,
 }: TimerPaneProps & { timer: TabTimer }) {
+  const { t } = useTranslation();
   const now = useNow(timer.running);
   const ms = timerDisplayMs(timer, now);
   const countdown = timer.mode === 'countdown';
   const done = countdown && ms <= 0;
-  const status = done ? "Time's up" : timer.running ? 'Running' : 'Paused';
+  const status = done ? t('timerpane.time-s-up') : timer.running ? 'Running' : 'Paused';
 
   // The wedge is time LEFT against a one-hour lap; the stopwatch sweeps once
   // a minute so something visibly moves while it counts.
@@ -126,7 +128,7 @@ function LiveTimer({
         </span>
       </TimerDial>
       {countdown ? (
-        <div className="grid grid-cols-3 gap-1" role="group" aria-label="Add time">
+        <div className="grid grid-cols-3 gap-1" role="group" aria-label={t('timerpane.add-time')}>
           {EXTENSIONS.map((x) => (
             <button
               key={x.ms}
@@ -140,24 +142,22 @@ function LiveTimer({
         </div>
       ) : null}
       <div className="flex items-end justify-center gap-6">
-        <TransportButton label="Reset" icon={<RestartGlyph />} onClick={onResetTimer} />
+        <TransportButton label={t('timerpane.reset')} icon={<RestartGlyph />} onClick={onResetTimer} />
         {done ? (
           <TransportButton
             primary
-            label="Again"
+            label={t('timerpane.again')}
             icon={<RestartGlyph />}
             onClick={() => onStartTimer('countdown', timer.durationMs)}
           />
         ) : timer.running ? (
-          <TransportButton primary label="Pause" icon={<PauseGlyph />} onClick={onPauseTimer} />
+          <TransportButton primary label={t('timerpane.pause')} icon={<PauseGlyph />} onClick={onPauseTimer} />
         ) : (
-          <TransportButton primary label="Resume" icon={<PlayGlyph />} onClick={onResumeTimer} />
+          <TransportButton primary label={t('timerpane.resume')} icon={<PlayGlyph />} onClick={onResumeTimer} />
         )}
-        <TransportButton label="End" icon={<StopGlyph />} onClick={onClearTimer} />
+        <TransportButton label={t('timerpane.end')} icon={<StopGlyph />} onClick={onClearTimer} />
       </div>
-      <p className="text-center text-[10px] leading-snug text-slate-400">
-        A tab runs one timer. End this one to start a different kind.
-      </p>
+      <p className="text-center text-[10px] leading-snug text-slate-400">{t('timerpane.a-tab-runs-one-timer-end')}</p>
     </div>
   );
 }

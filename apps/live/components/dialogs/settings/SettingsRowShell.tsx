@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import { HelpArticleLink } from '@/components/primitives/HelpArticleLink';
 import { SettingsIllustration } from './settings-illustrations';
@@ -43,7 +44,15 @@ export function SettingsRowShell({
   // illustration), so every row kind satisfies it.
   row: Pick<
     SettingsRowSpec,
-    'key' | 'label' | 'description' | 'helpArticle' | 'alsoIn' | 'illustration'
+    | 'key'
+    | 'label'
+    | 'labelKey'
+    | 'description'
+    | 'descriptionKey'
+    | 'helpArticle'
+    | 'alsoIn'
+    | 'alsoInKey'
+    | 'illustration'
   >;
   control?: ReactNode;
   illustrationActive?: boolean;
@@ -55,9 +64,10 @@ export function SettingsRowShell({
   wrapper?: (children: ReactNode) => ReactNode;
   descriptionContent?: ReactNode;
 }) {
+  const { t } = useTranslation();
   const label = (
     <span className="min-w-0 text-sm font-medium text-slate-800 dark:text-slate-100">
-      {row.label}
+      {row.labelKey ? t(row.labelKey) : row.label}
     </span>
   );
   const body = (
@@ -96,12 +106,14 @@ export function SettingsRowShell({
         </p>
       ) : null}
       {/* A row with nothing to say under it (a pair sharing one footnote) leaves the space out. */}
-      {!descriptionContent && !row.description && !row.helpArticle && !row.alsoIn ? null : (
+      {!descriptionContent && !row.description && !row.descriptionKey && !row.helpArticle && !row.alsoIn
+        ? null
+        : (
         <p
           id={`${row.key}-description`}
           className="mt-1.5 px-3.5 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400"
         >
-          {descriptionContent ?? row.description}
+          {descriptionContent ?? (row.descriptionKey ? t(row.descriptionKey) : row.description)}
           {row.helpArticle ? (
             <>
               {' '}
@@ -111,7 +123,12 @@ export function SettingsRowShell({
           {/* Settings now lists every preference, including the ones whose
             day-to-day home is a panel's own gear. Saying so keeps the two
             from reading as rival controls for the same thing. */}
-          {row.alsoIn ? <span className="block text-slate-400">Also in {row.alsoIn}.</span> : null}
+          {row.alsoIn || row.alsoInKey ? (
+            <span className="block text-slate-400">
+              {t('settingsrowshell.also-in')}
+              {row.alsoInKey ? t(row.alsoInKey) : row.alsoIn}.
+            </span>
+          ) : null}
         </p>
       )}
     </div>

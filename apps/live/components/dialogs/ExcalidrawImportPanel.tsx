@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState } from 'react';
 import { Button } from '@livediagram/ui';
 import { ImportDropZone } from './ImportDropZone';
@@ -63,6 +64,7 @@ function progressText(state: ExcalidrawImportStep): string {
 }
 
 function PickStep({ error, onPicked }: { error?: string; onPicked: (files: File[]) => void }) {
+  const { t } = useTranslation();
   const input = useRef<HTMLInputElement>(null);
   const choose = () => input.current?.click();
   return (
@@ -86,15 +88,13 @@ function PickStep({ error, onPicked }: { error?: string; onPicked: (files: File[
         }}
       />
       <ImportDropZone
-        label="Drop .excalidraw files here, or choose files"
+        label={t('excalidrawimportpanel.drop-excalidraw-files-here-or-choose')}
         onChoose={choose}
         onDropData={(data) => onPicked([...data.files])}
         {...(error ? { error } : {})}
       />
       <div className="mt-4 flex justify-end gap-2">
-        <Button variant="primary" size="md" onClick={choose}>
-          Choose files
-        </Button>
+        <Button variant="primary" size="md" onClick={choose}>{t('excalidrawimportpanel.choose-files')}</Button>
       </div>
     </>
   );

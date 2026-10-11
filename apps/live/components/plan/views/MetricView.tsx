@@ -2,6 +2,7 @@
 
 // A metric (docs/specs/026-plan/plan-views.md "Metrics"): a board widget free on the canvas,
 // drawn as in a header, over every live card. It narrows nothing and offers no set-up.
+import { useTranslation } from '@/lib/i18n';
 import { useMemo } from 'react';
 import { ITEM_TYPES, metricBoard, type MetricKind } from '@livediagram/items';
 import { BOARD_WIDGET_INFO } from '../board-widget-catalogue';
@@ -19,6 +20,7 @@ export function MetricView({
   palette,
   fontFamily,
 }: PlanViewProps & { kind: MetricKind }) {
+  const { t } = useTranslation();
   const types = plan?.types ?? ITEM_TYPES;
   const phases = plan?.statusPhases ?? NO_PHASES;
   const board = useMemo(() => metricBoard(items.values(), phases, types), [items, phases, types]);
@@ -59,9 +61,7 @@ export function MetricView({
         {label}
       </span>
       {plan?.status === 'loading' ? (
-        <span className="text-[12px]" style={{ color: palette.muted }}>
-          Loading cards…
-        </span>
+        <span className="text-[12px]" style={{ color: palette.muted }}>{t('metricview.loading-cards')}</span>
       ) : (
         // A press on the widget's own buttons stays with it in Plan mode; elsewhere it moves the element.
         <div

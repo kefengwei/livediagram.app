@@ -3,6 +3,7 @@
 // A page's lock (docs/specs/007-editor/illustrate-pages.md "Locking a page"): a padlock in its
 // title bar, before the cog, for someone who may edit. Open: Lock page. Closed and pressed: Unlock
 // page, named Locked beside it on a desktop.
+import { useTranslation } from '@/lib/i18n';
 import { lucideLock, lucideLockOpen } from '@livediagram/icons/lucide';
 import { lucideGlyph, Tooltip } from '@livediagram/ui';
 
@@ -27,7 +28,8 @@ export function PageLockButton({
   labelled: boolean;
   onToggle: () => void;
 }) {
-  const label = locked ? 'Unlock page' : 'Lock page';
+  const { t } = useTranslation();
+  const label = locked ? t('pagelockbutton.unlock-page') : t('pagelockbutton.lock-page');
   return (
     <div
       className="pointer-events-auto"
@@ -51,7 +53,7 @@ export function PageLockButton({
           }`}
         >
           {locked ? <LockIcon /> : <OpenIcon />}
-          {locked && labelled ? <span aria-hidden>Locked</span> : null}
+          {locked && labelled ? <span aria-hidden>{t('pagelockbutton.locked')}</span> : null}
         </button>
       </Tooltip>
     </div>

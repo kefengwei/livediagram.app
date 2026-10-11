@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation, type MessageKey } from '@/lib/i18n';
 import { useMemo, useRef, useState } from 'react';
 import { DialogCloseButton } from '@livediagram/ui';
 import { Dialog } from '@/components/dialogs/Dialog';
@@ -78,6 +79,10 @@ export function SettingsDialog({
   initialSectionId = null,
   ownerId = null,
 }: SettingsDialogProps) {
+  const { t } = useTranslation();
+  // A category's label is a key when the catalogue has one.
+  const labelOf = (category: { label: string; labelKey?: MessageKey }) =>
+    category.labelKey ? t(category.labelKey) : category.label;
   const isMobile = useIsMobileViewport();
   // Email rows need Resend configured AND a signed-in account: a guest has
   // no address, so those switches could never apply (docs/specs/014-identity/transactional-email.md).
@@ -205,7 +210,7 @@ export function SettingsDialog({
     <Dialog
       open
       onClose={close}
-      ariaLabel="Settings"
+      ariaLabel={t('settingsdialog.title')}
       // Wide enough for the rail plus a readable pane. Below `sm:` the Dialog
       // goes edge-to-edge for every size at or above `md`, which is exactly
       // what the phone layout wants.
@@ -230,11 +235,11 @@ export function SettingsDialog({
             className="-ml-1.5 flex items-center gap-0.5 rounded-md py-1 pr-2 pl-1 text-sm font-medium text-brand-600 transition hover:bg-brand-50 dark:text-brand-300 dark:hover:bg-brand-500/15"
           >
             <NavChevron direction="back" />
-            {backTo?.label ?? 'Settings'}
+            {backTo ? labelOf(backTo) : t('settingsdialog.title')}
           </button>
         ) : null}
         <h2 className="flex-1 truncate text-sm font-semibold text-slate-800 dark:text-slate-100">
-          {showBack ? selected?.label : 'Settings'}
+          {showBack && selected ? labelOf(selected) : t('settingsdialog.title')}
         </h2>
         <DialogCloseButton compact onClick={close} />
       </header>
@@ -256,7 +261,7 @@ export function SettingsDialog({
               <SearchInput
                 value={query}
                 onChange={setQuery}
-                placeholder="Search settings"
+                placeholder={t('settingsdialog.search-settings')}
                 ariaLabel="Search settings"
                 clearAriaLabel="Clear the settings search"
                 clearDescription="Clear the settings search and show every category."
@@ -270,8 +275,7 @@ export function SettingsDialog({
               searching={result.searching}
             />
             {isMobile && result.searching && result.totalMatches === 0 ? (
-              <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-400">
-                No settings match “{query.trim()}”.
+              <p className="mt-4 text-center text-xs text-slate-500 dark:text-slate-400">{t('settingsdialog.no-settings-match')}{query.trim()}”.
               </p>
             ) : null}
           </div>
@@ -318,18 +322,14 @@ export function SettingsDialog({
           </div>
         ) : result.searching && !isMobile ? (
           <div className="flex min-w-0 flex-1 items-center justify-center px-6 py-10">
-            <p className="text-center text-xs text-slate-500 dark:text-slate-400">
-              No settings match “{query.trim()}”.
+            <p className="text-center text-xs text-slate-500 dark:text-slate-400">{t('settingsdialog.no-settings-match-2')}{query.trim()}”.
             </p>
           </div>
         ) : null}
       </div>
 
       <footer className="border-t border-slate-200 px-4 py-3 dark:border-slate-800">
-        <p className="text-[10px] text-slate-500 dark:text-slate-400">
-          Settings sync to your account and apply to every document you open, on every device you
-          sign in from.
-        </p>
+        <p className="text-[10px] text-slate-500 dark:text-slate-400">{t('settingsdialog.settings-sync-to-your-account-and')}</p>
       </footer>
     </Dialog>
   );

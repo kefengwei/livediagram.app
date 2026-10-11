@@ -10,6 +10,7 @@
 // small form (a tool picker plus its one setting, a source plus a list), and
 // none of it belongs in the data-shape sections beside charts and rails.
 
+import { useTranslation } from '@/lib/i18n';
 import {
   REACTION_DEFAULT,
   REACTION_EMOJI,
@@ -52,6 +53,7 @@ function LinesRow({
   max: number;
   onCommit: (next: string[]) => void;
 }) {
+  const { t } = useTranslation();
   const joined = lines.join('\n');
   // Follows the element's lines when they change, adjusted during render. Compared as text: callers
   // pass a fresh `[]` while the element has none, and that must not wipe an uncommitted draft.
@@ -79,7 +81,7 @@ function LinesRow({
           className={`${fieldClass} resize-none`}
         />
       </label>
-      <p className="pb-1 pt-1 text-[10px] text-slate-400">One per line.</p>
+      <p className="pb-1 pt-1 text-[10px] text-slate-400">{t('behaviourmenusections.one-per-line')}</p>
     </div>
   );
 }
@@ -93,6 +95,7 @@ export function SessionMenuSection({
   onSetSession: (config: SessionButtonConfig) => void;
   sectionProps: { open: boolean; onToggle: () => void };
 }) {
+  const { t } = useTranslation();
   const config = element.session;
   const tool = config?.tool ?? DEFAULT_SESSION_TOOL;
 
@@ -110,7 +113,7 @@ export function SessionMenuSection({
     // choice fields ran off the right-hand edge and were simply cut off. The
     // Studio itself is reached the same way, as the tab menu's Collaborate
     // flyout, so this also makes the two open alike.
-    <MenuFlyoutSection title="Session" icon={<ToolsMenuGlyph />} panel {...sectionProps}>
+    <MenuFlyoutSection title={t('behaviourmenusections.session')} icon={<ToolsMenuGlyph />} panel {...sectionProps}>
       <SessionElementSettings config={{ ...config, tool }} onChange={onSetSession} />
     </MenuFlyoutSection>
   );
@@ -125,23 +128,22 @@ export function RevealMenuSection({
   onSetRevealed: (revealed: boolean) => void;
   sectionProps: { open: boolean; onToggle: () => void };
 }) {
+  const { t } = useTranslation();
   const revealed = element.revealed === true;
   return (
-    <MenuAccordionSection title="Reveal" icon={<RevealIcon />} {...sectionProps}>
-      <p className="px-3 pt-1 text-[10px] leading-snug text-slate-500 dark:text-slate-400">
-        Anyone can click the cover to peek for themselves. This takes it off for
-        <strong> everyone</strong>.
+    <MenuAccordionSection title={t('behaviourmenusections.reveal')} icon={<RevealIcon />} {...sectionProps}>
+      <p className="px-3 pt-1 text-[10px] leading-snug text-slate-500 dark:text-slate-400">{t('behaviourmenusections.anyone-can-click-the-cover-to')}<strong>{t('behaviourmenusections.everyone')}</strong>.
       </p>
       <MenuTileGrid cols={2}>
         <MenuTile
           icon={<RevealIcon />}
-          label="Reveal for all"
+          label={t('behaviourmenusections.reveal-for-all')}
           active={revealed}
           onClick={() => onSetRevealed(true)}
         />
         <MenuTile
           icon={<ToolsMenuGlyph />}
-          label="Hide for all"
+          label={t('behaviourmenusections.hide-for-all')}
           active={!revealed}
           onClick={() => onSetRevealed(false)}
         />
@@ -166,10 +168,11 @@ export function ReactionMenuSection({
   onSetReaction: (reaction: Reaction) => void;
   sectionProps: { open: boolean; onToggle: () => void };
 }) {
+  const { t } = useTranslation();
   const current = element.reaction ?? REACTION_DEFAULT;
   return (
     <MenuAccordionSection
-      title="Reaction"
+      title={t('behaviourmenusections.reaction')}
       icon={<span className="text-[13px] leading-none">{REACTION_EMOJI[current]}</span>}
       {...sectionProps}
     >
@@ -202,29 +205,28 @@ export function PickerMenuSection({
   onSetPickerOptions: (options: string[]) => void;
   sectionProps: { open: boolean; onToggle: () => void };
 }) {
+  const { t } = useTranslation();
   const source = element.pickerSource ?? DEFAULT_PICKER_SOURCE;
   return (
-    <MenuAccordionSection title="Picker" icon={<PickerIcon />} {...sectionProps}>
-      <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-        Picks from
-      </p>
+    <MenuAccordionSection title={t('behaviourmenusections.picker')} icon={<PickerIcon />} {...sectionProps}>
+      <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('behaviourmenusections.picks-from')}</p>
       <MenuTileGrid cols={2}>
         <MenuTile
           icon={<ToolsMenuGlyph />}
-          label="People here"
+          label={t('behaviourmenusections.people-here')}
           active={source === 'participants'}
           onClick={() => onSetPickerSource('participants')}
         />
         <MenuTile
           icon={<PickerIcon />}
-          label="A list"
+          label={t('behaviourmenusections.a-list')}
           active={source === 'options'}
           onClick={() => onSetPickerSource('options')}
         />
       </MenuTileGrid>
       {source === 'options' ? (
         <LinesRow
-          label="Options"
+          label={t('behaviourmenusections.options')}
           hint={'Alice\nBob\nCarol'}
           lines={element.pickerOptions ?? []}
           max={PICKER_MAX_OPTIONS}

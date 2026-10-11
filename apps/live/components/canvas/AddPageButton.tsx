@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useRef, useState } from 'react';
 import { ILLUSTRATE_PAGE_GAP, type PageKind } from '@livediagram/document';
 import { PlusIcon, Tooltip } from '@livediagram/ui';
@@ -21,6 +22,7 @@ export function AddPageButton({
   zoom: number;
   onAdd: (kind: PageKind) => void;
 }) {
+  const { t } = useTranslation();
   // Centred in a gap's width to the right of the last page, on the row's axis; zoomed far out (a
   // phone's fit) the gap is narrower than the button, which then keeps clear of the page by
   // ADD_PAGE_CLEARANCE screen px rather than covering its edge.
@@ -37,11 +39,11 @@ export function AddPageButton({
       onPointerDown={(e) => e.stopPropagation()}
       onDoubleClick={(e) => e.stopPropagation()}
     >
-      <Tooltip label="Add page">
+      <Tooltip label={t('addpagebutton.add-page')}>
         <button
           ref={button}
           type="button"
-          aria-label="Add page"
+          aria-label={t('addpagebutton.add-page-2')}
           aria-haspopup="dialog"
           aria-expanded={open}
           data-add-page-trigger

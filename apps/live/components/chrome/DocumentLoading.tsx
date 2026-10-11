@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { Button, DiagramBuildAnimation, LoadingSweep, RefreshIcon } from '@livediagram/ui';
 import { getLoadProgress, subscribeLoadProgress } from '@/lib/load-progress';
@@ -50,6 +51,7 @@ const CSS = `
 }`;
 
 export function DocumentLoading({ stage = 'opening' }: { stage?: DocumentLoadingStage }) {
+  const { t } = useTranslation();
   const [slow, setSlow] = useState(false);
   useEffect(() => {
     const id = window.setTimeout(() => {
@@ -103,22 +105,14 @@ export function DocumentLoading({ stage = 'opening' }: { stage?: DocumentLoading
         </div>
 
         {!online ? (
-          <p className="ldl-enter mt-6 text-xs text-slate-500 dark:text-slate-400">
-            You&rsquo;re offline. Waiting for the connection&hellip;
-          </p>
+          <p className="ldl-enter mt-6 text-xs text-slate-500 dark:text-slate-400">{t('documentloading.you-re-offline-waiting-for-the')}</p>
         ) : healing ? (
-          <p className="ldl-enter mt-6 text-xs text-slate-500 dark:text-slate-400">
-            Still working on it. Trying a fresh start.
-          </p>
+          <p className="ldl-enter mt-6 text-xs text-slate-500 dark:text-slate-400">{t('documentloading.still-working-on-it-trying-a')}</p>
         ) : slow ? (
           <div className="ldl-enter mt-6 flex flex-col items-center gap-2">
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              This is taking longer than usual.
-            </p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{t('documentloading.this-is-taking-longer-than-usual')}</p>
             <Button variant="secondary" size="xs" onClick={() => window.location.reload()}>
-              <RefreshIcon size={13} />
-              Refresh
-            </Button>
+              <RefreshIcon size={13} />{t('documentloading.refresh')}</Button>
           </div>
         ) : null}
       </div>

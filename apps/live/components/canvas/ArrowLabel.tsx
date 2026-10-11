@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import {
   useEffect,
   useEffectEvent,
@@ -78,6 +79,7 @@ export function ArrowLabel({
   onSelect,
   onContextMenu,
 }: ArrowLabelProps) {
+  const { t } = useTranslation();
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
   // cursorAtEnd is fixed for the lifetime of an edit session, so it is read
   // once, when editing begins: an effect event keyed on isEditing.
@@ -116,8 +118,8 @@ export function ArrowLabel({
         <textarea
           ref={inputRef}
           defaultValue={text}
-          aria-label="Arrow label"
-          placeholder="Label"
+          aria-label={t('arrowlabel.arrow-label')}
+          placeholder={t('arrowlabel.label')}
           rows={1}
           onPointerDown={(e) => e.stopPropagation()}
           onInput={(e) => onDraft?.(e.currentTarget.value)}

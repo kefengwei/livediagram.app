@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useId, useState } from 'react';
 import { editorModeLabel, type EditorMode, type Element } from '@livediagram/document';
 import { HoverCard, SearchIcon } from '@livediagram/ui';
@@ -31,11 +32,12 @@ export function ToolbarSearchButton({
   open: boolean;
   onToggle: (button: HTMLElement) => void;
 }) {
+  const { t } = useTranslation();
   const button = (
     <button
       type="button"
       data-toolbar-search-button=""
-      aria-label="Search elements"
+      aria-label={t('toolbarsearch.search-elements')}
       aria-keyshortcuts="S"
       aria-expanded={open}
       onClick={(e) => onToggle(e.currentTarget)}
@@ -54,8 +56,8 @@ export function ToolbarSearchButton({
   if (open) return button;
   return (
     <HoverCard
-      title="Search Elements"
-      description="Find any element by name, from every category and every mode. Shortcut: S."
+      title={t('toolbarsearch.search-elements-2')}
+      description={t('toolbarsearch.find-any-element-by-name-from')}
     >
       {button}
     </HoverCard>
@@ -77,6 +79,7 @@ export function ToolbarSearchPanel({
   // Plan's Cards, from the document's item types (as on the strip).
   planCardTiles?: readonly PaletteTileDef[];
 }) {
+  const { t } = useTranslation();
   // Mounted only while the popover is open, so both reset each time it opens.
   const [query, setQuery] = useState('');
   const [othersOpen, setOthersOpen] = useState(false);
@@ -116,14 +119,14 @@ export function ToolbarSearchPanel({
           value={query}
           onChange={setQuery}
           onKeyDown={onKeyDown}
-          placeholder="Search elements"
+          placeholder={t('toolbarsearch.search-elements-3')}
           ariaLabel="Search elements"
           clearAriaLabel="Clear the element search"
           clearDescription="Clear the search over every element."
         />
       </div>
       {browsing && here.length > 0 ? (
-        <div className="px-1 text-[10px] text-slate-500 dark:text-slate-400">On This Tab</div>
+        <div className="px-1 text-[10px] text-slate-500 dark:text-slate-400">{t('toolbarsearch.on-this-tab')}</div>
       ) : null}
       {here.length > 0 ? (
         <PaletteTileGrid tiles={here} actions={actions} pendingDraw={pendingDraw} />
@@ -131,11 +134,11 @@ export function ToolbarSearchPanel({
         <p className="px-1 py-2 text-center text-[11px] text-slate-500 dark:text-slate-400">
           {browsing
             ? elsewhere.length > 0
-              ? `Only elements from other modes are on this tab so far. Type to find any element.`
-              : 'Nothing on this tab yet. Type to find any element.'
+              ? t('toolbarsearch.only-elements-from-other-modes-are')
+              : t('toolbarsearch.nothing-on-this-tab-yet-type')
             : elsewhere.length > 0
               ? `No ${modeName} elements match. Other modes have ${elsewhere.length} below.`
-              : 'No elements match'}
+              : t('toolbarsearch.no-elements-match')}
         </p>
       )}
       {elsewhere.length > 0 ? (
@@ -156,16 +159,12 @@ export function ToolbarSearchPanel({
           >
             <span className="min-w-0 flex-1">
               <span className="flex min-w-0 items-center gap-1.5">
-                <span className="truncate text-[11px] font-semibold text-slate-700 dark:text-slate-200">
-                  Not in {modeName} Mode
-                </span>
+                <span className="truncate text-[11px] font-semibold text-slate-700 dark:text-slate-200">{t('toolbarsearch.not-in')}{modeName}{t('toolbarsearch.mode')}</span>
                 <span className="inline-flex h-[12.6px] shrink-0 items-center rounded-full bg-slate-100 px-1.5 text-[9px] font-semibold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
                   <span className="text-optical-centre">{elsewhere.length}</span>
                 </span>
               </span>
-              <span className="line-clamp-2 text-[10px] leading-snug text-slate-500 dark:text-slate-400">
-                Elements other modes offer. Any of them works here too.
-              </span>
+              <span className="line-clamp-2 text-[10px] leading-snug text-slate-500 dark:text-slate-400">{t('toolbarsearch.elements-other-modes-offer-any-of')}</span>
             </span>
             <span className="shrink-0 text-slate-400">
               <ChevronIcon open={othersOpen} />

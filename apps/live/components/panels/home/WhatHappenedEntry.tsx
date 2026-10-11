@@ -5,6 +5,7 @@
 // several people collapses into one summary: a disclosure button whose sentence names everyone
 // and everything, expanding (collapsed by default, never remembered) to every action, newest first.
 
+import { useTranslation } from '@/lib/i18n';
 import { useId, useState } from 'react';
 import type { HomeAction, HomeGroup } from '@livediagram/api-schema';
 import { track } from '@/lib/telemetry';
@@ -26,11 +27,12 @@ import { SOLID_BRAND_DARK } from '@livediagram/ui';
 
 /** Newer than the person's last look: the Timeline card's New pill, words not colour. */
 function NewPill() {
+  const { t } = useTranslation();
   return (
     <span
       className={`mr-1.5 inline-flex items-center rounded bg-brand-600 px-1.5 py-px align-[1px] text-[9px] font-semibold text-white ${SOLID_BRAND_DARK}`}
     >
-      <span className="text-optical-line text-optical-caps">New</span>
+      <span className="text-optical-line text-optical-caps">{t('whathappenedentry.new')}</span>
     </span>
   );
 }

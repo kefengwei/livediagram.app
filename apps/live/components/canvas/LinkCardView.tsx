@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { lucideFile, lucideLink, lucidePanelsTopLeft } from '@livediagram/icons/lucide';
 import { useState } from 'react';
 import { defaultTextColor, type LinkCardElement } from '@livediagram/document';
@@ -60,6 +61,7 @@ export function LinkCardView({
   // so double-click-to-edit still works.
   onFollow?: () => void;
 }) {
+  const { t } = useTranslation();
   const link = element.link;
   const url = link?.kind === 'url' ? link.url : undefined;
   // Only trust cached meta that matches the CURRENT url (it's stale otherwise).
@@ -69,9 +71,7 @@ export function LinkCardView({
 
   if (!link) {
     return (
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-3 text-center text-[12px] font-medium text-slate-400 dark:text-slate-400">
-        Double-click to add a link
-      </div>
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-3 text-center text-[12px] font-medium text-slate-400 dark:text-slate-400">{t('linkcardview.double-click-to-add-a-link')}</div>
     );
   }
 
@@ -144,7 +144,7 @@ export function LinkCardView({
       {onFollow ? (
         <button
           type="button"
-          aria-label="Open link"
+          aria-label={t('linkcardview.open-link')}
           onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => {
             e.stopPropagation();

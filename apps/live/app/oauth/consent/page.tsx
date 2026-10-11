@@ -6,6 +6,7 @@
 // (Clerk-authed) and hand it to the MCP's /oauth/complete bound to a one-time
 // PKCE code, then bounce the browser to the client's redirect. Signed-in only;
 // absent end-to-end without Clerk.
+import { useTranslation } from '@/lib/i18n';
 import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { CLI_CLIENT_ID } from '@livediagram/api-schema';
@@ -19,6 +20,7 @@ import { track } from '@/lib/telemetry';
 import { useClerkApiBootstrap } from '@/hooks/persistence/useClerkApiBootstrap';
 
 function Consent() {
+  const { t } = useTranslation();
   const params = useSearchParams();
   const session = params.get('session');
   const { authLoaded, isSignedIn, clerkUserId } = useClerkApiBootstrap();
@@ -51,19 +53,15 @@ function Consent() {
   // Only ever the server's name. Used in the headings AND as the token's label
   // at /api/oauth/exchange, so the Explorer's token list later names the same
   // client the user actually approved.
-  const client = resolved?.clientName ?? 'An application';
+  const client = resolved?.clientName ?? t('page.an-application');
 
   // Checked first so Cancel works from any state (incl. the sign-in screen,
   // which otherwise returns before the later checks).
   if (status === 'cancelled') {
     return (
       <OauthShell>
-        <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-          Connection cancelled
-        </h1>
-        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-          You can close this window.
-        </p>
+        <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{t('page.connection-cancelled')}</h1>
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{t('page.you-can-close-this-window')}</p>
       </OauthShell>
     );
   }
@@ -71,19 +69,15 @@ function Consent() {
   if (!sessionsEnabled) {
     return (
       <OauthShell>
-        <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100">
-          Connecting apps isn’t available
-        </h1>
-        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-          This deployment doesn’t have accounts enabled, so there’s nothing to connect to.
-        </p>
+        <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100">{t('page.connecting-apps-isn-t-available')}</h1>
+        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{t('page.this-deployment-doesn-t-have-accounts')}</p>
       </OauthShell>
     );
   }
   if (!authLoaded) {
     return (
       <OauthShell>
-        <p className="text-sm text-slate-500 dark:text-slate-400">Loading…</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{t('page.loading')}</p>
       </OauthShell>
     );
   }
@@ -95,26 +89,19 @@ function Consent() {
       typeof window !== 'undefined' ? window.location.pathname + window.location.search : '';
     return (
       <OauthShell>
-        <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-          Sign in to connect {client}
+        <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{t('page.sign-in-to-connect')}{client}
         </h1>
-        <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-          You need to be signed in to connect an app to your documents.
-        </p>
+        <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{t('page.you-need-to-be-signed-in')}</p>
         <div className="mt-5 flex items-center gap-2">
           <a
             href={`/sign-in/?redirect_url=${encodeURIComponent(back)}`}
             className={`inline-flex ${OAUTH_PRIMARY}`}
-          >
-            Sign in
-          </a>
+          >{t('page.sign-in')}</a>
           <button
             type="button"
             onClick={() => setStatus('cancelled')}
             className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
-          >
-            Cancel
-          </button>
+          >{t('page.cancel')}</button>
         </div>
         <div>
           <OauthHelpLink />
@@ -128,7 +115,7 @@ function Consent() {
   if (resolved === undefined) {
     return (
       <OauthShell>
-        <p className="text-sm text-slate-500 dark:text-slate-400">Checking this request…</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{t('page.checking-this-request')}</p>
       </OauthShell>
     );
   }
@@ -138,13 +125,8 @@ function Consent() {
   if (resolved === null) {
     return (
       <OauthShell>
-        <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-          This link has expired
-        </h1>
-        <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-          We couldn’t find the connection request this link points to. Start the connection again
-          from your app.
-        </p>
+        <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{t('page.this-link-has-expired')}</h1>
+        <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{t('page.we-couldn-t-find-the-connection')}</p>
         <div>
           <OauthHelpLink />
         </div>
@@ -181,7 +163,7 @@ function Consent() {
 
   return (
     <OauthShell>
-      <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Connect {client}</h1>
+      <h1 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{t('page.connect')}{client}</h1>
       <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
         <span className="font-medium text-slate-700 dark:text-slate-200">{client}</span> wants to
         access your livediagram documents on your behalf. Approving creates an API token, which you
@@ -197,20 +179,16 @@ function Consent() {
         className="mt-4 flex w-full cursor-pointer items-start justify-between gap-3 rounded-lg border border-slate-200 px-3 py-2.5 text-left text-sm dark:border-slate-700"
       >
         <span className="min-w-0 text-slate-600 dark:text-slate-300">
-          <span className="font-medium text-slate-800 dark:text-slate-100">Read-only access</span>:
-          let it find and view your documents, but not create, edit, delete, or share them. Leave
-          off for full read + write.
-        </span>
+          <span className="font-medium text-slate-800 dark:text-slate-100">{t('page.read-only-access')}</span>{t('page.let-it-find-and-view-your')}</span>
         <span className="mt-0.5 shrink-0">
-          <ToggleSwitch presentational checked={readOnly} label="Read-only access" />
+          <ToggleSwitch presentational checked={readOnly} label={t('page.read-only-access-2')} />
         </span>
       </button>
       {/* The one fact worth checking before approving, and now the server's
           answer rather than the URL's: the host the authorization code is
           delivered to, read off the redirect URI this client registered. */}
       {resolved.redirectHost ? (
-        <p className="mt-3 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">
-          Access will be sent to{' '}
+        <p className="mt-3 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">{t('page.access-will-be-sent-to')}{' '}
           <span className="font-medium text-slate-700 dark:text-slate-200">
             {resolved.redirectHost}
           </span>
@@ -218,9 +196,7 @@ function Consent() {
         </p>
       ) : null}
       {status === 'error' ? (
-        <p className="mt-3 text-xs text-rose-600 dark:text-rose-400">
-          Something went wrong. Please try again.
-        </p>
+        <p className="mt-3 text-xs text-rose-600 dark:text-rose-400">{t('page.something-went-wrong-please-try-again')}</p>
       ) : null}
       <div className="mt-5 flex items-center gap-2">
         <button
@@ -235,9 +211,7 @@ function Consent() {
           type="button"
           onClick={() => setStatus('cancelled')}
           className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
-        >
-          Cancel
-        </button>
+        >{t('page.cancel-2')}</button>
       </div>
       <div>
         <OauthHelpLink />
@@ -247,11 +221,12 @@ function Consent() {
 }
 
 export default function OauthConsentPage() {
+  const { t } = useTranslation();
   return (
     <Suspense
       fallback={
         <OauthShell>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Loading…</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">{t('page.loading-2')}</p>
         </OauthShell>
       }
     >

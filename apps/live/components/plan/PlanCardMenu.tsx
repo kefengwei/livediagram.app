@@ -5,6 +5,7 @@
 // Archive (or Restore), and Trash. Someone who
 // may only view gets Open alone. Built on the shared ContextMenu, so it opens at the click, re-clamps to
 // the window as it grows, is a bottom sheet on a phone and keeps the long-press grace, like the element menu.
+import { useTranslation } from '@/lib/i18n';
 import type { SyntheticEvent } from 'react';
 import { DuplicateIcon, PencilIcon, TrashIcon, PlanCardsIcon } from '@livediagram/ui';
 import { MenuActionRow, MenuGroupSeparator, MenuHeader } from '@/components/primitives/PortalMenu';
@@ -63,6 +64,7 @@ export function PlanCardMenu({
   onFlag: () => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const act = (fn: () => void) => () => {
     fn();
     onClose();
@@ -79,21 +81,21 @@ export function PlanCardMenu({
         e.stopPropagation();
       }}
     >
-      <ContextMenu position={at} label="Card menu" onClose={onClose}>
+      <ContextMenu position={at} label={t('plancardmenu.card-menu')} onClose={onClose}>
         <MenuHeader title={title} />
-        <MenuActionRow plain label="Open" icon={<PencilIcon />} onClick={act(onOpen)} />
+        <MenuActionRow plain label={t('plancardmenu.open')} icon={<PencilIcon />} onClick={act(onOpen)} />
         {canEdit ? (
           <>
             <MenuActionRow
               plain
-              label="Duplicate"
+              label={t('plancardmenu.duplicate')}
               icon={<DuplicateIcon />}
               onClick={act(onDuplicate)}
             />
             {onAddSlide ? (
               <MenuActionRow
                 plain
-                label="Add to Slides"
+                label={t('plancardmenu.add-to-slides')}
                 icon={<SlideDeckIcon />}
                 onClick={act(onAddSlide)}
               />
@@ -101,7 +103,7 @@ export function PlanCardMenu({
             {onEditType ? (
               <MenuActionRow
                 plain
-                label="Edit Card Type"
+                label={t('plancardmenu.edit-card-type')}
                 icon={<PlanCardsIcon size={16} />}
                 onClick={act(onEditType)}
               />
@@ -130,7 +132,7 @@ export function PlanCardMenu({
             <MenuGroupSeparator />
             <MenuActionRow
               plain
-              label={flagged ? 'Remove Flag' : 'Flag'}
+              label={flagged ? t('plancardmenu.remove-flag') : 'Flag'}
               icon={<PlanTypeGlyph glyph="flag" size={16} />}
               onClick={act(onFlag)}
             />
@@ -140,7 +142,7 @@ export function PlanCardMenu({
               icon={<PlanBoardTileArt preset="archive" size={16} />}
               onClick={act(onArchive)}
             />
-            <MenuActionRow plain label="Trash" icon={<TrashIcon />} onClick={act(onTrash)} />
+            <MenuActionRow plain label={t('plancardmenu.trash')} icon={<TrashIcon />} onClick={act(onTrash)} />
           </>
         ) : null}
       </ContextMenu>
@@ -162,6 +164,7 @@ export function PlanCardMenuHost({
   canEdit: boolean;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const item = plan.items.get(menu.itemId);
   if (!item) return null;
   const status = typeof item.fields['status'] === 'string' ? item.fields['status'] : '';
@@ -203,7 +206,7 @@ export function PlanCardMenuHost({
       onArchive={() => {
         const was = isArchived(item);
         plan.patchItem(item.id, was ? { clear: ['archived'] } : { set: { archived: true } });
-        plan.announce(was ? 'Card restored' : 'Card archived');
+        plan.announce(was ? t('plancardmenu.card-restored') : t('plancardmenu.card-archived'));
         if (was) track('Plan', 'Restored', 'Card');
         else track('Plan', 'Moved', 'Archive');
       }}

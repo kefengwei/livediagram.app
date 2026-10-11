@@ -6,6 +6,7 @@
 // only: Marker colour is the nine stock colours, Ink first; Custom colours, the tab's own, follow
 // only when the tab has any; then Marker width.
 
+import { useTranslation } from '@/lib/i18n';
 import { PenWidthIcon } from './whiteboard/PenWidthIcon';
 import type { QuickStyleApi } from '@/hooks/canvas/useQuickStyle';
 import type { PenColourChoice, PenWidthId, QuickPenStyle } from '@/lib/quick-style-pen';
@@ -26,13 +27,14 @@ export function QuickPenRows({
   quickStyle: QuickStyleApi;
   showTitles: boolean;
 }) {
+  const { t } = useTranslation();
   const surface = useCanvasSurface();
   const swatches = (options: QuickPenStyle['colour']['options']) =>
     options.map((o) => ({ ...o, content: null }));
   return (
     <>
       <QuickRadioRow
-        title="Marker colour"
+        title={t('quickpenrows.marker-colour')}
         testId="quick-style-marker-colour"
         showTitle={showTitles}
         options={swatches(pen.colour.options)}
@@ -53,7 +55,7 @@ export function QuickPenRows({
       />
       {pen.colour.custom.length > 0 ? (
         <QuickRadioRow
-          title="Custom colours"
+          title={t('quickpenrows.custom-colours')}
           testId="quick-style-marker-custom"
           showTitle={showTitles}
           options={swatches(pen.colour.custom)}
@@ -63,7 +65,7 @@ export function QuickPenRows({
         />
       ) : null}
       <QuickRadioRow
-        title="Marker width"
+        title={t('quickpenrows.marker-width')}
         testId="quick-style-marker-width"
         showTitle={showTitles}
         options={WHITEBOARD_PEN_WIDTHS.map((w) => ({

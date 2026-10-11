@@ -4,6 +4,7 @@
 // row's Title cell; a draft row tinted, with Save and Cancel in its Controls cell (for someone who may edit); and in a
 // column whose field has set values (Type, State, Priority, Assignee, a choice field) or a date, a dropdown arrow in
 // the active cell that picks one. Nothing is drawn over the frozen rows or columns a row has scrolled under.
+
 import { useRef, useState } from 'react';
 import { DateInput, Tooltip, lucideGlyph, openDatePicker } from '@livediagram/ui';
 import {
@@ -27,6 +28,7 @@ import { cardFieldChoice } from './card-field-options';
 import { cellBox } from './sheet-geometry';
 import { useSheetController, type SheetController } from './sheet-controller';
 import { cancelCardRow, saveCardRow } from './useCardTableSync';
+import { useTranslation } from '@/lib/i18n';
 
 const OpenGlyph = lucideGlyph(lucideExternalLink, 13);
 const SaveGlyph = lucideGlyph(lucideCheck, 14);
@@ -44,6 +46,7 @@ const OPEN_INSET_PX = 3;
 const stop = (e: { stopPropagation: () => void }) => e.stopPropagation();
 
 export function SheetCardRows() {
+  
   const c = useSheetController();
   const plan = usePlan();
   const tables = c.sheet.layout.cardTables;
@@ -67,6 +70,8 @@ function TableRows({
   plan: PlanContextValue;
   table: CardTable;
 }) {
+  const { t } = useTranslation();
+  
   const ix = layoutIndex(c.sheet.layout);
   const cols = table.cols
     .map((col) => ix.colPos.get(col.c))
@@ -104,7 +109,7 @@ function TableRows({
           onPointerDown={stop}
           onDoubleClick={stop}
         >
-          <RowButton c={c} quiet label="Open Card" onClick={() => plan.openItem(itemId)}>
+          <RowButton c={c} quiet label={t('sheetcardrows.open-card')} onClick={() => plan.openItem(itemId)}>
             <OpenGlyph />
           </RowButton>
         </div>
@@ -138,7 +143,7 @@ function TableRows({
             />
             <div
               role="group"
-              aria-label="Unsaved card row"
+              aria-label={t('sheetcardrows.unsaved-card-row')}
               className="absolute z-[8] flex items-center gap-1"
               style={{ left, top: a.y + (a.h - 24) / 2 }}
               onPointerDown={stop}
@@ -147,7 +152,7 @@ function TableRows({
               <RowButton
                 c={c}
                 primary
-                label={card ? 'Save Card' : 'Add Card'}
+                label={card ? t('sheetcardrows.save-card') : t('sheetcardrows.add-card')}
                 onClick={() => {
                   void saveCardRow(c, plan, table.id, r).then((ok) => ok && c.focusGrid());
                 }}
@@ -156,7 +161,7 @@ function TableRows({
               </RowButton>
               <RowButton
                 c={c}
-                label="Cancel Changes"
+                label={t('sheetcardrows.cancel-changes')}
                 onClick={() => {
                   cancelCardRow(c, plan, table.id, r);
                   c.focusGrid();
@@ -174,6 +179,8 @@ function TableRows({
 
 // The active cell's dropdown, when its column's field has set values or is a date.
 function ActiveCellChoice({ c, plan }: { c: SheetController; plan: PlanContextValue }) {
+  const { t } = useTranslation();
+  
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const dateRef = useRef<HTMLInputElement>(null);
   const { r, c: col } = c.selection.active;
@@ -271,9 +278,7 @@ function ActiveCellChoice({ c, plan }: { c: SheetController; plan: PlanContextVa
                 onPick={(o) => write({ i: { s: o } })}
               />
             ) : (
-              <p className="px-2 py-1.5 text-[12px] text-slate-500 dark:text-slate-400">
-                No choices yet.
-              </p>
+              <p className="px-2 py-1.5 text-[12px] text-slate-500 dark:text-slate-400">{t('sheetcardrows.no-choices-yet')}</p>
             )}
           </div>
         </AnchoredPopover>
@@ -306,6 +311,7 @@ function RowButton({
   onClick: () => void;
   children: React.ReactNode;
 }) {
+  
   // Save, in the brand colour: classes alone (white text on a brand fill carries its dark shade, never an inline
   // background).
   if (primary)

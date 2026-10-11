@@ -6,6 +6,7 @@
 // for, in the tab's own light or dark look. Blank comes first; the Archive board, never a first board, is
 // left to the palette. Choosing one places that board, empty, in the
 // middle of the view. Gone once the tab has a board; never shown to someone who may only view.
+import { useTranslation } from '@/lib/i18n';
 import { usePlan } from './PlanContext';
 import type { PlacedSheetStart } from '@/lib/sheet-seeds';
 import { useState } from 'react';
@@ -221,6 +222,7 @@ export function PlanBoardPicker({
   // Opens the regular Quick Start for this tab (a diagram template or another kind of tab instead).
   onQuickStart?: () => void;
 }) {
+  const { t } = useTranslation();
   const palette = planPalette(useCanvasSurface(), {});
   const [tab, setTab] = useState<PickerTab>('boards');
   const hasCards = (usePlan()?.items.size ?? 0) > 0;
@@ -259,19 +261,17 @@ export function PlanBoardPicker({
         style={{ backgroundColor: palette.card, borderColor: palette.border, color: palette.text }}
       >
         <div className="flex items-center gap-2">
-          <h2 id="plan-board-picker-title" className="text-[17px] font-semibold">
-            Start Planning
-          </h2>
+          <h2 id="plan-board-picker-title" className="text-[17px] font-semibold">{t('planboardpicker.start-planning')}</h2>
           <HelpArticleLink article="planBoards" variant="icon" />
         </div>
         <p className="mt-1 text-[13px]" style={{ color: palette.muted }}>
           {tab === 'boards'
-            ? 'Pick the board that fits the work. More are in the palette’s Boards whenever you need them.'
+            ? t('planboardpicker.pick-the-board-that-fits-the')
             : 'A spreadsheet beside your boards: cells, formulas, charts and your cards as rows.'}
         </p>
         <div
           role="tablist"
-          aria-label="Start Planning"
+          aria-label={t('planboardpicker.start-planning-2')}
           className="mt-3 inline-flex gap-0.5 rounded-lg p-0.5"
           style={{ backgroundColor: palette.column }}
         >
@@ -371,9 +371,7 @@ export function PlanBoardPicker({
                 ['--tw-ring-color' as string]: palette.focus,
               }}
             >
-              <SparkleIcon size={14} />
-              Open Quick Start
-            </button>
+              <SparkleIcon size={14} />{t('planboardpicker.open-quick-start')}</button>
           </div>
         ) : null}
       </section>

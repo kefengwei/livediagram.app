@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { BackBar } from '@/components/primitives/BackBar';
 import { Button } from '@livediagram/ui';
@@ -31,6 +32,7 @@ export function TextExportPanel({
   onCopied: () => void;
   onBack: () => void;
 }) {
+  const { t } = useTranslation();
   const [text, setText] = useState(initialText);
   const { copied, flash } = useCopiedFlash(1500);
 
@@ -51,7 +53,7 @@ export function TextExportPanel({
           style), the same control the New Document wizard's location step
           uses — not a small text link buried in the footer beside the
           commit button, where the way back sat next to the way forward. */}
-      <BackBar label="All formats" current={formatTitle} onClick={onBack} />
+      <BackBar label={t('textexportpanel.all-formats')} current={formatTitle} onClick={onBack} />
       <p className="mb-3 text-[11px] text-slate-500 dark:text-slate-400">{blurb}</p>
       <textarea
         value={text}

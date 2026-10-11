@@ -7,6 +7,8 @@
 // watching the bars move as people answer IS the reading, and it shows a
 // dissenter they are not alone before they have to say so out loud.
 
+
+import { useTranslation } from '@/lib/i18n';
 import {
   TEMPERATURE_VALUES,
   responseOf,
@@ -32,6 +34,7 @@ export function TemperatureFace({
   selfKey: string;
   onRespond?: (value: string) => void;
 }) {
+  const { t } = useTranslation();
   const responses = element.responses ?? [];
   const stats = responseStats(responses);
   const tally = responseTally(responses, TEMPERATURE_VALUES);
@@ -39,7 +42,7 @@ export function TemperatureFace({
   return (
     <CollabPanel
       element={element}
-      title={label.trim() || 'How are we feeling?'}
+      title={label.trim() || t('temperatureface.how-are-we-feeling')}
       textColor={textColor}
       aside={stats.count ? `${stats.count} answered` : undefined}
     >

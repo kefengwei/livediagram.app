@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { TrashIcon } from '@/components/primitives/explorer-icons';
 import { Button, HoverCard } from '@livediagram/ui';
 import type { ShareLink } from '@/lib/api-client';
@@ -21,6 +22,7 @@ export function ExpiredSharePass({
   onExtend: (code: string) => void;
   onDelete: (code: string) => Promise<void> | void;
 }) {
+  const { t } = useTranslation();
   const exit = usePassExit(() => onDelete(link.code));
   const duration = link.expiry === 'never' ? '' : EXPIRY_LABELS[link.expiry];
   return (
@@ -33,22 +35,20 @@ export function ExpiredSharePass({
     >
       <div className="flex items-center gap-2">
         <span className="inline-flex shrink-0 -rotate-3 items-center rounded border-2 border-rose-400 px-1.5 py-0.5 text-[10px] font-bold text-rose-600 dark:border-rose-500/70 dark:text-rose-300">
-          <span className="text-optical-line text-optical-caps uppercase tracking-widest">
-            Expired
-          </span>
+          <span className="text-optical-line text-optical-caps uppercase tracking-widest">{t('expiredsharepass.expired')}</span>
         </span>
         <input
           readOnly
           value={shareUrlFor(link.code)}
           onFocus={(e) => e.currentTarget.select()}
-          aria-label="Expired pass link"
+          aria-label={t('expiredsharepass.expired-pass-link')}
           className="min-w-0 flex-1 truncate bg-transparent px-1 py-0.5 font-mono text-[11px] text-slate-400 line-through outline-none"
         />
       </div>
       <div className="flex items-center gap-1.5">
         <HoverCard
           title={`Extend ${duration}`}
-          description="Reactivates this pass for another round of the lifetime chosen when it was issued, counted from now."
+          description={t('expiredsharepass.reactivates-this-pass-for-another-round')}
         >
           <Button
             variant="secondary"
@@ -65,7 +65,7 @@ export function ExpiredSharePass({
           type="button"
           onClick={exit.leave}
           disabled={busy || exit.ticket.leaving}
-          aria-label="Delete expired link"
+          aria-label={t('expiredsharepass.delete-expired-link')}
           className="rounded-md p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 disabled:opacity-50 dark:hover:bg-slate-800 dark:hover:text-slate-200"
         >
           <TrashIcon />

@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 // Bring Focus (docs/specs/012-collaboration/bring-focus.md): press it and everyone else in the room is offered a
 // jump to it, at your zoom, on your tab.
@@ -41,8 +42,9 @@ export function FocusButtonFace({
   // should see what the canvas is offering.
   onPress?: () => void;
 }) {
+  const { t } = useTranslation();
   const press = usePressWithoutDrag(onPress);
-  const text = label.trim() || 'Bring Focus';
+  const text = label.trim() || t('focusbuttonface.bring-focus');
   // The chip IS the button, in the same flow as the label rather than pinned
   // over it at a guessed percentage. A card-sized target would send the room
   // somewhere on a click meant to select or drag the element; an absolutely

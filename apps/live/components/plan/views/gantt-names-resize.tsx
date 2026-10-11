@@ -4,6 +4,7 @@
 // column's right edge, a vertical separator. Dragged, the columns follow the pointer as a preview and letting go
 // saves the width once; ← and → step it and save at once. Escape or a cancelled pointer drops a drag. Every press
 // stops here, so the canvas never moves the chart.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import {
   GANTT_NAMES_MIN_PX,
@@ -27,6 +28,7 @@ export function GanttNamesResizer({
   onPreview: (width: number | null) => void;
   onCommit: (width: number) => void;
 }) {
+  const { t } = useTranslation();
   const [active, setActive] = useState(false);
   const stop = useRef<(() => void) | null>(null);
   useEffect(() => () => stop.current?.(), []);
@@ -77,7 +79,7 @@ export function GanttNamesResizer({
     <div
       role="separator"
       aria-orientation="vertical"
-      aria-label="Resize Names Column"
+      aria-label={t('gantt-names-resize.resize-names-column')}
       aria-valuenow={Math.round(width)}
       aria-valuemin={GANTT_NAMES_MIN_PX}
       aria-valuemax={max}

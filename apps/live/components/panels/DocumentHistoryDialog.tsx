@@ -9,6 +9,7 @@
 // The document-level story: created, renamed, commented on, shared,
 // filed.
 
+import { useTranslation } from '@/lib/i18n';
 import { Dialog } from '@/components/dialogs/Dialog';
 import { DialogHeader } from '@livediagram/ui';
 import { DocumentTimeline } from './ScopedTimeline';
@@ -26,9 +27,10 @@ export function DocumentHistoryDialog({
   documentId: string | null;
   documentName: string | null;
 }) {
+  const { t } = useTranslation();
   return (
     <Dialog open={open} onClose={onClose} size="2xl" ariaLabel="Document history">
-      <DialogHeader title="History" subtitle={documentName ?? undefined} />
+      <DialogHeader title={t('documenthistorydialog.history')} subtitle={documentName ?? undefined} />
       <div className="max-h-[60vh] overflow-y-auto px-6 py-4">
         {/* Keyed on the id so switching rows remounts rather than
             showing the previous document's feed while the new one loads. */}

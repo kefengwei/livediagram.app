@@ -4,6 +4,7 @@
 // step joined by a line, the step's name beside it (under it on a narrow card, a container query on the card). The
 // current step's circle is filled in the brand colour and its name bold; a done step's circle holds a tick, the line
 // up to the current step is filled, and a done step is a button back to it; a step ahead is muted.
+import { useTranslation } from '@/lib/i18n';
 import { Fragment } from 'react';
 import { CheckIcon, GlyphDisc } from '@livediagram/ui';
 import type { PlanPalette } from './plan-palette';
@@ -20,8 +21,9 @@ export function SetupStepper<Id extends string>({
   palette: PlanPalette;
   onStep: (id: Id) => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <ol aria-label="Steps" className="@container flex items-start">
+    <ol aria-label={t('setupstepper.steps')} className="@container flex items-start">
       {steps.map((x, i) => {
         const current = i === at;
         const done = i < at;

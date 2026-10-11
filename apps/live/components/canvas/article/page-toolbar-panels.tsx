@@ -4,6 +4,7 @@
 // the text styles, the lists and indent, alignment, the colours (text and highlight together),
 // the less used formats under More, and the inserts. Each entry runs a command on the writing (or
 // asks the host to insert) and closes its menu.
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import {
   lucideCode,
@@ -128,8 +129,9 @@ export function StylePanel({
   selection: ArticleSelectionState;
   onStyle: (style: ArticleParagraphStyle | 'code') => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <div role="menu" aria-label="Text Style" className="flex flex-col">
+    <div role="menu" aria-label={t('page-toolbar-panels.text-style')} className="flex flex-col">
       {STYLE_OPTIONS.map((s) => (
         <MenuRow
           key={s.id}
@@ -160,8 +162,9 @@ export function ListPanel({
   onList: (list: ArticleListKind) => void;
   onIndent: (by: 1 | -1) => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <div role="menu" aria-label="Lists" className="flex flex-col">
+    <div role="menu" aria-label={t('page-toolbar-panels.lists')} className="flex flex-col">
       {LIST_OPTIONS.map((l) => {
         const Icon = PanelIcons[l.id];
         return (
@@ -179,13 +182,13 @@ export function ListPanel({
         <>
           <Rule />
           <Row
-            label="Increase indent"
+            label={t('page-toolbar-panels.increase-indent')}
             icon={<PanelIcons.indent />}
             keys="Tab"
             onPick={() => onIndent(1)}
           />
           <Row
-            label="Decrease indent"
+            label={t('page-toolbar-panels.decrease-indent')}
             icon={<PanelIcons.outdent />}
             keys="Shift-Tab"
             onPick={() => onIndent(-1)}
@@ -245,8 +248,9 @@ export function AlignPanel({
   selection: ArticleSelectionState;
   onAlign: (align: ArticleAlign) => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <div role="menu" aria-label="Alignment" className="flex flex-col">
+    <div role="menu" aria-label={t('page-toolbar-panels.alignment')} className="flex flex-col">
       {ALIGN_OPTIONS.map((a) => {
         const Icon = alignIcon(a.id);
         return (
@@ -286,6 +290,7 @@ export function ColourPanel({
   onColor: (color: string | null) => void;
   onHighlight: (color: string | null) => void;
 }) {
+  const { t } = useTranslation();
   const yours = useDocumentColours();
   const color = selection.color;
   const textValue =
@@ -293,18 +298,18 @@ export function ColourPanel({
   return (
     <div className="flex flex-col gap-3 p-1.5">
       <ColourPicker
-        label="Text colour"
+        label={t('page-toolbar-panels.text-colour')}
         value={textValue}
         leading={[
           noColour(DEFAULT_COLOUR, 'Default colour'),
-          { id: ACCENT, colour: accent, label: 'Accent' },
+          { id: ACCENT, colour: accent, label: t('page-toolbar-panels.accent') },
         ]}
         standard={[standardGroup('strong', 'light', 'hex')]}
         yours={yours}
         onPick={(id) => onColor(id === DEFAULT_COLOUR ? null : id === ACCENT ? accent : id)}
       />
       <ColourPicker
-        label="Highlight"
+        label={t('page-toolbar-panels.highlight')}
         value={selection.highlight ?? NO_HIGHLIGHT}
         leading={[noColour(NO_HIGHLIGHT, 'No highlight')]}
         standard={[
@@ -327,42 +332,43 @@ export function MorePanel({
   selection: ArticleSelectionState;
   onAction: (action: MoreAction) => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <div role="menu" aria-label="More Formatting" className="flex flex-col">
+    <div role="menu" aria-label={t('page-toolbar-panels.more-formatting')} className="flex flex-col">
       <Row
-        label="Strikethrough"
+        label={t('page-toolbar-panels.strikethrough')}
         icon={<PanelIcons.strike />}
         keys="Mod-Shift-x"
         selected={selection.marks.has('strike')}
         onPick={() => onAction('strike')}
       />
       <Row
-        label="Inline code"
+        label={t('page-toolbar-panels.inline-code')}
         icon={<PanelIcons.code />}
         keys="Mod-e"
         selected={selection.marks.has('code')}
         onPick={() => onAction('code')}
       />
       <Row
-        label="Superscript"
+        label={t('page-toolbar-panels.superscript')}
         icon={<PanelIcons.sup />}
         selected={selection.marks.has('sup')}
         onPick={() => onAction('sup')}
       />
       <Row
-        label="Subscript"
+        label={t('page-toolbar-panels.subscript')}
         icon={<PanelIcons.sub />}
         selected={selection.marks.has('sub')}
         onPick={() => onAction('sub')}
       />
       <Rule />
       <Row
-        label="Clear formatting"
+        label={t('page-toolbar-panels.clear-formatting')}
         icon={<PanelIcons.clear />}
         keys="Mod-\\"
         onPick={() => onAction('clear')}
       />
-      <Row label="Article style" icon={<PanelIcons.style />} onPick={() => onAction('style')} />
+      <Row label={t('page-toolbar-panels.article-style')} icon={<PanelIcons.style />} onPick={() => onAction('style')} />
     </div>
   );
 }
@@ -377,16 +383,17 @@ export function InsertPanel({
   onObject: (what: ObjectInsert) => void;
   onBlock: (what: BlockInsert) => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <div role="menu" aria-label="Insert" className="flex flex-col">
-      <Row label="Image" onPick={() => onObject('image')} />
-      <Row label="Table" onPick={() => onObject('table')} />
-      <Row label="Chart" onPick={() => onObject('chart')} />
+    <div role="menu" aria-label={t('page-toolbar-panels.insert')} className="flex flex-col">
+      <Row label={t('page-toolbar-panels.image')} onPick={() => onObject('image')} />
+      <Row label={t('page-toolbar-panels.table')} onPick={() => onObject('table')} />
+      <Row label={t('page-toolbar-panels.chart')} onPick={() => onObject('chart')} />
       <Rule />
-      <Row label="Divider" icon={<PanelIcons.divider />} onPick={() => onBlock('divider')} />
-      <Row label="Page break" icon={<PanelIcons.pageBreak />} onPick={() => onBlock('pageBreak')} />
-      <Row label="Quote" icon={<PanelIcons.quote />} onPick={() => onBlock('quote')} />
-      <Row label="Code" icon={<PanelIcons.codeBlock />} onPick={() => onBlock('code')} />
+      <Row label={t('page-toolbar-panels.divider')} icon={<PanelIcons.divider />} onPick={() => onBlock('divider')} />
+      <Row label={t('page-toolbar-panels.page-break')} icon={<PanelIcons.pageBreak />} onPick={() => onBlock('pageBreak')} />
+      <Row label={t('page-toolbar-panels.quote')} icon={<PanelIcons.quote />} onPick={() => onBlock('quote')} />
+      <Row label={t('page-toolbar-panels.code')} icon={<PanelIcons.codeBlock />} onPick={() => onBlock('code')} />
     </div>
   );
 }

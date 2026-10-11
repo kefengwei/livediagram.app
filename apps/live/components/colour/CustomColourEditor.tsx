@@ -7,6 +7,7 @@
 // reserved, so it never shifts the picker. Shared with the page background's custom colours
 // (page-background-custom.tsx), which preview each change and need no board warning.
 
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import { SOLID_BRAND_DARK_CONTROL, Tooltip, lucideGlyph } from '@livediagram/ui';
 import { lucideTriangleAlert } from '@livediagram/icons/lucide';
@@ -37,6 +38,7 @@ export function CustomColourEditor({
   // The hard-to-see warning for a marker on either board (a page background has no board).
   boardWarning?: boolean;
 }) {
+  const { t } = useTranslation();
   const [hsv, setHsv] = useState<Hsv>(() => hexToHsv(start ?? START_HEX) ?? hexToHsv(START_HEX)!);
   const hex = hsvToHex(hsv);
   const [text, setText] = useState(hex);
@@ -91,7 +93,7 @@ export function CustomColourEditor({
         ref={square}
         role="slider"
         tabIndex={0}
-        aria-label="Saturation and brightness"
+        aria-label={t('customcoloureditor.saturation-and-brightness')}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Math.round(hsv.s * 100)}
@@ -120,7 +122,7 @@ export function CustomColourEditor({
         min={0}
         max={359}
         value={Math.round(hsv.h)}
-        aria-label="Hue"
+        aria-label={t('customcoloureditor.hue')}
         onChange={(e) => set({ ...hsv, h: Number(e.target.value) })}
         className="h-3 w-full cursor-pointer appearance-none rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
         style={{
@@ -136,7 +138,7 @@ export function CustomColourEditor({
         <input
           type="text"
           value={text}
-          aria-label="Hex"
+          aria-label={t('customcoloureditor.hex')}
           spellCheck={false}
           onChange={(e) => {
             setText(e.target.value);
@@ -155,10 +157,10 @@ export function CustomColourEditor({
           className="h-7 w-24 rounded-md border border-slate-300 bg-transparent px-2 text-xs text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:border-slate-600 dark:text-slate-100"
         />
         {eyeDropper.supported ? (
-          <Tooltip label="Pick a colour from the screen">
+          <Tooltip label={t('customcoloureditor.pick-a-colour-from-the-screen')}>
             <button
               type="button"
-              aria-label="Pick a colour from the screen"
+              aria-label={t('customcoloureditor.pick-a-colour-from-the-screen-2')}
               onClick={async () => {
                 const picked = await eyeDropper.pick();
                 if (picked) setHex(picked);
@@ -173,9 +175,7 @@ export function CustomColourEditor({
           type="button"
           onClick={() => onUse(hex)}
           className={`ml-auto h-7 rounded-md bg-brand-600 px-3 text-xs font-medium text-white hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-1 dark:focus-visible:ring-offset-slate-900 ${SOLID_BRAND_DARK_CONTROL}`}
-        >
-          Use
-        </button>
+        >{t('customcoloureditor.use')}</button>
       </div>
       {/* The warning's line, always there so it never shifts the picker; empty until needed. */}
       {boardWarning ? (
@@ -187,7 +187,7 @@ export function CustomColourEditor({
           {readable ? (
             <>
               <WarningIcon aria-hidden />
-              <span>Hard to see on the {hard[0]} board.</span>
+              <span>{t('customcoloureditor.hard-to-see-on-the')}{hard[0]}{t('customcoloureditor.board')}</span>
               <Tooltip label={`Use ${readable}, readable on both boards`}>
                 <button
                   type="button"

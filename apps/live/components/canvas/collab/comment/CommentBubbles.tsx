@@ -3,6 +3,7 @@
 // else's on the left. Consecutive comments by one author group under one
 // name, the way a chat does, so a three-part remark reads as one voice.
 
+import { useTranslation } from '@/lib/i18n';
 import type { Comment } from '@livediagram/document';
 import { Glyph, GlyphDisc, IDENTITY_FILL, identityVars } from '@livediagram/ui';
 import { AuthorDisc } from '@/components/primitives/AuthorDisc';
@@ -51,6 +52,7 @@ export function CommentBubbles({
   freshFrom: number;
   onDelete?: (commentId: string) => void;
 }) {
+  const { t } = useTranslation();
   let index = 0;
   return (
     <ul className="flex flex-col gap-2.5">
@@ -114,7 +116,7 @@ export function CommentBubbles({
                         size={16}
                         as="button"
                         type="button"
-                        aria-label="Delete this comment"
+                        aria-label={t('commentbubbles.delete-this-comment')}
                         {...stopPointer}
                         onClick={(e: React.MouseEvent) => {
                           e.stopPropagation();

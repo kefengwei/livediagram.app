@@ -9,6 +9,7 @@
 // live turnout, the rules in force, and ONE primary button for the next
 // step, so the flow is always "press the big button".
 
+
 import { useState, type ReactNode } from 'react';
 import {
   VOTE_DOTS_RANGE,
@@ -22,6 +23,7 @@ import type { SessionToolsProps } from '@/components/chrome/session-tools-props'
 import { votePhase, voteTurnout, type VotePhase } from './session-studio';
 import { StudioButton, StudioCallout, StudioLabel, StudioSegmented } from './studio-ui';
 import { SOLID_BRAND_DARK, Glyph, GlyphDisc } from '@livediagram/ui';
+import { useTranslation } from '@/lib/i18n';
 
 type VotePaneProps = Pick<
   SessionToolsProps,
@@ -36,6 +38,7 @@ type VotePaneProps = Pick<
 > & { selfId: string };
 
 export function VotePane(props: VotePaneProps) {
+  
   return props.vote ? <LiveVote {...props} vote={props.vote} /> : <VoteSetupForm {...props} />;
 }
 
@@ -67,6 +70,8 @@ export function VoteSetupBody({
   dots: number;
   onDotsChange: (dots: number) => void;
 }) {
+  const { t } = useTranslation();
+  
   // Cursors hidden by default: the leak they cause is invisible to the
   // facilitator, so it's the safer default. Running counts shown by default,
   // because live tallies are how ordinary dot-voting works (docs/specs/012-collaboration/session-tools.md).
@@ -82,16 +87,16 @@ export function VoteSetupBody({
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-1.5">
-        <StudioLabel aside={`${dots} each`}>Dots per person</StudioLabel>
+        <StudioLabel aside={`${dots} each`}>{t('votepane.dots-per-person')}</StudioLabel>
         <DotBudgetPicker value={dots} onChange={onDotsChange} />
       </div>
       {/* With a single dot there is nothing to stack, so the choice would be
           a question with one answer. */}
       {dots > 1 ? (
         <div className="flex flex-col gap-1.5">
-          <StudioLabel>Dots per item</StudioLabel>
+          <StudioLabel>{t('votepane.dots-per-item')}</StudioLabel>
           <StudioSegmented
-            label="Dots per item"
+            label={t('votepane.dots-per-item-2')}
             value={stacking}
             onChange={setStacking}
             options={STACKING_OPTIONS}
@@ -99,41 +104,41 @@ export function VoteSetupBody({
           <span className="text-[10px] leading-snug text-slate-400">
             {stacking === 'one'
               ? `Each person backs ${dots} different items, one dot apiece.`
-              : 'People can pile several dots on one item they feel strongly about.'}
+              : t('votepane.people-can-pile-several-dots-on')}
           </span>
         </div>
       ) : null}
       {multiLayer ? (
         <div className="flex flex-col gap-1.5">
-          <StudioLabel>Votable layer</StudioLabel>
+          <StudioLabel>{t('votepane.votable-layer')}</StudioLabel>
           <StudioSegmented
-            label="Votable layer"
+            label={t('votepane.votable-layer-2')}
             value={layerId}
             onChange={setLayerId}
             options={[
-              { value: '', label: 'All layers' },
+              { value: '', label: t('votepane.all-layers') },
               ...voteLayers.map((l) => ({ value: l.id, label: l.name })),
             ]}
           />
           <span className="text-[10px] leading-snug text-slate-400">
             {layerId
-              ? 'Only this layer takes dots. The rest stay visible, dimmed.'
-              : 'Every votable element on the tab takes dots.'}
+              ? t('votepane.only-this-layer-takes-dots-the')
+              : t('votepane.every-votable-element-on-the-tab')}
           </span>
         </div>
       ) : null}
       <div className="flex flex-col gap-1.5">
-        <StudioLabel>Privacy</StudioLabel>
+        <StudioLabel>{t('votepane.privacy')}</StudioLabel>
         <PrivacyCard
           icon={<CursorOffGlyph />}
-          title="Hide cursors"
+          title={t('votepane.hide-cursors')}
           hint="Nobody can watch where others are pointing."
           checked={hideCursors}
           onToggle={() => setHideCursors((v) => !v)}
         />
         <PrivacyCard
           icon={<TallyOffGlyph />}
-          title="Hide running counts"
+          title={t('votepane.hide-running-counts')}
           hint="Totals stay secret until you reveal them."
           checked={hideCounts}
           onToggle={() => setHideCounts((v) => !v)}
@@ -149,9 +154,7 @@ export function VoteSetupBody({
             onePerElement: dots > 1 && stacking === 'one',
           })
         }
-      >
-        Start vote
-      </StudioButton>
+      >{t('votepane.start-vote')}</StudioButton>
     </div>
   );
 }
@@ -160,13 +163,15 @@ export function VoteSetupBody({
 // as what every participant will be handed, which a bare "3" stepper never
 // did.
 function DotBudgetPicker({ value, onChange }: { value: number; onChange: (n: number) => void }) {
+  const { t } = useTranslation();
+  
   const [hover, setHover] = useState<number | null>(null);
   const shown = hover ?? value;
   const count = VOTE_DOTS_RANGE.max - VOTE_DOTS_RANGE.min + 1;
   return (
     <div
       role="radiogroup"
-      aria-label="Dots per person"
+      aria-label={t('votepane.dots-per-person-2')}
       className="flex items-center rounded-lg bg-slate-50 px-1 py-1.5 dark:bg-slate-800/70"
       onPointerLeave={() => setHover(null)}
     >
@@ -211,6 +216,7 @@ function PrivacyCard({
   checked: boolean;
   onToggle: () => void;
 }) {
+  
   return (
     <button
       type="button"
@@ -248,9 +254,11 @@ const PHASES: { phase: Exclude<VotePhase, 'setup'>; label: string }[] = [
 ];
 
 function PhaseTrack({ phase }: { phase: VotePhase }) {
+  const { t } = useTranslation();
+  
   const at = PHASES.findIndex((p) => p.phase === phase);
   return (
-    <ol className="flex items-center" aria-label="Vote progress">
+    <ol className="flex items-center" aria-label={t('votepane.vote-progress')}>
       {PHASES.map((p, i) => {
         const done = i < at;
         const current = i === at;
@@ -303,19 +311,21 @@ function LiveVote({
   onRevealVote,
   onClearVote,
 }: VotePaneProps & { vote: TabVote }) {
+  const { t } = useTranslation();
+  
   const phase = votePhase(vote);
   const { dots, voters } = voteTurnout(vote);
   const host = isVoteHost(vote, selfId, facilitating);
   const rules = [
     `${vote.votesPerPerson} ${vote.votesPerPerson === 1 ? 'dot' : 'dots'} each`,
-    vote.onePerElement ? 'One per item' : null,
+    vote.onePerElement ? t('votepane.one-per-item') : null,
     vote.voteLayerId
-      ? `${voteLayers.find((l) => l.id === vote.voteLayerId)?.name ?? 'One layer'} only`
+      ? `${voteLayers.find((l) => l.id === vote.voteLayerId)?.name ?? t('votepane.one-layer')} only`
       : null,
     // Phase-aware: these read what is in force NOW (cursors come back the
     // moment voting closes), not what was ticked at start.
-    voteHidesCursors(vote) ? 'Cursors hidden' : null,
-    voteHidesTallies(vote) ? 'Counts hidden' : null,
+    voteHidesCursors(vote) ? t('votepane.cursors-hidden') : null,
+    voteHidesTallies(vote) ? t('votepane.counts-hidden') : null,
   ].filter((r): r is string => r !== null);
 
   return (
@@ -338,33 +348,25 @@ function LiveVote({
       {host ? (
         <div className="flex flex-col gap-1.5">
           {phase === 'casting' ? (
-            <StudioButton variant="primary" onClick={onEndVote}>
-              End vote
-            </StudioButton>
+            <StudioButton variant="primary" onClick={onEndVote}>{t('votepane.end-vote')}</StudioButton>
           ) : phase === 'closed' ? (
-            <StudioButton variant="primary" onClick={onRevealVote}>
-              Show results
-            </StudioButton>
+            <StudioButton variant="primary" onClick={onRevealVote}>{t('votepane.show-results')}</StudioButton>
           ) : (
-            <StudioButton variant="primary" onClick={onClearVote}>
-              Clear vote
-            </StudioButton>
+            <StudioButton variant="primary" onClick={onClearVote}>{t('votepane.clear-vote')}</StudioButton>
           )}
           {phase !== 'results' ? (
-            <StudioButton onClick={onClearVote}>Clear vote</StudioButton>
+            <StudioButton onClick={onClearVote}>{t('votepane.clear-vote-2')}</StudioButton>
           ) : null}
           <span className="text-center text-[10px] leading-snug text-slate-400">
             {phase === 'casting'
-              ? 'Ending keeps every dot; nobody can add more.'
+              ? t('votepane.ending-keeps-every-dot-nobody-can')
               : phase === 'closed'
-                ? 'Showing results walks the room through the winners, most dots first.'
-                : 'Clearing takes every dot off the canvas.'}
+                ? t('votepane.showing-results-walks-the-room-through')
+                : t('votepane.clearing-takes-every-dot-off-the')}
           </span>
         </div>
       ) : (
-        <StudioCallout>
-          Only the person who started this vote, or the facilitator, can move it on.
-        </StudioCallout>
+        <StudioCallout>{t('votepane.only-the-person-who-started-this')}</StudioCallout>
       )}
     </div>
   );

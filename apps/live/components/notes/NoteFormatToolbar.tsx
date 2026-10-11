@@ -8,6 +8,7 @@
 // Presentation + the link field only; every command is dispatched by the
 // editor, which owns the runs and the selection.
 
+import { useTranslation } from '@/lib/i18n';
 import { lucideList, lucideListOrdered } from '@livediagram/icons/lucide';
 import { useEffect, useRef, useState } from 'react';
 import type { ListStyle, RunBoolKey, RunHeading } from '@livediagram/document';
@@ -70,6 +71,7 @@ export function NoteFormatToolbar({
   // item's description); a toggle, so pressing the current one takes the list off.
   listButtons?: boolean;
 }) {
+  const { t } = useTranslation();
   const [linkOpen, setLinkOpen] = useState(false);
 
   const toggles = runToggles('bold', 'italic', 'underline');
@@ -120,10 +122,10 @@ export function NoteFormatToolbar({
             ))
           : null}
         {TOOLBAR_DIVIDER}
-        <HoverCard title="Link" description="Point the selected text at a web address.">
+        <HoverCard title={t('noteformattoolbar.link')} description={t('noteformattoolbar.point-the-selected-text-at-a')}>
           <button
             type="button"
-            aria-label="Link"
+            aria-label={t('noteformattoolbar.link-2')}
             aria-pressed={!!active.link}
             aria-expanded={linkOpen}
             onMouseDown={noFocusSteal}
@@ -160,6 +162,7 @@ function NoteLinkField({
   onApply: (url: string | null) => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const [value, setValue] = useState(initial ?? '');
   const [invalid, setInvalid] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -199,8 +202,8 @@ function NoteLinkField({
             onClose();
           }
         }}
-        placeholder="example.com"
-        aria-label="Link address"
+        placeholder={t('noteformattoolbar.example-com')}
+        aria-label={t('noteformattoolbar.link-address')}
         aria-invalid={invalid}
         className={`min-w-0 flex-1 rounded-md border bg-white px-2 py-1 text-xs text-slate-800 outline-none placeholder:text-slate-400 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 ${
           invalid
@@ -213,18 +216,14 @@ function NoteLinkField({
         onMouseDown={noFocusSteal}
         onClick={apply}
         className={`rounded-md bg-brand-600 px-2 py-1 text-xs font-medium text-white transition hover:bg-brand-700 ${SOLID_BRAND_DARK_CONTROL}`}
-      >
-        Apply
-      </button>
+      >{t('noteformattoolbar.apply')}</button>
       {initial ? (
         <button
           type="button"
           onMouseDown={noFocusSteal}
           onClick={() => onApply(null)}
           className="rounded-md px-2 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-        >
-          Remove
-        </button>
+        >{t('noteformattoolbar.remove')}</button>
       ) : null}
     </div>
   );

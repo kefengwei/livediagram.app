@@ -3,6 +3,7 @@
 // A Plan board's header (docs/specs/026-plan/board-widgets.md "The header"): the title, the board's
 // widgets, then Reveal and Retry when they apply, Maximise Board, and the list of items not on the board. The header's
 // own background is the board's handle: a press there moves the board, its controls do not.
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState } from 'react';
 import { useKeepOnScreen } from '@/hooks/plan/useKeepOnScreen';
 import {
@@ -81,6 +82,7 @@ export function PlanBoardHeader({
   // What ends the header at its top right: Maximise Board / Restore Board (MaximisedPlanLayer).
   end?: React.ReactNode;
 }) {
+  const { t } = useTranslation();
   const [trayOpen, setTrayOpen] = useState(false);
   const widgets = widgetsOf(setup);
   const ctx: WidgetContext = {
@@ -176,9 +178,7 @@ export function PlanBoardHeader({
               className={button}
               style={{ borderColor: palette.warning, color: palette.warning }}
               onClick={onRetry}
-            >
-              Couldn&rsquo;t load items · Retry
-            </button>
+            >{t('planboardheader.couldn-t-load-items-retry')}</button>
           ) : null}
           {setup.hideWriting && canEdit ? (
             <button
@@ -186,9 +186,7 @@ export function PlanBoardHeader({
               className={button}
               style={{ borderColor: palette.focus, color: palette.focus }}
               onClick={onReveal}
-            >
-              Reveal
-            </button>
+            >{t('planboardheader.reveal')}</button>
           ) : null}
         </div>
       ) : null}
@@ -208,11 +206,9 @@ export function PlanBoardHeader({
           style={{ backgroundColor: palette.card, borderColor: palette.border }}
           onPointerDown={stop}
           role="dialog"
-          aria-label="Items not on this board"
+          aria-label={t('planboardheader.items-not-on-this-board')}
         >
-          <div className="mb-1 px-1 text-[11px]" style={{ color: palette.muted }}>
-            Their status is none of this board&rsquo;s columns.
-          </div>
+          <div className="mb-1 px-1 text-[11px]" style={{ color: palette.muted }}>{t('planboardheader.their-status-is-none-of-this')}</div>
           {projection.unplaced.map((item) => {
             // Only the columns whose status the card's type uses (docs/specs/026-plan/item-types.md).
             const open = setup.columns.filter(
@@ -231,7 +227,7 @@ export function PlanBoardHeader({
                     value=""
                     onChange={(e) => e.target.value && onMoveUnplaced(item, e.target.value)}
                   >
-                    <option value="">Move to</option>
+                    <option value="">{t('planboardheader.move-to')}</option>
                     {open.map((c) => (
                       <option key={c.id} value={c.status}>
                         {c.name}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, type ComponentProps } from 'react';
 import type { Element } from '@livediagram/document';
 import type { DragState } from '@/lib/canvas';
@@ -38,6 +39,7 @@ export function ModifierHintBanner({
   // drag knows only what it is dragging, so the board comes from here.
   esBoard: boolean;
 }) {
+  const { t } = useTranslation();
   const shiftHeld = useShiftHeld();
   const movingNote = useInsertionDragInHand();
   const palette = usePaletteDragPreview();
@@ -51,7 +53,7 @@ export function ModifierHintBanner({
     // "Press", not "Hold": a window manager that claims Alt+press (Cinnamon's
     // default, and others') never lets the page see a drag that STARTED with
     // Alt down. Pressing it mid-drag always works, on every desktop.
-    return <Hint modifier="Alt">Press to insert it between two notes</Hint>;
+    return <Hint modifier="Alt">{t('modifierhintbanner.press-to-insert-it-between-two')}</Hint>;
   }
   if (!shiftHeld) return null;
   const message = shiftHintMessage(drag, selectedKind, hasElements);

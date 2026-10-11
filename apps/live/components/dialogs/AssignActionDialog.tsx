@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import { Button, CloseIcon, TextInput } from '@livediagram/ui';
 import type { ElementAction } from '@livediagram/document';
@@ -90,6 +91,7 @@ export function AssignActionDialog({
   onDelete,
   onClose,
 }: AssignActionDialogProps) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [assignee, setAssignee] = useState<PickableMember | null>(null);
@@ -214,13 +216,13 @@ export function AssignActionDialog({
               id="assign-action-title"
               className="text-lg font-semibold text-slate-900 dark:text-slate-50"
             >
-              {editing ? 'Edit Action' : 'Assign an Action'}
+              {editing ? t('assignactiondialog.edit-action') : t('assignactiondialog.assign-an-action')}
             </h2>
             <div className="-mr-1.5 -mt-0.5 flex items-center gap-0.5">
               <HelpArticleLink article="assignedActions" variant="icon" />
               <button
                 type="button"
-                aria-label="Close"
+                aria-label={t('assignactiondialog.close')}
                 onClick={onClose}
                 className="rounded p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
               >
@@ -230,35 +232,32 @@ export function AssignActionDialog({
           </div>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             {editing
-              ? 'Change what needs doing, or hand it to someone else.'
-              : 'Attach a piece of work to this element, for yourself or a teammate.'}
+              ? t('assignactiondialog.change-what-needs-doing-or-hand')
+              : t('assignactiondialog.attach-a-piece-of-work-to')}
           </p>
         </div>
 
         <div className="flex flex-col gap-4 px-6 py-5">
           <label className="flex flex-col gap-1.5">
-            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">
-              Action name
-            </span>
+            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">{t('assignactiondialog.action-name')}</span>
             <TextInput
               ref={nameRef}
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Confirm the retry budget"
+              placeholder={t('assignactiondialog.e-g-confirm-the-retry-budget')}
               maxLength={200}
             />
           </label>
 
           <label className="flex flex-col gap-1.5">
-            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">
-              Description <span className="font-normal text-slate-400">(optional)</span>
+            <span className="text-xs font-medium text-slate-700 dark:text-slate-200">{t('assignactiondialog.description')}<span className="font-normal text-slate-400">{t('assignactiondialog.optional')}</span>
             </span>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={3}
               maxLength={2000}
-              placeholder="Any detail the assignee needs…"
+              placeholder={t('assignactiondialog.any-detail-the-assignee-needs')}
               className="w-full resize-none rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-brand-400 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400"
             />
           </label>
@@ -297,17 +296,13 @@ export function AssignActionDialog({
                 // Informational, not a warning: access arrives with the
                 // invite acceptance, no owner action needed.
                 <>
-                  {assignee?.name} hasn&apos;t accepted the team invite yet; they&apos;ll get access
-                  to this document when they join.
-                </>
+                  {assignee?.name}{t('assignactiondialog.hasn-t-accepted-the-team-invite')}</>
               ) : (
                 <>
                   {assignee?.name}{' '}
                   {assigneeAccess === 'no'
-                    ? "can't open this document yet"
-                    : 'may not be able to open this document'}
-                  : share it or move it to the team library.
-                </>
+                    ? t('assignactiondialog.can-t-open-this-document-yet')
+                    : 'may not be able to open this document'}{t('assignactiondialog.share-it-or-move-it-to')}</>
               )}
             </p>
           ) : null}
@@ -319,7 +314,7 @@ export function AssignActionDialog({
               aria-pressed={notifyEmail}
               className="flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg border border-slate-200 px-3 py-2 text-left text-sm text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
             >
-              <span>Email {assignee?.name ?? 'them'} about this action</span>
+              <span>{t('assignactiondialog.email')}{assignee?.name ?? 'them'}{t('assignactiondialog.about-this-action')}</span>
               <ToggleSwitch
                 checked={notifyEmail}
                 label={`Email ${assignee?.name ?? 'them'} about this action`}
@@ -337,14 +332,12 @@ export function AssignActionDialog({
               onClick={() => (confirmingDelete ? onDelete() : setConfirmingDelete(true))}
               className="mr-auto"
             >
-              {confirmingDelete ? 'Confirm Delete' : 'Delete Action'}
+              {confirmingDelete ? t('assignactiondialog.confirm-delete') : t('assignactiondialog.delete-action')}
             </Button>
           ) : null}
-          <Button type="button" variant="secondary" onClick={onClose}>
-            Cancel
-          </Button>
+          <Button type="button" variant="secondary" onClick={onClose}>{t('assignactiondialog.cancel')}</Button>
           <Button type="submit" disabled={!canSubmit}>
-            {editing ? 'Save action' : 'Assign action'}
+            {editing ? t('assignactiondialog.save-action') : t('assignactiondialog.assign-action')}
           </Button>
         </DialogFooter>
       </form>

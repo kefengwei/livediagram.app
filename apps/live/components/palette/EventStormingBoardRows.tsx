@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { Glyph } from '@livediagram/ui';
 
 // The BOARD-level controls at the top of the palette's Event Storming category
@@ -21,6 +22,7 @@ export type EsBoardControls = {
 };
 
 export function EventStormingBoardRows({ controls }: { controls: EsBoardControls }) {
+  const { t } = useTranslation();
   return (
     <div className="mb-1.5 border-b border-slate-200 pb-1.5 dark:border-slate-700">
       {controls.onImportPhoto ? (
@@ -38,14 +40,12 @@ export function EventStormingBoardRows({ controls }: { controls: EsBoardControls
             <CameraIcon />
           </span>
           <span className="min-w-0 flex-1">
-            <span className="block text-[11px] font-semibold text-slate-700 dark:text-slate-200">
-              Add from photo
-            </span>
+            <span className="block text-[11px] font-semibold text-slate-700 dark:text-slate-200">{t('eventstormingboardrows.add-from-photo')}</span>
             {/* A disabled button takes no focus and may get no hover, so the
                 reason is the row's own second line rather than a hint. */}
             <span className="block text-[10px] leading-snug text-slate-500 dark:text-slate-400">
               {(controls.photoDisabled && controls.photoDisabledReason) ||
-                'Read the stickies off a photo of the wall'}
+                t('eventstormingboardrows.read-the-stickies-off-a-photo')}
             </span>
           </span>
         </button>

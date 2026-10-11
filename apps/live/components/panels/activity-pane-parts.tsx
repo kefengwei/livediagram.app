@@ -5,6 +5,7 @@
 // Lifted out of ActivityPane so the pane file keeps the data split and
 // the section order, and each piece here is one cohesive slice.
 
+
 import { ActivityIcon, TeamIcon } from '@/components/primitives/explorer-icons';
 import { CountBadge, IDENTITY_FILL, identityVars } from '@livediagram/ui';
 import Link from 'next/link';
@@ -31,6 +32,7 @@ import { helpArticleHref } from '@/lib/help-articles';
 import { initialsOf } from '@/lib/identity';
 import { formatRelativeTimeShort, useRelativeNow } from '@/lib/relative-time';
 import { LIST_CARD } from '@/components/primitives/surface-classes';
+import { useTranslation } from '@/lib/i18n';
 
 // One titled card-list. The container matches the List view's so the
 // page reads as an Explorer section rather than a panel that escaped
@@ -44,6 +46,7 @@ export function ActivitySection({
   count: number;
   children: ReactNode;
 }) {
+  
   return (
     <section className="mb-5">
       <h2 className="mb-2 flex items-center gap-2 px-1 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
@@ -66,6 +69,7 @@ export function ActivityActionRow({
   action: ActivityAction;
   onOpen: () => void;
 }) {
+  
   const assignee = action.assignedToMe ? 'You' : action.assignee.name?.trim() || 'Teammate';
   return (
     <ActivityRowShell
@@ -138,12 +142,14 @@ export function ActivityThreadRow({
 // number and title, where it sits, and the reader as its assignee. A custom type, whose name lives in its
 // document's catalogue, reads as a plain card.
 export function ActivityCardRow({ card, onOpen }: { card: ActivityCard; onOpen: () => void }) {
+  const { t } = useTranslation();
+  
   const type = ITEM_TYPES.find((t) => t.id === card.type);
   return (
     <ActivityRowShell
       href={cardDeepLinkHref(card)}
       place={card}
-      where={card.board ? `${card.board.title} · ${card.board.tabName}` : 'Not on a board'}
+      where={card.board ? `${card.board.title} · ${card.board.tabName}` : t('activity-pane-parts.not-on-a-board')}
       onOpen={onOpen}
       icon={<PlanTypeGlyph glyph={type?.glyph} size={16} />}
       title={`#${card.key} ${card.title}`}
@@ -168,12 +174,14 @@ export function ActivityCardThreadRow({
   thread: ActivityCardThread;
   onOpen: () => void;
 }) {
+  const { t } = useTranslation();
+  
   const type = ITEM_TYPES.find((t) => t.id === thread.type);
   return (
     <ActivityRowShell
       href={cardDeepLinkHref(thread)}
       place={thread}
-      where={thread.board ? `${thread.board.title} · ${thread.board.tabName}` : 'Not on a board'}
+      where={thread.board ? `${thread.board.title} · ${thread.board.tabName}` : t('activity-pane-parts.not-on-a-board-2')}
       onOpen={onOpen}
       icon={<PlanTypeGlyph glyph={type?.glyph} size={16} />}
       title={`#${thread.key} ${thread.title}`}
@@ -286,10 +294,12 @@ function PlaceChip({ place }: { place: DocumentPlace }) {
 // Nothing outstanding anywhere. No New Document CTA: a new document puts
 // nothing on this page; assigning an action or commenting does.
 export function ActivityEmptyState() {
+  const { t } = useTranslation();
+  
   return (
     <EmptyState
       icon={<ActivityIcon />}
-      title="Nothing waiting on you"
+      title={t('activity-pane-parts.nothing-waiting-on-you')}
       description="Open actions and Plan cards assigned to you, actions you assigned, and comment threads you're in, collect here across every document."
     >
       <a
@@ -297,28 +307,24 @@ export function ActivityEmptyState() {
         target="_blank"
         rel="noreferrer noopener"
         className={`inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-500 ${SOLID_BRAND_DARK_CONTROL}`}
-      >
-        How actions work
-      </a>
+      >{t('activity-pane-parts.how-actions-work')}</a>
     </EmptyState>
   );
 }
 
 // The read failed, which is NOT "nothing outstanding".
 export function ActivityFailedState({ onRetry }: { onRetry: () => void }) {
+  const { t } = useTranslation();
+  
   return (
     <div className="rounded-xl border border-dashed border-slate-300 px-6 py-10 text-center dark:border-slate-700">
-      <p className="text-sm font-medium text-slate-600 dark:text-slate-300">
-        Couldn&apos;t load your activity
-      </p>
-      <p className="mt-1 text-xs text-slate-400">Check your connection and try again.</p>
+      <p className="text-sm font-medium text-slate-600 dark:text-slate-300">{t('activity-pane-parts.couldn-t-load-your-activity')}</p>
+      <p className="mt-1 text-xs text-slate-400">{t('activity-pane-parts.check-your-connection-and-try-again')}</p>
       <button
         type="button"
         onClick={onRetry}
         className={`mt-3 inline-block rounded-md bg-brand-600 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-brand-500 ${SOLID_BRAND_DARK_CONTROL}`}
-      >
-        Try again
-      </button>
+      >{t('activity-pane-parts.try-again')}</button>
     </div>
   );
 }

@@ -20,6 +20,7 @@
 // works inside the pointer-inert Avatar / Spotlight / Isometric layers, and
 // pointer-down left alone so dragging still moves it.
 
+import { useTranslation } from '@/lib/i18n';
 import { useId } from 'react';
 import { usePressWithoutDrag } from '@/hooks/ui/usePressWithoutDrag';
 import { HoverCard } from '@livediagram/ui';
@@ -122,6 +123,7 @@ export function PortalFace({
   // Undefined when unlinked, or on a read-only surface with no viewport to move.
   onEnter?: () => void;
 }) {
+  const { t } = useTranslation();
   // The name is NOT drawn: a caption across the energy read as a sticker on a
   // window, and the ring is recognisable without one. It lives in the element
   // menu (PortalMenuSection), the hover cards here, and the accessible name.
@@ -132,8 +134,8 @@ export function PortalFace({
       <HoverCard
         block
         className="h-full w-full"
-        title="Portal (not linked)"
-        description="Right-click the portal and open Portal to pick the one it leads to."
+        title={t('portalface.portal-not-linked')}
+        description={t('portalface.right-click-the-portal-and-open')}
       >
         <div className="pointer-events-auto relative h-full w-full cursor-default">{face}</div>
       </HoverCard>
@@ -144,7 +146,7 @@ export function PortalFace({
       block
       className="h-full w-full"
       title={`Go to ${targetName ?? 'the linked portal'}`}
-      description="Click to travel, or walk your Avatar-mode character into it. The link works both ways."
+      description={t('portalface.click-to-travel-or-walk-your')}
     >
       <button
         type="button"

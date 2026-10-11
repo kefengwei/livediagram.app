@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { MenuFlyoutSection } from '@/components/primitives/MenuFlyoutSection';
 import { MenuCheckRow } from '@/components/primitives/MenuCheckRow';
 import { MenuHeader } from '@/components/primitives/PortalMenu';
@@ -12,9 +13,10 @@ import { DefaultKeyIcon, UseAsDefaultIcon } from './default-key-icons';
 // open as", each checkable. It stays open after a choice (blueprint D107), so several entries can be
 // set in one visit; the checks follow the store at once.
 export function UseAsDefaultMenu({ menu }: { menu: DefaultFolderMenu }) {
+  const { t } = useTranslation();
   return (
-    <MenuFlyoutSection plain flush title="Use as default for" icon={<UseAsDefaultIcon />}>
-      <MenuHeader title="New documents that open as" />
+    <MenuFlyoutSection plain flush title={t('useasdefaultmenu.use-as-default-for')} icon={<UseAsDefaultIcon />}>
+      <MenuHeader title={t('useasdefaultmenu.new-documents-that-open-as')} />
       {DEFAULT_KEY_ENTRIES.map((entry) => (
         <MenuCheckRow
           key={entry.key}

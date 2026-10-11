@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import type { ShapeLibrary, ShapeLibraryItem } from '@livediagram/api-schema';
 import { SearchInput } from '@/components/primitives/SearchInput';
@@ -28,6 +29,7 @@ export function myShapesSections(libraries: readonly ShapeLibrary[], query: stri
 }
 
 export function PaletteMyShapesTab({ onInsert }: { onInsert: (item: ShapeLibraryItem) => void }) {
+  const { t } = useTranslation();
   const { libraries } = useShapeLibraries();
   const [query, setQuery] = useState('');
   const sections = myShapesSections(libraries, query);
@@ -37,16 +39,14 @@ export function PaletteMyShapesTab({ onInsert }: { onInsert: (item: ShapeLibrary
         <SearchInput
           value={query}
           onChange={setQuery}
-          placeholder="Search my shapes"
+          placeholder={t('palettemyshapestab.search-my-shapes')}
           ariaLabel="Search my shapes"
           clearAriaLabel="Clear the shape search"
           clearDescription="Clear the search over your shapes."
         />
       </div>
       {sections.length === 0 ? (
-        <p className="px-1 py-2 text-center text-[11px] text-slate-500 dark:text-slate-400">
-          No shapes match
-        </p>
+        <p className="px-1 py-2 text-center text-[11px] text-slate-500 dark:text-slate-400">{t('palettemyshapestab.no-shapes-match')}</p>
       ) : (
         <div className="flex max-h-80 flex-col gap-3 overflow-y-auto overflow-x-hidden">
           {sections.map(({ library, shapes }) => {

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { onPaletteCategoryRequest } from '@/lib/palette-category-request';
 import type { Element, PageKind } from '@livediagram/document';
 import { AddPageStripButton } from './AddPageStripButton';
@@ -21,7 +22,7 @@ import { TOOLBAR_CARD } from '@/components/chrome/toolbar-surface';
 import { PaletteTintProvider } from './palette-controls';
 import { PaletteGroupProvider } from './palette-group-state';
 import { PaletteDropdown, TOOLBAR_TRIGGER_TONE } from './PaletteDropdown';
-import { CATEGORY_BANDS } from './palette-category-bands';
+import { CATEGORY_BAND_KEYS } from './palette-category-bands';
 import { EsPhotoStripButton } from './EsPhotoStripButton';
 import { PaletteTile } from './PaletteTileGrid';
 import { usePlan } from '@/components/plan/PlanContext';
@@ -127,6 +128,7 @@ function Divider() {
 }
 
 export function ToolbarPalette(props: Props) {
+  const { t } = useTranslation();
   const { canvasTool, esBoard, themeTint, pendingDraw, hidden, leading } = props;
   // The strip's two popovers (ToolbarStripPopover): only the popover and its own button count as
   // inside, so pressing anything else on the strip closes it.
@@ -353,7 +355,11 @@ export function ToolbarPalette(props: Props) {
                       autoHeight
                       grid
                       menuClassName=""
-                      groupLabels={{ 0: 'Edit', 1: 'Present', 2: 'Preview' }}
+                      groupLabels={{
+                          0: t('toolbarpalette.group.edit'),
+                          1: t('toolbarpalette.group.present'),
+                          2: t('toolbarpalette.group.preview'),
+                        }}
                       onChange={onCanvasToolChange}
                       options={canvasToolOptions}
                     />
@@ -374,11 +380,14 @@ export function ToolbarPalette(props: Props) {
                         autoHeight
                         grid
                         menuClassName=""
-                        groupLabels={CATEGORY_BANDS}
+                        groupLabels={Object.fromEntries(
+                          Object.entries(CATEGORY_BAND_KEYS).map(([band, key]) => [band, t(key)]),
+                        )}
                         onChange={switchCategory}
                         options={tabs.map((tab) => ({
                           id: tab.id,
                           label: tab.label,
+                          labelKey: tab.labelKey,
                           icon: tab.icon,
                           group: tab.group,
                           fullWidth: tab.fullWidth,
@@ -441,7 +450,7 @@ export function ToolbarPalette(props: Props) {
                     ) : (
                       <HoverCard
                         title={`More ${category?.label ?? ''}`.trim()}
-                        description={category?.description ?? 'Everything in this category.'}
+                        description={category?.description ?? t('toolbarpalette.everything-in-this-category')}
                       >
                         {moreButton}
                       </HoverCard>
@@ -493,7 +502,7 @@ export function ToolbarPalette(props: Props) {
               right={search.right}
               isMobile={isMobile}
               scale={scale}
-              label="Search Elements"
+              label={t('toolbarpalette.search-elements')}
               dataAttr="data-toolbar-search"
             >
               <ToolbarSearchPanel

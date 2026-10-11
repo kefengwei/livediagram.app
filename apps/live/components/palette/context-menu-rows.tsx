@@ -5,6 +5,7 @@
 // EditorContextMenu.tsx to keep that file focused on the menu's structure.
 // Each is purely presentational: props in, JSX out, with every action a
 // callback. Siblings of context-menu-tiles.tsx / context-menu-icons.tsx.
+
 import { type ReactNode } from 'react';
 import { SHAPE_MARKERS, type ShapeMarker, type TextSize } from '@livediagram/document';
 
@@ -26,6 +27,7 @@ import { lucideGlyph } from '@livediagram/ui';
 import { lucideCircleDot } from '@livediagram/icons/lucide';
 import { MENU_ICON_PX } from '@/components/palette/context-menu-icons';
 import { TOOLBAR_CONTROL_REST } from '@/components/chrome/toolbar-surface';
+import { useTranslation } from '@/lib/i18n';
 
 // Data-shape rows (rail / rating / pie / progress editors + AnimTiles)
 // live in context-menu-data-rows.tsx; re-exported so importers keep
@@ -61,6 +63,7 @@ export function BorderGrid({
   cols: 3 | 4 | 5;
   children: ReactNode;
 }) {
+  
   const colClass = cols === 5 ? 'grid-cols-5' : cols === 4 ? 'grid-cols-4' : 'grid-cols-3';
   return (
     <div className="mb-1.5 last:mb-0">
@@ -98,6 +101,8 @@ export function MarkerTiles({
   onPreviewSize?: (v: TextSize) => void;
   onPreviewEnd?: () => void;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <>
       <div className="grid grid-cols-3 gap-1 px-2 py-1.5">
@@ -129,7 +134,7 @@ export function MarkerTiles({
         }
         aria-hidden={marker ? undefined : true}
       >
-        <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">Size</p>
+        <p className="px-3 pb-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('context-menu-rows.size')}</p>
         <TextSizeTiles
           current={size}
           onSet={onSetSize}
@@ -153,9 +158,11 @@ export function OpacityRow({
   value: number;
   onChange: (opacity: number) => void;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <PercentSliderRow
-      label="Opacity"
+      label={t('context-menu-rows.opacity')}
       pct={Math.round(value * 100)}
       onPct={(p) => onChange(p / 100)}
     />
@@ -174,6 +181,7 @@ export function TextToggle({
   onClick: () => void;
   children: ReactNode;
 }) {
+  
   return (
     <button
       type="button"

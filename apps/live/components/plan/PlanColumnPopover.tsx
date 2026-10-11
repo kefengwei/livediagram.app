@@ -5,6 +5,7 @@
 // Done (a switch); move left or right; add a
 // column after it (the column picker: an existing status, or a new one); remove it, first asking where its cards go when it has any. Each change is one
 // element edit, made as it happens. Escape or an outside press closes it; on a phone it is a sheet.
+import { useTranslation } from '@/lib/i18n';
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   COLUMN_WIDTHS,
@@ -102,6 +103,7 @@ export function PlanColumnPopover({
   // Delete Status: the state's columns come off the document's other boards too.
   onDeleteStatus?: ((status: string) => void) | undefined;
 }) {
+  const { t } = useTranslation();
   const mobile = useIsMobileViewport();
   const box = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
@@ -190,7 +192,7 @@ export function PlanColumnPopover({
         />
         <input
           id={`column-${column.id}-name`}
-          aria-label="Column name"
+          aria-label={t('plancolumnpopover.column-name')}
           className="min-w-0 flex-1 rounded-md border border-transparent bg-transparent px-1.5 py-1 text-[14px] font-semibold text-slate-800 outline-none transition hover:border-slate-200 focus:border-brand-400 focus:bg-white dark:text-slate-100 dark:hover:border-slate-700 dark:focus:bg-slate-950"
           defaultValue={column.name}
           maxLength={COLUMN_NAME_MAX}
@@ -223,16 +225,15 @@ export function PlanColumnPopover({
           role="alert"
           className="border-b border-slate-100 px-3 py-2 text-[12px] text-amber-700 dark:border-slate-800 dark:text-amber-300"
         >
-          A {renameClash} state already exists. Add it from Add Column, so its cards show here.
-        </p>
+          A {renameClash}{t('plancolumnpopover.state-already-exists-add-it-from')}</p>
       ) : null}
       <div className="flex flex-col gap-3 px-3 py-3">
         <div>
-          <span className={LABEL}>Colour</span>
+          <span className={LABEL}>{t('plancolumnpopover.colour')}</span>
           {/* The one colour picker (docs/specs/004-interface-design/colour-picker.md): No colour first, the
               strong standard colours for light paper, then Custom colours with the board's column colours. */}
           <ColourPicker
-            label="Colour"
+            label={t('plancolumnpopover.colour-2')}
             value={column.color ?? NO_COLOUR}
             leading={NO_COLOUR_OPTION}
             standard={COLUMN_STANDARD}
@@ -250,17 +251,15 @@ export function PlanColumnPopover({
             <label
               htmlFor={`column-${column.id}-wip`}
               className="block text-[13px] text-slate-700 dark:text-slate-200"
-            >
-              WIP Limit
-            </label>
+            >{t('plancolumnpopover.wip-limit')}</label>
             <p className="text-[11px] text-slate-500 dark:text-slate-400">
-              {wip ? `Warns past ${wip} cards` : 'No limit'}
+              {wip ? `Warns past ${wip} cards` : t('plancolumnpopover.no-limit')}
             </p>
           </div>
           <div className="flex h-8 shrink-0 items-stretch overflow-hidden rounded-md border border-slate-200 dark:border-slate-700">
             <button
               type="button"
-              aria-label="Lower the WIP limit"
+              aria-label={t('plancolumnpopover.lower-the-wip-limit')}
               disabled={!wip}
               className={STEP}
               onClick={() => setWip(wip && wip > 1 ? wip - 1 : null)}
@@ -273,7 +272,7 @@ export function PlanColumnPopover({
               inputMode="numeric"
               min={1}
               max={WIP_LIMIT_MAX}
-              placeholder="Off"
+              placeholder={t('plancolumnpopover.off')}
               key={wip ?? 'none'}
               className="w-11 border-x border-slate-200 bg-transparent text-center text-[13px] tabular-nums text-slate-800 outline-none [appearance:textfield] focus:bg-brand-50 dark:border-slate-700 dark:text-slate-100 dark:focus:bg-brand-500/10 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               defaultValue={wip ?? ''}
@@ -284,7 +283,7 @@ export function PlanColumnPopover({
             />
             <button
               type="button"
-              aria-label="Raise the WIP limit"
+              aria-label={t('plancolumnpopover.raise-the-wip-limit')}
               disabled={(wip ?? 0) >= WIP_LIMIT_MAX}
               className={STEP}
               onClick={() => setWip((wip ?? 0) + 1)}
@@ -295,12 +294,12 @@ export function PlanColumnPopover({
         </div>
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <span className="block text-[13px] text-slate-700 dark:text-slate-200">Width</span>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">Slots across the board</p>
+            <span className="block text-[13px] text-slate-700 dark:text-slate-200">{t('plancolumnpopover.width')}</span>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">{t('plancolumnpopover.slots-across-the-board')}</p>
           </div>
           <div
             role="radiogroup"
-            aria-label="Column width"
+            aria-label={t('plancolumnpopover.column-width')}
             className="flex h-8 shrink-0 overflow-hidden rounded-md border border-slate-200 dark:border-slate-700"
           >
             {COLUMN_WIDTHS.map((w) => {
@@ -331,12 +330,8 @@ export function PlanColumnPopover({
           checked={done}
           onChange={(on) => onChange(setDoneColumn(setup, column.id, on), 'DoneColumn')}
         >
-          <span className="block text-[13px] text-slate-700 dark:text-slate-200">
-            Counts as Done
-          </span>
-          <span className="block text-[11px] text-slate-500 dark:text-slate-400">
-            Counts toward the board’s progress
-          </span>
+          <span className="block text-[13px] text-slate-700 dark:text-slate-200">{t('plancolumnpopover.counts-as-done')}</span>
+          <span className="block text-[11px] text-slate-500 dark:text-slate-400">{t('plancolumnpopover.counts-toward-the-board-s-progress')}</span>
         </SwitchRow>
       </div>
       <div className="border-t border-slate-100 px-1.5 py-1.5 dark:border-slate-800">
@@ -347,18 +342,14 @@ export function PlanColumnPopover({
           disabled={at <= 0}
           onClick={() => onChange(moveColumn(setup, column.id, -1), 'ColumnReordered')}
         >
-          <ChevronLeftIcon size={16} className="text-slate-400" />
-          Move Left
-        </button>
+          <ChevronLeftIcon size={16} className="text-slate-400" />{t('plancolumnpopover.move-left')}</button>
         <button
           type="button"
           className={ROW}
           disabled={at >= setup.columns.length - 1}
           onClick={() => onChange(moveColumn(setup, column.id, 1), 'ColumnReordered')}
         >
-          <ChevronRightIcon size={16} className="text-slate-400" />
-          Move Right
-        </button>
+          <ChevronRightIcon size={16} className="text-slate-400" />{t('plancolumnpopover.move-right')}</button>
         <button
           ref={addButton}
           type="button"
@@ -369,9 +360,7 @@ export function PlanColumnPopover({
           aria-expanded={adding}
           onClick={() => setAdding((a) => !a)}
         >
-          <PlusIcon size={16} className="text-slate-400" />
-          Add Column After
-        </button>
+          <PlusIcon size={16} className="text-slate-400" />{t('plancolumnpopover.add-column-after')}</button>
         {adding && added ? (
           <AddColumnPickerPopover
             anchor={addButton}
@@ -412,9 +401,7 @@ export function PlanColumnPopover({
               onClose(false);
             }}
           >
-            <ColumnOffIcon />
-            Remove Column
-          </button>
+            <ColumnOffIcon />{t('plancolumnpopover.remove-column')}</button>
         ) : null}
         {others.length > 0 ? (
           <button
@@ -431,9 +418,7 @@ export function PlanColumnPopover({
               }
             }}
           >
-            <TrashIcon size={16} />
-            Delete Status
-          </button>
+            <TrashIcon size={16} />{t('plancolumnpopover.delete-status')}</button>
         ) : null}
         {removingAt ? (
           <RemoveColumnPopover

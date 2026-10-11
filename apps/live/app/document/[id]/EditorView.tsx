@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { CanvasFocusProvider } from '@/hooks/canvas/useCanvasFocus';
 import dynamic from 'next/dynamic';
 import { CommentBadgesContext } from '@/components/canvas/CommentBadgesContext';
@@ -105,6 +106,7 @@ const SIGNIN_BANNER_DELAY_MS = 5 * 60_000;
 // threads ~150 props through this JSX. The JSX is verbatim; only its
 // scope changed from the page's locals to the destructured context.
 export function EditorView() {
+  const { t } = useTranslation();
   const ctx = useEditorContext();
   // Offline Mode (docs/specs/006-document/offline-mode.md): a document saved only in this browser. Drives the
   // "Local only" header badge and hides server-only actions (Share).
@@ -241,7 +243,7 @@ export function EditorView() {
   // so there is nothing to explain.
   const facilitatorName =
     facilitator.sessionToolsBlocked && facilitator.facilitatorId
-      ? (livePresence.find((p) => p.id === facilitator.facilitatorId)?.name ?? 'Someone else')
+      ? (livePresence.find((p) => p.id === facilitator.facilitatorId)?.name ?? t('editorview.someone-else'))
       : null;
   const selectTab = useSelectTab();
   // Contextual command palette for the SearchPanel "Actions" group (docs/specs/008-canvas/canvas-and-palette.md):
@@ -521,12 +523,10 @@ export function EditorView() {
                                   type="button"
                                   onClick={cancelConnect}
                                   className="pointer-events-auto flex items-center gap-2 rounded-full border border-brand-300 bg-brand-50 px-3 py-1.5 text-xs font-medium text-brand-700 shadow-sm transition hover:bg-brand-100 dark:border-brand-500/40 dark:bg-brand-500/15 dark:text-brand-200"
-                                >
-                                  Click a shape to connect the arrow
-                                  <span className="text-brand-300" aria-hidden>
+                                >{t('editorview.click-a-shape-to-connect-the')}<span className="text-brand-300" aria-hidden>
                                     |
                                   </span>
-                                  <span className="text-brand-500 dark:text-brand-300">Cancel</span>
+                                  <span className="text-brand-500 dark:text-brand-300">{t('editorview.cancel')}</span>
                                 </button>
                               </div>
                             ) : null}

@@ -7,6 +7,7 @@
 // same component draws PEERS' characters (from their presence snapshot), which
 // is why every animation input is a prop rather than read from the walk hook.
 
+import { useTranslation } from '@/lib/i18n';
 import { IDENTITY_FILL, identityVars } from '@livediagram/ui';
 import { avatarScale, type AvatarConfig } from '@/lib/avatar-config';
 import type { AvatarFacing } from '@/lib/avatar-walk';
@@ -57,6 +58,7 @@ export function AvatarWalker({
   // Stand up from a chair (docs/specs/009-elements/chair.md). Absent for peers' characters.
   onStand?: () => void;
 }) {
+  const { t } = useTranslation();
   const scale = avatarScale(config.size);
   const box = avatarBox(scale);
   return (
@@ -132,9 +134,7 @@ export function AvatarWalker({
               onStand();
             }}
             className="pointer-events-auto absolute left-1/2 top-full -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-full bg-slate-900/85 px-2 py-0.5 text-[10px] font-medium text-white shadow-sm"
-          >
-            Stand
-          </button>
+          >{t('avatarwalker.stand')}</button>
         ) : null}
       </div>
     </>

@@ -1,5 +1,6 @@
 'use client';
 
+import type { MessageKey } from '@/lib/i18n';
 import { Fragment, useCallback, useEffect, useRef, type ReactNode } from 'react';
 import { SettingsPresetSummaryRow } from './SettingsPresetSummaryRow';
 import type { SettingsCategoryId } from './settings-icons';
@@ -280,10 +281,12 @@ function FocusRing({
   );
 }
 
-const APPEARANCE_OPTIONS = [
-  { id: 'light', label: 'Light' },
-  { id: 'dark', label: 'Dark' },
-  { id: 'system', label: 'System' },
+// Keys, not English: this table is module scope and has no `t` to call
+// (docs/specs/004-interface-design/localization.md). The row translates them.
+const APPEARANCE_OPTIONS: { id: string; label: string; labelKey: MessageKey }[] = [
+  { id: 'light', label: 'Light', labelKey: 'settings.appearance.light' },
+  { id: 'dark', label: 'Dark', labelKey: 'settings.appearance.dark' },
+  { id: 'system', label: 'System', labelKey: 'settings.appearance.system' },
 ];
 
 // Appearance is the one row backed by its own device-local store rather than

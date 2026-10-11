@@ -1,3 +1,5 @@
+
+import { useTranslation } from '@/lib/i18n';
 import { usePlan } from '@/components/plan/PlanContext';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { DialogCloseButton, DialogHeader } from '@livediagram/ui';
@@ -222,6 +224,7 @@ export function ExportTabDialog({
   offerHiddenLayers = true,
   pages,
 }: ExportTabDialogProps) {
+  const { t } = useTranslation();
   // Plan boards and cards export with their items (docs/specs/026-plan/plan-board.md).
   const plan = usePlan();
   // Keyed on the items and types alone: the context value also changes with presence and the open item.
@@ -269,7 +272,7 @@ export function ExportTabDialog({
       CARDS.filter((c) => c.kind !== 'logo-kit');
 
   const isSelection = scope === 'selection';
-  const suffix = isSelection ? ' - selection' : '';
+  const suffix = isSelection ? t('exporttabdialog.selection') : '';
   const baseName = sanitizeFilename(
     `${documentName || 'document'} - ${tab.name || 'tab'}${suffix}`,
   );
@@ -386,7 +389,7 @@ export function ExportTabDialog({
       track('Document', 'Exported', EXPORT_LABEL[format]);
       onClose();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Export failed.');
+      setError(e instanceof Error ? e.message : t('exporttabdialog.export-failed'));
       setBusy(false);
     }
   };
@@ -394,25 +397,25 @@ export function ExportTabDialog({
   const activeCard = active ? CARDS.find((c) => c.kind === active) : null;
   const subtitle = activeCard
     ? active === 'logo-kit'
-      ? 'Download a logo page as an SVG, PNGs and a favicon.'
+      ? t('exporttabdialog.download-a-logo-page-as-an')
       : isTextFormat(active!)
         ? `Copy this tab as ${activeCard.title}, or download a file.`
         : `Set the image options for ${activeCard.title}, then download.`
     : isSelection
-      ? 'Pick a format to export the selected elements.'
+      ? t('exporttabdialog.pick-a-format-to-export-the')
       : pages
-        ? 'Pick a format to export the pages.'
-        : 'Pick a format to export the current tab.';
+        ? t('exporttabdialog.pick-a-format-to-export-the-2')
+        : t('exporttabdialog.pick-a-format-to-export-the-3');
 
   return (
     <Dialog
       open
       onClose={onClose}
-      ariaLabel={isSelection ? 'Export selection' : 'Export tab'}
+      ariaLabel={isSelection ? t('exporttabdialog.export-selection') : t('exporttabdialog.export-tab')}
       size="xl"
       className="max-h-[90vh]"
     >
-      <DialogHeader title={isSelection ? 'Export selection' : 'Export tab'} subtitle={subtitle}>
+      <DialogHeader title={isSelection ? t('exporttabdialog.export-selection-2') : t('exporttabdialog.export-tab-2')} subtitle={subtitle}>
         <HelpArticleLink article="exportingDiagrams" size="md" />
         <DialogCloseButton onClick={onClose} />
       </DialogHeader>

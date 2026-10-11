@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 import { truncateName } from '@livediagram/document';
 import dynamic from 'next/dynamic';
@@ -93,6 +94,7 @@ const PENDING_SELF: Participant = {
 };
 
 export default function NewDocumentPage() {
+  const { t } = useTranslation();
   // Stable placeholder so the first paint matches the SSG render; the
   // real participant lands once the identity has resolved.
   // Clerk wiring (token provider + guest to authed migration), the same
@@ -235,7 +237,7 @@ export default function NewDocumentPage() {
   };
 
   useEffect(() => {
-    document.title = 'New document | livediagram';
+    document.title = t('page.new-document-livediagram');
     // Fetch the editor's chunk while identity + the create run. Fire-and-forget: a failure here
     // just leaves `dynamic` to retry the import at handoff.
     loadEditor().catch(() => {});

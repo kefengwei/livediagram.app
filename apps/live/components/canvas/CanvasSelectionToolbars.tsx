@@ -1,3 +1,5 @@
+
+import { useTranslation } from '@/lib/i18n';
 import { useCallback } from 'react';
 import { useCommentBadges } from './CommentBadgesContext';
 import { useViewportOf } from '@/hooks/canvas/useViewportStore';
@@ -45,6 +47,7 @@ export function CanvasSelectionToolbars({
   // popover fades out (kept mounted) so it animates away and back.
   quickRingOpen: boolean;
 }) {
+  const { t } = useTranslation();
   const {
     selected,
     selectionBounds,
@@ -121,7 +124,7 @@ export function CanvasSelectionToolbars({
             canvasOffset={viewportOffset}
             zoom={viewportZoom}
             suspended={moving}
-            title={selected ? `Selected ${elementKindLabel(selected)}` : 'Selected Element'}
+            title={selected ? `Selected ${elementKindLabel(selected)}` : t('canvasselectiontoolbars.selected-element')}
             // In view-only mode we mount the popover with just
             // `onOpenComments`: visitors should be able to read +
             // post comments on a document they don't own, but no

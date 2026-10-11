@@ -2,6 +2,7 @@
 
 // The Gantt chart's header controls (docs/specs/026-plan/plan-views.md "Scale", "Scrolling the timeline"):
 // Today, the window's steps, and the scale as a pressed one of Month, Quarter and Year.
+import { useTranslation } from '@/lib/i18n';
 import { GANTT_SCALES, GANTT_SCALE_LABELS } from '@livediagram/items';
 import { ChevronLeftIcon, ChevronRightIcon } from '@livediagram/ui';
 import { track } from '@/lib/telemetry';
@@ -16,20 +17,19 @@ export function GanttScaleControls({
   timeline: ReturnType<typeof useGanttWindow>;
   palette: PlanPalette;
 }) {
+  const { t } = useTranslation();
   return (
     <>
-      <ViewStepButton label="Today" onPress={timeline.today} palette={palette}>
-        Today
-      </ViewStepButton>
-      <ViewStepButton label="Earlier" onPress={() => timeline.step(-1)} palette={palette}>
+      <ViewStepButton label={t('ganttscalecontrols.today')} onPress={timeline.today} palette={palette}>{t('ganttscalecontrols.today-2')}</ViewStepButton>
+      <ViewStepButton label={t('ganttscalecontrols.earlier')} onPress={() => timeline.step(-1)} palette={palette}>
         <ChevronLeftIcon size={14} />
       </ViewStepButton>
-      <ViewStepButton label="Later" onPress={() => timeline.step(1)} palette={palette}>
+      <ViewStepButton label={t('ganttscalecontrols.later')} onPress={() => timeline.step(1)} palette={palette}>
         <ChevronRightIcon size={14} />
       </ViewStepButton>
       <span
         role="group"
-        aria-label="Scale"
+        aria-label={t('ganttscalecontrols.scale')}
         className="ml-1 flex items-center gap-0.5 rounded-lg p-0.5"
         style={{ boxShadow: `inset 0 0 0 1px ${palette.border}` }}
       >

@@ -8,6 +8,7 @@
 // underneath. The panel opens on whatever is live, since the usual reason to
 // come back mid-session is to drive the thing already running.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import type { SessionToolsProps } from '@/components/chrome/session-tools-props';
 import {
@@ -28,6 +29,7 @@ export function SessionStudio({
   // The local participant, matched against a vote's host (docs/specs/012-collaboration/session-tools.md).
   selfId: string;
 }) {
+  const { t } = useTranslation();
   const state = {
     timer: session.timer,
     vote: session.vote,
@@ -45,9 +47,7 @@ export function SessionStudio({
           including ones added later. */}
       {blocked ? (
         <p className="rounded-md bg-slate-100 px-2.5 py-2 text-[12px] leading-snug text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-          <span className="font-semibold">{session.facilitatedBy}</span> is facilitating this
-          session. Ask them to start the timer, the vote or a poll.
-        </p>
+          <span className="font-semibold">{session.facilitatedBy}</span>{t('sessionstudio.is-facilitating-this-session-ask-them')}</p>
       ) : null}
       <StudioSwitcher
         tools={STUDIO_TOOLS}

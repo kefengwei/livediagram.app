@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState, type KeyboardEvent } from 'react';
 import { Button, CheckIcon, Select } from '@livediagram/ui';
 import { HelpArticleLink } from '@/components/primitives/HelpArticleLink';
@@ -22,6 +23,7 @@ export function ShareComposer({
   busy: boolean;
   onIssue: (role: ShareRole, expiry: ShareLinkExpiry, tabId: string | null) => void;
 }) {
+  const { t } = useTranslation();
   const [role, setRole] = useState<ShareRole>('edit');
   // Never = the pre-expiry default (docs/specs/013-workspace/share-link-expiry.md): works until revoked.
   const [expiry, setExpiry] = useState<ShareLinkExpiry>('never');
@@ -56,12 +58,10 @@ export function ShareComposer({
 
   return (
     <section className="flex flex-col gap-2.5" aria-labelledby="share-issue-heading">
-      <p id="share-issue-heading" className={SECTION_LABEL}>
-        Issue a pass
-      </p>
+      <p id="share-issue-heading" className={SECTION_LABEL}>{t('sharecomposer.issue-a-pass')}</p>
       <div
         role="radiogroup"
-        aria-label="What the pass lets people do"
+        aria-label={t('sharecomposer.what-the-pass-lets-people-do')}
         className="grid grid-cols-1 gap-2 sm:grid-cols-2"
       >
         {ROLES.map((r) => {
@@ -124,27 +124,23 @@ export function ShareComposer({
             <label
               htmlFor="share-new-scope"
               className="text-xs font-medium text-slate-600 dark:text-slate-300"
-            >
-              Opens
-            </label>
+            >{t('sharecomposer.opens')}</label>
             <Select
               id="share-new-scope"
               className="sm:col-span-2"
               value={scope}
               onChange={(e) => setScope(e.target.value)}
-              aria-label="Tabs this link opens"
+              aria-label={t('sharecomposer.tabs-this-link-opens')}
             >
               <ScopeOptions tabs={tabs} />
             </Select>
           </>
         ) : null}
-        <span className="flex items-center gap-1 text-xs font-medium text-slate-600 dark:text-slate-300">
-          Valid
-          <HelpArticleLink article="shareLinkExpiry" />
+        <span className="flex items-center gap-1 text-xs font-medium text-slate-600 dark:text-slate-300">{t('sharecomposer.valid')}<HelpArticleLink article="shareLinkExpiry" />
         </span>
         <div
           role="radiogroup"
-          aria-label="Link lifetime"
+          aria-label={t('sharecomposer.link-lifetime')}
           className="relative grid h-9 grid-cols-4 rounded-lg border border-slate-200 bg-white p-0.5 dark:border-slate-700 dark:bg-slate-900"
         >
           {/* The selection slides to the picked lifetime, like the Explorer tabs. */}
@@ -181,9 +177,7 @@ export function ShareComposer({
           disabled={busy}
           // The same height as the Valid control beside it, so the row reads as one line.
           className="h-9 shadow-sm whitespace-nowrap"
-        >
-          Create Pass
-        </Button>
+        >{t('sharecomposer.create-pass')}</Button>
       </div>
     </section>
   );

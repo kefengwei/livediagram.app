@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Button } from '@livediagram/ui';
 import { type ReactNode } from 'react';
 import {
@@ -78,6 +79,7 @@ export function PieDataEditor({
   palette?: readonly string[];
   onChange: (slices: PieSlice[]) => void;
 }) {
+  const { t } = useTranslation();
   const [rows, setRows] = useFollowingDraft<PieSlice[]>(slices);
   const colorAt = (i: number, s: PieSlice) => s.color ?? palette[i % palette.length]!;
   const patch = (i: number, p: Partial<PieSlice>) =>
@@ -88,7 +90,7 @@ export function PieDataEditor({
         {rows.map((s, i) => (
           <div key={i} className="flex items-center gap-1">
             <DataColour
-              label="Slice colour"
+              label={t('context-menu-data-editors.slice-colour')}
               value={s.color}
               shown={colorAt(i, s)}
               shape="rounded-[3px]"
@@ -97,7 +99,7 @@ export function PieDataEditor({
             <input
               className={`${MENU_CELL_INPUT} flex-1`}
               value={s.label}
-              placeholder="Label"
+              placeholder={t('context-menu-data-editors.label')}
               onChange={(e) => patch(i, { label: e.target.value })}
               onBlur={() => onChange(rows)}
             />
@@ -106,13 +108,13 @@ export function PieDataEditor({
               type="number"
               min={0}
               value={s.value}
-              aria-label="Value"
+              aria-label={t('context-menu-data-editors.value')}
               onChange={(e) => patch(i, { value: Math.max(0, Number(e.target.value) || 0) })}
               onBlur={() => onChange(rows)}
             />
             <button
               type="button"
-              aria-label="Remove slice"
+              aria-label={t('context-menu-data-editors.remove-slice')}
               disabled={rows.length <= 1}
               onClick={() => onChange(rows.filter((_, j) => j !== i))}
               className="flex h-5 w-5 shrink-0 items-center justify-center rounded text-slate-400 transition enabled:cursor-pointer enabled:hover:bg-slate-100 enabled:hover:text-slate-700 disabled:opacity-30 dark:enabled:hover:bg-slate-800"
@@ -126,9 +128,7 @@ export function PieDataEditor({
         type="button"
         onClick={() => onChange([...rows, { label: `Item ${rows.length + 1}`, value: 10 }])}
         className="mt-1.5 inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 transition hover:border-brand-300 hover:bg-brand-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/15"
-      >
-        + Add slice
-      </button>
+      >{t('context-menu-data-editors.add-slice')}</button>
     </div>
   );
 }
@@ -147,6 +147,7 @@ export function LegendDataEditor({
   palette?: readonly string[];
   onChange: (items: LegendItem[]) => void;
 }) {
+  const { t } = useTranslation();
   const [rows, setRows] = useFollowingDraft<LegendItem[]>(items);
   const colorAt = (i: number, item: LegendItem) => item.color ?? palette[i % palette.length]!;
   return (
@@ -155,7 +156,7 @@ export function LegendDataEditor({
         {rows.map((item, i) => (
           <div key={i} className="flex items-center gap-1">
             <DataColour
-              label="Legend colour"
+              label={t('context-menu-data-editors.legend-colour')}
               value={item.color}
               shown={colorAt(i, item)}
               // Round, matching the swatch on the card rather than the pie
@@ -167,7 +168,7 @@ export function LegendDataEditor({
             <input
               className={`${MENU_CELL_INPUT} flex-1`}
               value={item.label}
-              placeholder="Label"
+              placeholder={t('context-menu-data-editors.label-2')}
               onChange={(e) =>
                 setRows((r) => r.map((x, j) => (j === i ? { ...x, label: e.target.value } : x)))
               }
@@ -175,7 +176,7 @@ export function LegendDataEditor({
             />
             <button
               type="button"
-              aria-label="Remove legend row"
+              aria-label={t('context-menu-data-editors.remove-legend-row')}
               disabled={rows.length <= 1}
               onClick={() => onChange(rows.filter((_, j) => j !== i))}
               className="flex h-5 w-5 shrink-0 items-center justify-center rounded text-slate-400 transition enabled:cursor-pointer enabled:hover:bg-slate-100 enabled:hover:text-slate-700 disabled:opacity-30 dark:enabled:hover:bg-slate-800"
@@ -190,9 +191,7 @@ export function LegendDataEditor({
         // No colour on the new row, so it takes the next one from the ramp.
         onClick={() => onChange([...rows, { label: `Item ${rows.length + 1}` }])}
         className="mt-1.5 inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 transition hover:border-brand-300 hover:bg-brand-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/15"
-      >
-        Add row
-      </button>
+      >{t('context-menu-data-editors.add-row')}</button>
     </div>
   );
 }
@@ -210,6 +209,7 @@ export function LineDataSummary({
   palette?: readonly string[];
   onEdit: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="px-2 py-1.5">
       <div className="flex flex-col gap-1">
@@ -230,9 +230,7 @@ export function LineDataSummary({
         type="button"
         onClick={onEdit}
         className="mt-1.5 inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 transition hover:border-brand-300 hover:bg-brand-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/15"
-      >
-        Edit data
-      </button>
+      >{t('context-menu-data-editors.edit-data')}</button>
     </div>
   );
 }
@@ -240,14 +238,11 @@ export function LineDataSummary({
 // A chart drawn from a sheet range (docs/specs/029-sheets/sheet.md "Charts"): its data is the sheet's, edited
 // there, so the Data category says so and offers Unlink, which keeps the last read as an ordinary chart's data.
 export function LinkedChartData({ onUnlink }: { onUnlink: () => void }) {
+  const { t } = useTranslation();
   return (
     <div className="px-2 py-1.5">
-      <p className="text-[11px] leading-snug text-slate-600 dark:text-slate-300">
-        Drawn live from a Sheet&apos;s cells. Change the cells to change the chart.
-      </p>
-      <Button variant="secondary" size="xs" className="mt-1.5 w-full" onClick={onUnlink}>
-        Unlink From Sheet
-      </Button>
+      <p className="text-[11px] leading-snug text-slate-600 dark:text-slate-300">{t('context-menu-data-editors.drawn-live-from-a-sheet-s')}</p>
+      <Button variant="secondary" size="xs" className="mt-1.5 w-full" onClick={onUnlink}>{t('context-menu-data-editors.unlink-from-sheet')}</Button>
     </div>
   );
 }
@@ -265,6 +260,7 @@ export function EntityFieldsEditor({
   fields: EntityField[];
   onChange: (fields: EntityField[]) => void;
 }) {
+  const { t } = useTranslation();
   const [rows, setRows] = useFollowingDraft<EntityField[]>(fields);
   return (
     <div className="px-2 py-1.5">
@@ -274,7 +270,7 @@ export function EntityFieldsEditor({
             <input
               className={`${MENU_CELL_INPUT} flex-1`}
               value={f.name}
-              placeholder="name"
+              placeholder={t('context-menu-data-editors.name')}
               aria-label={`Field ${i + 1} name`}
               maxLength={ENTITY_MAX_TEXT}
               onChange={(e) =>
@@ -285,7 +281,7 @@ export function EntityFieldsEditor({
             <input
               className={`${MENU_CELL_INPUT} w-[5.5rem]`}
               value={f.type ?? ''}
-              placeholder="type"
+              placeholder={t('context-menu-data-editors.type')}
               aria-label={`Field ${i + 1} type`}
               maxLength={ENTITY_MAX_TEXT}
               onChange={(e) =>
@@ -299,7 +295,7 @@ export function EntityFieldsEditor({
             />
             <button
               type="button"
-              aria-label="Remove field"
+              aria-label={t('context-menu-data-editors.remove-field')}
               onClick={() => onChange(rows.filter((_, j) => j !== i))}
               className="flex h-5 w-5 shrink-0 items-center justify-center rounded text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800"
             >
@@ -313,9 +309,7 @@ export function EntityFieldsEditor({
         disabled={rows.length >= ENTITY_MAX_FIELDS}
         onClick={() => onChange([...rows, { name: '' }])}
         className={MENU_ADD_ROW_BUTTON}
-      >
-        Add field
-      </button>
+      >{t('context-menu-data-editors.add-field')}</button>
     </div>
   );
 }
@@ -331,6 +325,7 @@ export function ChecklistRowsEditor({
   // the rows like every other edit here.
   onToggle?: (index: number) => void;
 }) {
+  const { t } = useTranslation();
   const [rows, setRows] = useFollowingDraft<ChecklistItem[]>(items);
   return (
     <div className="px-2 py-1.5">
@@ -351,7 +346,7 @@ export function ChecklistRowsEditor({
             <input
               className={`${MENU_CELL_INPUT} flex-1`}
               value={item.text}
-              placeholder="Task"
+              placeholder={t('context-menu-data-editors.task')}
               maxLength={CHECKLIST_MAX_TEXT}
               onChange={(e) =>
                 setRows((r) => r.map((s, j) => (j === i ? { ...s, text: e.target.value } : s)))
@@ -360,7 +355,7 @@ export function ChecklistRowsEditor({
             />
             <button
               type="button"
-              aria-label="Remove row"
+              aria-label={t('context-menu-data-editors.remove-row')}
               disabled={rows.length <= 1}
               onClick={() => onChange(rows.filter((_, j) => j !== i))}
               className="flex h-5 w-5 shrink-0 items-center justify-center rounded text-slate-400 transition enabled:cursor-pointer enabled:hover:bg-slate-100 enabled:hover:text-slate-700 disabled:opacity-30 dark:enabled:hover:bg-slate-800"
@@ -375,9 +370,7 @@ export function ChecklistRowsEditor({
         disabled={rows.length >= CHECKLIST_MAX_ITEMS}
         onClick={() => onChange([...rows, { text: '', done: false }])}
         className={MENU_ADD_ROW_BUTTON}
-      >
-        + Add row
-      </button>
+      >{t('context-menu-data-editors.add-row-2')}</button>
     </div>
   );
 }
@@ -401,23 +394,22 @@ export function CodeSummary({
   onSetWrap: (wrap: boolean) => void;
   onEdit: () => void;
 }) {
+  const { t } = useTranslation();
   const lineCount = code.trim().length === 0 ? 0 : code.split('\n').length;
   return (
     <div className="px-2 py-1.5">
       <p className="text-[11px] text-slate-700 dark:text-slate-200">
         {lineCount === 0
-          ? 'No code yet'
+          ? t('context-menu-data-editors.no-code-yet')
           : `${lineCount} ${lineCount === 1 ? 'line' : 'lines'} · ${language === 'plain' ? 'plain text' : language}`}
       </p>
       <button
         type="button"
         onClick={onEdit}
         className="mt-1.5 inline-flex w-full cursor-pointer items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 transition hover:border-brand-300 hover:bg-brand-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500/60 dark:hover:bg-brand-500/15"
-      >
-        Edit code
-      </button>
+      >{t('context-menu-data-editors.edit-code')}</button>
       <div className="-mx-2 mt-1">
-        <MenuToggleRow label="Wrap Long Lines" checked={wrap} onToggle={() => onSetWrap(!wrap)} />
+        <MenuToggleRow label={t('context-menu-data-editors.wrap-long-lines')} checked={wrap} onToggle={() => onSetWrap(!wrap)} />
       </div>
     </div>
   );
@@ -485,6 +477,7 @@ export function MindFlowTiles({
   // A root only (docs/specs/009-elements/mind-node.md "Edit Outline").
   onEditOutline?: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
@@ -506,11 +499,11 @@ export function MindFlowTiles({
       {/* Tidy Map (docs/specs/009-elements/mind-node.md): the way back to a tidy map after dragging
           nodes around, and from then on growth keeps it tidy. */}
       <div className="px-2 pb-1.5 pt-1">
-        <MenuActionButton label="Tidy Map" onClick={onTidy} />
+        <MenuActionButton label={t('context-menu-data-editors.tidy-map')} onClick={onTidy} />
       </div>
       {onEditOutline ? (
         <div className="px-2 pb-1.5">
-          <MenuActionButton label="Edit Outline" onClick={onEditOutline} />
+          <MenuActionButton label={t('context-menu-data-editors.edit-outline')} onClick={onEditOutline} />
         </div>
       ) : null}
     </>

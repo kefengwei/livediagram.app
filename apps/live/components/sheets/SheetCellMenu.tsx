@@ -3,6 +3,7 @@
 // The cell menu (docs/specs/029-sheets/sheet.md "Cell menu"), shaped like the element menu: Cut, Copy and Paste as
 // icon buttons along its top, then the rest in categories that open one at a time, each a list of option rows.
 // Someone who may only view gets Copy alone.
+import { useTranslation } from '@/lib/i18n';
 import { useState, type ReactNode } from 'react';
 import { OptionRows } from '@/components/plan/OptionRows';
 import { ContextMenu } from '@/components/palette/ContextMenu';
@@ -39,6 +40,7 @@ export function SheetCellMenu({
   actions: SheetActions;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const clip = useSheetClipboard();
   const [open, setOpen] = useState<Section | null>(null);
@@ -63,27 +65,27 @@ export function SheetCellMenu({
     if (!asked) onClose();
   };
   return (
-    <ContextMenu position={at} label="Cell menu" onClose={onClose} flush>
+    <ContextMenu position={at} label={t('sheetcellmenu.cell-menu')} onClose={onClose} flush>
       <MenuToolbar>
         {c.canEdit ? (
           <MenuToolButton
             icon={<CutIcon />}
-            label="Cut"
-            description="Cut the selected cells."
+            label={t('sheetcellmenu.cut')}
+            description={t('sheetcellmenu.cut-the-selected-cells')}
             onClick={act(() => clip.copyNow(true))}
           />
         ) : null}
         <MenuToolButton
           icon={<CopyIcon />}
-          label="Copy"
-          description="Copy the selected cells."
+          label={t('sheetcellmenu.copy')}
+          description={t('sheetcellmenu.copy-the-selected-cells')}
           onClick={act(() => clip.copyNow(false))}
         />
         {c.canEdit ? (
           <MenuToolButton
             icon={<PasteMenuIcon />}
-            label="Paste"
-            description="Paste at the active cell."
+            label={t('sheetcellmenu.paste')}
+            description={t('sheetcellmenu.paste-at-the-active-cell')}
             onClick={act(() => void clip.pasteNow())}
           />
         ) : null}
@@ -100,44 +102,44 @@ export function SheetCellMenu({
           />
         ) : (
           <>
-            <MenuAccordionSection title="Insert" icon={<Glyph t="+" />} {...section('insert')}>
+            <MenuAccordionSection title={t('sheetcellmenu.insert')} icon={<Glyph t="+" />} {...section('insert')}>
               <ActionRows
                 rows={[
                   {
-                    label: 'Row Above',
+                    label: t('sheetcellmenu.row-above'),
                     icon: <Glyph t="↥" />,
                     run: act(() => actions.insert('r', 'before')),
                   },
                   {
-                    label: 'Column Left',
+                    label: t('sheetcellmenu.column-left'),
                     icon: <Glyph t="↤" />,
                     run: act(() => actions.insert('c', 'before')),
                   },
                   {
-                    label: 'Cells, Shift Right',
+                    label: t('sheetcellmenu.cells-shift-right'),
                     icon: <Glyph t="→" />,
                     run: act(() => actions.shift('insertRight')),
                   },
                   {
-                    label: 'Cells, Shift Down',
+                    label: t('sheetcellmenu.cells-shift-down'),
                     icon: <Glyph t="↓" />,
                     run: act(() => actions.shift('insertDown')),
                   },
                 ]}
               />
             </MenuAccordionSection>
-            <MenuAccordionSection title="Delete" icon={<Glyph t="−" />} {...section('delete')}>
+            <MenuAccordionSection title={t('sheetcellmenu.delete')} icon={<Glyph t="−" />} {...section('delete')}>
               <ActionRows
                 rows={[
-                  { label: 'Row', icon: <Glyph t="⇕" />, run: act(() => actions.remove('r')) },
-                  { label: 'Column', icon: <Glyph t="⇔" />, run: act(() => actions.remove('c')) },
+                  { label: t('sheetcellmenu.row'), icon: <Glyph t="⇕" />, run: act(() => actions.remove('r')) },
+                  { label: t('sheetcellmenu.column'), icon: <Glyph t="⇔" />, run: act(() => actions.remove('c')) },
                   {
-                    label: 'Cells, Shift Left',
+                    label: t('sheetcellmenu.cells-shift-left'),
                     icon: <Glyph t="←" />,
                     run: act(() => actions.shift('deleteLeft')),
                   },
                   {
-                    label: 'Cells, Shift Up',
+                    label: t('sheetcellmenu.cells-shift-up'),
                     icon: <Glyph t="↑" />,
                     run: act(() => actions.shift('deleteUp')),
                   },
@@ -145,68 +147,68 @@ export function SheetCellMenu({
               />
             </MenuAccordionSection>
             <MenuAccordionSection
-              title="Paste Special"
+              title={t('sheetcellmenu.paste-special')}
               icon={<PasteMenuIcon />}
               {...section('paste')}
             >
               <ActionRows
                 rows={[
                   {
-                    label: 'Values Only',
+                    label: t('sheetcellmenu.values-only'),
                     icon: <Glyph t="1" />,
                     run: act(() => void clip.pasteSpecial('values')),
                   },
                   {
-                    label: 'Formatting Only',
+                    label: t('sheetcellmenu.formatting-only'),
                     icon: <Glyph t="B" />,
                     run: act(() => void clip.pasteSpecial('formats')),
                   },
                 ]}
               />
             </MenuAccordionSection>
-            <MenuAccordionSection title="Clear" icon={<ClearFormatIcon />} {...section('clear')}>
+            <MenuAccordionSection title={t('sheetcellmenu.clear')} icon={<ClearFormatIcon />} {...section('clear')}>
               <ActionRows
                 rows={[
                   {
-                    label: 'Everything',
+                    label: t('sheetcellmenu.everything'),
                     icon: <Glyph t="⌫" />,
                     run: act(() => actions.clear('all')),
                   },
                   {
-                    label: 'Formatting',
+                    label: t('sheetcellmenu.formatting'),
                     icon: <ClearFormatIcon />,
                     run: act(() => actions.clear('formats')),
                   },
                 ]}
               />
             </MenuAccordionSection>
-            <MenuAccordionSection title="Cells" icon={<MergeIcon />} {...section('cells')}>
+            <MenuAccordionSection title={t('sheetcellmenu.cells')} icon={<MergeIcon />} {...section('cells')}>
               <ActionRows
                 rows={[
                   {
-                    label: 'Sort Range…',
+                    label: t('sheetcellmenu.sort-range'),
                     icon: <SortIcon />,
                     run: () => c.setMenu({ kind: 'sort' }),
                   },
-                  { label: 'Merge Cells', icon: <MergeIcon />, run: merge },
+                  { label: t('sheetcellmenu.merge-cells'), icon: <MergeIcon />, run: merge },
                 ]}
               />
             </MenuAccordionSection>
-            <MenuAccordionSection title="Chart" icon={<BarChartIcon />} {...section('chart')}>
+            <MenuAccordionSection title={t('sheetcellmenu.chart')} icon={<BarChartIcon />} {...section('chart')}>
               <ActionRows
                 rows={[
                   {
-                    label: 'Bar',
+                    label: t('sheetcellmenu.bar'),
                     icon: <BarChartIcon />,
                     run: act(() => actions.insertChart('bar-chart')),
                   },
                   {
-                    label: 'Line',
+                    label: t('sheetcellmenu.line'),
                     icon: <LineChartIcon />,
                     run: act(() => actions.insertChart('line-chart')),
                   },
                   {
-                    label: 'Pie',
+                    label: t('sheetcellmenu.pie'),
                     icon: <PieChartIcon />,
                     run: act(() => actions.insertChart('pie-chart')),
                   },
@@ -223,10 +225,11 @@ export function SheetCellMenu({
 // A section's actions as an option list (docs/specs/026-plan/plan-board.md "Option lists"): a row each, its glyph then
 // its name, no marker; inside the menu they are its items.
 function ActionRows({ rows }: { rows: { label: string; icon: ReactNode; run: () => void }[] }) {
+  const { t } = useTranslation();
   return (
     <OptionRows
       kind="action"
-      label="Actions"
+      label={t('sheetcellmenu.actions')}
       className="mx-3 my-1.5"
       rows={rows.map((r) => ({ id: r.label, label: r.label, icon: r.icon }))}
       onPick={(id) => rows.find((r) => r.label === id)?.run()}

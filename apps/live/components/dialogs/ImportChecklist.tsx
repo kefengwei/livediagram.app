@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { Button } from '@livediagram/ui';
 
 /** One thing an import found, ticked to import it. */
@@ -30,6 +31,7 @@ export function ImportChecklist({
   onImport: () => void;
   onCancel: () => void;
 }) {
+  const { t } = useTranslation();
   const count = rows.filter((r) => checked.has(r.key)).length;
   const all = count === rows.length;
   return (
@@ -46,9 +48,7 @@ export function ImportChecklist({
               if (el) el.indeterminate = count > 0 && !all;
             }}
             onChange={onToggleAll}
-          />
-          Select all
-        </label>
+          />{t('importchecklist.select-all')}</label>
         <ul className="max-h-[50vh] divide-y divide-slate-100 overflow-y-auto rounded-lg border border-slate-200 dark:divide-slate-800 dark:border-slate-700">
           {rows.map((row) => (
             <li key={row.key}>
@@ -78,9 +78,7 @@ export function ImportChecklist({
         </p>
       ) : null}
       <div className="mt-4 flex justify-end gap-2">
-        <Button variant="secondary" size="md" onClick={onCancel}>
-          Back
-        </Button>
+        <Button variant="secondary" size="md" onClick={onCancel}>{t('importchecklist.back')}</Button>
         <Button variant="primary" size="md" onClick={onImport} disabled={count === 0}>
           {importLabel}
         </Button>

@@ -13,6 +13,7 @@
 // Positioned at the click, like the context menu it stands in for, and clamped
 // so a right-click near an edge does not open it off-screen.
 
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useEffect, useId, useRef } from 'react';
 import { MENU_LABEL_ATTR, MenuTreeContext, useMenu, Portal } from '@livediagram/ui';
 import { VIEWPORT_EDGE_MARGIN as EDGE } from '@/lib/clamp-to-viewport';
@@ -35,6 +36,7 @@ export function LockedElementMenu({
   onRelease: (presenceId: string) => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement | null>(null);
   // A command menu with no trigger (docs/specs/004-interface-design/menus.md): focus moves to the
   // first Release row, Escape closes, and focus goes back to what held it at the right-click.
@@ -83,9 +85,7 @@ export function LockedElementMenu({
             id={`${noteId}-label`}
             aria-hidden
             className="px-3 pb-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400"
-          >
-            In use
-          </p>
+          >{t('lockedelementmenu.in-use')}</p>
           {holders.map((holder) => (
             <button
               key={holder.id}
@@ -105,12 +105,10 @@ export function LockedElementMenu({
               />
               {/* The name is the point: "free it" without saying whose hold you
                 are breaking is an action you cannot judge before taking. */}
-              <span className="truncate">Release {holder.name}&rsquo;s hold</span>
+              <span className="truncate">{t('lockedelementmenu.release')}{holder.name}{t('lockedelementmenu.s-hold')}</span>
             </button>
           ))}
-          <p id={noteId} aria-hidden className="px-3 pt-1 text-[10px] leading-snug text-slate-400">
-            They keep their work; it just stops being theirs to edit.
-          </p>
+          <p id={noteId} aria-hidden className="px-3 pt-1 text-[10px] leading-snug text-slate-400">{t('lockedelementmenu.they-keep-their-work-it-just')}</p>
         </div>
       </MenuTreeContext.Provider>
     </Portal>

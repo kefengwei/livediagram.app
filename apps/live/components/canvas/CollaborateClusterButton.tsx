@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { HoverCard } from '@livediagram/ui';
 import { CountBadge } from '@livediagram/ui';
 import { CollaborateGlyph } from '@/components/panels/collaborate/CollaborateGlyph';
@@ -27,7 +28,8 @@ export function CollaborateClusterButton({
   popoverOpen: boolean;
   onTogglePopover: (button: HTMLElement) => void;
 }) {
-  const label = openCount > 0 ? `Open Collaborate (${openCount} open)` : 'Open Collaborate';
+  const { t } = useTranslation();
+  const label = openCount > 0 ? `Open Collaborate (${openCount} open)` : t('collaborateclusterbutton.open-collaborate');
   const button = (
     <button
       type="button"
@@ -61,8 +63,8 @@ export function CollaborateClusterButton({
         button
       ) : (
         <HoverCard
-          title="Collaborate"
-          description="Comments and actions on this tab: what is open, and what is done."
+          title={t('collaborateclusterbutton.collaborate')}
+          description={t('collaborateclusterbutton.comments-and-actions-on-this-tab')}
         >
           {button}
         </HoverCard>

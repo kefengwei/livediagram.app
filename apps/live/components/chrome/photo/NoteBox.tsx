@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState, type PointerEvent } from 'react';
 import { EVENT_STORMING_NOTES } from '@livediagram/document';
 import { Tooltip } from '@livediagram/ui';
@@ -59,6 +60,7 @@ export function NoteBox({
   onKind?: (kind: string) => void;
   onDelete?: () => void;
 }) {
+  const { t } = useTranslation();
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(text);
   const input = useRef<HTMLInputElement | null>(null);
@@ -179,7 +181,7 @@ export function NoteBox({
             if (e.key === 'Escape') setEditing(false);
           }}
           onPointerDown={(e) => e.stopPropagation()}
-          aria-label="The words on this note"
+          aria-label={t('notebox.the-words-on-this-note')}
           style={
             chrome
               ? { transform: chrome, transformOrigin: 'bottom left', width: `${zoom * 100}%` }
@@ -208,7 +210,7 @@ export function NoteBox({
               ticked ? '' : 'opacity-40'
             }`}
           >
-            {words === '' ? <span className="text-slate-300">Type the words…</span> : words}
+            {words === '' ? <span className="text-slate-300">{t('notebox.type-the-words')}</span> : words}
           </button>
         </Tooltip>
       )}

@@ -3,6 +3,7 @@
 // The Due Calendar (docs/specs/026-plan/plan-views.md "Due Calendar"): a month in Monday weeks, each day
 // listing the cards due then as a type dot and title, as many as fit and then "+N more". The month steps
 // are each viewer's own.
+import { useTranslation } from '@/lib/i18n';
 import { useMemo, useState } from 'react';
 import {
   ITEM_TYPES,
@@ -27,6 +28,7 @@ const FRAME_HEAD_H = 40;
 const WEEKDAY_H = 22;
 
 export function CalendarView({ plan, items, palette, fontFamily, height }: PlanViewProps) {
+  const { t } = useTranslation();
   const phases = plan?.statusPhases ?? NO_PHASES;
   const types = plan?.types ?? ITEM_TYPES;
   const now = new Date();
@@ -56,19 +58,17 @@ export function CalendarView({ plan, items, palette, fontFamily, height }: PlanV
       aside={
         <>
           {offset !== 0 ? (
-            <ViewStepButton label="Today" onPress={() => setOffset(0)} palette={palette}>
-              Today
-            </ViewStepButton>
+            <ViewStepButton label={t('calendarview.today')} onPress={() => setOffset(0)} palette={palette}>{t('calendarview.today-2')}</ViewStepButton>
           ) : null}
           <ViewStepButton
-            label="Previous Month"
+            label={t('calendarview.previous-month')}
             onPress={() => setOffset((o) => o - 1)}
             palette={palette}
           >
             <ChevronLeftIcon size={14} />
           </ViewStepButton>
           <ViewStepButton
-            label="Next Month"
+            label={t('calendarview.next-month')}
             onPress={() => setOffset((o) => o + 1)}
             palette={palette}
           >
@@ -108,9 +108,7 @@ export function CalendarView({ plan, items, palette, fontFamily, height }: PlanV
           <span
             className="pointer-events-none absolute inset-x-0 bottom-2 text-center text-[11px]"
             style={{ color: palette.muted }}
-          >
-            Nothing due this month.
-          </span>
+          >{t('calendarview.nothing-due-this-month')}</span>
         ) : null}
       </div>
     </ViewFrame>
@@ -132,6 +130,7 @@ function DayCell({
   plan: PlanViewProps['plan'];
   room: number;
 }) {
+  const { t } = useTranslation();
   // As many as fit, the last line kept for "+N more" when some do not.
   const shown = cell.cards.length > room ? cell.cards.slice(0, Math.max(0, room - 1)) : cell.cards;
   const more = cell.cards.length - shown.length;
@@ -163,7 +162,7 @@ function DayCell({
             type="button"
             className="flex w-full min-w-0 shrink-0 cursor-pointer items-center gap-1 rounded px-0.5 text-left text-[10px] transition hover:bg-black/5 dark:hover:bg-white/10"
             style={{ height: ENTRY_H, color: done ? palette.muted : palette.text }}
-            aria-label={`#${item.key} ${itemTitle(item)}${done ? ', done' : ''}`}
+            aria-label={`#${item.key} ${itemTitle(item)}${done ? t('calendarview.done') : ''}`}
             {...openProps(plan, item.id)}
           >
             <span
@@ -178,8 +177,7 @@ function DayCell({
         ))}
         {more > 0 ? (
           <span className="shrink-0 px-0.5 text-[10px]" style={{ color: palette.muted }}>
-            +{more} more
-          </span>
+            +{more}{t('calendarview.more')}</span>
         ) : null}
       </div>
     </div>

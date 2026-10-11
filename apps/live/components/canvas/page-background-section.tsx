@@ -8,6 +8,7 @@
 // whose editor (From, To, Angle, Swap) shows while the page's fill is one; then the Pattern (not on
 // a logo page). Each hover previews on the page itself (`onPreview`), and a press commits; leaving
 // the section drops the preview.
+
 import { useState, type ReactNode } from 'react';
 import {
   PAGE_PATTERNS,
@@ -38,6 +39,7 @@ import { CustomGradientEditor, PAGE_COLOUR_GROUPS } from './page-background-cust
 import { ColourPicker } from '@/components/colour/ColourPicker';
 import { noColour } from '@/components/colour/colour-options';
 import { useDocumentColours } from '@/hooks/ui/useDocumentColours';
+import { useTranslation } from '@/lib/i18n';
 
 // Paper, the page's own default: no fill stored.
 const PAPER = 'paper';
@@ -62,6 +64,8 @@ function Swatch({
   onPreview: () => void;
   children?: ReactNode;
 }) {
+  
+  
   return (
     <Tooltip label={label}>
       <button
@@ -111,10 +115,12 @@ function CategoryControl({
   value: BackgroundCategory;
   onChange: (c: BackgroundCategory) => void;
 }) {
+  const { t } = useTranslation();
+  
   return (
     <div
       role="radiogroup"
-      aria-label="Background kind"
+      aria-label={t('page-background-section.background-kind')}
       className={`relative mb-2 grid rounded-lg p-0.5 ${SEGMENT_TRACK}`}
       style={{ gridTemplateColumns: `repeat(${categories.length}, minmax(0, 1fr))` }}
     >
@@ -155,6 +161,8 @@ export function BackgroundSection({
   onBackground: (patch: Partial<PageBackground>) => void;
   onPreview: (patch: Partial<PageBackground> | null) => void;
 }) {
+  const { t } = useTranslation();
+  
   const fill = page.background?.fill;
   const pattern = page.background?.pattern;
   const categories: BackgroundCategory[] = themePresets.length
@@ -180,7 +188,7 @@ export function BackgroundSection({
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) onPreview(null);
       }}
     >
-      <PanelSection title="Background">
+      <PanelSection title={t('page-background-section.background')}>
         <CategoryControl
           categories={categories}
           value={category}
@@ -192,7 +200,7 @@ export function BackgroundSection({
         {category === 'theme' ? (
           <div
             role="radiogroup"
-            aria-label="Theme backgrounds"
+            aria-label={t('page-background-section.theme-backgrounds')}
             className="grid grid-cols-7 gap-1.5"
           >
             {themePresets.map((t) => {
@@ -213,7 +221,7 @@ export function BackgroundSection({
           </div>
         ) : category === 'solid' ? (
           <ColourPicker
-            label="Background colour"
+            label={t('page-background-section.background-colour')}
             value={fill === undefined ? PAPER : fill.kind === 'solid' ? fill.color : null}
             leading={[noColour(PAPER, 'Paper')]}
             standard={PAGE_COLOUR_GROUPS}
@@ -226,7 +234,7 @@ export function BackgroundSection({
           <>
             <div
               role="radiogroup"
-              aria-label="Background gradient"
+              aria-label={t('page-background-section.background-gradient')}
               className="grid grid-cols-7 gap-1.5"
             >
               {PAGE_GRADIENT_PRESETS.map((g) => {
@@ -249,7 +257,7 @@ export function BackgroundSection({
                 );
               })}
               <Swatch
-                label="Custom gradient"
+                label={t('page-background-section.custom-gradient')}
                 background={customGradient ? fillCss(customGradient) : RAINBOW}
                 active={!!customGradient}
                 onPick={() => {
@@ -274,8 +282,8 @@ export function BackgroundSection({
       </PanelSection>
       {/* A logo page takes no pattern (docs/specs/007-editor/logo-pages.md "A logo page"). */}
       {pageKindOf(page) === 'logo' ? null : (
-        <PanelSection title="Pattern">
-          <div role="radiogroup" aria-label="Pattern" className="grid grid-cols-4 gap-1">
+        <PanelSection title={t('page-background-section.pattern')}>
+          <div role="radiogroup" aria-label={t('page-background-section.pattern-2')} className="grid grid-cols-4 gap-1">
             {(['none', ...PAGE_PATTERNS] as const).map((p) => {
               const on = (pattern ?? 'none') === p;
               const value = p === 'none' ? undefined : p;

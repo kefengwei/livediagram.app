@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { clampIntoRange, Portal } from '@livediagram/ui';
 import type { TextRun } from '@livediagram/document';
@@ -56,6 +57,7 @@ export function NotePopover({
   onClose,
   readOnly,
 }: NotePopoverProps) {
+  const { t } = useTranslation();
   // The live value, kept in step by the editor's onChange so an outside
   // click can commit without reaching into the contentEditable.
   const valueRef = useRef<{ plain: string; runs: TextRun[] }>({
@@ -132,9 +134,7 @@ export function NotePopover({
           transform: 'translate(-50%, 0)',
         }}
       >
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-          Note
-        </p>
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{t('notepopover.note')}</p>
         {readOnly ? (
           <NoteRichText
             note={initial}
@@ -156,9 +156,7 @@ export function NotePopover({
               onCancel={onClose}
             />
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[10px] text-slate-400 dark:text-slate-400">
-                Cmd-Enter saves, Esc cancels.
-              </span>
+              <span className="text-[10px] text-slate-400 dark:text-slate-400">{t('notepopover.cmd-enter-saves-esc-cancels')}</span>
               <button
                 type="button"
                 onClick={() => {
@@ -167,9 +165,7 @@ export function NotePopover({
                 }}
                 disabled={!initial && !hasText}
                 className="text-[10px] font-medium text-slate-500 transition hover:text-slate-700 hover:underline disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:no-underline dark:text-slate-400 dark:hover:text-slate-200 dark:disabled:text-slate-600"
-              >
-                Delete note
-              </button>
+              >{t('notepopover.delete-note')}</button>
             </div>
           </>
         )}

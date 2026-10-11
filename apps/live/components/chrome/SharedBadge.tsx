@@ -1,6 +1,7 @@
 'use client';
 
 import { useId, useState, type HTMLAttributes } from 'react';
+import { useTranslation } from '@/lib/i18n';
 import { Chip } from '@livediagram/ui';
 import { SHARE_STATE_META, STATE_CHIP_HEIGHT_PX, StateDot, type ShareState } from './share-states';
 import { VisibilityLegend } from './VisibilityLegend';
@@ -20,6 +21,7 @@ function ShareStateChip({
   className = '',
   ...rest
 }: { state: ShareState; className?: string } & HTMLAttributes<HTMLSpanElement>) {
+  const { t } = useTranslation();
   const m = SHARE_STATE_META[state];
   return (
     <Chip
@@ -29,7 +31,7 @@ function ShareStateChip({
       className={`${m.badge} ${className}`}
       {...rest}
     >
-      {m.label}
+      {t(m.labelKey)}
     </Chip>
   );
 }

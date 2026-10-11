@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 import { useEffect, useRef, useState } from 'react';
 import { isTrashed } from '@livediagram/items';
@@ -18,6 +19,7 @@ export function usePlanCardDragging(): boolean {
 }
 
 export function TrashDropTarget() {
+  const { t } = useTranslation();
   const [over, setOver] = useState(false);
   const targetRef = useRef<HTMLSpanElement>(null);
   // Over it or not, from the pointer's place: a touch pointer stays captured by the card it pressed, so
@@ -56,7 +58,7 @@ export function TrashDropTarget() {
       >
         <TrashIcon size={18} />
       </span>
-      {over ? 'Let go to trash it' : 'Drop to Trash'}
+      {over ? t('trashclusterbutton.let-go-to-trash-it') : t('trashclusterbutton.drop-to-trash')}
     </span>
   );
 }
@@ -66,6 +68,7 @@ export function TrashSegment(props: {
   popoverOpen: boolean;
   onTogglePopover: (button: HTMLElement) => void;
 }) {
+  const { t } = useTranslation();
   const plan = usePlan();
   let count = 0;
   for (const it of plan?.items.values() ?? []) if (isTrashed(it)) count += 1;
@@ -73,7 +76,7 @@ export function TrashSegment(props: {
     <span data-plan-trash className="relative flex">
       <ClusterPopoverSegment
         label={
-          count ? `Open the Trash, ${count} ${count === 1 ? 'card' : 'cards'}` : 'Open the Trash'
+          count ? `Open the Trash, ${count} ${count === 1 ? 'card' : 'cards'}` : t('trashclusterbutton.open-the-trash')
         }
         hoverTitle="Trash"
         hoverDescription="Drag a card here to put it out of the way; open it to restore cards or delete them for good."

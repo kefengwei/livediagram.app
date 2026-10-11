@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { HoverCard, Glyph } from '@livediagram/ui';
 
 // The shared search box: a bordered text input with an inline clear (×)
@@ -43,6 +44,7 @@ export function SearchInput({
   // Focus the box on mount (a popover whose first job is the search, like Plan's Cards panel).
   autoFocus?: boolean;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="relative flex-1">
       <input
@@ -61,7 +63,7 @@ export function SearchInput({
         className="w-full rounded-md border border-slate-200 bg-white py-1 pl-2 pr-7 text-xs text-slate-700 placeholder:text-slate-400 focus:border-brand-400 focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
       />
       {value ? (
-        <HoverCard title="Clear search" description={clearDescription}>
+        <HoverCard title={t('searchinput.clear-search')} description={clearDescription}>
           <button
             type="button"
             onClick={() => onChange('')}

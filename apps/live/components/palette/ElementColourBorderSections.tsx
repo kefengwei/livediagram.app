@@ -6,6 +6,7 @@
 // with their hover previews. Shares the host's accordion + colour
 // scaffolding via props like the sibling section files.
 
+import { useTranslation } from '@/lib/i18n';
 import {
   BorderColourIcon,
   FillColourIcon,
@@ -73,6 +74,7 @@ export function ElementColourBorderSections({
   arrowheadColorHandlers: Scaffold['arrowheadColorHandlers'];
   strokeColorHandlers: Scaffold['strokeColorHandlers'];
 }) {
+  const { t } = useTranslation();
   // A swatch shows the colour the element is ACTUALLY drawn in, so an element
   // that carries no colour of its own must read the canvas's ink here too
   // (docs/specs/007-editor/live-app.md) — otherwise the menu offers a light-canvas blue beside a grey
@@ -92,12 +94,12 @@ export function ElementColourBorderSections({
           section, which needs a label to exist). */}
       {target.type === 'arrow' ? (
         <MenuAccordionSection
-          title="Colours"
+          title={t('elementcolourbordersections.colours')}
           icon={<PaletteMenuIcon />}
           {...sectionProps('colours')}
         >
           <ColourRow
-            label="Line"
+            label={t('elementcolourbordersections.line')}
             icon={<BorderColourIcon />}
             value={shownColour(target, 'line', surface, defaultArrowStrokeColor(surface))}
             ink={inkSwatch(target, 'line', surface)}
@@ -110,7 +112,7 @@ export function ElementColourBorderSections({
               element would break the moment either end moved. Unset means the
               heads take the line's colour, as they always have. */}
           <ColourRow
-            label="Pointer"
+            label={t('elementcolourbordersections.pointer')}
             icon={<PointerColourIcon />}
             value={target.arrowheadColor ?? target.strokeColor ?? defaultArrowStrokeColor(surface)}
             {...arrowheadColorHandlers}
@@ -119,7 +121,7 @@ export function ElementColourBorderSections({
           />
           <div className="px-2 pb-1 pt-1.5">
             <MenuActionButton
-              label="Reset to theme"
+              label={t('elementcolourbordersections.reset-to-theme')}
               onClick={() => {
                 props.onResetColors();
                 onClose();
@@ -131,12 +133,12 @@ export function ElementColourBorderSections({
       {boxed && supportsColours(target) && !isChart ? (
         <>
           <MenuAccordionSection
-            title="Colours"
+            title={t('elementcolourbordersections.colours-2')}
             icon={<PaletteMenuIcon />}
             {...sectionProps('colours')}
           >
             <ColourRow
-              label="Text"
+              label={t('elementcolourbordersections.text')}
               icon={<TextColourIcon />}
               value={shownColour(
                 target,
@@ -151,7 +153,7 @@ export function ElementColourBorderSections({
             />
             {supportsFillColor(target) ? (
               <ColourRow
-                label="Background"
+                label={t('elementcolourbordersections.background')}
                 tone="soft"
                 icon={<FillColourIcon />}
                 value={
@@ -169,7 +171,7 @@ export function ElementColourBorderSections({
                 the row reads as empty until you choose. */}
             {hasHeadingBand(target) ? (
               <ColourRow
-                label="Heading"
+                label={t('elementcolourbordersections.heading')}
                 tone="soft"
                 icon={<HeadingColourIcon />}
                 value={(target as { headerFill?: string }).headerFill ?? 'transparent'}
@@ -201,7 +203,7 @@ export function ElementColourBorderSections({
             ) : null}
             <div className="px-2 pb-1 pt-1.5">
               <MenuActionButton
-                label="Reset to theme"
+                label={t('elementcolourbordersections.reset-to-theme-2')}
                 onClick={() => {
                   props.onResetColors();
                   onClose();
@@ -215,7 +217,7 @@ export function ElementColourBorderSections({
             to style, so they're excluded. */}
       {borderable && !isChart ? (
         <>
-          <MenuAccordionSection title="Border" icon={<BorderGlyph />} {...sectionProps('border')}>
+          <MenuAccordionSection title={t('elementcolourbordersections.border')} icon={<BorderGlyph />} {...sectionProps('border')}>
             <BorderControls
               strokeWidth={borderStrokeVal}
               strokeStyle={borderStyleVal}

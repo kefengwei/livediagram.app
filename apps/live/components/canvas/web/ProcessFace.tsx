@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { ACCENT_BAR_TEXT, processLayout, WEB_TEXT_MAX } from '@livediagram/document';
 import { capBandBaselineY } from '@livediagram/icons';
 import { InlineTextLine } from '@/components/canvas/InlineTextLine';
@@ -16,6 +17,7 @@ export function ProcessFace({
   editable,
   onSetRows,
 }: WebFaceProps) {
+  const { t } = useTranslation();
   const zoom = useCanvasZoom();
   const steps = element.processSteps ?? [];
   const l = processLayout(element.width, element.height, steps.length);
@@ -72,7 +74,7 @@ export function ProcessFace({
         >
           <InlineTextLine
             value={steps[i] ?? ''}
-            placeholder="Step"
+            placeholder={t('processface.step')}
             editable={editable}
             onCommit={(v) => edit(i, v)}
             zoom={zoom}

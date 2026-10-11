@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import dynamic from 'next/dynamic';
 import { useEffect, type ReactNode } from 'react';
 import { setSessionSharePassword } from '@/lib/api-client';
@@ -38,6 +39,7 @@ const SharePasswordGate = dynamic(
 // docs/specs/013-workspace/workbench-embeds.md). Same state, same EditorView, with the chrome /
 // identity / edit gates flipped by it.
 export default function LivePage({ surface = 'app' }: { surface?: EditorSurface } = {}) {
+  const { t } = useTranslation();
   const state = useEditorState({ surface });
   const { embedMode, workbenchMode, appChrome } = surfaceFlags(surface);
   // Anonymous telemetry (docs/specs/017-telemetry/telemetry.md): one emit per rendered embed iframe
@@ -68,7 +70,7 @@ export default function LivePage({ surface = 'app' }: { surface?: EditorSurface 
   // Untitled when the document has no name yet). Updates as the user renames.
   useEffect(() => {
     const name = state.documentName?.trim();
-    document.title = `${name || 'Untitled document'} | livediagram`;
+    document.title = `${name || t('editor-page.untitled-document')} | livediagram`;
   }, [state.documentName]);
   const {
     documentNotFound,
@@ -140,7 +142,7 @@ export default function LivePage({ surface = 'app' }: { surface?: EditorSurface 
     return !appChrome ? (
       <EmbedShell>{card}</EmbedShell>
     ) : (
-      <StatusShell title="Document deleted" explorer={fullExplorer}>
+      <StatusShell title={t('editor-page.document-deleted')} explorer={fullExplorer}>
         {card}
       </StatusShell>
     );
@@ -161,7 +163,7 @@ export default function LivePage({ surface = 'app' }: { surface?: EditorSurface 
     return !appChrome ? (
       <EmbedShell>{card}</EmbedShell>
     ) : (
-      <StatusShell title="Couldn’t load document" explorer={fullExplorer}>
+      <StatusShell title={t('editor-page.couldn-t-load-document')} explorer={fullExplorer}>
         {card}
       </StatusShell>
     );
@@ -177,7 +179,7 @@ export default function LivePage({ surface = 'app' }: { surface?: EditorSurface 
         />
       </EmbedShell>
     ) : (
-      <StatusShell title="Document not found" explorer={fullExplorer}>
+      <StatusShell title={t('editor-page.document-not-found')} explorer={fullExplorer}>
         <NotFound onCreateNew={() => window.location.assign(`${window.location.origin}/new`)} />
       </StatusShell>
     );
@@ -190,7 +192,7 @@ export default function LivePage({ surface = 'app' }: { surface?: EditorSurface 
   // embed the gate renders headerless inside the iframe (docs/specs/013-workspace/embeds.md).
   if (sharePasswordGate) {
     return (
-      <StatusShell title="Password required" showHeader={!embedMode}>
+      <StatusShell title={t('editor-page.password-required')} showHeader={!embedMode}>
         <SharePasswordGate
           invalid={sharePasswordGate.invalid}
           ownerName={documentOwnerName}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useRef } from 'react';
 import { sessionsEnabled } from '@/lib/clerk-config';
 import { isMinimalChrome } from '@/lib/power-user-mode';
@@ -17,6 +18,7 @@ import { MoreGroup } from './MoreGroup';
 // Minimal chrome. Every navigation goes through `go`, which also closes the
 // drawer.
 export function ExplorerSidebar() {
+  const { t } = useTranslation();
   const { teamsEnabled, invites, offlineDocuments, selected, prefs } = useExplorer();
   const navRef = useRef<HTMLElement>(null);
   const keyboard = useTreeNavigation(navRef);
@@ -29,7 +31,7 @@ export function ExplorerSidebar() {
     selected: selected.kind,
   });
   return (
-    <nav ref={navRef} aria-label="Explorer" {...keyboard}>
+    <nav ref={navRef} aria-label={t('explorersidebar.explorer')} {...keyboard}>
       {groups.map(({ id, rows }, i) => {
         const first = i === 0;
         if (id === 'overview') return <OverviewGroup key={id} divider={divider} first={first} />;

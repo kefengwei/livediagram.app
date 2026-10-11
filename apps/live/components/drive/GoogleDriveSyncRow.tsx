@@ -7,6 +7,7 @@
 // status keeps one width per phase (Layout stability, "reserve per phase, not
 // per message"). Syncing is automatic, so there is no Sync now.
 
+
 import { useEffect, useRef, useState } from 'react';
 import { lucideCloud, lucideTriangleAlert } from '@livediagram/icons/lucide';
 import { Button, StableLabel, lucideGlyph } from '@livediagram/ui';
@@ -25,6 +26,7 @@ import {
 import type { DriveMirrorStatus } from '@/lib/drive/engine';
 import { useRelativeNow } from '@/lib/relative-time';
 import { useDriveMirror } from './drive-mirror-context';
+import { useTranslation } from '@/lib/i18n';
 
 // Whether this pass has run long enough to say Syncing… (D26). Compared by
 // identity, so a new status is never "long" until its own timer fires.
@@ -51,6 +53,8 @@ function StatusText({
   options: DriveStatusText[];
   current: DriveStatusText;
 }) {
+  
+  
   const all = options.some((o) => o.text === current.text) ? options : [...options, current];
   return (
     <span data-drive-status className="grid shrink-0 text-xs tabular-nums">
@@ -99,6 +103,8 @@ export function driveFolderUrl(folderId: string): string {
 }
 
 export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
+  const { t } = useTranslation();
+  
   const drive = useDriveMirror();
   const { status, connecting } = drive;
   const now = useSinceNow(status.lastSyncedAt);
@@ -138,12 +144,12 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
     switch (problem?.action) {
       case 'reconnect':
         return {
-          label: 'Reconnect',
+          label: t('googledrivesyncrow.reconnect'),
           held: connecting,
           act: drive.connect,
         };
       case 'resume':
-        return { label: 'Resume', held: busy === 'resume', act: run('resume', drive.resume) };
+        return { label: t('googledrivesyncrow.resume'), held: busy === 'resume', act: run('resume', drive.resume) };
       default:
         return null;
     }
@@ -155,9 +161,7 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
   // known (our own server says so before any call to Google).
   const folderLink =
     phase === 'connected' && status.rootName && status.rootFolderId ? (
-      <>
-        Your documents are synced to “
-        <a
+      <>{t('googledrivesyncrow.your-documents-are-synced-to')}<a
           href={driveFolderUrl(status.rootFolderId)}
           target="_blank"
           rel="noopener noreferrer"
@@ -166,9 +170,7 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
         >
           {status.rootName}
           <ArrowOutIcon />
-        </a>
-        ” in Google Drive.
-      </>
+        </a>{t('googledrivesyncrow.in-google-drive')}</>
     ) : undefined;
 
   return (
@@ -206,9 +208,7 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
                     onClick={() => {
                       if (!connecting) void drive.connect();
                     }}
-                  >
-                    Connect
-                  </Button>
+                  >{t('googledrivesyncrow.connect')}</Button>
                 </span>
               ) : (
                 <span data-drive-disconnect>
@@ -218,9 +218,7 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
                     size="sm"
                     disabled={busy !== null}
                     onClick={run('disconnect', drive.disconnect)}
-                  >
-                    Disconnect
-                  </Button>
+                  >{t('googledrivesyncrow.disconnect')}</Button>
                 </span>
               )}
             </span>
@@ -247,9 +245,7 @@ export function GoogleDriveSyncRow({ row }: { row: SettingsCloudSyncRowSpec }) {
                   size="sm"
                   disabled={busy !== null}
                   onClick={run('adopt', () => drive.adopt(notice))}
-                >
-                  Show folder
-                </Button>
+                >{t('googledrivesyncrow.show-folder')}</Button>
               ) : null}
               {problemAction ? (
                 <Button

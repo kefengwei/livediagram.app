@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 // A slide page's place in the slide deck (docs/specs/007-editor/illustrate-pages.md "Slides"),
 // beside its cog: Add to slide deck while the deck has no slide of the page; once it has, an eye
@@ -9,12 +10,13 @@ import { EyeIcon, EyeOffIcon } from '@/components/panels/layers-panel-icons';
 import type { PageDeckControls } from '@/hooks/editor/useIllustratePages';
 
 export function PageDeckButton({ pageId, deck }: { pageId: string; deck: PageDeckControls }) {
+  const { t } = useTranslation();
   const slide = deck.slideOf(pageId);
   const label = !slide
-    ? 'Add to slide deck'
+    ? t('pagedeckbutton.add-to-slide-deck')
     : slide.hidden
-      ? 'Show in the presentation'
-      : 'Hide from the presentation';
+      ? t('pagedeckbutton.show-in-the-presentation')
+      : t('pagedeckbutton.hide-from-the-presentation');
   return (
     <div
       className="pointer-events-auto"

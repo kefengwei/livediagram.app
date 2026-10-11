@@ -17,6 +17,7 @@
 // means (set local state vs apply live). `onCommit` is the double-click
 // shortcut (defaults to onSelect when not given).
 
+import { useTranslation } from '@/lib/i18n';
 import { BackBar } from '@/components/primitives/BackBar';
 import { useState } from 'react';
 import type { CustomTheme } from '@livediagram/api-schema';
@@ -76,6 +77,7 @@ export function ThemeCategoryBrowser({
   // When set, built-in theme cards show a "Copy" affordance.
   onCopyTheme?: (theme: ThemeDefinition) => void;
 }) {
+  const { t } = useTranslation();
   const customEnabled = !!onNewCustomTheme;
   const custom = customThemes ?? [];
   const themeIsCustom = isCustomThemeId(themeId);
@@ -116,10 +118,7 @@ export function ThemeCategoryBrowser({
       {openCategory === 'custom' ? (
         <>
           <BackButton current="Custom" onClick={() => setOpenCategory(null)} />
-          <p className="mb-2 text-[11px] leading-snug text-slate-500 dark:text-slate-400">
-            Build your own theme: your saved themes appear here and apply to any document, just like
-            a built-in one.
-          </p>
+          <p className="mb-2 text-[11px] leading-snug text-slate-500 dark:text-slate-400">{t('themecategorybrowser.build-your-own-theme-your-saved')}</p>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
             {custom.map((t) => (
               <CustomThemeCard
@@ -165,8 +164,8 @@ export function ThemeCategoryBrowser({
           {defaultScheme ? (
             <ThemeQuickPickCard
               theme={defaultScheme}
-              label="Default"
-              description="Follows your appearance: light or dark."
+              label={t('themecategorybrowser.default')}
+              description={t('themecategorybrowser.follows-your-appearance-light-or-dark')}
               active={themeId === 'brand'}
               onSelect={() => onSelect('brand')}
               onCommit={() => commit('brand')}
@@ -193,8 +192,8 @@ export function ThemeCategoryBrowser({
           })}
           {customEnabled ? (
             <ThemeCategoryCard
-              label="Custom"
-              description="Your saved themes, plus build your own."
+              label={t('themecategorybrowser.custom')}
+              description={t('themecategorybrowser.your-saved-themes-plus-build-your')}
               count={custom.length}
               themes={custom.map(materialiseCustomTheme)}
               selected={themeIsCustom}
@@ -208,7 +207,8 @@ export function ThemeCategoryBrowser({
 }
 
 function BackButton({ current, onClick }: { current?: string; onClick: () => void }) {
-  return <BackBar label="All themes" current={current} onClick={onClick} />;
+  const { t } = useTranslation();
+  return <BackBar label={t('themecategorybrowser.all-themes')} current={current} onClick={onClick} />;
 }
 
 // A full-width iOS-style switch prompting the user to match the editor's
@@ -218,15 +218,16 @@ function BackButton({ current, onClick }: { current?: string; onClick: () => voi
 // (and never for the colour-agnostic Custom bucket), so it reads as a
 // helpful one-tap nudge rather than a persistent control.
 function ModeSwitchRow({ category }: { category: ThemeCategory | 'custom' }) {
+  const { t } = useTranslation();
   const { appearance, set } = useAppearance();
   const target: 'light' | 'dark' | null =
     category === 'custom' ? null : category === 'dark' ? 'dark' : 'light';
   if (!target || appearance === target) return null;
-  const label = target === 'dark' ? 'Turn on Dark mode' : 'Turn on Light mode';
+  const label = target === 'dark' ? t('themecategorybrowser.turn-on-dark-mode') : t('themecategorybrowser.turn-on-light-mode');
   const hint =
     target === 'dark'
       ? 'Match the editor chrome to these dark themes.'
-      : 'Switch the editor chrome back to light.';
+      : t('themecategorybrowser.switch-the-editor-chrome-back-to');
   return (
     <button
       type="button"

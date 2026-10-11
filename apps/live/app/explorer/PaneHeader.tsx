@@ -5,6 +5,7 @@
 // a single Create dropdown (New document / New folder). Split out of views.tsx
 // so that barrel holds the list/row primitives while the header chrome (and
 // its private hamburger / caret icons) stands on its own.
+import { useTranslation } from '@/lib/i18n';
 import { DocumentIcon, FolderOutlineIcon, PlusIcon } from '@/components/primitives/explorer-icons';
 import { Button, Glyph } from '@livediagram/ui';
 import { useState, type ReactNode } from 'react';
@@ -79,6 +80,7 @@ export function PaneHeader({
   viewMode?: ExplorerViewMode;
   onSetViewMode?: (mode: ExplorerViewMode) => void;
 }) {
+  const { t } = useTranslation();
   // A single-item breadcrumb is just the page title in a second
   // place: visually noisy and provides no navigation. Show only
   // when there are actual parents to click back to.
@@ -98,8 +100,8 @@ export function PaneHeader({
   const singleCreate =
     createMode.kind === 'single'
       ? createMode.action === 'document'
-        ? { label: 'New document', onClick: onCreateDocument! }
-        : { label: folderLabel ?? 'New Folder', onClick: onCreateFolder! }
+        ? { label: t('paneheader.new-document'), onClick: onCreateDocument! }
+        : { label: folderLabel ?? t('paneheader.new-folder'), onClick: onCreateFolder! }
       : null;
   const [createOpen, setCreateOpen] = useState(false);
   // In state, so the menu anchors to the button on the render that opens it.
@@ -114,7 +116,7 @@ export function PaneHeader({
             <button
               type="button"
               onClick={onOpenNav}
-              aria-label="Browse sections"
+              aria-label={t('paneheader.browse-sections')}
               className="-ml-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200 sm:hidden"
             >
               <HamburgerIcon />
@@ -157,9 +159,7 @@ export function PaneHeader({
                 aria-expanded={createOpen}
                 className="shadow-sm"
               >
-                <PlusIcon />
-                Create
-                <CaretDownIcon />
+                <PlusIcon />{t('paneheader.create')}<CaretDownIcon />
               </Button>
             ) : null}
             {showViewToggle ? <ViewToggle mode={viewMode!} onChange={onSetViewMode!} /> : null}
@@ -183,7 +183,7 @@ export function PaneHeader({
                           <DocumentIcon />
                         </span>
                       }
-                      label="New document"
+                      label={t('paneheader.new-document-2')}
                       onClick={() => {
                         onCreateDocument();
                         setCreateOpen(false);
@@ -197,7 +197,7 @@ export function PaneHeader({
                           <FolderOutlineIcon />
                         </span>
                       }
-                      label={folderLabel ?? 'New Folder'}
+                      label={folderLabel ?? t('paneheader.new-folder-2')}
                       onClick={() => {
                         onCreateFolder();
                         setCreateOpen(false);
@@ -212,7 +212,7 @@ export function PaneHeader({
       </div>
       {showCrumbs ? (
         <nav
-          aria-label="Breadcrumb"
+          aria-label={t('paneheader.breadcrumb')}
           className="flex flex-wrap items-center rounded-md border border-slate-200 bg-white px-2 py-1.5 text-xs text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300"
         >
           {crumbs.map((c, i) => {

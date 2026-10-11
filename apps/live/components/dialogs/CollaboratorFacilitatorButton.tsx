@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 // The baton verb on one Collaborators row (docs/specs/012-collaboration/facilitator.md).
 //
@@ -39,6 +40,7 @@ export function FacilitatorButton({
   isOwner: boolean;
   onPress: () => void;
 }) {
+  const { t } = useTranslation();
   // Their row says "Facilitating" in its badges; a button would repeat it.
   if (!isSelf && theyHoldIt) return null;
   // Handing it out is the owner's, the holder's, or anybody's when it is free.
@@ -51,18 +53,18 @@ export function FacilitatorButton({
 
   const label = isSelf
     ? iHoldIt
-      ? 'Step Down'
+      ? t('collaboratorfacilitatorbutton.step-down')
       : batonFree
-        ? 'Take Facilitation'
-        : 'Take Over'
+        ? t('collaboratorfacilitatorbutton.take-facilitation')
+        : t('collaboratorfacilitatorbutton.take-over')
     : 'Make Facilitator';
 
   const description = isSelf
     ? iHoldIt
-      ? 'Hand the session tools back to everyone.'
+      ? t('collaboratorfacilitatorbutton.hand-the-session-tools-back-to')
       : batonFree
-        ? 'Run the timer, votes and polls for this session.'
-        : 'Take the session back from whoever is running it.'
+        ? t('collaboratorfacilitatorbutton.run-the-timer-votes-and-polls')
+        : t('collaboratorfacilitatorbutton.take-the-session-back-from-whoever')
     : `Let ${name} run the timer, votes and polls.`;
 
   // Disabled rather than hidden for a viewer, so the rule is learnable: a

@@ -5,6 +5,7 @@
 // colour picker (docs/specs/004-interface-design/colour-picker.md) in a popover beside the row, since
 // the picker is wider than the panel. "Your colour" (the presence colour) leads it; then the strong
 // standard colours by name, drawn for the canvas; Custom colours and +.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { ChevronIcon } from '@/components/primitives/ChevronIcon';
 import { ColourPopover } from '@/components/colour/ColourPopover';
@@ -31,6 +32,7 @@ export function LaserColourRow({
   // Opening it closes the panel's open row: one thing open at a time.
   onOpen?: () => void;
 }) {
+  const { t } = useTranslation();
   const appearance = useCanvasSurface();
   const yours = useDocumentColours();
   const [open, setOpen] = useState(false);
@@ -51,9 +53,7 @@ export function LaserColourRow({
         }}
         className="flex w-full cursor-pointer items-center justify-between gap-2 py-1.5 text-left"
       >
-        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-          Colour
-        </span>
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">{t('lasercolourrow.colour')}</span>
         <span className="flex items-center gap-1.5">
           <span className="flex items-center gap-1.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
             <SwatchChip colour={laserColour(config, selfColour, appearance)} small />
@@ -65,9 +65,9 @@ export function LaserColourRow({
       {open && trigger ? (
         <ColourPopover
           anchor={trigger}
-          label="Laser colour"
+          label={t('lasercolourrow.laser-colour')}
           value={config.colour}
-          leading={[{ id: LASER_PRESENCE, colour: selfColour, label: 'Your colour' }]}
+          leading={[{ id: LASER_PRESENCE, colour: selfColour, label: t('lasercolourrow.your-colour') }]}
           standard={[standardGroup('strong', appearance, 'name')]}
           yours={yours}
           onClose={() => setOpen(false)}

@@ -29,6 +29,7 @@ import {
 } from './palette-tab-icons';
 import { PlanCardsIcon, PlanIcon } from '@livediagram/ui';
 import { SheetArt } from '@/components/sheets/sheet-art';
+import type { MessageKey } from '@/lib/i18n';
 
 /**
  * The category catalogue's IDENTITY: which categories exist, in band order,
@@ -46,6 +47,9 @@ import { SheetArt } from '@/components/sheets/sheet-art';
 export const PALETTE_CATEGORIES: {
   id: string;
   label: string;
+  // The KEY the picker renders; the English above is the fallback and what the
+  // catalogue's own tests read (docs/specs/004-interface-design/localization.md).
+  labelKey?: MessageKey;
   group?: number;
   fullWidth?: boolean;
   description: string;
@@ -57,7 +61,7 @@ export const PALETTE_CATEGORIES: {
     // categories by its palette layout. No band: it draws from every category at once, so it
     // spans the row above the first heading rather than sitting under one.
     id: 'popular',
-    label: 'Popular',
+    label: 'Popular', labelKey: 'palette.category.popular.label' as const,
     fullWidth: true,
     description: 'The tiles most reached for in this mode, from across its categories.',
     icon: <PopularTabIcon />,
@@ -66,7 +70,7 @@ export const PALETTE_CATEGORIES: {
     // Cards and Boards (docs/specs/026-plan/plan-mode.md "The palette"): Plan mode's own band, offered
     // in Plan mode only, first in the picker, Cards first.
     id: 'plan-cards',
-    label: 'Cards',
+    label: 'Cards', labelKey: 'palette.category.plan-cards.label' as const,
     group: 4,
     description:
       'A card for one item, by type: project, task, note, idea or action, and any the document adds.',
@@ -74,7 +78,7 @@ export const PALETTE_CATEGORIES: {
   },
   {
     id: 'plan-boards',
-    label: 'Boards',
+    label: 'Boards', labelKey: 'palette.category.plan-boards.label' as const,
     group: 4,
     description:
       'Boards of items to drag through columns: Kanban, sprint, retro, roadmap and more.',
@@ -83,7 +87,7 @@ export const PALETTE_CATEGORIES: {
   {
     // A board header's widgets (docs/specs/026-plan/board-widgets.md), after Boards.
     id: 'plan-widgets',
-    label: 'Widgets',
+    label: 'Widgets', labelKey: 'palette.category.plan-widgets.label' as const,
     group: 4,
     description:
       'Read-outs and controls for a board’s header: completion, a filter, people and more.',
@@ -93,7 +97,7 @@ export const PALETTE_CATEGORIES: {
     // Plan views (docs/specs/026-plan/plan-views.md): the read-out widgets free on the canvas, then charts
     // of every card.
     id: 'plan-metrics',
-    label: 'Metrics',
+    label: 'Metrics', labelKey: 'palette.category.plan-metrics.label' as const,
     group: 4,
     description:
       'Live metrics over every card, placed anywhere on the canvas: completion, due soon and more.',
@@ -101,7 +105,7 @@ export const PALETTE_CATEGORIES: {
   },
   {
     id: 'plan-visualisations',
-    label: 'Visualisations',
+    label: 'Visualisations', labelKey: 'palette.category.plan-visualisations.label' as const,
     group: 4,
     description:
       'Charts of the cards: a project Gantt chart, a due calendar, cards by any field, priority by status and a card search.',
@@ -110,7 +114,7 @@ export const PALETTE_CATEGORIES: {
   {
     // The Sheet (docs/specs/029-sheets/sheet.md): a spreadsheet tab on the canvas.
     id: 'plan-sheets',
-    label: 'Sheet',
+    label: 'Sheet', labelKey: 'palette.category.plan-sheets.label' as const,
     group: 5,
     description:
       'A spreadsheet tab: cells, formulas, formatting, sort and filter, worked on like a board.',
@@ -121,14 +125,14 @@ export const PALETTE_CATEGORIES: {
     // the same tiles as their home categories. Offered in Plan mode only, and not card-backed, so they sit
     // under the Common heading rather than Boards & Cards.
     id: 'plan-content',
-    label: 'Content',
+    label: 'Content', labelKey: 'palette.category.plan-content.label' as const,
     group: 0,
     description: 'Sticky notes, text, images and pages to sit beside the boards.',
     icon: <WriteTabIcon />,
   },
   {
     id: 'plan-tools',
-    label: 'Tools',
+    label: 'Tools', labelKey: 'palette.category.plan-tools.label' as const,
     group: 0,
     description:
       'Facilitation for the team: temperature, estimates, an idea box, a picker and timers.',
@@ -136,7 +140,7 @@ export const PALETTE_CATEGORIES: {
   },
   {
     id: 'shapes',
-    label: 'Shapes',
+    label: 'Shapes', labelKey: 'palette.category.shapes.label' as const,
     group: 0,
     description: 'Square, circle, diamond, and the flowchart shape vocabulary.',
     icon: <ShapesTabIcon />,
@@ -145,14 +149,14 @@ export const PALETTE_CATEGORIES: {
     // My shapes (docs/specs/013-workspace/shape-libraries.md): the owner's imported shape libraries,
     // after Shapes in the Common band; offered only when there is a shape to place.
     id: 'my-shapes',
-    label: 'My shapes',
+    label: 'My shapes', labelKey: 'palette.category.my-shapes.label' as const,
     group: 0,
     description: 'Shapes from your imported libraries, ready to place.',
     icon: <MyShapesTabIcon />,
   },
   {
     id: 'write',
-    label: 'Write',
+    label: 'Write', labelKey: 'palette.category.write.label' as const,
     group: 0,
     description: 'The wordy elements: pages, text, sticky notes, and annotations.',
     icon: <WriteTabIcon />,
@@ -161,7 +165,7 @@ export const PALETTE_CATEGORIES: {
     // Illustrate mode, while the tab has a logo page (docs/specs/007-editor/logo-pages.md "The Logo
     // palette").
     id: 'logo',
-    label: 'Logo',
+    label: 'Logo', labelKey: 'palette.category.logo.label' as const,
     group: 0,
     description:
       'The tools a logo is made with: the pen, the pencil, text, the basic shapes and your markers.',
@@ -169,21 +173,21 @@ export const PALETTE_CATEGORIES: {
   },
   {
     id: 'draw',
-    label: 'Draw',
+    label: 'Draw', labelKey: 'palette.category.draw.label' as const,
     group: 0,
     description: 'The gesture tools: pencil, shape pen, highlighter, polygon, and arrows.',
     icon: <DrawTabIcon />,
   },
   {
     id: 'build',
-    label: 'Build',
+    label: 'Build', labelKey: 'palette.category.build.label' as const,
     group: 1,
     description: 'The structural elements: mind nodes, lanes, frames, timelines, and tables.',
     icon: <BuildTabIcon />,
   },
   {
     id: 'components',
-    label: 'Components',
+    label: 'Components', labelKey: 'palette.category.components.label' as const,
     group: 1,
     description:
       'Ready-made web components that follow the tab theme: Banner, Callout, Stat row, Process, Hero, and Header. Each is one element that re-flows as you resize it, with every line of text editable in place.',
@@ -191,7 +195,7 @@ export const PALETTE_CATEGORIES: {
   },
   {
     id: 'devices',
-    label: 'Devices',
+    label: 'Devices', labelKey: 'palette.category.devices.label' as const,
     group: 1,
     description:
       'Wireframing device frames: browser, monitor, laptop, phone, tablet, foldable, smartwatch.',
@@ -202,7 +206,7 @@ export const PALETTE_CATEGORIES: {
     // kit. Structure band — like Build, it's a set you reach for when
     // deciding how a board is arranged, not a decoration or a behaviour.
     id: 'event-storming',
-    label: 'Event Storming',
+    label: 'Event Storming', labelKey: 'palette.category.event-storming.label' as const,
     group: 1,
     description:
       'The sticky-note workshop notation: events, commands, actors, policies, read models, and more.',
@@ -210,14 +214,14 @@ export const PALETTE_CATEGORIES: {
   },
   {
     id: 'icons',
-    label: 'Icons',
+    label: 'Icons', labelKey: 'palette.category.icons.label' as const,
     group: 2,
     description: 'Searchable catalogue of single-colour glyphs.',
     icon: <IconsTabIcon />,
   },
   {
     id: 'stickers',
-    label: 'Stickers',
+    label: 'Stickers', labelKey: 'palette.category.stickers.label' as const,
     group: 2,
     description:
       'Colour emoji for reacting, showing how you feel, marking status, pointing at things, celebrating, and prettying the canvas up.',
@@ -225,7 +229,7 @@ export const PALETTE_CATEGORIES: {
   },
   {
     id: 'technology',
-    label: 'Tech',
+    label: 'Tech', labelKey: 'palette.category.technology.label' as const,
     group: 2,
     description:
       'Full-colour AWS, Azure, Cloudflare, Firebase, and generic-infrastructure icons for system-architecture diagrams.',
@@ -233,14 +237,14 @@ export const PALETTE_CATEGORIES: {
   },
   {
     id: 'media',
-    label: 'Media',
+    label: 'Media', labelKey: 'palette.category.media.label' as const,
     group: 2,
     description: 'Pictures and figures: an uploaded image, or a circular avatar.',
     icon: <MediaTabIcon />,
   },
   {
     id: 'data',
-    label: 'Data',
+    label: 'Data', labelKey: 'palette.category.data.label' as const,
     group: 3,
     description:
       'Charts and meters: pie, bar and line charts, progress bars and rings, and ratings.',
@@ -258,7 +262,7 @@ export const PALETTE_CATEGORIES: {
     // reach for both while facilitating, and nothing told a user hunting for
     // the Done check why it lived apart from the Estimate card.
     id: 'behaviour',
-    label: 'Collaborate',
+    label: 'Collaborate', labelKey: 'palette.category.behaviour.label' as const,
     group: 3,
     description:
       'Elements that come alive with the room: ask for an estimate or a temperature, run a quiz, leave a comment or an action on the canvas, collect ideas, rank the room’s questions, check who is done, run a timer or a stopwatch, vote or poll, keep an agenda or a decision, throw a reaction, switch a mode, jump through a portal, or bring everyone to look at one spot.',

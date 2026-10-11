@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import type { PointerEvent as ReactPointerEvent, ReactNode, RefObject } from 'react';
 import { HelpArticleLink } from '@/components/primitives/HelpArticleLink';
 import type { HelpArticleKey } from '@/lib/help-articles';
@@ -51,6 +52,7 @@ export function MovablePanelHeader({
   effectiveCollapsed: boolean;
   onToggleCollapsed: () => void;
 }) {
+  const { t } = useTranslation();
   const minimalChrome = useMinimalChrome();
   return (
     <div
@@ -90,7 +92,7 @@ export function MovablePanelHeader({
           // see beginDrag above), so a reset-position affordance has
           // nothing to reset. The button reappears on `sm:` and up
           // where dragging the title row pans the panel.
-          <HoverCard title="Reset position" description="Snap back to the default corner.">
+          <HoverCard title={t('movablepanelheader.reset-position')} description={t('movablepanelheader.snap-back-to-the-default-corner')}>
             <button
               type="button"
               onPointerDown={(e) => e.stopPropagation()}
@@ -112,7 +114,7 @@ export function MovablePanelHeader({
                 : `Collapse ${title.toLowerCase()}`
             }
             description={
-              effectiveCollapsed ? 'Show the panel body.' : 'Hide the panel body, keep the banner.'
+              effectiveCollapsed ? t('movablepanelheader.show-the-panel-body') : t('movablepanelheader.hide-the-panel-body-keep-the')
             }
           >
             <button

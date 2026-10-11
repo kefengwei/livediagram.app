@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { MAX_SIZE_PX, MIN_SIZE_PX } from '@/hooks/canvas/useShapeStyleSetters';
 import { MenuActionButton } from '@/components/primitives/PortalMenu';
 import { MenuToggleRow } from '@/components/palette/context-menu-input-rows';
@@ -28,6 +29,7 @@ function SizeField({
   value: number;
   onCommit: (n: number) => void;
 }) {
+  const { t } = useTranslation();
   // Follow the element when it changes underneath us — a drag-resize, an undo,
   // or the aspect lock carrying this dimension after the other one was typed.
   // Adjusted during render.
@@ -72,7 +74,7 @@ function SizeField({
           }}
           className="w-full rounded-md border border-slate-200 bg-white py-1 pl-2 pr-7 text-xs tabular-nums text-slate-700 outline-none transition focus:border-brand-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
         />
-        <span className="pointer-events-none absolute right-2 text-[10px] text-slate-400">px</span>
+        <span className="pointer-events-none absolute right-2 text-[10px] text-slate-400">{t('sizesection.px')}</span>
       </span>
     </label>
   );
@@ -98,23 +100,24 @@ export function SizeSection({
   // category's morph grid does.
   showReset: boolean;
 }) {
+  const { t } = useTranslation();
   return (
     <>
       <div className="flex items-end gap-2 px-3 py-2">
         {/* One dimension at a time, deliberately: passing only the edited key
             lets the setter carry the other one when the aspect lock is on. */}
-        <SizeField label="Width" value={width} onCommit={(n) => onSetSize({ width: n })} />
-        <SizeField label="Height" value={height} onCommit={(n) => onSetSize({ height: n })} />
+        <SizeField label={t('sizesection.width')} value={width} onCommit={(n) => onSetSize({ width: n })} />
+        <SizeField label={t('sizesection.height')} value={height} onCommit={(n) => onSetSize({ height: n })} />
       </div>
       <MenuToggleRow
-        label="Lock aspect ratio"
-        description="Typing one dimension carries the other"
+        label={t('sizesection.lock-aspect-ratio')}
+        description={t('sizesection.typing-one-dimension-carries-the-other')}
         checked={aspectLocked}
         onToggle={onToggleAspectLock}
       />
       {showReset ? (
         <div className="px-2 pb-1.5 pt-0.5">
-          <MenuActionButton label="Reset aspect ratio" onClick={onResetAspectRatio} />
+          <MenuActionButton label={t('sizesection.reset-aspect-ratio')} onClick={onResetAspectRatio} />
         </div>
       ) : null}
     </>

@@ -13,6 +13,7 @@
 // inline version used). The page owns the open/closed state + the
 // handlers; this component only decides which items to show.
 
+import { useTranslation } from '@/lib/i18n';
 import dynamic from 'next/dynamic';
 import {
   animLoops,
@@ -195,6 +196,7 @@ export function ElementDataSections({
   sectionProps,
   flyoutProps,
 }: ElementDataSectionsProps) {
+  const { t } = useTranslation();
   const shapeTarget = target.type === 'shape' ? target : null;
   // What an uncoloured slice / series shows as, so the swatches in the data
   // rows match the chart. The chart's own palette when it has one (docs/specs/009-elements/pie-chart.md);
@@ -263,12 +265,12 @@ export function ElementDataSections({
         />
       ) : null}
       {showTools ? (
-        <MenuFlyoutSection title="Tools" icon={<ToolsMenuGlyph />} {...flyoutProps('tools')}>
+        <MenuFlyoutSection title={t('elementdatasections.tools')} icon={<ToolsMenuGlyph />} {...flyoutProps('tools')}>
           {/* Progress (docs/specs/009-elements/progress.md) — the percentage + how the fill animates. Only
             for progress bars / rings. */}
           {isProgress ? (
             <MenuAccordionSection
-              title="Progress"
+              title={t('elementdatasections.progress')}
               icon={<ProgressMenuGlyph />}
               {...sectionProps('progress')}
             >
@@ -291,7 +293,7 @@ export function ElementDataSections({
             "+" on the canvas adds one too; this is the precise control. */}
           {isRail ? (
             <MenuAccordionSection
-              title="Timeline"
+              title={t('elementdatasections.timeline')}
               icon={<ProgressMenuGlyph />}
               {...sectionProps('timeline')}
             >
@@ -304,7 +306,7 @@ export function ElementDataSections({
           {/* Rating (docs/specs/009-elements/rating.md) — the star score + a star-specific animation. */}
           {isRating ? (
             <MenuAccordionSection
-              title="Rating"
+              title={t('elementdatasections.rating')}
               icon={<RatingMenuGlyph />}
               {...sectionProps('rating')}
             >
@@ -331,7 +333,7 @@ export function ElementDataSections({
             menu, so it summarises the series + opens a modal to edit. */}
           {isChart ? (
             <MenuAccordionSection
-              title="Data"
+              title={t('elementdatasections.data')}
               icon={<DataMenuGlyph />}
               {...sectionProps('pie-data')}
             >
@@ -358,7 +360,7 @@ export function ElementDataSections({
           {/* Code (docs/specs/009-elements/code-block.md) — the snippet summary + the modal opener (the
             multi-line editor is too big for the menu, like the line grid). */}
           {isCodeBlock ? (
-            <MenuAccordionSection title="Code" icon={<DataMenuGlyph />} {...sectionProps('code')}>
+            <MenuAccordionSection title={t('elementdatasections.code')} icon={<DataMenuGlyph />} {...sectionProps('code')}>
               <CodeSummary
                 code={shapeTarget?.code ?? ''}
                 language={shapeTarget?.codeLanguage ?? 'plain'}
@@ -412,7 +414,7 @@ export function ElementDataSections({
           {/* Record (docs/specs/009-elements/entity.md) — the fields: name + optional type, add / remove. */}
           {isEntity ? (
             <MenuAccordionSection
-              title="Fields"
+              title={t('elementdatasections.fields')}
               icon={<DataMenuGlyph />}
               {...sectionProps('entity')}
             >
@@ -425,7 +427,7 @@ export function ElementDataSections({
           {/* Checklist (docs/specs/009-elements/checklist.md) — the rows: done toggles, text, add / remove. */}
           {isChecklist ? (
             <MenuAccordionSection
-              title="Checklist"
+              title={t('elementdatasections.checklist')}
               icon={<DataMenuGlyph />}
               {...sectionProps('checklist')}
             >
@@ -443,7 +445,7 @@ export function ElementDataSections({
           {/* Legend (docs/specs/009-elements/pie-chart.md): the key's rows, a colour and a word each. */}
           {isLegend ? (
             <MenuAccordionSection
-              title="Legend"
+              title={t('elementdatasections.legend')}
               icon={<DataMenuGlyph />}
               {...sectionProps('legend')}
             >
@@ -465,7 +467,7 @@ export function ElementDataSections({
             rather than leaving half a map in one arrangement. */}
           {isMindNode ? (
             <MenuAccordionSection
-              title="Mind Map"
+              title={t('elementdatasections.mind-map')}
               icon={<DataMenuGlyph />}
               {...sectionProps('mind-flow')}
             >
@@ -482,13 +484,11 @@ export function ElementDataSections({
             palette's own mode picker. */}
           {isModeButton ? (
             <MenuAccordionSection
-              title="Button"
+              title={t('elementdatasections.button')}
               icon={<ToolsMenuGlyph />}
               {...sectionProps('button-mode')}
             >
-              <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-                Switches the presser to
-              </p>
+              <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('elementdatasections.switches-the-presser-to')}</p>
               <MenuTileGrid cols={3}>
                 {SELECTION_MODES.map((mode) => (
                   <MenuTile
@@ -552,13 +552,11 @@ export function ElementDataSections({
           {/* Chart (docs/specs/009-elements/pie-chart.md) — display options. Legend placement: Off + 4 sides. */}
           {isChart ? (
             <MenuAccordionSection
-              title="Chart"
+              title={t('elementdatasections.chart')}
               icon={<ChartMenuGlyph />}
               {...sectionProps('chart')}
             >
-              <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-                Legend
-              </p>
+              <p className="px-3 pt-1 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('elementdatasections.legend-2')}</p>
               <LegendPositionTiles
                 position={shapeTarget?.chartLegendPosition ?? 'bottom'}
                 show={shapeTarget?.chartLegend !== false}

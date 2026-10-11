@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import {
   MenuAccordionSection,
@@ -49,6 +50,7 @@ export function TabCanvasMenuSections({
   onClose: () => void;
   sectionProps: (id: string) => { open: boolean; onToggle: () => void; flush: boolean };
 }) {
+  const { t } = useTranslation();
   // Hovering a cleanup row lays the tab out behind the menu (docs/specs/008-canvas/layout-cleanup.md). Mouse
   // pointers only, via onMouseHover: on touch a tap IS the commit, so a
   // preview would be a flicker nobody asked for.
@@ -67,7 +69,7 @@ export function TabCanvasMenuSections({
             (docs/specs/008-canvas/layout-cleanup.md "Layout styles"): flowchart down / right, tree,
             mindmap. */}
       <MenuGroupSeparator />
-      <MenuAccordionSection title="Cleanup" icon={<CleanupMenuIcon />} {...sectionProps('cleanup')}>
+      <MenuAccordionSection title={t('tabcanvasmenusections.cleanup')} icon={<CleanupMenuIcon />} {...sectionProps('cleanup')}>
         {/* One verb per row, icon on the left: six tidiers in a two-column
             grid read in two directions, and "Flowchart ↓" beside
             "Flowchart →" was easy to mix up. */}
@@ -88,7 +90,7 @@ export function TabCanvasMenuSections({
         <MenuActionRow
           plain
           icon={<AutoAlignIcon />}
-          label="Auto-align"
+          label={t('tabcanvasmenusections.auto-align')}
           {...hover('align')}
           onClick={() => {
             canvas.onEndCleanupPreview();

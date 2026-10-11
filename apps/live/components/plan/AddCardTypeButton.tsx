@@ -4,6 +4,7 @@
 // added (Setup Board, a board's Add a Card menu, the Card Types panel): the shared dashed add row. In a menu it is one
 // of the menu's items (the arrow keys reach it). On a board it wears the board's colours (`palette`); elsewhere the
 // chrome's.
+import { useTranslation } from '@/lib/i18n';
 import { DashedAddButton } from '@/components/primitives/DashedAddButton';
 import { useMenuItemProps } from '@/components/primitives/menu-item-props';
 import type { PlanPalette } from './plan-palette';
@@ -15,11 +16,12 @@ export function AddCardTypeButton({
   onClick: () => void;
   palette?: PlanPalette;
 }) {
+  const { t } = useTranslation();
   const { itemProps } = useMenuItemProps();
   return (
     <DashedAddButton
       {...itemProps}
-      label="Add New Card Type"
+      label={t('addcardtypebutton.add-new-card-type')}
       onClick={onClick}
       tone={palette ? { line: palette.cardBorder, muted: palette.muted } : undefined}
     />

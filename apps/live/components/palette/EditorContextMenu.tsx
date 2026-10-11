@@ -13,6 +13,7 @@
 // inline version used). The page owns the open/closed state + the
 // handlers; this component only decides which items to show.
 
+import { useTranslation } from '@/lib/i18n';
 import { onMouseHover, useRevertOnUnmount } from '@/components/primitives/hover-preview';
 import {
   EVENT_STORMING_NOTES,
@@ -72,6 +73,7 @@ import { COMMON_SHAPES, ROTATION_ANGLES } from './context-menu-constants';
 export type { EditorContextMenuState } from './EditorContextMenu.types';
 
 export function EditorContextMenu(props: EditorContextMenuProps) {
+  const { t } = useTranslation();
   const { menu, elements, onClose } = props;
   const position = { x: menu.x, y: menu.y };
   // Revert any in-flight swatch / border / rotation hover preview if the menu
@@ -156,7 +158,7 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
     return (
       <ContextMenu
         position={position}
-        label="Element menu"
+        label={t('editorcontextmenu.element-menu')}
         onClose={onClose}
         flush
         anchorBottom={anchorBottom}
@@ -173,28 +175,28 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
                 the very element they just acted on, hiding the result. */}
             <MenuActionRow
               icon={<CutIcon />}
-              label="Cut"
+              label={t('editorcontextmenu.cut')}
               onClick={runAndClose(props.onCutElement)}
             />
             <MenuActionRow
               icon={<CopyIcon />}
-              label="Copy"
+              label={t('editorcontextmenu.copy')}
               onClick={runAndClose(props.onCopyElement)}
             />
             <MenuActionRow
               icon={<DuplicateMenuIcon />}
-              label="Duplicate"
+              label={t('editorcontextmenu.duplicate')}
               onClick={runAndClose(props.onDuplicateElement)}
             />
             <MenuGroupSeparator />
             <MenuActionRow
               icon={<LayerUpIcon />}
-              label="Bring to Front"
+              label={t('editorcontextmenu.bring-to-front')}
               onClick={runAndClose(props.onStackFront)}
             />
             <MenuActionRow
               icon={<LayerDownIcon />}
-              label="Send to Back"
+              label={t('editorcontextmenu.send-to-back')}
               onClick={runAndClose(props.onStackBack)}
             />
             {/* Change kind (docs/specs/021-event-storming/event-storming.md): the ONE styling-shaped thing this menu
@@ -205,7 +207,7 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
               <>
                 <MenuGroupSeparator />
                 <MenuAccordionSection
-                  title="Change kind"
+                  title={t('editorcontextmenu.change-kind')}
                   icon={<SquareMenuIcon />}
                   {...sectionProps('es-kind')}
                 >
@@ -231,24 +233,24 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
             <MenuGroupSeparator />
             <MenuActionRow
               icon={<RemoveIcon />}
-              label="Remove"
+              label={t('editorcontextmenu.remove')}
               onClick={runAndClose(props.onDeleteElement)}
             />
           </>
         ) : null}
         {esNote ? null : (
-          <MenuAccordionSection title="Layer" icon={<LayersGlyph />} {...sectionProps('layer')}>
+          <MenuAccordionSection title={t('editorcontextmenu.layer')} icon={<LayersGlyph />} {...sectionProps('layer')}>
             {/* Layer order tweaks keep the menu open so you can nudge
               front/back a few times in a row. */}
             <MenuTileGrid cols={2}>
               <MenuTile
                 icon={<LayerUpIcon />}
-                label="Bring to Front"
+                label={t('editorcontextmenu.bring-to-front-2')}
                 onClick={props.onBringToFront}
               />
               <MenuTile
                 icon={<LayerDownIcon />}
-                label="Send to Back"
+                label={t('editorcontextmenu.send-to-back-2')}
                 onClick={props.onSendToBack}
               />
             </MenuTileGrid>
@@ -280,7 +282,7 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
             notes) have no size to edit — offering the boxes would advertise
             a resize the drag paths deliberately ignore. */}
         {boxed && !isFixedSizeElement(target) ? (
-          <MenuAccordionSection title="Size" icon={<SizeMenuIcon />} {...sectionProps('size')}>
+          <MenuAccordionSection title={t('editorcontextmenu.size')} icon={<SizeMenuIcon />} {...sectionProps('size')}>
             <SizeSection
               width={(target as { width: number }).width}
               height={(target as { height: number }).height}
@@ -297,7 +299,7 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
         ) : null}
         {/* Shape — morph to another common kind, preserving size + colour. */}
         {morphable ? (
-          <MenuAccordionSection title="Shape" icon={<SquareMenuIcon />} {...sectionProps('shape')}>
+          <MenuAccordionSection title={t('editorcontextmenu.shape')} icon={<SquareMenuIcon />} {...sectionProps('shape')}>
             <div className="grid grid-cols-4 gap-1 px-2 py-1.5">
               {COMMON_SHAPES.map((kind) => (
                 <SizeButton
@@ -320,7 +322,7 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
             (docs/specs/009-elements/blueprints/annotations.md [QD8]). */}
         {supportsRotation(target) && !esNote ? (
           <MenuAccordionSection
-            title="Rotation"
+            title={t('editorcontextmenu.rotation')}
             icon={<RotationMenuIcon />}
             {...sectionProps('rotation')}
           >
@@ -346,7 +348,7 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
         {props.onMirrorCopy ? (
           <MenuActionRow
             icon={<MirrorCopyGlyph />}
-            label="Mirror Copy"
+            label={t('editorcontextmenu.mirror-copy')}
             onClick={runAndClose(props.onMirrorCopy)}
           />
         ) : null}
@@ -374,7 +376,7 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
             ArrowLine/PointerControls). */}
         {target.type === 'arrow' ? (
           <>
-            <MenuAccordionSection title="Line" icon={<LineGlyph />} {...sectionProps('line')}>
+            <MenuAccordionSection title={t('editorcontextmenu.line')} icon={<LineGlyph />} {...sectionProps('line')}>
               <div className="px-3 py-1.5">
                 <ArrowLineControls
                   thickness={arrowThicknessOf(target)}
@@ -392,7 +394,7 @@ export function EditorContextMenu(props: EditorContextMenuProps) {
               </div>
             </MenuAccordionSection>
             <MenuAccordionSection
-              title="Pointer"
+              title={t('editorcontextmenu.pointer')}
               icon={<PointerGlyph />}
               {...sectionProps('pointer')}
             >

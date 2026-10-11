@@ -3,6 +3,7 @@
 // The Status Breakdown (docs/specs/026-plan/plan-views.md "Status Breakdown"): a donut of every live card by
 // status, its middle the total, beside a legend of each status's name, colour and count. The donut is a
 // conic gradient, so it needs no SVG.
+import { useTranslation } from '@/lib/i18n';
 import { useMemo } from 'react';
 import { statusMixModel } from '@livediagram/items';
 import { ViewFrame, viewState } from './view-frame';
@@ -19,6 +20,7 @@ export function StatusMixView({
   width,
   height,
 }: PlanViewProps) {
+  const { t } = useTranslation();
   const model = useMemo(
     () => statusMixModel(items.values(), plan?.statusNames ?? NO_NAMES),
     [items, plan?.statusNames],
@@ -39,7 +41,7 @@ export function StatusMixView({
   const size = Math.max(48, Math.min(height - 72, width / 2 - 24, 260));
   return (
     <ViewFrame
-      title="Status Breakdown"
+      title={t('statusmixview.status-breakdown')}
       count={model.total}
       countLabel={`${model.total} ${model.total === 1 ? 'card' : 'cards'}`}
       palette={palette}

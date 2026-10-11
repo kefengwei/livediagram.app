@@ -18,6 +18,7 @@
 // with data they can recover from; Clerk-first would leave orphan
 // rows behind that the user could no longer reach.
 
+import { useTranslation } from '@/lib/i18n';
 import { Button, useEscape, useFocusTrap, Portal } from '@livediagram/ui';
 import { useDeferredAuth } from '@/components/providers/deferred-auth';
 import { useEffect, useRef, useState } from 'react';
@@ -38,6 +39,7 @@ export function DeleteAccountDialog({
   onClose: () => void;
   onDeleted: () => Promise<void> | void;
 }) {
+  const { t } = useTranslation();
   // Silence the canvas shortcut/paste listeners behind the modal
   // (see lib/modal-guard).
   useModalGuard(open);
@@ -113,7 +115,7 @@ export function DeleteAccountDialog({
       const detail = messageOf(err, 'Clerk delete failed');
       setErrorMsg(
         `Backend data was deleted, but removing the Clerk account failed: ${detail}. ` +
-          'If this says self-deletion is disabled, enable it in your Clerk dashboard → User & Authentication → Personal information → Delete account.',
+          t('deleteaccountdialog.if-this-says-self-deletion-is'),
       );
       return;
     }
@@ -138,9 +140,7 @@ export function DeleteAccountDialog({
             <h2
               id="delete-account-title"
               className="text-lg font-semibold text-slate-900 dark:text-slate-100"
-            >
-              Delete Account
-            </h2>
+            >{t('deleteaccountdialog.delete-account')}</h2>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
               This permanently removes your documents (including any in the Trash), folders, and
               participant record from the livediagram server, then deletes your account. This cannot
@@ -152,13 +152,10 @@ export function DeleteAccountDialog({
             <label
               htmlFor="delete-confirm-email"
               className="block text-sm font-medium text-slate-700 dark:text-slate-300"
-            >
-              Type{' '}
+            >{t('deleteaccountdialog.type')}{' '}
               <strong className="font-semibold text-slate-900 dark:text-slate-100">
                 {expectedEmail || 'your email address'}
-              </strong>{' '}
-              to confirm
-            </label>
+              </strong>{' '}{t('deleteaccountdialog.to-confirm')}</label>
             <input
               ref={inputRef}
               id="delete-confirm-email"
@@ -168,7 +165,7 @@ export function DeleteAccountDialog({
               onChange={(e) => setTyped(e.target.value)}
               disabled={phase === 'submitting'}
               className="mt-2 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder-slate-400 transition focus:border-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-100 disabled:opacity-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:focus:ring-rose-500/20"
-              placeholder="you@example.com"
+              placeholder={t('deleteaccountdialog.you-example-com')}
             />
 
             {phase === 'error' && errorMsg ? (
@@ -179,16 +176,14 @@ export function DeleteAccountDialog({
           </div>
 
           <DialogFooter>
-            <Button variant="secondary" onClick={onClose} disabled={phase === 'submitting'}>
-              Cancel
-            </Button>
+            <Button variant="secondary" onClick={onClose} disabled={phase === 'submitting'}>{t('deleteaccountdialog.cancel')}</Button>
             <Button
               variant="primary"
               onClick={handleDelete}
               disabled={!emailsMatch || phase === 'submitting'}
               className="shadow-sm"
             >
-              {phase === 'submitting' ? 'Deleting…' : 'Delete Account'}
+              {phase === 'submitting' ? 'Deleting…' : t('deleteaccountdialog.delete-account-2')}
             </Button>
           </DialogFooter>
         </div>

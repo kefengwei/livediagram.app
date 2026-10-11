@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import { MenuAccordionSection } from '@/components/primitives/PortalMenu';
 import { MenuTile, MenuTileGrid } from '@/components/primitives/MenuTiles';
@@ -76,11 +77,10 @@ export function TextSizeTiles({
 // A key's Text Size (docs/specs/009-elements/pie-chart.md), captioned the way the Chart section captions its
 // Legend placement tiles, so it can sit under them or under a Legend's rows.
 export function LegendTextSize(props: Omit<Parameters<typeof TextSizeTiles>[0], 'withScale'>) {
+  const { t } = useTranslation();
   return (
     <>
-      <p className="px-3 pt-2 text-[10px] font-medium text-slate-500 dark:text-slate-400">
-        Text Size
-      </p>
+      <p className="px-3 pt-2 text-[10px] font-medium text-slate-500 dark:text-slate-400">{t('typographysections.text-size')}</p>
       <TextSizeTiles {...props} withScale={false} />
     </>
   );
@@ -119,6 +119,7 @@ export function TypographySections({
   onPreviewPadding?: (padding: Padding) => void;
   onPreviewEnd?: () => void;
 }) {
+  const { t } = useTranslation();
   // Build the mouse-only hover handlers for a tile, or undefined when no
   // preview handler was supplied (so touch never leaves a preview stuck).
   const hover = <T,>(preview: ((v: T) => void) | undefined, value: T) =>
@@ -130,7 +131,7 @@ export function TypographySections({
       : {};
   return (
     <>
-      <MenuAccordionSection title="Font" icon={<FontGlyph />} {...sectionProps('font')}>
+      <MenuAccordionSection title={t('typographysections.font')} icon={<FontGlyph />} {...sectionProps('font')}>
         <MenuTileGrid cols={2}>
           {FONTS.map((f) => (
             // No "Aa" swatch — the tile IS the font name rendered in its own
@@ -146,7 +147,7 @@ export function TypographySections({
           ))}
         </MenuTileGrid>
       </MenuAccordionSection>
-      <MenuAccordionSection title="Size" icon={<DotsIcon count={2} />} {...sectionProps('size')}>
+      <MenuAccordionSection title={t('typographysections.size')} icon={<DotsIcon count={2} />} {...sectionProps('size')}>
         <TextSizeTiles
           current={currentSize}
           onSet={onSetSize}
@@ -155,7 +156,7 @@ export function TypographySections({
         />
       </MenuAccordionSection>
       <MenuAccordionSection
-        title="Padding"
+        title={t('typographysections.padding')}
         icon={padding === 'none' ? <NonePaddingIcon /> : <PaddingIcon size={padding} />}
         {...sectionProps('padding')}
       >

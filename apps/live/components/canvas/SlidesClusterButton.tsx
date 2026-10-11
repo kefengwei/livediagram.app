@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { SlideDeckIcon } from '@/components/palette/palette-icons';
 import { ClusterPopoverButton } from './ClusterPopoverButton';
 
@@ -10,9 +11,10 @@ export function SlidesClusterButton(props: {
   popoverOpen: boolean;
   onTogglePopover: (button: HTMLElement) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <ClusterPopoverButton
-      label="Open Slides"
+      label={t('slidesclusterbutton.open-slides')}
       hoverTitle="Open Slides"
       hoverDescription="Build a slide deck from your pages and present it."
       icon={<SlideDeckIcon />}

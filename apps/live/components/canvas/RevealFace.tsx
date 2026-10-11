@@ -17,6 +17,7 @@
 // completely — pointer-events included, so the content underneath is editable
 // — leaving one small Hide pill to put it back.
 
+import { useTranslation } from '@/lib/i18n';
 import { usePressWithoutDrag } from '@/hooks/ui/usePressWithoutDrag';
 import { useCoarsePointer } from '@/hooks/ui/useCoarsePointer';
 import { REVEAL_COVER_BASE } from '@livediagram/document';
@@ -56,6 +57,7 @@ export function RevealFace({
   // Absent on a surface with no interaction at all (an export render).
   onToggleForMe?: () => void;
 }) {
+  const { t } = useTranslation();
   // The cover needs two presses; the pill needs one (see the header).
   const coverPress = usePressWithoutDrag(onToggleForMe, { requireDouble: true });
   const pillPress = usePressWithoutDrag(onToggleForMe);
@@ -80,9 +82,7 @@ export function RevealFace({
           {...pillPress}
           className="flex cursor-pointer items-center gap-1 rounded-full bg-slate-900/75 px-2.5 py-1 text-[10px] font-semibold text-white shadow-lg ring-1 ring-white/10 backdrop-blur transition hover:bg-slate-900/90"
         >
-          <EyeOffIcon />
-          Hide
-        </button>
+          <EyeOffIcon />{t('revealface.hide')}</button>
       </div>
     );
   }
@@ -131,8 +131,7 @@ export function RevealFace({
         className="relative rounded-full px-2.5 py-1 text-[10.5px] font-semibold"
         style={{ color: textColor, backgroundColor: tint(textColor, 0.07) }}
       >
-        {gesture} to reveal
-      </span>
+        {gesture}{t('revealface.to-reveal')}</span>
     </button>
   );
 }

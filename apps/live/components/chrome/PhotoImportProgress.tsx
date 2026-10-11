@@ -12,6 +12,7 @@
 // Same slot and visual language as PhotoDraftBar, because the two are the same
 // strip at different moments of one gesture and never show at once.
 
+import { useTranslation } from '@/lib/i18n';
 import type { PhotoDraftState } from '@/hooks/canvas/usePhotoDraft';
 
 export function PhotoImportProgress({
@@ -21,6 +22,7 @@ export function PhotoImportProgress({
   state: PhotoDraftState;
   onCancel: () => void;
 }) {
+  const { t } = useTranslation();
   // The photo appears the moment detection finishes, so this strip only covers
   // the brief in-browser detection — the words stream in inside the review.
   if (state.stage !== 'detecting') return null;
@@ -38,14 +40,12 @@ export function PhotoImportProgress({
           aria-hidden
           className="h-3 w-3 animate-spin rounded-full border-2 border-slate-300 border-t-brand-500 dark:border-slate-600 dark:border-t-brand-400"
         />
-        <p className="text-[11px] text-slate-600 dark:text-slate-300">Finding the stickies…</p>
+        <p className="text-[11px] text-slate-600 dark:text-slate-300">{t('photoimportprogress.finding-the-stickies')}</p>
         <button
           type="button"
           onClick={onCancel}
           className="rounded-full border border-slate-300 px-2.5 py-1 text-[11px] font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800"
-        >
-          Cancel
-        </button>
+        >{t('photoimportprogress.cancel')}</button>
       </div>
     </div>
   );

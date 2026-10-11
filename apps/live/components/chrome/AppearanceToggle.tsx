@@ -1,6 +1,6 @@
+
 import type { MouseEvent } from 'react';
 import {
-  APPEARANCE_LABEL,
   AppearanceIcon,
   appearanceToggleName,
   HoverCard,
@@ -8,6 +8,8 @@ import {
   quickAppearanceToggleName,
 } from '@livediagram/ui';
 import type { AppearanceSetting } from '@livediagram/ui';
+import { useTranslation } from '@/lib/i18n';
+import { APPEARANCE_DESCRIPTION_KEY, APPEARANCE_LABEL_KEY } from '@/lib/i18n/shared-labels';
 import { useAppearance } from '@/hooks/ui/useAppearance';
 import { CHROME_BTN, CHROME_BTN_LABELLED, ChromeLabel } from '@/components/chrome/chrome-button';
 
@@ -24,11 +26,8 @@ import { CHROME_BTN, CHROME_BTN_LABELLED, ChromeLabel } from '@/components/chrom
 // (docs/specs/007-editor/power-user-mode.md#quick-appearance-switch): a click flips to the
 // opposite of the painted appearance, and the context menu gesture sets System.
 
-const DESCRIPTION: Record<AppearanceSetting, string> = {
-  light: 'The editor chrome is light.',
-  dark: 'The editor chrome is dark.',
-  system: 'The editor chrome follows your device setting.',
-};
+// Keys, not English: the shared package names these states, but only the live app
+// translates (lib/i18n/shared-labels.ts).
 
 export function AppearanceToggle({
   labelled = false,
@@ -37,8 +36,11 @@ export function AppearanceToggle({
   labelled?: boolean;
   quick?: boolean;
 }) {
+  const { t } = useTranslation();
   const { setting, appearance, set, cycle } = useAppearance();
   const opposite = oppositeAppearanceSetting(appearance);
+  const label = (state: AppearanceSetting) => t(APPEARANCE_LABEL_KEY[state]);
+  const descriptionOf = (state: AppearanceSetting) => t(APPEARANCE_DESCRIPTION_KEY[state]);
 
   const onContextMenu = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -46,13 +48,14 @@ export function AppearanceToggle({
   };
 
   const description = quick
-    ? `${DESCRIPTION[setting]} Click for ${APPEARANCE_LABEL[opposite]}${
-        setting === 'system' ? '.' : '; right-click to follow your device.'
-      }`
-    : DESCRIPTION[setting];
+    ? t(setting === 'system' ? 'appearance.hover.quick-simple' : 'appearance.hover.quick-hint', {
+        current: descriptionOf(setting),
+        next: label(opposite),
+      })
+    : descriptionOf(setting);
 
   return (
-    <HoverCard title={`Appearance: ${APPEARANCE_LABEL[setting]}`} description={description}>
+    <HoverCard title={t('appearance.title', { name: label(setting) })} description={description}>
       <button
         type="button"
         onClick={quick ? () => set(opposite) : cycle}
@@ -63,7 +66,7 @@ export function AppearanceToggle({
         className={labelled ? `${CHROME_BTN} ${CHROME_BTN_LABELLED}` : CHROME_BTN}
       >
         <AppearanceIcon setting={setting} />
-        <ChromeLabel show={labelled}>{APPEARANCE_LABEL[setting]}</ChromeLabel>
+        <ChromeLabel show={labelled}>{label(setting)}</ChromeLabel>
       </button>
     </HoverCard>
   );

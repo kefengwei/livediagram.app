@@ -3,6 +3,7 @@
 // A Plan board's title in its header (docs/specs/026-plan/plan-board.md "What the board shows"): a double-click
 // (on the title, or on the header's empty space) turns it into a text field, its text selected, for someone who
 // may edit. Enter or leaving it saves the trimmed name (an empty one changes nothing); Escape puts it back.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import type { PlanPalette } from './plan-palette';
 
@@ -46,6 +47,7 @@ function BoardTitleField({
   onRename: (title: string) => void;
   onDone: () => void;
 }) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState(title);
   const input = useRef<HTMLInputElement>(null);
   // Set once Enter or Escape has finished, so the blur that follows cannot save a cancelled edit.
@@ -64,7 +66,7 @@ function BoardTitleField({
   return (
     <input
       ref={input}
-      aria-label="Board title"
+      aria-label={t('boardtitle.board-title')}
       value={draft}
       maxLength={BOARD_TITLE_MAX}
       className={`${TITLE_CLASS} rounded-md border bg-transparent px-1.5 py-0.5 outline-none`}

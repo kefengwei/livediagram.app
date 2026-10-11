@@ -3,6 +3,7 @@
 // The Sheet's toolbar (docs/specs/029-sheets/sheet.md "Toolbar"): a category switcher on the left (the palette's own
 // dropdown, in its toolbar style), then the chosen category's buttons, each with the shared Tooltip. Buttons that do
 // not fit fold from the right into More (⋯), so it never wraps. For someone who may edit, in Plan mode.
+import { useTranslation } from '@/lib/i18n';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { Tooltip } from '@livediagram/ui';
 import { PaletteDropdown } from '@/components/palette/PaletteDropdown';
@@ -50,6 +51,7 @@ const widthOf = (b: ToolbarButton, labelled = false) =>
 
 // Undo and Redo are the canvas's own (the zoom cluster and the keys), never repeated here.
 export function SheetToolbar({ actions }: { actions: SheetActions }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const categories = toolbarCategories(c, actions, actions.activeFormat());
   const [categoryId, setCategoryId] = useState<ToolbarCategoryId>(lastCategory);
@@ -137,7 +139,7 @@ export function SheetToolbar({ actions }: { actions: SheetActions }) {
     <div
       ref={ref}
       role="toolbar"
-      aria-label="Sheet formatting"
+      aria-label={t('sheettoolbar.sheet-formatting')}
       className="flex shrink-0 items-center gap-0 overflow-hidden border-b px-1"
       style={{ height: TOOLBAR_PX, borderColor: c.palette.cardBorder, color: c.palette.text }}
       onPointerDown={stop}
@@ -180,10 +182,10 @@ export function SheetToolbar({ actions }: { actions: SheetActions }) {
         ))}
       </div>
       {folded.length ? (
-        <Tooltip label="More">
+        <Tooltip label={t('sheettoolbar.more')}>
           <button
             type="button"
-            aria-label="More"
+            aria-label={t('sheettoolbar.more-2')}
             aria-haspopup="menu"
             className="ml-auto flex h-9 w-9 cursor-pointer items-center justify-center rounded-md text-xl leading-none hover:bg-black/5 dark:hover:bg-white/10"
             onClick={(e) => setMenu({ kind: 'more', anchor: e.currentTarget })}

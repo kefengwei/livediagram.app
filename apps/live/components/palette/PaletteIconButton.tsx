@@ -1,3 +1,4 @@
+
 import { SHAPE_DEFAULT_SIZE, type ShapeKind } from '@livediagram/document';
 import { planViewSize } from '@livediagram/items';
 import { PALETTE_DND_MIME } from '@/lib/icons';

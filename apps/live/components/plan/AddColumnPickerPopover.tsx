@@ -4,6 +4,7 @@
 // its own small popover beside the button, an arrow pointing at it, over the settings popover (which stays open).
 // Placed by placeHint (right, left, below, above: the first that fits on screen). It takes focus as it opens and
 // gives it back to the button when it closes; Escape closes only it, as does a press outside it.
+import { useTranslation } from '@/lib/i18n';
 import { useLayoutEffect, useRef, useState, type CSSProperties, type RefObject } from 'react';
 import {
   POPOVER_VIEWPORT_MARGIN,
@@ -52,6 +53,7 @@ export function AddColumnPickerPopover({
   // Closed without adding (Escape, a press outside).
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const box = useRef<HTMLDivElement>(null);
   const [layout, setLayout] = useState<HintLayout | null>(null);
   const dismiss = () => {
@@ -82,7 +84,7 @@ export function AddColumnPickerPopover({
       <div
         ref={box}
         role="dialog"
-        aria-label="Add a Column"
+        aria-label={t('addcolumnpickerpopover.add-a-column')}
         data-add-column-picker=""
         onPointerDown={(e) => e.stopPropagation()}
         className="fixed z-[var(--z-popover)] animate-fade-in rounded-xl border border-slate-200 bg-white p-3 text-slate-800 shadow-xl shadow-slate-900/15 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"

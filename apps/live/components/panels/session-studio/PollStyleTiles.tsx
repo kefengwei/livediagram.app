@@ -27,10 +27,13 @@
 // answers change, and a new style has to draw what it actually offers rather
 // than pick a glyph that gestures at it.
 
+
 import type { ReactNode } from 'react';
 import { POLL_STYLES, POLL_STYLE_LABEL, type PollStyle } from '@livediagram/document';
+import { useTranslation } from '@/lib/i18n';
 
 function PillRow({ count }: { count: number }) {
+  
   return (
     <span className="flex gap-0.5">
       {Array.from({ length: count }, (_, i) => (
@@ -90,6 +93,7 @@ function PollStyleTile({
   selected: boolean;
   onPick: () => void;
 }) {
+  
   return (
     <button
       type="button"
@@ -127,13 +131,15 @@ export function PollStyleTiles({
   style: PollStyle;
   onChange: (next: PollStyle) => void;
 }) {
+  const { t } = useTranslation();
+  
   return (
     // Equal rows: a tile whose label wraps cannot make its row taller than the
     // one above and leave the grid ragged.
     <div
       className="grid grid-cols-2 gap-1 [grid-auto-rows:1fr]"
       role="radiogroup"
-      aria-label="Answer style"
+      aria-label={t('pollstyletiles.answer-style')}
     >
       {POLL_STYLES.map((option) => (
         <PollStyleTile

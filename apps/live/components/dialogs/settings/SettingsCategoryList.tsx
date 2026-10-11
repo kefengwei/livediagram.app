@@ -1,8 +1,10 @@
 'use client';
 
+
 import { useState, type ReactNode } from 'react';
 import type { SettingsCategorySpec } from './settings-catalogue';
 import { NavChevron } from '@/components/primitives/NavChevron';
+import { useTranslation, type MessageKey } from '@/lib/i18n';
 import {
   SettingsCategoryIcon,
   SettingsSubcategoryIcon,
@@ -57,6 +59,11 @@ export function SettingsCategoryList({
   // "which category was it in?", which is the question search is really for.
   searching?: boolean;
 }) {
+  const { t } = useTranslation();
+  // A category's label is a key when the catalogue has one (docs/specs/004-interface-design/localization.md).
+  const labelOf = (category: { label: string; labelKey?: MessageKey }) =>
+    category.labelKey ? t(category.labelKey) : category.label;
+  
   const isRoot = variant === 'root';
   const [expanded, setExpanded] = useState<ReadonlySet<string>>(() => new Set());
   const toggle = (id: string) =>
@@ -88,7 +95,7 @@ export function SettingsCategoryList({
 
   return (
     <nav
-      aria-label="Settings categories"
+      aria-label={t('settingscategorylist.settings-categories')}
       className={isRoot ? ROOT_CARD : 'flex flex-col gap-0.5 p-2'}
     >
       {categories.map((category) => {
@@ -104,7 +111,7 @@ export function SettingsCategoryList({
         const rowFor = (c: ListCategory, nested: boolean) => (
           <CategoryRow
             key={c.id}
-            label={c.label}
+            label={labelOf(c)}
             icon={
               nested ? (
                 <SettingsSubcategoryIcon id={c.id as SettingsSubcategoryId} />
@@ -125,7 +132,7 @@ export function SettingsCategoryList({
         return (
           <div key={category.id} className="flex flex-col gap-0.5">
             <CategoryRow
-              label={category.label}
+              label={labelOf(category)}
               icon={<SettingsCategoryIcon id={category.id as SettingsIconId} />}
               current={selected === category.id}
               count={category.matchCount ?? 0}
@@ -144,7 +151,12 @@ export function SettingsCategoryList({
                   : {
                       open,
                       controls: listId,
-                      label: `${open ? 'Hide' : 'Show'} ${category.label} sub-categories`,
+                      label: t(
+                        open
+                          ? 'settingscategorylist.hide-name-sub-categories'
+                          : 'settingscategorylist.show-name-sub-categories',
+                        { name: labelOf(category) },
+                      ),
                       // Nothing to fold while it is held open.
                       locked: open && !expanded.has(category.id),
                       onToggle: () => toggle(category.id),
@@ -155,7 +167,7 @@ export function SettingsCategoryList({
               <div
                 id={listId}
                 role="group"
-                aria-label={category.label}
+                aria-label={labelOf(category)}
                 className={
                   isRoot
                     ? 'flex flex-col divide-y divide-slate-100 border-t border-slate-100 dark:divide-slate-800 dark:border-slate-800'
@@ -183,14 +195,20 @@ export function SettingsSubcategoryLinks({
   categories: readonly SettingsCategorySpec[];
   onSelect: (id: SettingsCategorySpec['id']) => void;
 }) {
+  const { t } = useTranslation();
+  const labelOf = (category: { label: string; labelKey?: MessageKey }) =>
+    category.labelKey ? t(category.labelKey) : category.label;
   const children = childrenOf(categories, parent.id);
   if (children.length === 0) return null;
   return (
-    <nav aria-label={`${parent.label} sub-categories`} className={`mt-6 ${ROOT_CARD}`}>
+    <nav
+      aria-label={t('settingscategorylist.name-sub-categories', { name: labelOf(parent) })}
+      className={`mt-6 ${ROOT_CARD}`}
+    >
       {children.map((c) => (
         <CategoryRow
           key={c.id}
-          label={c.label}
+          label={labelOf(c)}
           icon={<SettingsSubcategoryIcon id={c.id as SettingsSubcategoryId} />}
           isRoot
           onClick={() => onSelect(c.id)}
@@ -237,6 +255,7 @@ function CategoryRow({
     onToggle: () => void;
   };
 }) {
+  
   const empty = searching === true && count === 0 && !reachable;
   const lit = !isRoot && current;
   // The row's background (hover, and the current highlight on the sidebar).

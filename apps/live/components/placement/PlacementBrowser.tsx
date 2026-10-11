@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { BackBar } from '@/components/primitives/BackBar';
 import {
   FolderPlaceIcon,
@@ -121,6 +122,7 @@ export function PlacementBrowser({
   // Tile grid (default) or stacked rows; see the header comment.
   layout?: PlacementLayout;
 }) {
+  const { t } = useTranslation();
   const levelClass =
     layout === 'list' ? 'flex flex-col gap-1' : 'grid grid-cols-3 gap-2 sm:grid-cols-4';
   // Rows enter as a cascade, each a beat after the one above (the entrance
@@ -177,11 +179,11 @@ export function PlacementBrowser({
   if (hasOverview && space === null) {
     return (
       <div className="flex flex-col">
-        <BackBar label="Choose a Space" gap="tight" />
+        <BackBar label={t('placementbrowser.choose-a-space')} gap="tight" />
         <div key="overview" className={levelClass}>
           {showPersonal ? (
             <PlacementCard
-              label="My documents"
+              label={t('placementbrowser.my-documents')}
               sub="Your folders"
               icon={<PersonalSpaceIcon />}
               count={countChildren(folders, null)}
@@ -285,12 +287,12 @@ export function PlacementBrowser({
       ? stack[stack.length - 2]!.name
       : stack.length === 1
         ? spaceName
-        : 'All spaces';
+        : t('placementbrowser.all-spaces');
 
   return (
     <div className="flex flex-col">
       <BackBar
-        label={showBack ? backLabel : 'Choose a Folder'}
+        label={showBack ? backLabel : t('placementbrowser.choose-a-folder')}
         current={openFolder?.name ?? spaceName}
         onClick={showBack ? onBack : undefined}
         gap="tight"
@@ -311,8 +313,8 @@ export function PlacementBrowser({
           />
         ) : (
           <PlacementCard
-            label={isPersonalSpace ? 'My documents' : 'Team Library'}
-            sub={isPersonalSpace ? 'Top level' : (team?.name ?? 'Team')}
+            label={isPersonalSpace ? 'My documents' : t('placementbrowser.team-library')}
+            sub={isPersonalSpace ? t('placementbrowser.top-level') : (team?.name ?? 'Team')}
             icon={isPersonalSpace ? <PersonalSpaceIcon /> : <TeamPlaceIcon />}
             count={children.length}
             selected={placement === rootValue}
@@ -362,8 +364,8 @@ export function PlacementBrowser({
           <NewFolderTile
             layout={layout}
             enterIndex={children.length + 1}
-            label={newFolderParent ? 'New Subfolder' : 'New Folder'}
-            sub={newFolderParent ? `In ${newFolderParent.name}` : 'Create here'}
+            label={newFolderParent ? t('placementbrowser.new-subfolder') : t('placementbrowser.new-folder')}
+            sub={newFolderParent ? `In ${newFolderParent.name}` : t('placementbrowser.create-here')}
             onCreate={async (name) => {
               const created = await onCreateFolder(name, newFolderParent?.id ?? null, teamId);
               if (!created) return false;

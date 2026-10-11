@@ -9,6 +9,7 @@
 // small form, and none of it belongs in the data-shape sections beside charts
 // and rails.
 
+import { useTranslation } from '@/lib/i18n';
 import {
   AGENDA_DEFAULT_MINUTES,
   AGENDA_MAX_ITEMS,
@@ -69,9 +70,10 @@ export function EstimateMenuSection({
   sectionProps: (id: string) => { open: boolean; onToggle: () => void };
   onSetScale: (scale: EstimateScale) => void;
 }) {
+  const { t } = useTranslation();
   const current = target?.estimateScale ?? DEFAULT_ESTIMATE_SCALE;
   return (
-    <MenuAccordionSection title="Scale" icon={<ToolsMenuGlyph />} {...sectionProps('estimate')}>
+    <MenuAccordionSection title={t('collabmenusections.scale')} icon={<ToolsMenuGlyph />} {...sectionProps('estimate')}>
       <div className="flex flex-col gap-1 px-2 py-1.5">
         {ESTIMATE_SCALES.map((scale) => (
           <button
@@ -95,10 +97,7 @@ export function EstimateMenuSection({
             </span>
           </button>
         ))}
-        <p className="mt-0.5 text-[10px] leading-snug text-slate-500 dark:text-slate-400">
-          Changing the scale keeps answers already cast, so clear the card first if the round has
-          started.
-        </p>
+        <p className="mt-0.5 text-[10px] leading-snug text-slate-500 dark:text-slate-400">{t('collabmenusections.changing-the-scale-keeps-answers-already')}</p>
       </div>
     </MenuAccordionSection>
   );
@@ -121,6 +120,7 @@ export function AgendaMenuSection({
   sectionProps: (id: string) => { open: boolean; onToggle: () => void };
   onSetItems: (items: AgendaItem[]) => void;
 }) {
+  const { t } = useTranslation();
   const items = target?.agendaItems ?? NO_AGENDA_ITEMS;
   // The row drafts follow the element's segments when they change, adjusted during render.
   const [rows, setRows] = useFollowingDraft<AgendaItem[]>(items);
@@ -134,7 +134,7 @@ export function AgendaMenuSection({
   };
 
   return (
-    <MenuAccordionSection title="Segments" icon={<ToolsMenuGlyph />} {...sectionProps('agenda')}>
+    <MenuAccordionSection title={t('collabmenusections.segments')} icon={<ToolsMenuGlyph />} {...sectionProps('agenda')}>
       <div className="px-2 py-1.5">
         <div className="flex flex-col gap-1">
           {rows.map((item, i) => (
@@ -142,7 +142,7 @@ export function AgendaMenuSection({
               <input
                 className={`${MENU_CELL_INPUT} flex-1`}
                 value={item.label}
-                placeholder="Segment"
+                placeholder={t('collabmenusections.segment')}
                 aria-label={`Segment ${i + 1} name`}
                 maxLength={AGENDA_MAX_TEXT}
                 onChange={(e) =>
@@ -194,9 +194,7 @@ export function AgendaMenuSection({
           disabled={rows.length >= AGENDA_MAX_ITEMS}
           onClick={() => onSetItems([...rows, { label: '', minutes: AGENDA_DEFAULT_MINUTES }])}
           className={MENU_ADD_ROW_BUTTON}
-        >
-          Add segment
-        </button>
+        >{t('collabmenusections.add-segment')}</button>
       </div>
     </MenuAccordionSection>
   );
@@ -217,16 +215,17 @@ export function DecisionMenuSection({
   onSetDate: (date: string | undefined) => void;
   onSetDrivers: (drivers: string[]) => void;
 }) {
+  const { t } = useTranslation();
   const status = target?.decisionStatus ?? DEFAULT_DECISION_STATUS;
   const drivers = target?.decisionDrivers ?? NO_DRIVERS;
   // The row drafts follow the element's drivers when they change, adjusted during render.
   const [rows, setRows] = useFollowingDraft<string[]>(drivers);
 
   return (
-    <MenuAccordionSection title="Decision" icon={<ToolsMenuGlyph />} {...sectionProps('decision')}>
+    <MenuAccordionSection title={t('collabmenusections.decision')} icon={<ToolsMenuGlyph />} {...sectionProps('decision')}>
       <div className="flex flex-col gap-2 px-2 py-1.5">
         <div>
-          <span className={labelClass}>Status</span>
+          <span className={labelClass}>{t('collabmenusections.status')}</span>
           <div className="mt-1 grid grid-cols-2 gap-1">
             {DECISION_STATUSES.map((s) => (
               <button
@@ -258,9 +257,7 @@ export function DecisionMenuSection({
           </div>
         </div>
         <div>
-          <label className={labelClass} htmlFor="lvd-decision-date">
-            Date
-          </label>
+          <label className={labelClass} htmlFor="lvd-decision-date">{t('collabmenusections.date')}</label>
           <DateInput
             id="lvd-decision-date"
             unstyled
@@ -273,14 +270,14 @@ export function DecisionMenuSection({
           />
         </div>
         <div>
-          <span className={labelClass}>Drivers</span>
+          <span className={labelClass}>{t('collabmenusections.drivers')}</span>
           <div className="mt-1 flex flex-col gap-1">
             {rows.map((driver, i) => (
               <div key={i} className="flex items-center gap-1">
                 <input
                   className={`${MENU_CELL_INPUT} flex-1`}
                   value={driver}
-                  placeholder="Why"
+                  placeholder={t('collabmenusections.why')}
                   aria-label={`Driver ${i + 1}`}
                   maxLength={DECISION_MAX_TEXT}
                   onChange={(e) => setRows((r) => r.map((s, j) => (j === i ? e.target.value : s)))}
@@ -302,9 +299,7 @@ export function DecisionMenuSection({
             disabled={rows.length >= DECISION_MAX_DRIVERS}
             onClick={() => onSetDrivers([...rows, ''])}
             className={MENU_ADD_ROW_BUTTON}
-          >
-            Add driver
-          </button>
+          >{t('collabmenusections.add-driver')}</button>
         </div>
       </div>
     </MenuAccordionSection>
@@ -324,9 +319,10 @@ export function ChairMenuSection({
   sectionProps: (id: string) => { open: boolean; onToggle: () => void };
   onSetFacing: (facing: ChairFacing) => void;
 }) {
+  const { t } = useTranslation();
   const facing = target?.chairFacing ?? DEFAULT_CHAIR_FACING;
   return (
-    <MenuAccordionSection title="Chair" icon={<ToolsMenuGlyph />} {...sectionProps('chair')}>
+    <MenuAccordionSection title={t('collabmenusections.chair')} icon={<ToolsMenuGlyph />} {...sectionProps('chair')}>
       {/* Tiles rather than a list: the arrow IS the answer here, which is the
           same test the palette applies to its own categories (docs/specs/010-palette/palette-top-level-categories.md). */}
       <MenuTileGrid cols={4}>
@@ -344,10 +340,7 @@ export function ChairMenuSection({
           />
         ))}
       </MenuTileGrid>
-      <p className="px-2 pb-1.5 pt-1 text-[10px] leading-snug text-slate-500 dark:text-slate-400">
-        Which way somebody sitting here faces. Walk an Avatar-mode character into the chair to sit
-        down.
-      </p>
+      <p className="px-2 pb-1.5 pt-1 text-[10px] leading-snug text-slate-500 dark:text-slate-400">{t('collabmenusections.which-way-somebody-sitting-here-faces')}</p>
     </MenuAccordionSection>
   );
 }

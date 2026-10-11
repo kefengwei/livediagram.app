@@ -4,6 +4,7 @@
 // carries its type's stripe and glyph, its number and title (two lines), and where it came from and when;
 // Restore puts it back in that status, Delete deletes it for good after asking (the workspace Trash's
 // ConfirmPopover). Empty Trash deletes them all at once. A popover above its button in Plan mode's bottom-right cluster, like Card Types.
+import { useTranslation } from '@/lib/i18n';
 import { useMemo, useState } from 'react';
 import { TRASHED_FROM_FIELD, isTrashed, itemTitle, statusLabel, typeIn } from '@livediagram/items';
 import { Button, CountBadge, EmptyState, relativeSince, TrashIcon } from '@livediagram/ui';
@@ -21,6 +22,7 @@ export function TrashPanel({
   popoverAnchor?: DockAnchor;
   onPopoverClose: () => void;
 }) {
+  const { t } = useTranslation();
   const plan = usePlan();
   // When the panel opened: each row says how long ago its card was trashed from here.
   const [now] = useState(() => Date.now());
@@ -37,7 +39,7 @@ export function TrashPanel({
   const { canEdit } = plan;
   return (
     <MovablePanel
-      title="Trash"
+      title={t('trashpanel.trash')}
       helpArticle="planCards"
       position={null}
       defaultCorner="bottom-right"
@@ -54,8 +56,8 @@ export function TrashPanel({
         {trashed.length === 0 ? (
           <EmptyState
             icon={<TrashIcon size={18} />}
-            title="The Trash is empty"
-            description="Drag a card onto the Trash button to put it out of the way. You can restore it from here."
+            title={t('trashpanel.the-trash-is-empty')}
+            description={t('trashpanel.drag-a-card-onto-the-trash')}
           />
         ) : (
           <>
@@ -65,11 +67,10 @@ export function TrashPanel({
                 <CountBadge size="md" background="#64748b26" color="#64748b">
                   {trashed.length}
                 </CountBadge>
-                {trashed.length === 1 ? 'card' : 'cards'} in the Trash
-              </span>
+                {trashed.length === 1 ? 'card' : 'cards'}{t('trashpanel.in-the-trash')}</span>
             </div>
             <ul
-              aria-label="Cards in the Trash"
+              aria-label={t('trashpanel.cards-in-the-trash')}
               className="flex max-h-96 flex-col gap-1.5 overflow-y-auto"
             >
               {trashed.map((it) => {
@@ -116,9 +117,7 @@ export function TrashPanel({
                             setPurging({ id: it.id, key: it.key, anchor: e.currentTarget })
                           }
                         >
-                          <TrashIcon size={13} />
-                          Delete
-                        </button>
+                          <TrashIcon size={13} />{t('trashpanel.delete')}</button>
                         <Button
                           variant="secondary"
                           size="xs"
@@ -128,9 +127,7 @@ export function TrashPanel({
                             plan.restoreItem(it.id);
                             plan.announce(`#${it.key} restored`);
                           }}
-                        >
-                          Restore
-                        </Button>
+                        >{t('trashpanel.restore')}</Button>
                       </div>
                     ) : null}
                   </li>
@@ -149,9 +146,7 @@ export function TrashPanel({
                   onPopoverClose();
                 }}
               >
-                <TrashIcon size={14} />
-                Empty Trash
-                <CountBadge
+                <TrashIcon size={14} />{t('trashpanel.empty-trash')}<CountBadge
                   count={trashed.length}
                   background="rgba(255, 255, 255, 0.25)"
                   color="#ffffff"

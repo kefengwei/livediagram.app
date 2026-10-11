@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 import type { CommentMention, ShapeElement } from '@livediagram/document';
@@ -68,6 +69,7 @@ export function CommentPanelFace({
   onResolve?: () => void;
   onUnresolve?: () => void;
 }) {
+  const { t } = useTranslation();
   const now = useRelativeNow();
   const mentionScope = useMentionScope();
   const thread = element.commentThread;
@@ -86,7 +88,7 @@ export function CommentPanelFace({
   }, [comments.length]);
 
   const aside = resolved ? (
-    <CollabDoneChip>Resolved</CollabDoneChip>
+    <CollabDoneChip>{t('commentpanelface.resolved')}</CollabDoneChip>
   ) : comments.length > 0 && onResolve ? (
     // The thread's one other act, top right: no count there, since the
     // bubbles already show how many there are.
@@ -95,14 +97,12 @@ export function CommentPanelFace({
 
   const footer = !onAddComment ? undefined : resolved ? (
     onUnresolve ? (
-      <AccentBar onPress={onUnresolve} icon={<ReopenGlyph size={12} />}>
-        Reopen Thread
-      </AccentBar>
+      <AccentBar onPress={onUnresolve} icon={<ReopenGlyph size={12} />}>{t('commentpanelface.reopen-thread')}</AccentBar>
     ) : undefined
   ) : (
     <CollabComposer
       textColor={textColor}
-      placeholder={comments.length ? 'Reply…' : 'Write a comment…'}
+      placeholder={comments.length ? 'Reply…' : t('commentpanelface.write-a-comment')}
       ariaLabel="Write a comment"
       sendLabel="Send comment"
       maxLength={COMMENT_MAX_TEXT}
@@ -125,11 +125,11 @@ export function CommentPanelFace({
           {comments.length === 0 ? (
             <EmptyRows
               textColor={textColor}
-              title="Start the Conversation"
+              title={t('commentpanelface.start-the-conversation')}
               rows={0}
               glyph={<DiscussGlyph size={14} />}
             >
-              {onAddComment ? 'Replies stay on the canvas for everyone to read.' : undefined}
+              {onAddComment ? t('commentpanelface.replies-stay-on-the-canvas-for') : undefined}
             </EmptyRows>
           ) : (
             <CommentBubbles
@@ -150,6 +150,7 @@ export function CommentPanelFace({
 // In the header's top-right slot: the thread's one other act, a small chip in
 // the accent (the Idea box's Anonymous badge's shape).
 function ResolveChip({ onPress }: { onPress: () => void }) {
+  const { t } = useTranslation();
   const press = usePressWithoutDrag(onPress);
   return (
     <button
@@ -159,8 +160,6 @@ function ResolveChip({ onPress }: { onPress: () => void }) {
       className="pointer-events-auto inline-flex cursor-pointer items-center gap-1 rounded-full py-0.5 pl-1.5 pr-2 text-[10px] font-semibold transition hover:brightness-110"
       style={{ color: QA_ACCENT_INK, backgroundColor: tint(QA_ACCENT, 0.14) }}
     >
-      <CheckGlyph size={10} />
-      Resolve
-    </button>
+      <CheckGlyph size={10} />{t('commentpanelface.resolve')}</button>
   );
 }

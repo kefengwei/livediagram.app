@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { HoverCard } from '@livediagram/ui';
 import { CameraIcon, type EsBoardControls } from './EventStormingBoardRows';
 import { TOOLBAR_TRIGGER_TONE } from './PaletteDropdown';
@@ -9,18 +10,19 @@ import { TOOLBAR_TRIGGER_TONE } from './PaletteDropdown';
 // category's board row (EventStormingBoardRows), icon-only to sit with the strip's tiles, its words in the
 // hover card and its accessible name. Renders nothing where the board offers no photo import.
 export function EsPhotoStripButton({ controls }: { controls: EsBoardControls | undefined }) {
+  const { t } = useTranslation();
   if (!controls?.onImportPhoto) return null;
   const disabled = controls.photoDisabled === true;
   return (
     <HoverCard
-      title="Add from photo"
+      title={t('esphotostripbutton.add-from-photo')}
       description={
-        (disabled && controls.photoDisabledReason) || 'Read the stickies off a photo of the wall.'
+        (disabled && controls.photoDisabledReason) || t('esphotostripbutton.read-the-stickies-off-a-photo')
       }
     >
       <button
         type="button"
-        aria-label="Add from photo"
+        aria-label={t('esphotostripbutton.add-from-photo-2')}
         // aria-disabled, not disabled: the button keeps focus and hover, so the reason in the
         // hover card stays reachable.
         aria-disabled={disabled || undefined}

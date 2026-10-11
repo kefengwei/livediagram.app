@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 import { DocumentIcon } from '@/components/primitives/explorer-icons';
 import { EllipsisTriggerButton } from '@/components/primitives/EllipsisTriggerButton';
@@ -28,9 +29,10 @@ export function PanelDocumentItem({
   depth: number;
   draggable?: boolean;
 }) {
+  const { t } = useTranslation();
   const tree = usePanelTree();
   const menu = useRowMenu();
-  const name = doc.name || 'Untitled document';
+  const name = doc.name || t('paneldocumentitem.untitled-document');
   const local = isLocalOnly(doc);
   const team = doc.team;
   const shareCode = doc.shared?.shareCode;

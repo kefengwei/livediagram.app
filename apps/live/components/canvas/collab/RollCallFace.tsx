@@ -3,6 +3,7 @@
 // would be empty five minutes after the session, which is exactly when anyone
 // reads it. Built in the behaviour elements' current look ("The face").
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import type { RollCallEntry, ShapeElement } from '@livediagram/document';
 import { GlyphDisc, Glyph, IDENTITY_FILL, identityVars } from '@livediagram/ui';
@@ -67,6 +68,7 @@ export function RollCallFace({
   surface: string;
   onTakeRoll?: () => void;
 }) {
+  const { t } = useTranslation();
   const entries = element.rollCall ?? [];
   // Every entry is stamped at the same moment, so the first is the roll's time.
   const takenAt = entries[0]?.at;
@@ -79,20 +81,18 @@ export function RollCallFace({
     <CollabAccentScope element={element} textColor={textColor} surface={surface}>
       <CollabPanel
         element={element}
-        title={label.trim() || 'Roll call'}
+        title={label.trim() || t('rollcallface.roll-call')}
         textColor={textColor}
         footer={
           onTakeRoll ? (
             <AccentBar onPress={onTakeRoll} icon={<ClipboardGlyph />}>
-              {entries.length ? 'Take again' : 'Take roll'}
+              {entries.length ? t('rollcallface.take-again') : t('rollcallface.take-roll')}
             </AccentBar>
           ) : undefined
         }
       >
         {entries.length === 0 ? (
-          <EmptyRows textColor={textColor} title="Nobody recorded yet" rows={0}>
-            Take the roll to freeze who is here into the document.
-          </EmptyRows>
+          <EmptyRows textColor={textColor} title={t('rollcallface.nobody-recorded-yet')} rows={0}>{t('rollcallface.take-the-roll-to-freeze-who')}</EmptyRows>
         ) : (
           <div className="flex min-h-0 flex-col gap-2.5">
             <div
@@ -109,9 +109,7 @@ export function RollCallFace({
                 <span
                   className="text-[10px] font-semibold uppercase tracking-[0.06em]"
                   style={{ color: textColor, opacity: 0.55 }}
-                >
-                  present
-                </span>
+                >{t('rollcallface.present')}</span>
               </span>
               <span className="flex -space-x-2" aria-hidden>
                 {entries.slice(0, STACK).map((entry, i) => (

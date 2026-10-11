@@ -4,6 +4,7 @@
 // pressed while Mirror While Drawing is on for the page, opening a popover: the switch at the top,
 // then the axis (Vertical, Horizontal, Both, Radial), Radial's copies, and Merge Into One. This
 // page's own, for the session; a page turned on starts from the last settings chosen.
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import { MIRROR_AXES, RADIAL_COPIES } from '@livediagram/document';
 import { SegmentedRadio } from '@/components/primitives/SegmentedRadio';
@@ -18,6 +19,7 @@ const COPIES = RADIAL_COPIES.map((n) => ({ id: n, label: String(n) }));
 
 /** The popover's body: Mirror While Drawing for the page, then its axis, copies and merge. */
 export function LogoMirrorSettings({ pageId, tools }: { pageId: string; tools: LogoToolsView }) {
+  const { t } = useTranslation();
   const on = tools.mirrorOn(pageId);
   const settings = tools.mirrorSettings(pageId);
   return (
@@ -26,13 +28,11 @@ export function LogoMirrorSettings({ pageId, tools }: { pageId: string; tools: L
         checked={on}
         onChange={(next) => tools.setMirror(pageId, next)}
         className="py-1 text-xs"
-      >
-        Mirror While Drawing
-      </SwitchRow>
+      >{t('logomirrorpopover.mirror-while-drawing')}</SwitchRow>
       {/* The settings, dimmed while off: choosing an axis turns it on. */}
       <div className={on ? '' : 'opacity-50'}>
-        <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">Axis</p>
-        <div role="radiogroup" aria-label="Mirror axis" className="mt-1 grid grid-cols-2 gap-1">
+        <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">{t('logomirrorpopover.axis')}</p>
+        <div role="radiogroup" aria-label={t('logomirrorpopover.mirror-axis')} className="mt-1 grid grid-cols-2 gap-1">
           {MIRROR_AXES.map((axis) => {
             const chosen = settings.axis === axis.id;
             return (
@@ -56,11 +56,9 @@ export function LogoMirrorSettings({ pageId, tools }: { pageId: string; tools: L
         </div>
         {settings.axis === 'radial' ? (
           <>
-            <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">
-              Copies
-            </p>
+            <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">{t('logomirrorpopover.copies')}</p>
             <SegmentedRadio
-              label="Radial copies"
+              label={t('logomirrorpopover.radial-copies')}
               options={COPIES}
               value={settings.copies}
               onChange={(copies) => tools.setMirrorSettings(pageId, { copies })}
@@ -72,13 +70,11 @@ export function LogoMirrorSettings({ pageId, tools }: { pageId: string; tools: L
           checked={settings.merge}
           onChange={(merge) => tools.setMirrorSettings(pageId, { merge })}
           className="mt-2 py-1 text-xs"
-        >
-          Merge Into One
-        </SwitchRow>
+        >{t('logomirrorpopover.merge-into-one')}</SwitchRow>
         <p className="text-[11px] text-slate-500 dark:text-slate-400">
           {settings.merge
-            ? 'Each drawing and its copies become one element.'
-            : 'Each copy is its own element.'}
+            ? t('logomirrorpopover.each-drawing-and-its-copies-become')
+            : t('logomirrorpopover.each-copy-is-its-own-element')}
         </p>
       </div>
     </div>

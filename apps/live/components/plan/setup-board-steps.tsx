@@ -2,6 +2,7 @@
 
 // Setup Board's two steps (docs/specs/026-plan/plan-board.md "Setup Board"): the card types the board is for, then
 // its columns (existing statuses to pick, new ones to name, in order). Drawn in the board's own colours.
+import { useTranslation } from '@/lib/i18n';
 import { useId, useState } from 'react';
 import { missingBoardStatuses, type ItemTypeDef } from '@livediagram/items';
 import { CountBadge, PlusIcon } from '@livediagram/ui';
@@ -49,35 +50,30 @@ export function SetupTypesStep({
   // Add New Card Type: opens the type editor (absent while the catalogue is full); a type made there joins the picks.
   onCreateType?: (() => void) | undefined;
 }) {
+  const { t } = useTranslation();
   const all = types.every((t) => chosen.includes(t.id));
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between gap-2">
-        <p className="text-[13px]" style={{ color: palette.muted }}>
-          Which cards belong on this board? Only these can be added to it.
-        </p>
+        <p className="text-[13px]" style={{ color: palette.muted }}>{t('setup-board-steps.which-cards-belong-on-this-board')}</p>
         <div className="flex shrink-0 gap-1">
           <button
             type="button"
             className={LINK}
             disabled={all}
             onClick={() => onChange(types.map((t) => t.id))}
-          >
-            Select All
-          </button>
+          >{t('setup-board-steps.select-all')}</button>
           <button
             type="button"
             className={LINK}
             disabled={chosen.length === 0}
             onClick={() => onChange([])}
-          >
-            Clear
-          </button>
+          >{t('setup-board-steps.clear')}</button>
         </div>
       </div>
       <OptionRows
         kind="multiple"
-        label="Card Types"
+        label={t('setup-board-steps.card-types')}
         palette={palette}
         selected={chosen}
         rows={types.map((t) => ({
@@ -100,7 +96,7 @@ export function SetupTypesStep({
       {onCreateType ? <AddCardTypeButton onClick={onCreateType} palette={palette} /> : null}
       <p className="text-[12px] tabular-nums" style={{ color: palette.muted }}>
         {chosen.length === 0
-          ? 'Pick at least one card type.'
+          ? t('setup-board-steps.pick-at-least-one-card-type')
           : all
             ? `Every card type, ${types.length} in all`
             : `${chosen.length} of ${types.length} card types`}
@@ -127,6 +123,7 @@ export function SetupColumnsStep({
   palette: PlanPalette;
   onChange: (next: SetupColumn[]) => void;
 }) {
+  const { t } = useTranslation();
   const inputId = useId();
   const [name, setName] = useState('');
   const plan = usePlan();
@@ -155,16 +152,11 @@ export function SetupColumnsStep({
   };
   return (
     <div className="flex flex-col gap-4">
-      <p className="text-[13px]" style={{ color: palette.muted }}>
-        The stages your cards move through. Drag to reorder: top to bottom is left to right on the
-        board.
-      </p>
+      <p className="text-[13px]" style={{ color: palette.muted }}>{t('setup-board-steps.the-stages-your-cards-move-through')}</p>
 
       {/* The columns so far, as the board will show them. */}
       <div className="flex flex-col gap-1.5">
-        <p className={`${HEADING} flex items-center gap-1.5`} style={{ color: palette.muted }}>
-          Columns
-          <CountBadge size="sm" background="#64748b26" color="#64748b">
+        <p className={`${HEADING} flex items-center gap-1.5`} style={{ color: palette.muted }}>{t('setup-board-steps.columns')}<CountBadge size="sm" background="#64748b26" color="#64748b">
             {chosen.length}
           </CountBadge>
         </p>
@@ -172,24 +164,20 @@ export function SetupColumnsStep({
           <p
             className="rounded-xl border-2 border-dashed px-3 py-4 text-center text-[12px]"
             style={{ borderColor: palette.cardBorder, color: palette.muted }}
-          >
-            No columns yet. Add one below.
-          </p>
+          >{t('setup-board-steps.no-columns-yet-add-one-below')}</p>
         ) : (
           <SetupColumnList chosen={chosen} palette={palette} onChange={onChange} />
         )}
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <label htmlFor={inputId} className={HEADING} style={{ color: palette.muted }}>
-          Add a New State
-        </label>
+        <label htmlFor={inputId} className={HEADING} style={{ color: palette.muted }}>{t('setup-board-steps.add-a-new-state')}</label>
         <div className="flex gap-2">
           <input
             id={inputId}
             value={name}
             maxLength={COLUMN_NAME_MAX}
-            placeholder="In Review"
+            placeholder={t('setup-board-steps.in-review')}
             disabled={full}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => {
@@ -212,15 +200,13 @@ export function SetupColumnsStep({
             className={ADD_BUTTON}
             style={boardVars(palette)}
           >
-            <PlusIcon size={12} />
-            Add
-          </button>
+            <PlusIcon size={12} />{t('setup-board-steps.add')}</button>
         </div>
         <p className="min-h-4 text-[12px]" style={{ color: palette.muted }}>
           {full
             ? `A board holds up to ${max} columns.`
             : name.trim() && !typed
-              ? 'That column is already on the board.'
+              ? t('setup-board-steps.that-column-is-already-on-the')
               : reuses?.kind === 'existing'
                 ? `Uses the existing ${reuses.pick.name} state, so its cards show here.`
                 : ' '}
@@ -230,9 +216,7 @@ export function SetupColumnsStep({
       {existing.length > 0 ? (
         <div className="flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
-            <p className={HEADING} style={{ color: palette.muted }}>
-              Use an Existing State
-            </p>
+            <p className={HEADING} style={{ color: palette.muted }}>{t('setup-board-steps.use-an-existing-state')}</p>
             {existing.length > 1 ? (
               <button
                 type="button"
@@ -250,16 +234,14 @@ export function SetupColumnsStep({
                     ].slice(0, max),
                   )
                 }
-              >
-                Add All
-              </button>
+              >{t('setup-board-steps.add-all')}</button>
             ) : null}
           </div>
           {/* A row per state, as the column picker shows it: its colour, its name, the boards that use it and its
               cards. */}
           <OptionRows
             kind="action"
-            label="Existing States"
+            label={t('setup-board-steps.existing-states')}
             palette={palette}
             rows={existing.map((c) => ({
               id: c.status,

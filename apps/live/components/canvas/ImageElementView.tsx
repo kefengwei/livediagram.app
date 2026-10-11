@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { memo } from 'react';
 import { IMAGE_DEFAULT_RADIUS_PX, cornerRadiusPx, type ImageElement } from '@livediagram/document';
 import { useImageBlobUrl } from '@/hooks/persistence/useImageBlobUrl';
@@ -50,6 +51,7 @@ function ImageElementViewImpl({
   shareCode,
   canOpenPicker,
 }: ImageElementViewProps) {
+  const { t } = useTranslation();
   const { imageId } = element;
   const state = useImageBlobUrl(ownerId, imageId, { documentId, shareCode });
 
@@ -83,7 +85,7 @@ function ImageElementViewImpl({
       return (
         <div className={placeholderBase} style={radiusStyle}>
           <ImageIcon />
-          <span className="text-[10px] font-medium">No image</span>
+          <span className="text-[10px] font-medium">{t('imageelementview.no-image')}</span>
         </div>
       );
     }
@@ -93,7 +95,7 @@ function ImageElementViewImpl({
         style={radiusStyle}
       >
         <ImageIcon />
-        <span className="text-[10px] font-medium">Double-click to upload</span>
+        <span className="text-[10px] font-medium">{t('imageelementview.double-click-to-upload')}</span>
       </div>
     );
   }
@@ -105,7 +107,7 @@ function ImageElementViewImpl({
         style={radiusStyle}
       >
         <BrokenIcon />
-        <span className="text-[10px] font-medium">Image unavailable</span>
+        <span className="text-[10px] font-medium">{t('imageelementview.image-unavailable')}</span>
       </div>
     );
   }

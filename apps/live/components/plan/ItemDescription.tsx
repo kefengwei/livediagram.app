@@ -5,6 +5,7 @@
 // same runs, toolbar and shortcuts) on a raised surface, with shortcut hints and a Saving / Saved line,
 // until focus leaves it or Escape. Saved as `descriptionRich` with `description` as its plain-text mirror,
 // in one write: a moment after typing stops, when focus leaves, and when the panel closes.
+import { useTranslation } from '@/lib/i18n';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { PencilIcon } from '@livediagram/ui';
 import { useLatest } from '@/hooks/ui/useLatest';
@@ -43,6 +44,7 @@ export function ItemDescription({
   canEdit: boolean;
   onPatch: (patch: ItemPatch) => void;
 }) {
+  const { t } = useTranslation();
   const pending = useRef<{ plain: string; runs: TextRun[] } | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const patch = useLatest(onPatch);
@@ -67,7 +69,7 @@ export function ItemDescription({
 
   if (!canEdit) {
     return empty ? (
-      <p className="text-[13px] text-slate-500">No description</p>
+      <p className="text-[13px] text-slate-500">{t('itemdescription.no-description')}</p>
     ) : (
       <NoteRichText
         note={undefined}
@@ -84,9 +86,7 @@ export function ItemDescription({
         onClick={() => setEditing(true)}
         className="group -mx-3 flex w-[calc(100%+1.5rem)] cursor-text items-center gap-2 rounded-lg px-3 py-2 text-left text-[13px] text-slate-400 transition hover:bg-slate-50 hover:text-slate-600 dark:hover:bg-slate-800/50 dark:hover:text-slate-300"
       >
-        <PencilIcon size={14} />
-        Add a description…
-      </button>
+        <PencilIcon size={14} />{t('itemdescription.add-a-description')}</button>
     );
   }
 
@@ -107,12 +107,10 @@ export function ItemDescription({
         <button
           type="button"
           onClick={() => setEditing(true)}
-          aria-label="Edit the description"
+          aria-label={t('itemdescription.edit-the-description')}
           className="absolute right-2 top-2 flex items-center gap-1 rounded-md bg-white px-1.5 py-0.5 text-[11px] font-medium text-slate-500 opacity-0 shadow-sm transition focus-visible:opacity-100 group-hover:opacity-100 max-sm:opacity-100 dark:bg-slate-900 dark:text-slate-400"
         >
-          <PencilIcon size={11} />
-          Edit
-        </button>
+          <PencilIcon size={11} />{t('itemdescription.edit')}</button>
       </div>
     );
   }
@@ -138,8 +136,8 @@ export function ItemDescription({
         initialRuns={runs}
         note={false}
         autoFocus
-        label="Description"
-        placeholder="Write the why and the what…"
+        label={t('itemdescription.description')}
+        placeholder={t('itemdescription.write-the-why-and-the-what')}
         surfaceClassName="min-h-40 max-h-[28rem] resize-y sm:min-h-[16rem] sm:max-h-[36rem]"
         onChange={(plain, next) => {
           pending.current = { plain, runs: next };
@@ -151,9 +149,7 @@ export function ItemDescription({
       />
       <div className="mt-1.5 flex items-center justify-between gap-2 px-1 text-[11px] text-slate-500 dark:text-slate-400">
         <span className="max-sm:hidden">
-          <kbd className="font-sans">⌘B</kbd> bold · <kbd className="font-sans">⌘I</kbd> italic ·
-          Esc to finish
-        </span>
+          <kbd className="font-sans">{t('itemdescription.b')}</kbd>{t('itemdescription.bold')}<kbd className="font-sans">{t('itemdescription.i')}</kbd>{t('itemdescription.italic-esc-to-finish')}</span>
         <span aria-live="polite" className="ml-auto">
           {status === 'saving' ? 'Saving…' : status === 'saved' ? 'Saved' : ''}
         </span>

@@ -12,6 +12,7 @@
 // onSelect / onCommit; the host decides what that means: apply live (the
 // dialog) or stage the choice until Create (the new-document wizard).
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useState, type ReactNode } from 'react';
 import { customDefinitionFromTheme } from '@/lib/custom-theme-registry';
 import { type ThemeDefinition } from '@/lib/themes';
@@ -45,6 +46,7 @@ export function CustomThemePicker({
   onBuildingChange?: (building: boolean) => void;
   browserClassName?: string;
 }) {
+  const { t } = useTranslation();
   const {
     themes: customThemes,
     createTheme,
@@ -97,7 +99,7 @@ export function CustomThemePicker({
     if (
       await confirm({
         title: `Delete "${theme?.name ?? 'theme'}"?`,
-        message: 'Documents using it fall back to the Default theme. This cannot be undone.',
+        message: t('customthemepicker.documents-using-it-fall-back-to'),
         confirmLabel: 'Delete',
       })
     ) {

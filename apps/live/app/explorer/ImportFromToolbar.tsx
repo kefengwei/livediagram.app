@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { Tooltip } from '@livediagram/ui';
 import type { ImportSource, ImportSourceId } from './import-sources';
 
@@ -12,11 +13,12 @@ export function ImportFromToolbar({
   sources: readonly ImportSource[];
   onImport: (id: ImportSourceId) => void;
 }) {
+  const { t } = useTranslation();
   if (sources.length === 0) return null;
   return (
     <div
       role="toolbar"
-      aria-label="Import from"
+      aria-label={t('importfromtoolbar.import-from')}
       // A toolbar moves focus between its buttons with the arrow keys.
       onKeyDown={(e) => {
         if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
@@ -29,9 +31,7 @@ export function ImportFromToolbar({
       }}
       className="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white py-[2px] pr-[2px] pl-[2px] text-xs font-medium text-slate-500 shadow-sm sm:pl-3 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400"
     >
-      <span aria-hidden className="hidden pr-1 text-optical-line sm:inline">
-        Import from
-      </span>
+      <span aria-hidden className="hidden pr-1 text-optical-line sm:inline">{t('importfromtoolbar.import-from-2')}</span>
       {sources.map((source) => (
         <Tooltip key={source.id} label={source.name}>
           <button

@@ -3,6 +3,7 @@
 // The Wordmark section of a text element's Text flyout on a logo page (docs/specs/007-editor/
 // logo-pages.md "Wordmark type"): Tracking, Weight, Case and Arc. Tiles hover-preview and commit on
 // a press; the sliders preview as they move and commit once when let go, so a drag is one undo step.
+import { useTranslation } from '@/lib/i18n';
 import { useState, type ReactNode } from 'react';
 import {
   LETTER_SPACING_MAX,
@@ -48,15 +49,16 @@ export function WordmarkSection({
   onPreview: (patch: WordmarkPatch) => void;
   onPreviewEnd: () => void;
 }) {
+  const { t } = useTranslation();
   const hover = (patch: WordmarkPatch) => ({
     onPointerEnter: onMouseHover(() => onPreview(patch)),
     onPointerLeave: onMouseHover(onPreviewEnd),
   });
   const weight = resolvedFontWeight(element);
   return (
-    <MenuAccordionSection title="Wordmark" icon={<WordmarkGlyph />} {...section}>
+    <MenuAccordionSection title={t('wordmarksection.wordmark')} icon={<WordmarkGlyph />} {...section}>
       <SliderRow
-        label="Tracking"
+        label={t('wordmarksection.tracking')}
         min={LETTER_SPACING_MIN * 100}
         max={LETTER_SPACING_MAX * 100}
         step={1}
@@ -66,7 +68,7 @@ export function WordmarkSection({
         onCommit={(v) => onSet({ letterSpacing: v === 0 ? null : v / 100 })}
         onPreviewEnd={onPreviewEnd}
       />
-      <Caption>Weight</Caption>
+      <Caption>{t('wordmarksection.weight')}</Caption>
       <MenuTileGrid cols={3}>
         {WEIGHTS.map((w) => (
           <MenuTile
@@ -79,7 +81,7 @@ export function WordmarkSection({
           />
         ))}
       </MenuTileGrid>
-      <Caption>Case</Caption>
+      <Caption>{t('wordmarksection.case')}</Caption>
       <MenuTileGrid cols={3}>
         {CASES.map((c) => (
           <MenuTile
@@ -93,7 +95,7 @@ export function WordmarkSection({
         ))}
       </MenuTileGrid>
       <SliderRow
-        label="Arc"
+        label={t('wordmarksection.arc')}
         min={-TEXT_ARC_MAX}
         max={TEXT_ARC_MAX}
         step={ARC_STEP}
@@ -104,7 +106,7 @@ export function WordmarkSection({
         onCommit={(v) => onSet({ textArc: v === 0 ? null : v })}
         onPreviewEnd={onPreviewEnd}
         reset={
-          element.textArc ? { label: 'Flat', onReset: () => onSet({ textArc: null }) } : undefined
+          element.textArc ? { label: t('wordmarksection.flat'), onReset: () => onSet({ textArc: null }) } : undefined
         }
       />
     </MenuAccordionSection>

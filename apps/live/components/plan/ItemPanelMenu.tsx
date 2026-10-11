@@ -4,6 +4,7 @@
 // Flag), Archive (or Restore) and Edit Card Type for someone who may edit, then Help for everyone, then Trash last
 // for an editor, as icon-left rows beside
 // the panel's Close, so the header keeps only the item's type, its key and the two buttons.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { DuplicateIcon, PlanCardsIcon, TrashIcon } from '@livediagram/ui';
 import { EllipsisTriggerButton } from '@/components/primitives/EllipsisTriggerButton';
@@ -35,6 +36,7 @@ export function ItemPanelMenu({
   // Opens the card's type in the type editor; absent, no row.
   onEditType?: (() => void) | undefined;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   // Held in state so the menu anchors on its first render.
   const [button, setButton] = useState<HTMLButtonElement | null>(null);
@@ -57,13 +59,13 @@ export function ItemPanelMenu({
             <>
               <MenuActionRow
                 plain
-                label="Duplicate"
+                label={t('itempanelmenu.duplicate')}
                 icon={<DuplicateIcon />}
                 onClick={run(onDuplicate)}
               />
               <MenuActionRow
                 plain
-                label={flagged ? 'Remove Flag' : 'Flag'}
+                label={flagged ? t('itempanelmenu.remove-flag') : 'Flag'}
                 icon={<PlanTypeGlyph glyph="flag" size={14} />}
                 onClick={run(onFlag)}
               />
@@ -76,7 +78,7 @@ export function ItemPanelMenu({
               {onEditType ? (
                 <MenuActionRow
                   plain
-                  label="Edit Card Type"
+                  label={t('itempanelmenu.edit-card-type')}
                   icon={<PlanCardsIcon size={16} />}
                   onClick={run(onEditType)}
                 />
@@ -86,7 +88,7 @@ export function ItemPanelMenu({
           ) : null}
           <MenuActionRow
             plain
-            label="Help"
+            label={t('itempanelmenu.help')}
             icon={<HelpMarkIcon />}
             onClick={run(() => openHelpArticle('planCards'))}
           />
@@ -94,7 +96,7 @@ export function ItemPanelMenu({
           {canEdit ? (
             <>
               <MenuGroupSeparator />
-              <MenuActionRow plain label="Trash" icon={<TrashIcon />} onClick={run(onTrash)} />
+              <MenuActionRow plain label={t('itempanelmenu.trash')} icon={<TrashIcon />} onClick={run(onTrash)} />
             </>
           ) : null}
         </PortalMenu>

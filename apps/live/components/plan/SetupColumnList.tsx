@@ -5,6 +5,7 @@
 // land (a dashed slot in the brand colour, the others closing up around it) and a lifted copy follows the pointer;
 // release places it, Escape or a cancelled pointer puts it back. Alt+Up and Alt+Down on a grip move its column by
 // keyboard. Pointer events, so a mouse, a pen and a finger drag alike.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { CloseIcon } from '@livediagram/ui';
 import { GripIcon } from './ItemTypeFieldMenu';
@@ -39,6 +40,7 @@ export function SetupColumnList({
   palette: PlanPalette;
   onChange: (next: SetupColumn[]) => void;
 }) {
+  const { t } = useTranslation();
   const listRef = useRef<HTMLOListElement>(null);
   const [drag, setDrag] = useState<Drag | null>(null);
   const dragRef = useRef<Drag | null>(null);
@@ -124,7 +126,7 @@ export function SetupColumnList({
 
   return (
     <>
-      <ol ref={listRef} aria-label="Columns" className="flex flex-col gap-1.5">
+      <ol ref={listRef} aria-label={t('setupcolumnlist.columns')} className="flex flex-col gap-1.5">
         {shown.map((c, i) =>
           c === 'slot' ? (
             <li
@@ -192,6 +194,7 @@ function ColumnRow({
   grip?: React.ButtonHTMLAttributes<HTMLButtonElement> & { 'aria-label': string };
   onRemove?: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <>
       <button
@@ -209,7 +212,7 @@ function ColumnRow({
         {column.name}
       </span>
       <span className="shrink-0 text-[11px]" style={{ color: palette.muted }}>
-        {column.kind === 'existing' ? 'Existing state' : 'New'}
+        {column.kind === 'existing' ? t('setupcolumnlist.existing-state') : 'New'}
       </span>
       {onRemove ? (
         <button

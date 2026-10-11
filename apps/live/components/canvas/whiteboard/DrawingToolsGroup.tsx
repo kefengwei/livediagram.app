@@ -4,6 +4,7 @@
 // Select, Markers 1 to 3, Text, Path tool and Eraser; the sticky note is a shape (the Shapes group).
 // A pen or the eraser already in hand opens its flyout.
 
+import { useTranslation } from '@/lib/i18n';
 import {
   EditPointsIcon,
   EraserIcon,
@@ -30,18 +31,19 @@ export function DrawingToolsGroup({
   fly: DockFlyoutApi;
   pickAndClose: (pick: () => void) => void;
 }) {
+  const { t } = useTranslation();
   const { tool, prefs } = model;
   // A named colour in its version for this board (docs/specs/023-draw-mode/draw-mode.md).
   // The canvas the stock colours are drawn for (docs/specs/007-editor/editor-modes.md "One look").
   const appearance = useCanvasSurface();
   const expanded = (kind: string) => fly.flyout?.kind === kind;
   return (
-    <DockToolbar label="Drawing tools" group="drawing">
+    <DockToolbar label={t('drawingtoolsgroup.drawing-tools')} group="drawing">
       {/* In a path's edit mode (docs/specs/023-draw-mode/path-tool.md "Editing") Select shows the
           path glyph, and pressing it leaves the mode. */}
       <DockButton
         itemKey="select"
-        label={model.pathEditing ? 'Select, editing a path' : 'Select'}
+        label={model.pathEditing ? t('drawingtoolsgroup.select-editing-a-path') : 'Select'}
         shortcut={WHITEBOARD_TOOL_KEYS.select}
         icon={
           model.pathEditing ? (
@@ -75,7 +77,7 @@ export function DrawingToolsGroup({
       <DockDivider />
       <DockButton
         itemKey="text"
-        label="Text"
+        label={t('drawingtoolsgroup.text')}
         shortcut={WHITEBOARD_TOOL_KEYS.text}
         icon={<TextGlyph />}
         pressed={tool === 'text'}
@@ -84,7 +86,7 @@ export function DrawingToolsGroup({
       {/* The Path tool (docs/specs/023-draw-mode/path-tool.md), in the Shape Pen's own icon. */}
       <DockButton
         itemKey="path"
-        label="Path tool"
+        label={t('drawingtoolsgroup.path-tool')}
         shortcut={WHITEBOARD_TOOL_KEYS.path}
         icon={<ShapePenIcon size={DOCK_ICON_PX} />}
         pressed={tool === 'path'}
@@ -93,7 +95,7 @@ export function DrawingToolsGroup({
       <DockDivider />
       <DockButton
         itemKey="eraser"
-        label="Eraser"
+        label={t('drawingtoolsgroup.eraser')}
         shortcut={WHITEBOARD_TOOL_KEYS.eraser}
         icon={<EraserIcon size={DOCK_ICON_PX} />}
         pressed={tool === 'eraser'}

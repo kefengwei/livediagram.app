@@ -3,6 +3,7 @@
 // a breathing "live" dot. The facilitator closes it from here, or closes it
 // and brings up the next top note in one press.
 
+import { useTranslation } from '@/lib/i18n';
 import type { QaNote } from '@livediagram/document';
 import { usePressWithoutDrag } from '@/hooks/ui/usePressWithoutDrag';
 import { tint } from '../collab-chrome';
@@ -70,9 +71,10 @@ export function QaSpotlight({
   hasNext: boolean;
   onReturn?: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <section
-      aria-label="Now discussing"
+      aria-label={t('qaspotlight.now-discussing')}
       className="qa-spotlight qa-enter relative shrink-0 rounded-2xl p-3"
       style={{ boxShadow: `0 10px 30px -14px ${QA_ACCENT}` }}
     >
@@ -81,9 +83,7 @@ export function QaSpotlight({
         <span
           className="text-[9.5px] font-bold uppercase tracking-[0.12em]"
           style={{ color: QA_ACCENT_INK }}
-        >
-          Now discussing
-        </span>
+        >{t('qaspotlight.now-discussing-2')}</span>
         {onReturn ? (
           <button
             type="button"
@@ -94,9 +94,7 @@ export function QaSpotlight({
             }}
             className="pointer-events-auto ml-auto cursor-pointer text-[10px] font-medium opacity-50 transition hover:opacity-90"
             style={{ color: textColor }}
-          >
-            Back to queue
-          </button>
+          >{t('qaspotlight.back-to-queue')}</button>
         ) : null}
       </div>
       <div className="flex gap-3">
@@ -129,12 +127,9 @@ export function QaSpotlight({
       {onDone ? (
         <div className="mt-2.5 flex justify-end gap-1.5">
           <SpotButton textColor={textColor} onPress={onDone}>
-            <CheckGlyph size={11} /> Done
-          </SpotButton>
+            <CheckGlyph size={11} />{t('qaspotlight.done')}</SpotButton>
           {hasNext && onDoneNext ? (
-            <SpotButton loud textColor={textColor} onPress={onDoneNext}>
-              Done, next →
-            </SpotButton>
+            <SpotButton loud textColor={textColor} onPress={onDoneNext}>{t('qaspotlight.done-next')}</SpotButton>
           ) : null}
         </div>
       ) : null}

@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 // What every visualisation shares (docs/specs/026-plan/plan-views.md "Visualisations"): the card it sits
 // on in the board's theme colours, a header of its name and count, its loading and empty states, and the
@@ -74,6 +75,7 @@ export function ViewFrame({
   aside?: ReactNode;
   children?: ReactNode;
 }) {
+  const { t } = useTranslation();
   const end = useContext(ViewHeaderEnd);
   return (
     <div
@@ -109,7 +111,7 @@ export function ViewFrame({
           className="flex min-h-0 flex-1 items-center justify-center overflow-hidden px-4 text-center text-[12px]"
           style={{ color: palette.muted }}
         >
-          {state === 'loading' ? 'Loading cards…' : empty}
+          {state === 'loading' ? t('view-frame.loading-cards') : empty}
         </div>
       )}
     </div>

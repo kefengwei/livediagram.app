@@ -3,6 +3,7 @@
 // The palette's Cards category (docs/specs/026-plan/item-types.md "Where types show"): card tiles
 // drawn from the document's item types, so a type someone adds shows here and a renamed or deleted
 // one changes or goes. Outside the editor (no PlanContext) the default types stand.
+import { useTranslation } from '@/lib/i18n';
 import { ITEM_TYPES } from '@livediagram/items';
 import { usePlan } from '@/components/plan/PlanContext';
 import { PaletteTileGrid } from './PaletteTileGrid';
@@ -13,6 +14,7 @@ import { track } from '@/lib/telemetry';
 type GridProps = Omit<React.ComponentProps<typeof PaletteTileGrid>, 'tiles'>;
 
 export function PalettePlanCardsTab(props: GridProps) {
+  const { t } = useTranslation();
   const plan = usePlan();
   const types = plan?.types ?? ITEM_TYPES;
   return (
@@ -29,9 +31,7 @@ export function PalettePlanCardsTab(props: GridProps) {
               track('Plan', 'Opened', 'EditCards');
               openCardTypes();
             }}
-          >
-            Edit Cards
-          </button>
+          >{t('paletteplancardstab.edit-cards')}</button>
         </div>
       ) : null}
     </>

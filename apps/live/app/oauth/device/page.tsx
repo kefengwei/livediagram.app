@@ -5,6 +5,7 @@
 // and approves. On approve the page mints an API token (Clerk-authed, as the consent page does) and hands it to the
 // MCP worker for the waiting CLI to collect; on cancel it refuses the code, so the CLI stops waiting. No help link:
 // the CLI's own README documents it.
+import { useTranslation } from '@/lib/i18n';
 import { Suspense, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { ToggleSwitch } from '@/components/palette/palette-controls';
@@ -43,6 +44,7 @@ function Message({ heading, body }: { heading: string; body: string }) {
 }
 
 function Device() {
+  const { t } = useTranslation();
   const params = useSearchParams();
   const { authLoaded, isSignedIn, clerkUserId } = useClerkApiBootstrap();
   const [typed, setTyped] = useState(params.get('code') ?? '');
@@ -68,7 +70,7 @@ function Device() {
   if (!authLoaded)
     return (
       <OauthShell>
-        <p className="text-sm text-slate-500 dark:text-slate-400">Loading…</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">{t('page.loading-3')}</p>
       </OauthShell>
     );
   if (!isSignedIn || !clerkUserId) {
@@ -76,17 +78,13 @@ function Device() {
       typeof window !== 'undefined' ? window.location.pathname + window.location.search : '';
     return (
       <OauthShell>
-        <h1 className={HEADING}>Sign in to connect the livediagram CLI</h1>
+        <h1 className={HEADING}>{t('page.sign-in-to-connect-the-livediagram')}</h1>
         <div className="mt-5 flex items-center gap-2">
           <a
             href={`/sign-in/?redirect_url=${encodeURIComponent(back)}`}
             className={`inline-flex ${OAUTH_PRIMARY}`}
-          >
-            Sign in
-          </a>
-          <button type="button" onClick={() => void cancel()} className={SECONDARY}>
-            Cancel
-          </button>
+          >{t('page.sign-in-2')}</a>
+          <button type="button" onClick={() => void cancel()} className={SECONDARY}>{t('page.cancel-3')}</button>
         </div>
       </OauthShell>
     );
@@ -133,22 +131,20 @@ function Device() {
     case 'checking':
       return (
         <OauthShell>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Checking this code…</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">{t('page.checking-this-code')}</p>
         </OauthShell>
       );
     case 'unknown':
       return (
         <OauthShell>
-          <h1 className={HEADING}>We couldn’t find that code yet</h1>
-          <p className={BODY}>Check it and try again. Codes last 10 minutes.</p>
+          <h1 className={HEADING}>{t('page.we-couldn-t-find-that-code')}</h1>
+          <p className={BODY}>{t('page.check-it-and-try-again-codes')}</p>
           <div className="mt-5">
             <button
               type="button"
               onClick={() => setStep({ kind: 'enter' })}
               className={OAUTH_PRIMARY}
-            >
-              Try again
-            </button>
+            >{t('page.try-again')}</button>
           </div>
         </OauthShell>
       );
@@ -156,7 +152,7 @@ function Device() {
       const { userCode, clientName, working, failed } = step;
       return (
         <OauthShell>
-          <h1 className={HEADING}>Connect {clientName}</h1>
+          <h1 className={HEADING}>{t('page.connect-2')}{clientName}</h1>
           <p className={BODY}>
             <span className="font-medium text-slate-700 dark:text-slate-200">{clientName}</span>{' '}
             wants to access your livediagram documents on your behalf. Approving creates an API
@@ -169,20 +165,13 @@ function Device() {
             className="mt-4 flex w-full cursor-pointer items-start justify-between gap-3 rounded-lg border border-slate-200 px-3 py-2.5 text-left text-sm dark:border-slate-700"
           >
             <span className="min-w-0 text-slate-600 dark:text-slate-300">
-              <span className="font-medium text-slate-800 dark:text-slate-100">
-                Read-only access
-              </span>
-              : let it find and view your documents, but not create, edit, delete, or share them.
-              Leave off for full read + write.
-            </span>
+              <span className="font-medium text-slate-800 dark:text-slate-100">{t('page.read-only-access-3')}</span>{t('page.let-it-find-and-view-your-2')}</span>
             <span className="mt-0.5 shrink-0">
-              <ToggleSwitch presentational checked={readOnly} label="Read-only access" />
+              <ToggleSwitch presentational checked={readOnly} label={t('page.read-only-access-4')} />
             </span>
           </button>
           {failed ? (
-            <p role="alert" className="mt-3 text-xs text-rose-600 dark:text-rose-400">
-              Something went wrong. Please try again.
-            </p>
+            <p role="alert" className="mt-3 text-xs text-rose-600 dark:text-rose-400">{t('page.something-went-wrong-please-try-again-2')}</p>
           ) : null}
           <div className="mt-5 flex items-center gap-2">
             <button
@@ -193,9 +182,7 @@ function Device() {
             >
               {working ? 'Connecting…' : 'Connect'}
             </button>
-            <button type="button" onClick={() => void cancel()} className={SECONDARY}>
-              Cancel
-            </button>
+            <button type="button" onClick={() => void cancel()} className={SECONDARY}>{t('page.cancel-4')}</button>
           </div>
         </OauthShell>
       );
@@ -203,7 +190,7 @@ function Device() {
     default:
       return (
         <OauthShell>
-          <h1 className={HEADING}>Connect a terminal</h1>
+          <h1 className={HEADING}>{t('page.connect-a-terminal')}</h1>
           <form
             className="mt-4 flex flex-col gap-3"
             onSubmit={(e) => {
@@ -214,9 +201,7 @@ function Device() {
             <label
               htmlFor="device-code"
               className="text-sm font-medium text-slate-700 dark:text-slate-200"
-            >
-              Code shown in your terminal
-            </label>
+            >{t('page.code-shown-in-your-terminal')}</label>
             <input
               id="device-code"
               value={typed}
@@ -225,16 +210,12 @@ function Device() {
               autoCapitalize="characters"
               spellCheck={false}
               maxLength={9}
-              placeholder="XXXX-XXXX"
+              placeholder={t('page.xxxx-xxxx')}
               className="rounded-lg border border-slate-300 bg-white px-3 py-2 font-mono text-base tracking-widest text-slate-900 uppercase focus-visible:outline-2 focus-visible:outline-brand-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
             />
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              Only enter a code shown by a terminal you are using.
-            </p>
+            <p className="text-xs text-slate-500 dark:text-slate-400">{t('page.only-enter-a-code-shown-by')}</p>
             <div>
-              <button type="submit" className={OAUTH_PRIMARY}>
-                Continue
-              </button>
+              <button type="submit" className={OAUTH_PRIMARY}>{t('page.continue')}</button>
             </div>
           </form>
         </OauthShell>
@@ -243,11 +224,12 @@ function Device() {
 }
 
 export default function OauthDevicePage() {
+  const { t } = useTranslation();
   return (
     <Suspense
       fallback={
         <OauthShell>
-          <p className="text-sm text-slate-500 dark:text-slate-400">Loading…</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">{t('page.loading-4')}</p>
         </OauthShell>
       }
     >

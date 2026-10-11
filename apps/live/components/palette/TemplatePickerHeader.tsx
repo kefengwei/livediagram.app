@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { CloseIcon } from '@livediagram/ui';
 import { HelpArticleLink } from '@/components/primitives/HelpArticleLink';
 import { WizardSteps, type WizardStep } from './template-picker-wizard';
@@ -25,27 +26,28 @@ export function TemplatePickerHeader({
   onStep: (step: WizardStep) => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-4 border-b border-slate-100 px-6 pt-6 pb-5 dark:border-slate-800">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h2 className="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-50">
             {isWelcome
-              ? 'New Document'
+              ? t('templatepickerheader.new-document')
               : isIdentity
                 ? documentName && documentName.trim()
                   ? `Welcome to '${documentName.trim()}'`
-                  : 'Welcome to this document'
-                : 'Quick Start'}
+                  : t('templatepickerheader.welcome-to-this-document')
+                : t('templatepickerheader.quick-start')}
           </h2>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-300">
             {!isIdentity
               ? step === 'template'
-                ? 'Build anything, start from scratch or find inspiration in a template.'
-                : 'Name your document and choose where it lives.'
+                ? t('templatepickerheader.build-anything-start-from-scratch-or')
+                : t('templatepickerheader.name-your-document-and-choose-where')
               : nameLocked
-                ? 'This is the name from your account; others will see it on this document.'
-                : 'Pick the name people will see while you collaborate on this document.'}
+                ? t('templatepickerheader.this-is-the-name-from-your')
+                : t('templatepickerheader.pick-the-name-people-will-see')}
           </p>
         </div>
         <div className="-mr-2 -mt-1 flex shrink-0 items-center gap-0.5">
@@ -60,7 +62,7 @@ export function TemplatePickerHeader({
             // The X backs out as Escape does, from any step, creating nothing
             // (docs/specs/007-editor/new-document-route.md "Escape backs out").
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t('templatepickerheader.close')}
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
           >
             <CloseIcon />

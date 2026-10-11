@@ -12,6 +12,7 @@
 // no other workspace consumes it yet. If marketing later grows its
 // own auth surface this can be promoted to `packages/ui`.
 
+import { useTranslation } from '@/lib/i18n';
 import { Brand, Button, buttonClassName, TextInput, ButtonContent } from '@livediagram/ui';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, type MutableRefObject, type ReactNode } from 'react';
@@ -75,10 +76,11 @@ export function AuthCard({
 // ---------------------------------------------------------------------
 
 export function RedirectingCard() {
+  const { t } = useTranslation();
   return (
     <div className="flex min-h-dvh items-center justify-center bg-slate-50 px-4 dark:bg-slate-950">
       <div className="rounded-xl border border-slate-200 bg-white px-8 py-6 text-center shadow-lg shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900">
-        <p className="text-sm text-slate-600 dark:text-slate-400">Redirecting…</p>
+        <p className="text-sm text-slate-600 dark:text-slate-400">{t('auth-shared.redirecting')}</p>
       </div>
     </div>
   );
@@ -92,19 +94,14 @@ export function RedirectingCard() {
 // ---------------------------------------------------------------------
 
 export function AuthDisabledNotice() {
+  const { t } = useTranslation();
   return (
     <AuthCard subtitle="Sign-in isn't enabled on this deployment" error="">
-      <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-        This livediagram instance is running in <strong>guest-only</strong> mode: the canvas works
-        without an account. To enable sign-in, set{' '}
-        <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs dark:bg-slate-800 dark:text-slate-200">
-          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-        </code>{' '}
-        at build time and redeploy.
-      </p>
+      <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">{t('auth-shared.this-livediagram-instance-is-running-in')}<strong>guest-only</strong>{t('auth-shared.mode-the-canvas-works-without-an')}{' '}
+        <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs dark:bg-slate-800 dark:text-slate-200">{t('auth-shared.next-public-clerk-publishable-key')}</code>{' '}{t('auth-shared.at-build-time-and-redeploy')}</p>
       <div className="mt-6 flex justify-center">
         <a href="/" className={buttonClassName({ size: 'md', className: 'shadow-sm' })}>
-          <ButtonContent>Continue as guest</ButtonContent>
+          <ButtonContent>{t('auth-shared.continue-as-guest')}</ButtonContent>
         </a>
       </div>
     </AuthCard>
@@ -130,8 +127,9 @@ function CodeInputRow({
   inputRefs: MutableRefObject<(HTMLInputElement | null)[]>;
   onComplete: (fullCode: string) => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <div className="flex justify-center gap-2" role="group" aria-label="Verification code">
+    <div className="flex justify-center gap-2" role="group" aria-label={t('auth-shared.verification-code')}>
       {[0, 1, 2, 3, 4, 5].map((i) => (
         <input
           key={i}
@@ -212,10 +210,10 @@ export function EmailCodeStep({
   onResend: () => void;
   onBack: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <form onSubmit={onSubmit} className="space-y-4">
-      <p className="text-sm text-slate-600 dark:text-slate-400">
-        We sent a verification code to{' '}
+      <p className="text-sm text-slate-600 dark:text-slate-400">{t('auth-shared.we-sent-a-verification-code-to')}{' '}
         <strong className="text-slate-900 dark:text-slate-100">{email}</strong>. Enter it below.
       </p>
       <CodeInputRow
@@ -242,16 +240,12 @@ export function EmailCodeStep({
           onClick={onResend}
           disabled={loading}
           className="text-slate-600 hover:text-slate-900 disabled:opacity-50 dark:text-slate-400 dark:hover:text-slate-100"
-        >
-          Resend code
-        </button>
+        >{t('auth-shared.resend-code')}</button>
         <button
           type="button"
           onClick={onBack}
           className="text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
-        >
-          Back
-        </button>
+        >{t('auth-shared.back')}</button>
       </div>
     </form>
   );
@@ -284,20 +278,19 @@ export function AuthEmailField({
   value: string;
   onChange: (value: string) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div>
       <label
         htmlFor="email"
         className="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300"
-      >
-        Email
-      </label>
+      >{t('auth-shared.email')}</label>
       <TextInput
         id="email"
         type="email"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="you@example.com"
+        placeholder={t('auth-shared.you-example-com')}
         autoComplete="email"
       />
     </div>
@@ -317,6 +310,7 @@ export function ProviderAuthButton({
   disabled: boolean;
   onClick: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <button
       type="button"
@@ -325,7 +319,7 @@ export function ProviderAuthButton({
       className="flex w-full items-center justify-center gap-2 rounded-md border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-600 dark:text-slate-200 dark:hover:border-slate-500 dark:hover:bg-slate-800"
     >
       {loading ? (
-        <span className="text-slate-500 dark:text-slate-400">Redirecting…</span>
+        <span className="text-slate-500 dark:text-slate-400">{t('auth-shared.redirecting-2')}</span>
       ) : (
         <>
           {glyph}
@@ -347,6 +341,7 @@ export function GoogleAuthButton(props: {
 }
 
 export function OrDivider() {
+  const { t } = useTranslation();
   return (
     <div className="relative">
       <div className="absolute inset-0 flex items-center">
@@ -355,9 +350,7 @@ export function OrDivider() {
       <div className="relative flex justify-center text-xs uppercase tracking-wide">
         {/* The chip's fill must match the AuthCard surface so it reads as a
             gap in the rule, not a floating box. */}
-        <span className="bg-white px-2 text-slate-400 dark:bg-slate-900 dark:text-slate-400">
-          or
-        </span>
+        <span className="bg-white px-2 text-slate-400 dark:bg-slate-900 dark:text-slate-400">{t('auth-shared.or')}</span>
       </div>
     </div>
   );

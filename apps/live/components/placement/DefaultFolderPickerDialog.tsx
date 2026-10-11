@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Button, useEscape, DialogCloseButton } from '@livediagram/ui';
 import type { PlacementDefaultKey } from '@livediagram/api-schema';
@@ -41,6 +42,7 @@ export function DefaultFolderPickerDialog({
   onPick: (folderId: string | null) => void;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const [placement, setPlacement] = useState(current);
   useEscape(onClose, { capture: true, stopPropagation: true });
   const entry = defaultKeyEntry(entryKey);
@@ -68,9 +70,7 @@ export function DefaultFolderPickerDialog({
           <h2 className="truncate text-base font-semibold text-slate-900 dark:text-slate-100">
             {title}
           </h2>
-          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-            New {entry.noun} you create without choosing a place are saved here.
-          </p>
+          <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{t('defaultfolderpickerdialog.new')}{entry.noun}{t('defaultfolderpickerdialog.you-create-without-choosing-a-place')}</p>
         </div>
         <div className="-mt-1 flex shrink-0 items-center">
           <DialogCloseButton onClick={onClose} />
@@ -90,15 +90,11 @@ export function DefaultFolderPickerDialog({
       </div>
       <div className="flex min-h-14 items-center justify-end gap-2 border-t border-slate-100 px-5 py-3 dark:border-slate-800">
         {teamRoot ? (
-          <p role="note" className="mr-auto text-xs text-slate-600 dark:text-slate-300">
-            Choose a folder inside the team.
-          </p>
+          <p role="note" className="mr-auto text-xs text-slate-600 dark:text-slate-300">{t('defaultfolderpickerdialog.choose-a-folder-inside-the-team')}</p>
         ) : null}
-        <Button variant="secondary" size="sm" onClick={onClose}>
-          Cancel
-        </Button>
+        <Button variant="secondary" size="sm" onClick={onClose}>{t('defaultfolderpickerdialog.cancel')}</Button>
         <Button size="sm" disabled={unchanged || teamRoot} onClick={() => commit(placement)}>
-          {folderId === null && !teamRoot ? 'Use My documents' : 'Use this folder'}
+          {folderId === null && !teamRoot ? t('defaultfolderpickerdialog.use-my-documents') : t('defaultfolderpickerdialog.use-this-folder')}
         </Button>
       </div>
     </Dialog>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import {
   LENS_SETTLE_MS,
@@ -76,17 +77,16 @@ export function FilteredEmpty({
   issues: readonly LensIssue[];
   onClear: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <EmptyState
       icon={<SearchIcon size={20} />}
       title={FILTERED_EMPTY_TITLE}
-      description="Change or clear the filters to see more."
+      description={t('lensstates.change-or-clear-the-filters-to')}
     >
       <div className="flex flex-col items-center gap-3">
         <LensIssues issues={issues} />
-        <Button size="sm" variant="secondary" onClick={onClear}>
-          Clear filters
-        </Button>
+        <Button size="sm" variant="secondary" onClick={onClear}>{t('lensstates.clear-filters')}</Button>
       </div>
     </EmptyState>
   );
@@ -94,15 +94,14 @@ export function FilteredEmpty({
 
 /** The view's list could not be read; the lens stays as it was. */
 export function LoadFailed({ onRetry }: { onRetry: () => void }) {
+  const { t } = useTranslation();
   return (
     <EmptyState
       icon={<DocumentIcon />}
       title={LOAD_FAILED_TITLE}
-      description="Check your connection, then try again."
+      description={t('lensstates.check-your-connection-then-try-again')}
     >
-      <Button size="sm" onClick={onRetry}>
-        Try again
-      </Button>
+      <Button size="sm" onClick={onRetry}>{t('lensstates.try-again')}</Button>
     </EmptyState>
   );
 }

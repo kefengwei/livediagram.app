@@ -3,6 +3,7 @@
 // The grid's menus (docs/specs/029-sheets/sheet.md "Cell menu", "Rows and columns", "Filter", "Sort"): the cell menu
 // and a header's menu at the pointer, a filter column's values and condition, and Custom Sort. Rows in the shared
 // context menu; every row that changes something only for someone who may edit.
+import { useTranslation } from '@/lib/i18n';
 import { Button } from '@livediagram/ui';
 import { useMemo, useState } from 'react';
 import {
@@ -41,6 +42,7 @@ const CONDITION_LABELS: Record<NonNullable<FilterCondition['op']>, string> = {
 };
 
 export function SheetMenus({ actions }: { actions: SheetActions }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const clip = useSheetClipboard();
   const menu = c.menu;
@@ -63,7 +65,7 @@ export function SheetMenus({ actions }: { actions: SheetActions }) {
     return (
       <ContextMenu
         position={{ x: menu.x, y: menu.y }}
-        label={rows ? 'Row menu' : 'Column menu'}
+        label={rows ? t('sheetmenus.row-menu') : t('sheetmenus.column-menu')}
         onClose={close}
       >
         <MenuHeader
@@ -91,7 +93,7 @@ export function SheetMenus({ actions }: { actions: SheetActions }) {
             />
             <MenuActionRow
               plain
-              label="Clear"
+              label={t('sheetmenus.clear')}
               icon={<ClearFormatIcon />}
               onClick={act(() => actions.clear('all'))}
             />
@@ -103,7 +105,7 @@ export function SheetMenus({ actions }: { actions: SheetActions }) {
             />
             <MenuActionRow
               plain
-              label="Fit to Data"
+              label={t('sheetmenus.fit-to-data')}
               icon={<Glyph t="⇔" />}
               onClick={act(() =>
                 actions.autofit(menu.axis, range(rows ? g.r1 : g.c1, rows ? g.r2 : g.c2)),
@@ -122,13 +124,13 @@ export function SheetMenus({ actions }: { actions: SheetActions }) {
                 <ContextMenuDivider />
                 <MenuActionRow
                   plain
-                  label="Sort A to Z"
+                  label={t('sheetmenus.sort-a-to-z')}
                   icon={<SortIcon />}
                   onClick={act(() => actions.sortColumn(true))}
                 />
                 <MenuActionRow
                   plain
-                  label="Sort Z to A"
+                  label={t('sheetmenus.sort-z-to-a')}
                   icon={<SortIcon />}
                   onClick={act(() => actions.sortColumn(false))}
                 />
@@ -138,7 +140,7 @@ export function SheetMenus({ actions }: { actions: SheetActions }) {
         ) : (
           <MenuActionRow
             plain
-            label="Copy"
+            label={t('sheetmenus.copy')}
             icon={<Glyph t="⧉" />}
             onClick={act(() => clip.copyNow(false))}
           />
@@ -168,6 +170,7 @@ function ResizeRow({
   at: number;
   onResize: (px: number) => void;
 }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const offs = axis === 'c' ? c.geometry.cols : c.geometry.rows;
   const now = Math.round(offs[at + 1]! - offs[at]!);
@@ -176,7 +179,7 @@ function ResizeRow({
   const min = axis === 'c' ? 24 : 18;
   if (!open)
     return (
-      <MenuActionRow plain label="Resize…" icon={<Glyph t="↔" />} onClick={() => setOpen(true)} />
+      <MenuActionRow plain label={t('sheetmenus.resize')} icon={<Glyph t="↔" />} onClick={() => setOpen(true)} />
     );
   const done = () => {
     const n = Math.round(Number(px));
@@ -200,10 +203,8 @@ function ResizeRow({
           if (e.key === 'Enter') done();
         }}
       />
-      <span style={{ color: c.palette.muted }}>px</span>
-      <Button variant="primary" size="xs" onClick={done}>
-        OK
-      </Button>
+      <span style={{ color: c.palette.muted }}>{t('sheetmenus.px')}</span>
+      <Button variant="primary" size="xs" onClick={done}>{t('sheetmenus.ok')}</Button>
     </div>
   );
 }
@@ -225,6 +226,7 @@ function FilterMenu({
   actions: SheetActions;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const current = c.sheet.layout.filter?.conds[colId];
   const values = useMemo(
@@ -251,10 +253,10 @@ function FilterMenu({
   };
   const field = 'h-7 w-full rounded-md border bg-transparent px-2 text-[12px] outline-none';
   return (
-    <ContextMenu position={at} label="Filter column" onClose={onClose}>
+    <ContextMenu position={at} label={t('sheetmenus.filter-column')} onClose={onClose}>
       <MenuActionRow
         plain
-        label="Sort A to Z"
+        label={t('sheetmenus.sort-a-to-z-2')}
         icon={<SortIcon />}
         onClick={() => {
           actions.sortColumn(true);
@@ -263,7 +265,7 @@ function FilterMenu({
       />
       <MenuActionRow
         plain
-        label="Sort Z to A"
+        label={t('sheetmenus.sort-z-to-a-2')}
         icon={<SortIcon />}
         onClick={() => {
           actions.sortColumn(false);
@@ -272,10 +274,10 @@ function FilterMenu({
       />
       <ContextMenuDivider />
       <div className="w-64 px-3 py-1.5 text-[12px]" onKeyDown={(e) => e.stopPropagation()}>
-        <div className="mb-1 font-semibold">Filter by Values</div>
+        <div className="mb-1 font-semibold">{t('sheetmenus.filter-by-values')}</div>
         <input
-          aria-label="Search values"
-          placeholder="Search"
+          aria-label={t('sheetmenus.search-values')}
+          placeholder={t('sheetmenus.search')}
           className={field}
           style={{ borderColor: c.palette.border }}
           value={search}
@@ -286,16 +288,12 @@ function FilterMenu({
             type="button"
             className="cursor-pointer underline"
             onClick={() => setKept(new Set(values.map((v) => v.text)))}
-          >
-            Select All
-          </button>
+          >{t('sheetmenus.select-all')}</button>
           <button
             type="button"
             className="cursor-pointer underline"
             onClick={() => setKept(new Set())}
-          >
-            Clear
-          </button>
+          >{t('sheetmenus.clear-2')}</button>
         </div>
         <ul className="mt-1 max-h-40 overflow-auto">
           {shown.map((v) => (
@@ -319,15 +317,15 @@ function FilterMenu({
             </li>
           ))}
         </ul>
-        <div className="mb-1 mt-2 font-semibold">Filter by Condition</div>
+        <div className="mb-1 mt-2 font-semibold">{t('sheetmenus.filter-by-condition')}</div>
         <select
-          aria-label="Condition"
+          aria-label={t('sheetmenus.condition')}
           className={field}
           style={{ borderColor: c.palette.border }}
           value={op}
           onChange={(e) => setOp(e.target.value as FilterCondition['op'] | '')}
         >
-          <option value="">None</option>
+          <option value="">{t('sheetmenus.none')}</option>
           {CONDITION_OPS.map((o) => (
             <option key={o} value={o}>
               {CONDITION_LABELS[o]}
@@ -336,8 +334,8 @@ function FilterMenu({
         </select>
         {op && op !== 'empty' && op !== 'notEmpty' ? (
           <input
-            aria-label="Value"
-            placeholder="Value"
+            aria-label={t('sheetmenus.value')}
+            placeholder={t('sheetmenus.value-2')}
             className={`${field} mt-1`}
             style={{ borderColor: c.palette.border }}
             value={a}
@@ -346,8 +344,8 @@ function FilterMenu({
         ) : null}
         {op === 'between' ? (
           <input
-            aria-label="And"
-            placeholder="And"
+            aria-label={t('sheetmenus.and')}
+            placeholder={t('sheetmenus.and-2')}
             className={`${field} mt-1`}
             style={{ borderColor: c.palette.border }}
             value={b}
@@ -355,12 +353,9 @@ function FilterMenu({
           />
         ) : null}
         <div className="mt-2 flex justify-end gap-2">
-          <Button variant="ghost" size="xs" onClick={onClose}>
-            Cancel
-          </Button>
+          <Button variant="ghost" size="xs" onClick={onClose}>{t('sheetmenus.cancel')}</Button>
           <Button variant="primary" size="xs" onClick={apply}>
-            <FilterIcon /> OK
-          </Button>
+            <FilterIcon />{t('sheetmenus.ok-2')}</Button>
         </div>
       </div>
     </ContextMenu>
@@ -368,6 +363,7 @@ function FilterMenu({
 }
 
 function SortDialog({ actions, onClose }: { actions: SheetActions; onClose: () => void }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const g = c.selection.ranges[c.selection.ranges.length - 1]!;
   const [keys, setKeys] = useState<SortKey[]>([{ col: g.c1, ascending: true }]);
@@ -377,20 +373,18 @@ function SortDialog({ actions, onClose }: { actions: SheetActions; onClose: () =
   return (
     <ContextMenu
       position={{ x: (rect?.left ?? 100) + 60, y: (rect?.top ?? 100) + 40 }}
-      label="Sort range"
+      label={t('sheetmenus.sort-range')}
       onClose={onClose}
     >
       <div className="w-72 px-3 py-2 text-[12px]" onKeyDown={(e) => e.stopPropagation()}>
-        <div className="mb-2 font-semibold">Sort Range</div>
+        <div className="mb-2 font-semibold">{t('sheetmenus.sort-range-2')}</div>
         <label className="mb-2 flex cursor-pointer items-center gap-1.5">
-          <input type="checkbox" checked={header} onChange={(e) => setHeader(e.target.checked)} />
-          Data has a header row
-        </label>
+          <input type="checkbox" checked={header} onChange={(e) => setHeader(e.target.checked)} />{t('sheetmenus.data-has-a-header-row')}</label>
         {keys.map((k, i) => (
           <div key={i} className="mb-1 flex items-center gap-1.5">
-            <span className="w-14">{i === 0 ? 'Sort by' : 'Then by'}</span>
+            <span className="w-14">{i === 0 ? t('sheetmenus.sort-by') : t('sheetmenus.then-by')}</span>
             <select
-              aria-label="Column"
+              aria-label={t('sheetmenus.column')}
               className="h-7 flex-1 rounded-md border bg-transparent px-1"
               style={{ borderColor: c.palette.border }}
               value={k.col}
@@ -399,13 +393,12 @@ function SortDialog({ actions, onClose }: { actions: SheetActions; onClose: () =
               }
             >
               {cols.map((col) => (
-                <option key={col} value={col}>
-                  Column {columnLetters(col)}
+                <option key={col} value={col}>{t('sheetmenus.column-2')}{columnLetters(col)}
                 </option>
               ))}
             </select>
             <select
-              aria-label="Order"
+              aria-label={t('sheetmenus.order')}
               className="h-7 rounded-md border bg-transparent px-1"
               style={{ borderColor: c.palette.border }}
               value={k.ascending ? 'a' : 'z'}
@@ -415,8 +408,8 @@ function SortDialog({ actions, onClose }: { actions: SheetActions; onClose: () =
                 )
               }
             >
-              <option value="a">A to Z</option>
-              <option value="z">Z to A</option>
+              <option value="a">{t('sheetmenus.a-to-z')}</option>
+              <option value="z">{t('sheetmenus.z-to-a')}</option>
             </select>
           </div>
         ))}
@@ -424,13 +417,9 @@ function SortDialog({ actions, onClose }: { actions: SheetActions; onClose: () =
           type="button"
           className="mt-1 cursor-pointer underline"
           onClick={() => setKeys([...keys, { col: g.c1, ascending: true }])}
-        >
-          Add Another Sort Column
-        </button>
+        >{t('sheetmenus.add-another-sort-column')}</button>
         <div className="mt-2 flex justify-end gap-2">
-          <Button variant="ghost" size="xs" onClick={onClose}>
-            Cancel
-          </Button>
+          <Button variant="ghost" size="xs" onClick={onClose}>{t('sheetmenus.cancel-2')}</Button>
           <Button
             variant="primary"
             size="xs"
@@ -439,9 +428,7 @@ function SortDialog({ actions, onClose }: { actions: SheetActions; onClose: () =
               actions.sortRange(keys, header);
               onClose();
             }}
-          >
-            Sort
-          </Button>
+          >{t('sheetmenus.sort')}</Button>
         </div>
       </div>
     </ContextMenu>

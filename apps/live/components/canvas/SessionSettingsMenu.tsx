@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 // The `…` quick settings on a vote / poll session element (docs/specs/012-collaboration/session-button.md).
 //
@@ -31,14 +32,15 @@ export function SessionSettingsMenu({
   /** The way out of the quick settings to the element's full menu (docs/specs/008-canvas/canvas-and-palette.md). */
   onOpenSettings?: () => void;
 }) {
+  const { t } = useTranslation();
   // A timer element has its own face and its own `…` (SessionTimerFace).
   if (config.tool === 'timer') return null;
   const label =
     config.tool === 'vote'
-      ? 'Dot vote options'
+      ? t('sessionsettingsmenu.dot-vote-options')
       : config.tool === 'stopwatch'
-        ? 'Stopwatch options'
-        : 'Poll options';
+        ? t('sessionsettingsmenu.stopwatch-options')
+        : t('sessionsettingsmenu.poll-options');
   return (
     <ElementEllipsisMenu label={label} kind="control">
       {(close) => (

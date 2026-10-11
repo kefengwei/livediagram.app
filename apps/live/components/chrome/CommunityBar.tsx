@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { communityPostPath, documentPath } from '@livediagram/api-schema';
 import { Button, buttonClassName, lucideGlyph, CommunityAuthorBadge } from '@livediagram/ui';
 import { lucideArrowLeft, lucideCopyPlus, lucidePencil } from '@livediagram/icons/lucide';
@@ -23,16 +24,16 @@ export function CommunityBar({
   onMakeCopy: () => void;
   copying: boolean;
 }) {
+  const { t } = useTranslation();
   return (
     <div
       role="region"
-      aria-label="Community"
+      aria-label={t('communitybar.community')}
       className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-brand-100 bg-brand-50/70 px-4 py-1.5 text-sm dark:border-brand-500/20 dark:bg-brand-500/10"
     >
       <p className="flex min-w-0 flex-1 items-center gap-2 text-slate-700 dark:text-slate-200">
         <CommunityAuthorBadge author={community.author} size={22} showName={false} />
-        <span className="truncate">
-          Shared to the Community by{' '}
+        <span className="truncate">{t('communitybar.shared-to-the-community-by')}{' '}
           <span className="font-medium text-slate-900 dark:text-slate-50">
             {community.author.name}
           </span>
@@ -43,17 +44,13 @@ export function CommunityBar({
           href={communityPostPath(community.postId)}
           className={buttonClassName({ variant: 'secondary', size: 'xs' })}
         >
-          <BackIcon />
-          Back to Community
-        </a>
+          <BackIcon />{t('communitybar.back-to-community')}</a>
         {community.ownDocumentId ? (
           <a
             href={documentPath(community.ownDocumentId)}
             className={buttonClassName({ size: 'xs' })}
           >
-            <EditIcon />
-            Edit Your Document
-          </a>
+            <EditIcon />{t('communitybar.edit-your-document')}</a>
         ) : (
           <Button size="xs" onClick={onMakeCopy} disabled={copying}>
             <CopyIcon />

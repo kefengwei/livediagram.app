@@ -17,6 +17,7 @@
 // what you're wearing. A cropped portrait sits on top, drawn by the SAME sprite
 // the canvas uses, so what you build here is exactly what walks around.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import {
   AVATAR_CLOTHING,
@@ -109,13 +110,14 @@ export function AvatarPanel({
   // character on the canvas does.
   shirt?: string;
 } & ModePanelProps) {
+  const { t } = useTranslation();
   // Single-open, and closed to start: the panel opens as a four-line summary of
   // the character, and you expand only the row you came to change.
   const [openRow, setOpenRow] = useState<Row | null>(null);
   const toggle = (row: Row) => setOpenRow((r) => (r === row ? null : row));
 
   return (
-    <ModePanel helpArticle="avatarMode" title="Avatar" {...placement}>
+    <ModePanel helpArticle="avatarMode" title={t('avatarpanel.avatar')} {...placement}>
       <div className="flex flex-col px-2 pb-2">
         {/* Cropped portrait: the canvas sprite standing front-on in a box that
             hugs it (see AvatarSprite's `portrait`), at a fixed scale so
@@ -135,13 +137,13 @@ export function AvatarPanel({
           {/* Dice-roll in the corner of the portrait: a whole new character in
               one click, for when you'd rather not walk the four rows. */}
           <HoverCard
-            title="Randomise"
-            description="Roll a new character. Your size choice is kept."
+            title={t('avatarpanel.randomise')}
+            description={t('avatarpanel.roll-a-new-character-your-size')}
           >
             <button
               type="button"
               onClick={onRandomise}
-              aria-label="Randomise avatar"
+              aria-label={t('avatarpanel.randomise-avatar')}
               className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-md text-slate-400 transition hover:bg-white hover:text-brand-600 dark:hover:bg-slate-900 dark:hover:text-brand-300"
             >
               <RefreshIcon />
@@ -150,7 +152,7 @@ export function AvatarPanel({
         </div>
         <div className="divide-y divide-slate-100 dark:divide-slate-800">
           <ToolOptionRow
-            label="Gender"
+            label={t('avatarpanel.gender')}
             options={AVATAR_GENDERS}
             value={config.gender}
             open={openRow === 'gender'}
@@ -158,7 +160,7 @@ export function AvatarPanel({
             onPick={(id) => onChange('gender', id)}
           />
           <ToolOptionRow
-            label="Clothing"
+            label={t('avatarpanel.clothing')}
             options={AVATAR_CLOTHING}
             value={config.clothing}
             open={openRow === 'clothing'}
@@ -166,7 +168,7 @@ export function AvatarPanel({
             onPick={(id) => onChange('clothing', id)}
           />
           <ToolOptionRow
-            label="Hair"
+            label={t('avatarpanel.hair')}
             options={AVATAR_HAIR}
             value={config.hair}
             open={openRow === 'hair'}
@@ -174,7 +176,7 @@ export function AvatarPanel({
             onPick={(id) => onChange('hair', id)}
           />
           <ToolOptionRow
-            label="Size"
+            label={t('avatarpanel.size')}
             options={AVATAR_SIZES}
             value={config.size}
             open={openRow === 'size'}
@@ -191,14 +193,14 @@ export function AvatarPanel({
             which named the wrong thing and left no room for the bursts. */}
         <div className="mt-1.5 border-t border-slate-100 pt-1.5 dark:border-slate-800">
           <ActionRow
-            label="Behaviour"
+            label={t('avatarpanel.behaviour')}
             open={openRow === 'behaviour'}
             onToggle={() => toggle('behaviour')}
             items={AVATAR_REACTIONS.map((r) => ({ id: r.id, label: r.label }))}
             onPick={(id) => onReaction(id as AvatarReactionKind)}
           />
           <ActionRow
-            label="Reactions"
+            label={t('avatarpanel.reactions')}
             open={openRow === 'reactions'}
             onToggle={() => toggle('reactions')}
             items={REACTIONS.map((r) => ({

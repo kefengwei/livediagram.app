@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { lucideGlyph } from '@livediagram/ui';
 import { lucideImage } from '@livediagram/icons/lucide';
 
@@ -28,6 +29,7 @@ type GalleryPaneProps = {
 type Usage = Record<string, { id: string; name: string }[]>;
 
 export function GalleryPane({ ownerId }: GalleryPaneProps) {
+  const { t } = useTranslation();
   const [gallery, setGallery] = useState<ImageSummary[] | null>(null);
   const [usage, setUsage] = useState<Usage>({});
   const [galleryError, setGalleryError] = useState<string | null>(null);
@@ -65,7 +67,7 @@ export function GalleryPane({ ownerId }: GalleryPaneProps) {
       ? `It's still attached to ${refs.length} document${
           refs.length === 1 ? '' : 's'
         }: those tiles will render as broken images.`
-      : 'This image will be permanently removed from your gallery. This can’t be undone.';
+      : t('gallerypane.this-image-will-be-permanently-removed');
     const ok = await confirm({
       title: `Delete "${image.originalName ?? 'image'}"?`,
       message: detail,
@@ -92,7 +94,7 @@ export function GalleryPane({ ownerId }: GalleryPaneProps) {
       await uploadImageFile(ownerId, file);
       await refresh();
     } catch (e) {
-      setUploadError(e instanceof ImageUploadError ? e.message : 'Upload failed.');
+      setUploadError(e instanceof ImageUploadError ? e.message : t('gallerypane.upload-failed'));
     } finally {
       setUploading(false);
     }
@@ -127,8 +129,8 @@ export function GalleryPane({ ownerId }: GalleryPaneProps) {
         ) : gallery.length === 0 ? (
           <EmptyState
             icon={<ImageIcon />}
-            title="No images yet"
-            description="Drop an image onto the canvas (or the area above) and every image you add collects here, ready to reuse in any document."
+            title={t('gallerypane.no-images-yet')}
+            description={t('gallerypane.drop-an-image-onto-the-canvas')}
           />
         ) : (
           <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
@@ -159,6 +161,7 @@ function GalleryCard({
   usage: { id: string; name: string }[];
   onDelete: () => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   return (
     <li className="group relative rounded-lg border border-slate-200 bg-white p-2 shadow-sm dark:border-slate-700 dark:bg-slate-900">
@@ -174,7 +177,7 @@ function GalleryCard({
       <div className="mt-2 flex items-start justify-between gap-2">
         <div className="min-w-0">
           <p className="truncate text-xs font-medium text-slate-700 dark:text-slate-200">
-            {image.originalName ?? 'Untitled image'}
+            {image.originalName ?? t('gallerypane.untitled-image')}
           </p>
           <p className="text-[10px] text-slate-500 dark:text-slate-400">
             {image.width} × {image.height} · {formatBytes(image.byteSize)}
@@ -191,17 +194,14 @@ function GalleryCard({
       </div>
       <div className="mt-1">
         {usage.length === 0 ? (
-          <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400">
-            Not used
-          </span>
+          <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400">{t('gallerypane.not-used')}</span>
         ) : (
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
             className="inline-flex items-center gap-1 rounded-full bg-brand-50 px-2 py-0.5 text-[10px] font-medium text-brand-700 transition hover:bg-brand-100 dark:bg-brand-500/15 dark:text-brand-300 dark:hover:bg-brand-500/25"
             aria-expanded={open}
-          >
-            Used in {usage.length} {usage.length === 1 ? 'document' : 'documents'}
+          >{t('gallerypane.used-in')}{usage.length} {usage.length === 1 ? 'document' : 'documents'}
           </button>
         )}
       </div>
@@ -213,7 +213,7 @@ function GalleryCard({
                 href={`/document/${encodeURIComponent(d.id)}`}
                 className="text-brand-700 transition hover:text-brand-800 hover:underline dark:text-brand-300 dark:hover:text-brand-200"
               >
-                {d.name || 'Untitled document'}
+                {d.name || t('gallerypane.untitled-document')}
               </a>
             </li>
           ))}

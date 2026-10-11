@@ -8,6 +8,7 @@
 
 // The new-document sparkle, shared with the template picker's footer so
 // the two create-new surfaces can't drift.
+import { useTranslation } from '@/lib/i18n';
 import { SparkleIcon } from '@/components/palette/template-picker-icons';
 import { Button, CircleXIcon } from '@livediagram/ui';
 
@@ -16,6 +17,7 @@ type NotFoundProps = {
 };
 
 export function NotFound({ onCreateNew }: NotFoundProps) {
+  const { t } = useTranslation();
   return (
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center p-6">
       <div className="pointer-events-auto flex max-w-md animate-pop-in flex-col items-center rounded-xl border border-slate-200 bg-white px-8 py-10 text-center shadow-lg shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900">
@@ -25,17 +27,10 @@ export function NotFound({ onCreateNew }: NotFoundProps) {
         <p className="mt-4 text-[10px] font-semibold uppercase tracking-wider text-rose-600 dark:text-rose-300">
           404
         </p>
-        <h1 className="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">
-          Document not found
-        </h1>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-          This document doesn&apos;t exist or isn&apos;t yours. Open one from the Explorer or start
-          fresh.
-        </p>
+        <h1 className="mt-1 text-xl font-semibold text-slate-900 dark:text-slate-100">{t('notfound.document-not-found')}</h1>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">{t('notfound.this-document-doesn-t-exist-or')}</p>
         <Button size="md" onClick={onCreateNew} className="mt-6 shadow-sm">
-          <SparkleIcon />
-          Create a new document
-        </Button>
+          <SparkleIcon />{t('notfound.create-a-new-document')}</Button>
       </div>
     </div>
   );

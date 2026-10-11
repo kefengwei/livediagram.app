@@ -2,6 +2,7 @@
 // below the live queue, most recently closed first, counts frozen. Closed by
 // default: the record of what the room covered is kept, not shown off.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import type { QaNote } from '@livediagram/document';
 import { tint } from '../collab-chrome';
@@ -16,6 +17,7 @@ export function QaDiscussed({
   textColor: string;
   onReopen?: (noteId: string) => void;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   if (notes.length === 0) return null;
   return (
@@ -37,7 +39,7 @@ export function QaDiscussed({
         >
           <CheckGlyph size={9} />
         </span>
-        <span className="uppercase tracking-[0.08em]">Discussed · {notes.length}</span>
+        <span className="uppercase tracking-[0.08em]">{t('qadiscussed.discussed')}{notes.length}</span>
         <span className="h-px flex-1" style={{ backgroundColor: tint(textColor, 0.12) }} />
         <ChevronGlyph open={open} />
       </button>
@@ -69,8 +71,8 @@ export function QaDiscussed({
               {onReopen ? (
                 <div className="qa-row-actions shrink-0">
                   <RoundAction
-                    label="Reopen"
-                    description="Puts it back in the live queue with its votes."
+                    label={t('qadiscussed.reopen')}
+                    description={t('qadiscussed.puts-it-back-in-the-live')}
                     textColor={textColor}
                     onPress={() => onReopen(note.id)}
                   >

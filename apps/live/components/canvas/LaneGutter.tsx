@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import {
   isLaneBand,
@@ -87,6 +88,7 @@ export function LaneGutter({
   elementX: number;
   elementY: number;
 }) {
+  const { t } = useTranslation();
   const zoom = useCanvasZoom();
   // The gutter FOLLOWS the title. Pinning it left while the text moved right
   // left the strip sitting behind nothing and the title floating over the
@@ -239,7 +241,7 @@ export function LaneGutter({
         <div
           role="separator"
           aria-orientation={band ? 'horizontal' : 'vertical'}
-          aria-label="Resize the lane's title area"
+          aria-label={t('lanegutter.resize-the-lane-s-title-area')}
           onPointerDown={startDrag}
           className={`absolute z-10 ${
             band ? 'inset-x-0 h-2 cursor-ns-resize' : 'inset-y-0 w-2 cursor-ew-resize'

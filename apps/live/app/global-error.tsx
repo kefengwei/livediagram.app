@@ -4,6 +4,7 @@
 // from an earlier build that failed to load becomes a full page load of where the user was going;
 // anything else, or a second failure inside the loop guard's window, shows this calm page in the
 // app's own look instead of the framework's.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect } from 'react';
 import { Button } from '@livediagram/ui';
 import { browserNavigationDeps, recoverInBrowser } from '@/lib/stale-build-navigation';
@@ -15,6 +16,7 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const { t } = useTranslation();
   useEffect(() => {
     console.error('[global-error] the page failed', error);
     void recoverInBrowser(error, browserNavigationDeps());
@@ -24,9 +26,9 @@ export default function GlobalError({
     <html lang="en">
       <body className="bg-slate-50 text-slate-800 antialiased dark:bg-slate-950 dark:text-slate-100">
         <main className="flex min-h-screen flex-col items-center justify-center gap-4 p-6 text-center">
-          <h1 className="text-lg font-semibold">This page couldn&apos;t load</h1>
-          <p className="text-sm text-slate-600 dark:text-slate-300">Reload to try again.</p>
-          <Button onClick={() => window.location.reload()}>Reload</Button>
+          <h1 className="text-lg font-semibold">{t('global-error.this-page-couldn-t-load')}</h1>
+          <p className="text-sm text-slate-600 dark:text-slate-300">{t('global-error.reload-to-try-again')}</p>
+          <Button onClick={() => window.location.reload()}>{t('global-error.reload')}</Button>
         </main>
       </body>
     </html>

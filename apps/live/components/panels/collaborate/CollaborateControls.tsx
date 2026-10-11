@@ -3,6 +3,7 @@
 // The Collaborate panel's two controls (docs/specs/012-collaboration/assigned-actions.md §5): the Open / Resolved
 // segmented control on the shared sliding pill, and the kind chips under it.
 
+import { useTranslation } from '@/lib/i18n';
 import { ACTIVE_SEGMENT, SEGMENT_TRACK, ActionIcon, CommentIcon, Tooltip } from '@livediagram/ui';
 import { SegmentSlider } from '@/components/primitives/SegmentSlider';
 import type { CollaborateKind, CollaborateSide } from './collaborate-model';
@@ -21,10 +22,11 @@ export function SideTabs({
   counts: Record<CollaborateSide, number>;
   onChange: (next: CollaborateSide) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div
       role="tablist"
-      aria-label="Show open or resolved"
+      aria-label={t('collaboratecontrols.show-open-or-resolved')}
       className={`relative grid grid-cols-2 rounded-lg p-0.5 ${SEGMENT_TRACK}`}
     >
       <SegmentSlider
@@ -83,8 +85,9 @@ export function KindChips({
   counts: Record<CollaborateKind, number>;
   onChange: (next: CollaborateKind) => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <div role="group" aria-label="Filter by kind" className="flex items-center gap-1">
+    <div role="group" aria-label={t('collaboratecontrols.filter-by-kind')} className="flex items-center gap-1">
       {KINDS.map((k) => {
         const active = k.id === value;
         const chip = (

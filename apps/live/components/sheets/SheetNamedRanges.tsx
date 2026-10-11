@@ -2,6 +2,7 @@
 
 // Sheet Settings' Named Ranges (docs/specs/029-sheets/sheet.md "Named ranges"): each name with its range, Go To
 // (selects it) and, for someone who may edit, Remove (one undo step). Names are made in the name box.
+import { useTranslation } from '@/lib/i18n';
 import { CloseIcon, Tooltip } from '@livediagram/ui';
 import { formatRange, posRangeOf } from '@livediagram/sheets';
 import { useSheetController } from './sheet-controller';
@@ -16,6 +17,7 @@ export function SheetNamedRanges({
   actions: SheetActions;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const c = useSheetController();
   const layout = c.sheet.layout;
   const names = [...(layout.names ?? [])].sort((a, b) => a.name.localeCompare(b.name));
@@ -26,7 +28,7 @@ export function SheetNamedRanges({
       </p>
     );
   return (
-    <ul aria-label="Named ranges" className="flex flex-col gap-1">
+    <ul aria-label={t('sheetnamedranges.named-ranges')} className="flex flex-col gap-1">
       {names.map((x) => {
         const at = posRangeOf(layout, x);
         return (
@@ -50,9 +52,7 @@ export function SheetNamedRanges({
                   onClose();
                   c.focusGrid();
                 }}
-              >
-                Go To
-              </button>
+              >{t('sheetnamedranges.go-to')}</button>
             ) : null}
             {c.canEdit ? (
               <Tooltip label={`Remove ${x.name}`}>

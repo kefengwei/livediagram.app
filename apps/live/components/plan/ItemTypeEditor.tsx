@@ -3,6 +3,7 @@
 // The type editor (docs/specs/026-plan/item-types.md "Editing a type"): a modal, a sheet rising from
 // the bottom on a phone. Name, colour, glyph and fields are edited as a draft; Save applies the whole
 // edit as one change, Cancel drops it. Delete Type, for a type with items, asks where they go first.
+import { useTranslation } from '@/lib/i18n';
 import { pickableStatuses } from './column-status-picks';
 import { useId, useMemo, useState } from 'react';
 import {
@@ -70,6 +71,7 @@ export function ItemTypeEditor({
   // Duplicate Type, for a type that exists while the catalogue has room.
   onDuplicate?: () => void;
 }) {
+  const { t } = useTranslation();
   const titleId = useId();
   const start = type ?? template ?? NEW_TYPE;
   const [label, setLabel] = useState(start.label);
@@ -145,9 +147,9 @@ export function ItemTypeEditor({
   ]);
   const tabNames = withoutEmptyTabs(tabs).map((t) => t.label.trim().toLowerCase());
   const tabProblem = tabNames.some((n) => !n)
-    ? 'Give every tab a name.'
+    ? t('itemtypeeditor.give-every-tab-a-name')
     : new Set(tabNames).size !== tabNames.length
-      ? 'Two tabs have the same name.'
+      ? t('itemtypeeditor.two-tabs-have-the-same-name')
       : null;
   // The same check the api makes, on this type alone: a bad custom field never reaches a save.
   const check = useMemo(
@@ -157,15 +159,15 @@ export function ItemTypeEditor({
   // Too many statuses left out (one stored past the cap, or kept ids a board no longer names): its own message.
   const statusesProblem = !check.ok && check.reason.endsWith('.excludedStatuses');
   const problem = !draft.label
-    ? 'Give the type a name.'
+    ? t('itemtypeeditor.give-the-type-a-name')
     : clash
-      ? 'Another type has this name.'
+      ? t('itemtypeeditor.another-type-has-this-name')
       : tabProblem
         ? tabProblem
         : statusesProblem
           ? `Too many states turned off: a type can turn off at most ${ITEM_TYPE_EXCLUDED_STATUSES_MAX}.`
           : !check.ok
-            ? 'A custom field needs a name, and a Choice field at least one option.'
+            ? t('itemtypeeditor.a-custom-field-needs-a-name')
             : null;
 
   // The tabs holding what stops Save (a left-out status problem is States'; a clashing name, a tab or a custom field
@@ -198,7 +200,7 @@ export function ItemTypeEditor({
             <PlanTypeGlyph glyph={glyph} size={18} />
           </span>
           {/* Named for the type as saved, so the title stays put while its Name is edited. */}
-          {type ? `Edit ${type.label} Card Type` : 'New Card Type'}
+          {type ? `Edit ${type.label} Card Type` : t('itemtypeeditor.new-card-type')}
         </h2>
         {/* Show Me, Help on card types, and the editor's own close (as Cancel: the draft is dropped). */}
         <ShowMeButton tour={tour} />
@@ -230,7 +232,7 @@ export function ItemTypeEditor({
           ),
           display: (
             <div data-tour-id="card-type-display">
-              <SheetRow label="Display">
+              <SheetRow label={t('itemtypeeditor.display')}>
                 <ItemTypeDisplay type={draft} display={display} onChange={setDisplay} />
               </SheetRow>
             </div>
@@ -238,7 +240,7 @@ export function ItemTypeEditor({
           statuses: (
             <>
               <div data-tour-id="card-type-states">
-                <SheetRow label="States">
+                <SheetRow label={t('itemtypeeditor.states')}>
                   <ItemTypeStatuses
                     statuses={statuses}
                     excluded={excluded}
@@ -270,15 +272,11 @@ export function ItemTypeEditor({
               onClick={(e) => setConfirmingAt(e.currentTarget)}
             >
               <TrashIcon size={14} />
-              {/* One word, so a phone's footer keeps each button on one line. */}
-              Delete
-            </Button>
+              {/* One word, so a phone's footer keeps each button on one line. */}{t('itemtypeeditor.delete')}</Button>
           ) : null}
           {type && onDuplicate ? (
             <Button variant="secondary" className="mr-auto" onClick={onDuplicate}>
-              <DuplicateIcon size={14} />
-              Duplicate
-            </Button>
+              <DuplicateIcon size={14} />{t('itemtypeeditor.duplicate')}</Button>
           ) : null}
           {problem && draft.label ? (
             <span className="self-center text-[12px] text-rose-600 dark:text-rose-400">
@@ -286,18 +284,14 @@ export function ItemTypeEditor({
             </span>
           ) : null}
           <Button variant="secondary" onClick={onClose}>
-            <CloseIcon size={12} />
-            Cancel
-          </Button>
+            <CloseIcon size={12} />{t('itemtypeeditor.cancel')}</Button>
           <Button
             variant="primary"
             data-tour-id="card-type-save"
             disabled={!!problem}
             onClick={() => check.ok && onSave(check.catalogue.types[0]!)}
           >
-            <CheckIcon size={14} />
-            Save
-          </Button>
+            <CheckIcon size={14} />{t('itemtypeeditor.save')}</Button>
         </>
       </DialogFooter>
       <CardTypeTourStage tour={tour} />

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useRef } from 'react';
 import { Button } from '@livediagram/ui';
 import { describeImportImageReport, type ImportImageReport as Report } from '@/lib/import-images';
@@ -26,6 +27,7 @@ export function ImportImageReport({
   libraries?: { id: string; name: string }[];
   onDone: () => void;
 }) {
+  const { t } = useTranslation();
   const doneRef = useRef<HTMLButtonElement>(null);
   const images = report ? describeImportImageReport(report) : null;
 
@@ -35,7 +37,7 @@ export function ImportImageReport({
 
   return (
     <div role="status" data-testid="import-image-report">
-      <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Import complete</h3>
+      <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{t('importimagereport.import-complete')}</h3>
       {scene ? (
         <div className="mt-2">
           <BoardSceneReportList report={scene} showLanded />
@@ -98,9 +100,7 @@ export function ImportImageReport({
         </>
       ) : null}
       <div className="mt-5 flex justify-end">
-        <Button ref={doneRef} variant="primary" size="md" onClick={onDone}>
-          Done
-        </Button>
+        <Button ref={doneRef} variant="primary" size="md" onClick={onDone}>{t('importimagereport.done')}</Button>
       </div>
     </div>
   );

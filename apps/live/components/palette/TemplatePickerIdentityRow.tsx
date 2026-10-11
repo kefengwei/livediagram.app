@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { initialsOf, randomName, type Participant } from '@/lib/identity';
 import { RefreshIcon, HoverCard, GlyphDisc, IDENTITY_FILL, identityVars } from '@livediagram/ui';
 
@@ -19,6 +20,7 @@ export function TemplatePickerIdentityRow({
   nameLocked: boolean;
   onChangeName: (next: string) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50/50 p-3 dark:border-slate-700 dark:bg-slate-800/50">
       <GlyphDisc
@@ -35,9 +37,7 @@ export function TemplatePickerIdentityRow({
         <label
           htmlFor="welcome-name"
           className="block text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400"
-        >
-          Your name
-        </label>
+        >{t('templatepickeridentityrow.your-name')}</label>
         <input
           id="welcome-name"
           value={name}
@@ -57,11 +57,11 @@ export function TemplatePickerIdentityRow({
         />
       </div>
       {nameLocked ? null : (
-        <HoverCard title="Shuffle name" description="Pick a different random name.">
+        <HoverCard title={t('templatepickeridentityrow.shuffle-name')} description={t('templatepickeridentityrow.pick-a-different-random-name')}>
           <button
             type="button"
             onClick={() => onChangeName(randomName())}
-            aria-label="Generate a different name"
+            aria-label={t('templatepickeridentityrow.generate-a-different-name')}
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
           >
             <RefreshIcon />

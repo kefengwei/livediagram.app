@@ -3,6 +3,7 @@
 // The small parts a card face is built from (docs/specs/026-plan/plan-board.md "What the board shows"): the type
 // chip, the number on its type's colour, the priority's signal bars, the footer's pills (due, start, estimate, checklist, comments, votes),
 // label chips, the flag and the vote control. PlanCardFace lays them out per card size.
+import { useTranslation } from '@/lib/i18n';
 import { PRIORITY_LABELS, itemCommentCount, type Item, type Priority } from '@livediagram/items';
 import { contrastRatio } from '@livediagram/document';
 import { CommentIcon } from '@livediagram/ui';
@@ -74,17 +75,17 @@ export function DuePill({
   done: boolean;
   palette: PlanPalette;
 }) {
+  const { t } = useTranslation();
   const state = dueState(due, done);
   const tone = state === 'late' ? LATE_COLOUR : state === 'soon' ? SOON_COLOUR : undefined;
   return (
     <MetaPill
       palette={palette}
       {...(tone ? { tone } : {})}
-      label={`Due ${dayLabel(due)}${state === 'late' ? ', overdue' : ''}`}
+      label={`Due ${dayLabel(due)}${state === 'late' ? t('plan-card-parts.overdue') : ''}`}
     >
       <PlanTypeGlyph glyph="calendar" size={11} />
-      <span aria-hidden className={state === 'late' ? 'font-semibold' : undefined}>
-        Due {dayLabel(due)}
+      <span aria-hidden className={state === 'late' ? 'font-semibold' : undefined}>{t('plan-card-parts.due')}{dayLabel(due)}
       </span>
     </MetaPill>
   );
@@ -92,9 +93,10 @@ export function DuePill({
 
 // When the work begins, always quiet: only a due date takes a colour.
 export function StartPill({ start, palette }: { start: string; palette: PlanPalette }) {
+  const { t } = useTranslation();
   return (
     <MetaPill palette={palette} label={`Starts ${dayLabel(start)}`}>
-      <span aria-hidden>From {dayLabel(start)}</span>
+      <span aria-hidden>{t('plan-card-parts.from')}{dayLabel(start)}</span>
     </MetaPill>
   );
 }
@@ -122,10 +124,11 @@ export function ChecklistPill({
 }
 
 export function CommentsPill({ item, palette }: { item: Item; palette: PlanPalette }) {
+  const { t } = useTranslation();
   const n = itemCommentCount(item);
   if (n === 0) return null;
   return (
-    <MetaPill palette={palette} label={n === 1 ? '1 comment' : `${n} comments`}>
+    <MetaPill palette={palette} label={n === 1 ? t('plan-card-parts.1-comment') : `${n} comments`}>
       <CommentIcon size={11} />
       <span aria-hidden>{n}</span>
     </MetaPill>
@@ -245,8 +248,9 @@ export function LabelChips({ labels, max = 4 }: { labels: readonly string[]; max
 
 // A flagged card's mark (docs/specs/026-plan/items.md "Flags"), at the end of its title on every size.
 export function FlagMark() {
+  const { t } = useTranslation();
   return (
-    <span className="mt-0.5 shrink-0" role="img" aria-label="Flagged">
+    <span className="mt-0.5 shrink-0" role="img" aria-label={t('plan-card-parts.flagged')}>
       <PlanTypeGlyph glyph="flag" size={13} color={FLAG_COLOUR} />
     </span>
   );

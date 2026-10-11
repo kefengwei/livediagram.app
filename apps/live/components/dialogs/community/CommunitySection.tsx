@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useId, useRef, useState } from 'react';
 import { HelpArticleLink } from '@/components/primitives/HelpArticleLink';
 import {
@@ -49,6 +50,7 @@ export function CommunitySection({
   onEdit: () => void;
   onRemove: () => Promise<void>;
 }) {
+  const { t } = useTranslation();
   const toast = useToast();
   const [confirming, setConfirming] = useState(false);
   const [removing, setRemoving] = useState(false);
@@ -94,27 +96,25 @@ export function CommunitySection({
       <p className={`${SECTION_LABEL} flex items-center gap-1.5`}>
         <GlobeIcon />
         {/* The section is named by the word alone, not the help link beside it. */}
-        <span id={headingId}>Community</span>
+        <span id={headingId}>{t('communitysection.community')}</span>
         <HelpArticleLink article="community" className="ml-auto" />
       </p>
 
       {state === 'guest' ? (
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className={NOTE}>Sign in to share your document with the Community.</p>
-          <a href={signInHref} className={buttonClassName({ variant: 'secondary', size: 'xs' })}>
-            Sign In to Share
-          </a>
+          <p className={NOTE}>{t('communitysection.sign-in-to-share-your-document')}</p>
+          <a href={signInHref} className={buttonClassName({ variant: 'secondary', size: 'xs' })}>{t('communitysection.sign-in-to-share')}</a>
         </div>
       ) : null}
 
       {state === 'team' ? (
-        <p className={NOTE}>Team library documents can&rsquo;t be shared to the Community.</p>
+        <p className={NOTE}>{t('communitysection.team-library-documents-can-t-be')}</p>
       ) : null}
 
       {state === 'loading' ? (
         <div
           aria-busy="true"
-          aria-label="Loading"
+          aria-label={t('communitysection.loading')}
           className="h-9 animate-pulse rounded-lg bg-slate-100 motion-reduce:animate-none dark:bg-slate-800"
         />
       ) : null}
@@ -123,18 +123,11 @@ export function CommunitySection({
 
       {state === 'unpublished' ? (
         <div className="flex flex-col gap-2">
-          <p className={NOTE}>
-            The Community is <strong className="font-semibold">public</strong>: anyone, with or
-            without an account, can find this document there, view it and make their own copy.
-          </p>
+          <p className={NOTE}>{t('communitysection.the-community-is')}<strong className="font-semibold">{t('communitysection.public')}</strong>{t('communitysection.anyone-with-or-without-an-account')}</p>
           <div className="flex flex-wrap items-center gap-2">
-            <Button size="xs" data-focus="share" onClick={onPublish} disabled={sharePasswordSet}>
-              Share to Community
-            </Button>
+            <Button size="xs" data-focus="share" onClick={onPublish} disabled={sharePasswordSet}>{t('communitysection.share-to-community')}</Button>
             {sharePasswordSet ? (
-              <span className="text-xs text-slate-500 dark:text-slate-400">
-                Remove the share password to share it to the Community.
-              </span>
+              <span className="text-xs text-slate-500 dark:text-slate-400">{t('communitysection.remove-the-share-password-to-share')}</span>
             ) : null}
           </div>
         </div>
@@ -150,13 +143,13 @@ export function CommunitySection({
               {communityCategoryLabel(post.category)} ·{' '}
               <span className="tabular-nums">
                 <span aria-hidden>♥</span>
-                <span className="sr-only">Likes</span> {post.likeCount} · Copied {post.copyCount}{' '}
+                <span className="sr-only">{t('communitysection.likes')}</span> {post.likeCount}{t('communitysection.copied')}{post.copyCount}{' '}
                 {communityPlural(post.copyCount, 'time', 'times')}
               </span>
             </p>
             {state === 'hidden' ? (
               <p className="mt-1 text-xs text-amber-800 dark:text-amber-200">
-                <span className="font-medium">Hidden after reports.</span> Several people reported
+                <span className="font-medium">{t('communitysection.hidden-after-reports')}</span> Several people reported
                 it, so it was taken out of the Community for good. Only you can see it, and it can
                 no longer be changed or removed.
               </p>
@@ -164,19 +157,14 @@ export function CommunitySection({
           </div>
           {confirming ? (
             <div className="flex flex-wrap items-center gap-2 border-t border-slate-100 pt-2 dark:border-slate-800">
-              <p className="flex-1 text-xs text-slate-600 dark:text-slate-300">
-                Remove it from the Community? Its likes and copy count go too; copies people made
-                stay theirs.
-              </p>
+              <p className="flex-1 text-xs text-slate-600 dark:text-slate-300">{t('communitysection.remove-it-from-the-community-its')}</p>
               <Button
                 variant="secondary"
                 size="xs"
                 data-focus="confirm"
                 onClick={() => ask(false, 'actions')}
                 disabled={removing}
-              >
-                Keep It
-              </Button>
+              >{t('communitysection.keep-it')}</Button>
               <Button variant="primary" size="xs" onClick={remove} disabled={removing}>
                 {removing ? 'Removing' : 'Remove'}
               </Button>
@@ -189,20 +177,14 @@ export function CommunitySection({
                 rel="noopener"
                 className={buttonClassName({ variant: 'secondary', size: 'xs' })}
               >
-                <OpenIcon />
-                View Post
-              </a>
-              <Button variant="secondary" size="xs" onClick={onEdit}>
-                Edit Listing
-              </Button>
+                <OpenIcon />{t('communitysection.view-post')}</a>
+              <Button variant="secondary" size="xs" onClick={onEdit}>{t('communitysection.edit-listing')}</Button>
               <Button
                 variant="secondary"
                 size="xs"
                 data-focus="actions"
                 onClick={() => ask(true, 'confirm')}
-              >
-                Remove From Community
-              </Button>
+              >{t('communitysection.remove-from-community')}</Button>
             </div>
           )}
         </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useMemo, useState } from 'react';
 import type { Folder } from '@livediagram/api-schema';
 import { FolderRow, SkeletonRows } from '@/app/explorer/views';
@@ -71,6 +72,7 @@ export function TeamSharedDocuments({
   // library lists every matching document at or below the open spot, its folders stepping aside.
   lens?: LibraryLens;
 }) {
+  const { t } = useTranslation();
   const lib = useTeamLibrary(ownerId, teamId);
   // Default folders (docs/specs/013-workspace/default-folders.md): a joined member may send new
   // documents to this team's folders.
@@ -119,7 +121,7 @@ export function TeamSharedDocuments({
     if (!lensed || d.folderId === currentFolderId) return null;
     const folderId = d.folderId;
     if (folderId === null)
-      return { label: 'Team documents', onOpen: () => setSpot({ kind: 'root' }) };
+      return { label: t('teamshareddocuments.team-documents'), onOpen: () => setSpot({ kind: 'root' }) };
     const folder = lib.folders.find((f) => f.id === folderId);
     return folder
       ? { label: folder.name, onOpen: () => setSpot({ kind: 'folder', id: folder.id }) }
@@ -127,8 +129,8 @@ export function TeamSharedDocuments({
   };
 
   const crumbs: { label: string; onClick?: () => void }[] = (() => {
-    const root = { label: 'Team documents', onClick: () => setSpot({ kind: 'root' }) };
-    if (spot.kind === 'root') return [{ label: 'Team documents' }];
+    const root = { label: t('teamshareddocuments.team-documents-2'), onClick: () => setSpot({ kind: 'root' }) };
+    if (spot.kind === 'root') return [{ label: t('teamshareddocuments.team-documents-3') }];
     const chain = lib.breadcrumb(spot.id);
     return [
       root,
@@ -243,14 +245,14 @@ export function TeamSharedDocuments({
           {spot.kind === 'root' ? (
             <EmptyState
               icon={<TeamIcon />}
-              title="Nothing Shared Yet"
-              description="Move a document here from your personal explorer, or create a folder to organise ahead."
+              title={t('teamshareddocuments.nothing-shared-yet')}
+              description={t('teamshareddocuments.move-a-document-here-from-your')}
             />
           ) : (
             <EmptyState
               icon={<FolderSolidIcon open />}
-              title="This Folder Is Empty"
-              description="Move a document here, or add a subfolder to organise your team's work."
+              title={t('teamshareddocuments.this-folder-is-empty')}
+              description={t('teamshareddocuments.move-a-document-here-or-add')}
             />
           )}
         </div>

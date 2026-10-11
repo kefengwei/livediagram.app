@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation, type MessageKey } from '@/lib/i18n';
 import { SettingsRowShell } from './SettingsRowShell';
 import type { SettingsRowSpec } from './settings-catalogue';
 
@@ -26,15 +27,19 @@ export function SettingsChoiceRow({
   // Only the shell's half of the spec is needed: label, description, help.
   row: Pick<
     SettingsRowSpec,
-    'key' | 'label' | 'description' | 'helpArticle' | 'alsoIn' | 'illustration'
+    'key' | 'label' | 'labelKey' | 'description' | 'descriptionKey' | 'helpArticle' | 'alsoIn'
   >;
   // `disabled` greys an option out and stops it being picked (a desktop-only
   // layout on a phone); `notice` says why.
-  options: { id: string; label: string; disabled?: boolean }[];
+  // `labelKey` is preferred when present: the caller's table may be module scope, where it
+  // has no `t` (docs/specs/004-interface-design/localization.md). `label` stays as the
+  // English fallback for options that have no key yet.
+  options: { id: string; label: string; labelKey?: MessageKey; disabled?: boolean }[];
   value: string;
   onChange: (next: string) => void;
   notice?: React.ReactNode;
 }) {
+  const { t } = useTranslation();
   return (
     <SettingsRowShell
       row={row}
@@ -45,7 +50,7 @@ export function SettingsChoiceRow({
       control={
         <span
           role="radiogroup"
-          aria-label={row.label}
+          aria-label={row.labelKey ? t(row.labelKey) : row.label}
           aria-describedby={`${row.key}-description`}
           className="flex shrink-0 gap-0.5 rounded-lg bg-slate-100 p-0.5 dark:bg-slate-900"
         >
@@ -65,7 +70,7 @@ export function SettingsChoiceRow({
                     : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100'
                 }`}
               >
-                {option.label}
+                {option.labelKey ? t(option.labelKey) : option.label}
               </button>
             );
           })}

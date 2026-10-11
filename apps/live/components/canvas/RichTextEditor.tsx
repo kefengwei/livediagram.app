@@ -19,6 +19,7 @@
 // commit lifecycle) lives in useRichTextSession; this file keeps the
 // JSX and its event handlers.
 
+import { useTranslation } from '@/lib/i18n';
 import type { RunBoolKey } from '@livediagram/document';
 import { useMindLabelKeys } from '@/components/canvas/useMindLabelKeys';
 import {
@@ -57,6 +58,7 @@ export function RichTextEditor({
   onSetAlign,
   inline = false,
 }: RichTextEditorProps) {
+  const { t } = useTranslation();
   const zoom = useCanvasZoom();
   const {
     editorRef,
@@ -124,7 +126,7 @@ export function RichTextEditor({
         suppressContentEditableWarning
         role="textbox"
         aria-multiline={multiline}
-        aria-label="Edit text"
+        aria-label={t('richtexteditor.edit-text')}
         data-rt-placeholder={placeholder}
         spellCheck={false}
         onInput={() => {
@@ -284,7 +286,7 @@ export function RichTextEditor({
             placeBelow ? 'top-full mt-1' : 'bottom-full mb-1'
           }`}
         >
-          <span className="text-optical-line text-optical-caps">Selected Text</span>
+          <span className="text-optical-line text-optical-caps">{t('richtexteditor.selected-text')}</span>
         </span>
         <RichTextToolbar
           active={active}

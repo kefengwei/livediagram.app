@@ -3,6 +3,7 @@
 // The frame of the OAuth pages (the consent page and the device page, docs/specs/015-api/blueprints/cli.md
 // "The device grant"): the brand over a card on the animated lines backdrop, and the help link to the
 // connect-an-AI-tool article.
+import { useTranslation } from '@/lib/i18n';
 import { Brand, Glyph, SOLID_BRAND_DARK_CONTROL } from '@livediagram/ui';
 import { AnimatedLinesBackdrop } from '@/components/canvas/AnimatedLinesBackdrop';
 
@@ -30,6 +31,7 @@ export function OauthShell({ children }: { children: React.ReactNode }) {
 // Help link to the connect-an-AI-tool article. Opens in a new tab so it never
 // abandons the in-progress OAuth session on this screen.
 export function OauthHelpLink() {
+  const { t } = useTranslation();
   return (
     <a
       href="/help/account-and-data/connect-ai-mcp/"
@@ -41,8 +43,6 @@ export function OauthHelpLink() {
         <circle cx="8" cy="8" r="6.5" />
         <path d="M6.2 6.3a1.8 1.8 0 1 1 2.3 1.8c-.5.2-.7.5-.7 1.1" strokeLinecap="round" />
         <circle cx="8" cy="11.4" r="0.5" fill="currentColor" stroke="none" />
-      </Glyph>
-      Learn about connecting AI tools
-    </a>
+      </Glyph>{t('oauth-shell.learn-about-connecting-ai-tools')}</a>
   );
 }

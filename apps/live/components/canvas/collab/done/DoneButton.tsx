@@ -2,6 +2,8 @@
 // accent with a check, which pops when pressed; once you are done it turns
 // quiet and reads "I'm not done", the same press to take it back.
 
+
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { usePressWithoutDrag } from '@/hooks/ui/usePressWithoutDrag';
 import { tint } from '../collab-chrome';
@@ -16,6 +18,7 @@ export function DoneButton({
   textColor: string;
   onToggle?: () => void;
 }) {
+  const { t } = useTranslation();
   const [initial] = useState(mine);
   const press = usePressWithoutDrag(() => onToggle?.());
   return (
@@ -32,7 +35,7 @@ export function DoneButton({
         className={`inline-flex items-center gap-1.5 ${mine !== initial ? 'qa-pop' : ''}`}
       >
         {mine ? null : <CheckGlyph size={13} />}
-        {mine ? "I'm not done" : "I'm done"}
+        {mine ? t('donebutton.i-m-not-done') : t('donebutton.i-m-done')}
       </span>
     </button>
   );

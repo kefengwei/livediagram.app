@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import dynamic from 'next/dynamic';
 import {
   isBoxed,
@@ -42,6 +43,7 @@ const ImagePicker = dynamic(
 // EditorView just renders <EditorElementDialogs />. Distinct from the
 // global modals (EditorModals) and the tab/share dialogs (EditorTabDialogs).
 export function EditorElementDialogs() {
+  const { t } = useTranslation();
   const {
     linkPickerOpenForId,
     isReadOnly,
@@ -91,15 +93,15 @@ export function EditorElementDialogs() {
     linkTarget?.type === 'video'
       ? {
           subtitle: isWebsiteEmbed
-            ? 'Paste any web address. The page loads right here on the canvas.'
+            ? t('editorelementdialogs.paste-any-web-address-the-page')
             : embedNamed
               ? `Paste a ${embedNamed} link. It loads right here on the canvas.`
-              : 'Paste a link. The content plays or loads right here on the canvas.',
+              : t('editorelementdialogs.paste-a-link-the-content-plays'),
           fieldLabel: isWebsiteEmbed
-            ? 'Web address'
+            ? t('editorelementdialogs.web-address')
             : embedNamed
               ? `${embedNamed} link`
-              : 'Embed link',
+              : t('editorelementdialogs.embed-link'),
           placeholder: isWebsiteEmbed
             ? 'https://www.bbc.co.uk'
             : 'https://www.youtube.com/watch?v=…',
@@ -117,7 +119,7 @@ export function EditorElementDialogs() {
     <>
       {linkPickerOpenForId !== null && !isReadOnly ? (
         <LinkPickerDialog
-          title={linkTarget?.type === 'video' ? 'Link embed' : 'Link element'}
+          title={linkTarget?.type === 'video' ? t('editorelementdialogs.link-embed') : t('editorelementdialogs.link-element')}
           urlOnly={urlOnly}
           currentLink={linkTarget?.link ?? null}
           tabs={tabs.map((t) => ({ id: t.id, name: t.name }))}
@@ -142,7 +144,7 @@ export function EditorElementDialogs() {
       ) : null}
       {cellLinkPickerOpenFor !== null && !isReadOnly ? (
         <LinkPickerDialog
-          title="Link cell"
+          title={t('editorelementdialogs.link-cell')}
           currentLink={(() => {
             const t = activeTab.elements.find(
               (e) => e.id === cellLinkPickerOpenFor.tableId && e.type === 'table',

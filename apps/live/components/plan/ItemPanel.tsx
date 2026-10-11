@@ -5,6 +5,7 @@
 // panel beside it holds the fields in no tab, then who made the item and who last changed it. On a phone
 // it is one column and Details becomes the first tab. Every field saves as it changes. It follows the
 // item wherever someone moves it, and closes if someone deletes it.
+import { useTranslation } from '@/lib/i18n';
 import { useEffect, useState, type ReactNode } from 'react';
 import {
   BUILT_IN_FIELD_IDS,
@@ -155,6 +156,7 @@ function ItemPanelContent({
   onAddLinked,
   statusNames,
 }: ItemPanelProps) {
+  const { t } = useTranslation();
   const mobile = useIsMobileViewport();
   useTitleFocus(fieldId(item, 'title'), !mobile && canEdit, fresh);
   // When the panel opened: the meta line says how long ago the last change was from here.
@@ -241,9 +243,7 @@ function ItemPanelContent({
           className="flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold"
           style={{ color: FLAG_COLOUR, backgroundColor: `${FLAG_COLOUR}14` }}
         >
-          <PlanTypeGlyph glyph="flag" size={12} color={FLAG_COLOUR} />
-          Flagged
-        </span>
+          <PlanTypeGlyph glyph="flag" size={12} color={FLAG_COLOUR} />{t('itempanel.flagged')}</span>
       ) : null}
       <span className="flex-1" />
       <ItemPanelMenu
@@ -301,9 +301,7 @@ function ItemPanelContent({
       ) : current.fields.length > 0 ? (
         current.fields.map(mainField)
       ) : (
-        <p className="py-6 text-center text-[13px] text-slate-500 dark:text-slate-400">
-          Nothing on this tab yet. Edit the card type to add fields to it.
-        </p>
+        <p className="py-6 text-center text-[13px] text-slate-500 dark:text-slate-400">{t('itempanel.nothing-on-this-tab-yet-edit')}</p>
       )}
     </div>
   ) : null;
@@ -317,7 +315,7 @@ function ItemPanelContent({
         <div className="min-w-0 flex-1 overflow-y-auto px-4 pb-8 pt-2 sm:px-8">
           <DebouncedText
             id={fieldId(item, 'title')}
-            label="Title"
+            label={t('itempanel.title')}
             value={itemTitle(item)}
             maxLength={ITEM_TITLE_MAX}
             // Enter saves the title and closes the card.
@@ -325,7 +323,7 @@ function ItemPanelContent({
             // A long title wraps to three lines, then scrolls; a short one keeps to one (plan-board.md "Look").
             wrapLines={3}
             required
-            placeholder="Title"
+            placeholder={t('itempanel.title-2')}
             disabled={!canEdit}
             onSave={(v) => onSave('title', v)}
             className="-mx-2 mb-5 w-[calc(100%+1rem)] rounded-lg border border-transparent bg-transparent px-2 py-1 text-[22px] font-semibold leading-snug tracking-tight text-slate-900 outline-none transition hover:bg-slate-50 focus:border-brand-400 focus:bg-white focus:ring-2 focus:ring-brand-500/20 dark:text-slate-50 dark:hover:bg-slate-800/50 dark:focus:bg-slate-950"
@@ -333,7 +331,7 @@ function ItemPanelContent({
           {shownTabs.length > 1 ? (
             <div
               role="tablist"
-              aria-label="Item sections"
+              aria-label={t('itempanel.item-sections')}
               className="mb-6 flex gap-5 overflow-x-auto overflow-y-hidden border-b border-slate-200 dark:border-slate-700"
               onKeyDown={(e) => {
                 if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;

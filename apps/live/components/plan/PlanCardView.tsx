@@ -3,6 +3,7 @@
 // The Plan card element's body (docs/specs/026-plan/plan-board.md "The Plan card"): one item's card
 // face at the element's size. A double-click or double-tap, in any mode, opens the item;
 // a card whose item is not in this document's store says so and offers to go.
+import { useTranslation } from '@/lib/i18n';
 import type { ShapeElement } from '@livediagram/document';
 import { useCanvasSurface } from '@/components/canvas/CanvasSurfaceContext';
 import { usePressWithoutDrag } from '@/hooks/ui/usePressWithoutDrag';
@@ -18,6 +19,7 @@ export function PlanCardView({
   element: ShapeElement;
   fontFamily?: string;
 }) {
+  const { t } = useTranslation();
   const plan = usePlan();
   // Its theme and style colours (docs/specs/026-plan/plan-board.md "Theme and style"): a lone card's
   // fill is its face.
@@ -42,10 +44,10 @@ export function PlanCardView({
         style={{ borderColor: palette.border, color: palette.muted, backgroundColor: palette.card }}
       >
         {loading ? (
-          <span>Loading item…</span>
+          <span>{t('plancardview.loading-item')}</span>
         ) : (
           <>
-            <span>Item not found</span>
+            <span>{t('plancardview.item-not-found')}</span>
             {plan?.canEdit ? (
               <button
                 type="button"
@@ -56,9 +58,7 @@ export function PlanCardView({
                   e.stopPropagation();
                   plan.removeCard(element.id);
                 }}
-              >
-                Remove card
-              </button>
+              >{t('plancardview.remove-card')}</button>
             ) : null}
           </>
         )}

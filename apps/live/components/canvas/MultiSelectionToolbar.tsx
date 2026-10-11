@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { Element } from '@livediagram/document';
 import {
   DuplicateIcon,
@@ -56,6 +57,7 @@ export function MultiSelectionToolbar({
   onExport,
   onOpenContextMenu,
 }: MultiSelectionToolbarProps) {
+  const { t } = useTranslation();
   // SelectionFilterMenu renders nothing for a single-kind selection, so its
   // trailing divider must share the SAME predicate — gating on `onFilter`
   // alone leaves a stray divider when the funnel button self-hides.
@@ -69,7 +71,7 @@ export function MultiSelectionToolbar({
     <>
       {onOpenContextMenu && (touch || !powerUser) ? (
         <>
-          <HoverCard title="More" description="Open the selection menu.">
+          <HoverCard title={t('multiselectiontoolbar.more')} description={t('multiselectiontoolbar.open-the-selection-menu')}>
             <button
               type="button"
               data-context-menu-trigger
@@ -77,7 +79,7 @@ export function MultiSelectionToolbar({
                 const r = e.currentTarget.getBoundingClientRect();
                 onOpenContextMenu(r.left, r.bottom);
               }}
-              aria-label="More actions"
+              aria-label={t('multiselectiontoolbar.more-actions')}
               className={TOOLBAR_BTN}
             >
               <EllipsisIcon size={14} />
@@ -94,11 +96,11 @@ export function MultiSelectionToolbar({
           <span aria-hidden className="h-5 w-px bg-slate-200 dark:bg-slate-700" />
         </>
       ) : null}
-      <HoverCard title="Duplicate" description="Duplicate the selection, arrows included.">
+      <HoverCard title={t('multiselectiontoolbar.duplicate')} description={t('multiselectiontoolbar.duplicate-the-selection-arrows-included')}>
         <button
           type="button"
           onClick={onDuplicate}
-          aria-label="Duplicate selected elements"
+          aria-label={t('multiselectiontoolbar.duplicate-selected-elements')}
           className={TOOLBAR_BTN}
         >
           <DuplicateIcon size={14} />
@@ -113,11 +115,11 @@ export function MultiSelectionToolbar({
           decide whether these elements can still be touched, and locking is
           what makes the Delete beside it refuse. A divider between them read
           as Lock belonging with Export, which it does not. */}
-      <HoverCard title="Export" description="Export just these elements.">
+      <HoverCard title={t('multiselectiontoolbar.export')} description={t('multiselectiontoolbar.export-just-these-elements')}>
         <button
           type="button"
           onClick={onExport}
-          aria-label="Export selected elements"
+          aria-label={t('multiselectiontoolbar.export-selected-elements')}
           className={TOOLBAR_BTN}
         >
           <ExportIcon />
@@ -126,12 +128,12 @@ export function MultiSelectionToolbar({
       <span aria-hidden className="h-5 w-px bg-slate-200 dark:bg-slate-700" />
       <HoverCard
         title={anyLocked ? 'Unlock' : 'Lock'}
-        description={anyLocked ? 'Unlock so they move again.' : "Lock so they can't move."}
+        description={anyLocked ? t('multiselectiontoolbar.unlock-so-they-move-again') : t('multiselectiontoolbar.lock-so-they-can-t-move')}
       >
         <button
           type="button"
           onClick={onToggleLock}
-          aria-label={anyLocked ? 'Unlock selected elements' : 'Lock selected elements'}
+          aria-label={anyLocked ? t('multiselectiontoolbar.unlock-selected-elements') : t('multiselectiontoolbar.lock-selected-elements')}
           aria-pressed={anyLocked}
           className={anyLocked ? TOOLBAR_BTN_ON : TOOLBAR_BTN}
         >
@@ -140,16 +142,16 @@ export function MultiSelectionToolbar({
       </HoverCard>
       {showDelete ? (
         <HoverCard
-          title="Delete"
+          title={t('multiselectiontoolbar.delete')}
           description={
-            allLocked ? 'All locked. Unlock to delete.' : 'Delete selected (locked ones are kept).'
+            allLocked ? t('multiselectiontoolbar.all-locked-unlock-to-delete') : t('multiselectiontoolbar.delete-selected-locked-ones-are-kept')
           }
         >
           <button
             type="button"
             onClick={onDelete}
             disabled={allLocked}
-            aria-label="Delete selected elements"
+            aria-label={t('multiselectiontoolbar.delete-selected-elements')}
             className={
               allLocked
                 ? 'flex h-7 w-7 items-center justify-center rounded-md text-slate-300 dark:text-slate-400'

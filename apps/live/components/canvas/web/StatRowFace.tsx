@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import {
   BORDER_RADIUS_PX,
   cornerRadiusPx,
@@ -20,6 +21,7 @@ export function StatRowFace({
   editable,
   onSetRows,
 }: WebFaceProps) {
+  const { t } = useTranslation();
   const zoom = useCanvasZoom();
   const stats = element.stats ?? [];
   const l = statRowLayout(element.width, element.height, stats.length);
@@ -58,7 +60,7 @@ export function StatRowFace({
           />
           <InlineTextLine
             value={st.caption}
-            placeholder="Caption"
+            placeholder={t('statrowface.caption')}
             editable={editable}
             onCommit={(v) => edit(i, 'caption', v)}
             zoom={zoom}

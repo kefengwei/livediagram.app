@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { EmptyState, lucideGlyph } from '@livediagram/ui';
 import { lucideShapes } from '@livediagram/icons/lucide';
@@ -32,10 +33,11 @@ const BUTTON =
   'rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 transition hover:border-brand-300 hover:text-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:border-slate-700 dark:text-slate-300';
 
 export function ShapeLibrariesPane() {
+  const { t } = useTranslation();
   const { libraries, status, reload } = useShapeLibraries();
   if (status === 'loading') {
     return (
-      <div role="status" aria-label="Loading shape libraries" className="flex flex-col gap-3">
+      <div role="status" aria-label={t('shapelibrariespane.loading-shape-libraries')} className="flex flex-col gap-3">
         {[0, 1].map((i) => (
           <div
             key={i}
@@ -48,10 +50,8 @@ export function ShapeLibrariesPane() {
   if (status === 'error') {
     return (
       <div className="px-1 py-8 text-sm text-slate-600 dark:text-slate-300">
-        <p>Couldn&apos;t load your shape libraries.</p>
-        <button type="button" onClick={() => void reload()} className={`mt-2 ${BUTTON}`}>
-          Try again
-        </button>
+        <p>{t('shapelibrariespane.couldn-t-load-your-shape-libraries')}</p>
+        <button type="button" onClick={() => void reload()} className={`mt-2 ${BUTTON}`}>{t('shapelibrariespane.try-again')}</button>
       </div>
     );
   }
@@ -59,8 +59,8 @@ export function ShapeLibrariesPane() {
     return (
       <EmptyState
         icon={<ShapesBadge />}
-        title="No shape libraries yet"
-        description="Import a draw.io library with Import from draw.io."
+        title={t('shapelibrariespane.no-shape-libraries-yet')}
+        description={t('shapelibrariespane.import-a-draw-io-library-with')}
       >
         <HelpArticleLink article="shapeLibraries" variant="text" />
       </EmptyState>
@@ -79,6 +79,7 @@ export function ShapeLibrariesPane() {
 }
 
 function LibraryCard({ library }: { library: ShapeLibrary }) {
+  const { t } = useTranslation();
   const { renameLibrary, deleteLibrary, deleteItem } = useShapeLibraries();
   const confirm = useConfirm();
   const [renaming, setRenaming] = useState(false);
@@ -87,8 +88,8 @@ function LibraryCard({ library }: { library: ShapeLibrary }) {
 
   const remove = async () => {
     const ok = await confirm({
-      title: 'Delete this shape library?',
-      message: 'Its shapes leave My shapes; documents that use them keep them.',
+      title: t('shapelibrariespane.delete-this-shape-library'),
+      message: t('shapelibrariespane.its-shapes-leave-my-shapes-documents'),
       confirmLabel: 'Delete',
     });
     if (ok) await deleteLibrary(library.id);
@@ -135,17 +136,13 @@ function LibraryCard({ library }: { library: ShapeLibrary }) {
           aria-label={`Rename ${library.name}`}
           onClick={() => setRenaming(true)}
           className={BUTTON}
-        >
-          Rename
-        </button>
+        >{t('shapelibrariespane.rename')}</button>
         <button
           type="button"
           aria-label={`Delete ${library.name}`}
           onClick={() => void remove()}
           className={BUTTON}
-        >
-          Delete
-        </button>
+        >{t('shapelibrariespane.delete')}</button>
         {library.items.length > 0 ? (
           <button
             type="button"
@@ -153,7 +150,7 @@ function LibraryCard({ library }: { library: ShapeLibrary }) {
             onClick={() => setOpen((o) => !o)}
             className={BUTTON}
           >
-            {open ? 'Hide shapes' : 'Show shapes'}
+            {open ? t('shapelibrariespane.hide-shapes') : t('shapelibrariespane.show-shapes')}
           </button>
         ) : null}
       </div>
@@ -179,9 +176,7 @@ function LibraryCard({ library }: { library: ShapeLibrary }) {
                 aria-label={`Delete ${titleOf(item, i)}`}
                 onClick={() => void deleteItem(library.id, item.id)}
                 className={BUTTON}
-              >
-                Delete
-              </button>
+              >{t('shapelibrariespane.delete-2')}</button>
             </li>
           ))}
         </ul>
@@ -201,6 +196,7 @@ function RenameInput({
   onRename: (name: string) => Promise<{ ok: true } | { ok: false; error: string }>;
   onDone: () => void;
 }) {
+  const { t } = useTranslation();
   const [name, setName] = useState(library.name);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -216,7 +212,7 @@ function RenameInput({
   return (
     <div className="flex min-w-0 flex-1 flex-col">
       <input
-        aria-label="Library name"
+        aria-label={t('shapelibrariespane.library-name')}
         // The field opens for typing at once.
         autoFocus
         value={name}

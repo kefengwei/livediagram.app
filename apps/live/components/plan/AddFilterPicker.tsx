@@ -4,6 +4,7 @@
 // the fields a filter can be added on; picking one shows its values, each with how many cards have it, and picking a
 // value adds the filter and closes it. A long list gets a box to narrow it. Drawn over the page (AnchoredPopover),
 // so a picker on the zoomed canvas reads at its own size, as menus do.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import {
   ChevronLeftIcon,
@@ -38,6 +39,7 @@ export function AddFilterPicker({
   // Inside a search box's right edge (FilterSearchBox): a quiet button rather than a dashed pill.
   inBox?: boolean;
 }) {
+  const { t } = useTranslation();
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const [field, setField] = useState<FilterField | null>(null);
   const [query, setQuery] = useState('');
@@ -66,7 +68,7 @@ export function AddFilterPicker({
         onClick={(e) => (anchor ? close() : setAnchor(e.currentTarget))}
       >
         <PlusIcon size={11} />
-        <span className="text-optical-centre">Add Filter</span>
+        <span className="text-optical-centre">{t('addfilterpicker.add-filter')}</span>
       </button>
       {anchor ? (
         <AnchoredPopover anchor={anchor} name="Add Filter" width={POPOVER_PX} onClose={close}>
@@ -78,7 +80,7 @@ export function AddFilterPicker({
               {field ? (
                 <button
                   type="button"
-                  aria-label="Back to the fields"
+                  aria-label={t('addfilterpicker.back-to-the-fields')}
                   className="flex h-6 w-6 cursor-pointer items-center justify-center rounded text-slate-500 transition hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                   onClick={() => {
                     setField(null);
@@ -89,7 +91,7 @@ export function AddFilterPicker({
                 </button>
               ) : null}
               <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                {field ? `${field.label} is` : 'Filter by'}
+                {field ? `${field.label} is` : t('addfilterpicker.filter-by')}
               </span>
             </div>
             {long ? (
@@ -99,8 +101,8 @@ export function AddFilterPicker({
                 </span>
                 <TextInput
                   compact
-                  aria-label={field ? `Find a ${field.label}` : 'Find a field'}
-                  placeholder={field ? `Find a ${field.label.toLowerCase()}` : 'Find a field'}
+                  aria-label={field ? `Find a ${field.label}` : t('addfilterpicker.find-a-field')}
+                  placeholder={field ? `Find a ${field.label.toLowerCase()}` : t('addfilterpicker.find-a-field-2')}
                   className="pl-7"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
@@ -143,8 +145,7 @@ export function AddFilterPicker({
                   ))}
             </ul>
             {(field ? shownValues : shownFields).length === 0 ? (
-              <p className="px-2 py-2 text-[12px] text-slate-500 dark:text-slate-400">
-                Nothing matches “{query.trim()}”.
+              <p className="px-2 py-2 text-[12px] text-slate-500 dark:text-slate-400">{t('addfilterpicker.nothing-matches')}{query.trim()}”.
               </p>
             ) : null}
           </div>

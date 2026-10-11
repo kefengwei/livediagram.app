@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import {
   Fragment,
   useEffect,
@@ -163,6 +164,7 @@ export function QuickConnectRing({
   onGrowMind,
   onAddTableColumn,
 }: QuickConnectRingProps) {
+  const { t } = useTranslation();
   // The rail "Add point" action only appears when the selected element is a
   // timeline rail (onAddRailPoint set), appended after the standard actions.
   // The table variant slims to Arrow + this side's structural add (Add Row
@@ -298,7 +300,7 @@ export function QuickConnectRing({
           Styled to match the selection toolbar (white, slate, soft shadow). */}
       <button
         type="button"
-        aria-label="Quick add and connect"
+        aria-label={t('quickconnectring.quick-add-and-connect')}
         aria-expanded={open}
         className="pointer-events-auto absolute flex items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg shadow-slate-900/10 transition hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:shadow-slate-950/40 dark:hover:bg-slate-800 dark:hover:text-white"
         style={{

@@ -7,6 +7,7 @@
 // (applyShapeColorPresetSelected / applyArrowPresetSelected walk every selected
 // id), so the same section works for one element or many.
 
+import { useTranslation } from '@/lib/i18n';
 import {
   isChartShape,
   isCodeBlockShape,
@@ -148,8 +149,9 @@ export function CodeThemePresetsSection({
   props: EditorContextMenuProps;
   accordion: AccordionProps;
 }) {
+  const { t } = useTranslation();
   return (
-    <MenuAccordionSection title="Presets" icon={<PresetsMenuGlyph />} {...accordion}>
+    <MenuAccordionSection title={t('presetsections.presets')} icon={<PresetsMenuGlyph />} {...accordion}>
       <CodeThemePresets
         current={current}
         onApply={props.onApplyCodeTheme}
@@ -187,8 +189,9 @@ export function TablePresetsSection({
   accordion: AccordionProps;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <MenuAccordionSection title="Presets" icon={<PresetsMenuGlyph />} {...accordion}>
+    <MenuAccordionSection title={t('presetsections.presets-2')} icon={<PresetsMenuGlyph />} {...accordion}>
       <TablePresets
         presets={props.tableColorPresets}
         current={current}
@@ -218,8 +221,9 @@ export function ChartPalettePresetsSection({
   accordion: AccordionProps;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   return (
-    <MenuAccordionSection title="Presets" icon={<PresetsMenuGlyph />} {...accordion}>
+    <MenuAccordionSection title={t('presetsections.presets-3')} icon={<PresetsMenuGlyph />} {...accordion}>
       <ChartPalettePresets
         current={current}
         onApply={props.onApplyChartPalette}

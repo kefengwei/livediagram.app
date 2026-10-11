@@ -6,6 +6,7 @@
 // what the type leaves out, so a status added later is open to every type. All may be unticked: such a card stays in
 // the status it is made in. A type leaves out at most ITEM_TYPE_EXCLUDED_STATUSES_MAX: at the cap a status still
 // ticked cannot be unticked (Deselect All stops there too), and a note says why.
+import { useTranslation } from '@/lib/i18n';
 import { useId } from 'react';
 import { ITEM_TYPE_EXCLUDED_STATUSES_MAX, readyMadeDefaultStatus } from '@livediagram/items';
 import { Button, Select } from '@livediagram/ui';
@@ -80,12 +81,11 @@ export function ItemTypeStatuses({
   // Each board's title and the statuses it names: the statuses are grouped under them (statusGroups).
   boards?: readonly { title: string; statuses: readonly string[] }[];
 }) {
+  const { t } = useTranslation();
   const defaultId = useId();
   if (statuses.length === 0)
     return (
-      <p className="rounded-lg border border-dashed border-slate-300 px-3 py-4 text-center text-[12px] text-slate-500 dark:border-slate-600 dark:text-slate-400">
-        No boards on this tab have columns yet, so there are no states to choose from.
-      </p>
+      <p className="rounded-lg border border-dashed border-slate-300 px-3 py-4 text-center text-[12px] text-slate-500 dark:border-slate-600 dark:text-slate-400">{t('itemtypestatuses.no-boards-on-this-tab-have')}</p>
     );
   const onCount = statuses.filter((s) => !excluded.includes(s.status)).length;
   // A ready-made type's Default State by name, as this document has it (none chosen falls back to it).
@@ -111,25 +111,20 @@ export function ItemTypeStatuses({
           aria-live="polite"
           className="text-[12px] font-medium text-slate-600 dark:text-slate-300"
         >
-          {onCount} of {statuses.length} {statuses.length === 1 ? 'state' : 'states'} on
-        </span>
+          {onCount}{t('itemtypestatuses.of')}{statuses.length} {statuses.length === 1 ? 'state' : 'states'}{t('itemtypestatuses.on')}</span>
         <Button
           variant="ghost"
           size="xs"
           className="ml-auto"
           disabled={allOn}
           onClick={() => onChange(selectAllStates(statuses, excluded))}
-        >
-          Select All
-        </Button>
+        >{t('itemtypestatuses.select-all')}</Button>
         <Button
           variant="ghost"
           size="xs"
           disabled={allOff}
           onClick={() => onChange(deselectAllStates(statuses, excluded))}
-        >
-          Deselect All
-        </Button>
+        >{t('itemtypestatuses.deselect-all')}</Button>
       </div>
       <div className="flex flex-col gap-3">
         {statusGroups(statuses, boards).map((g, gi) => {
@@ -140,9 +135,7 @@ export function ItemTypeStatuses({
                 <h4 className="mb-1.5 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   <span className="min-w-0 truncate">{g.title}</span>
                   <span className="font-medium normal-case tracking-normal tabular-nums">
-                    {groupOn} of {g.statuses.length} {g.statuses.length === 1 ? 'state' : 'states'}{' '}
-                    on
-                  </span>
+                    {groupOn}{t('itemtypestatuses.of-2')}{g.statuses.length} {g.statuses.length === 1 ? 'state' : 'states'}{' '}{t('itemtypestatuses.on-2')}</span>
                 </h4>
               ) : null}
               <OptionRows
@@ -173,25 +166,17 @@ export function ItemTypeStatuses({
         })}
       </div>
       {full ? (
-        <p role="note" className="text-[12px] text-slate-500 dark:text-slate-400">
-          A type can turn off at most {ITEM_TYPE_EXCLUDED_STATUSES_MAX} states. Turn one back on to
-          turn off another.
-        </p>
+        <p role="note" className="text-[12px] text-slate-500 dark:text-slate-400">{t('itemtypestatuses.a-type-can-turn-off-at')}{ITEM_TYPE_EXCLUDED_STATUSES_MAX}{t('itemtypestatuses.states-turn-one-back-on-to')}</p>
       ) : null}
       {onCount === 0 ? (
-        <p role="note" className="text-[12px] text-slate-500 dark:text-slate-400">
-          With every state off, a card of this type stays in the state it is made in and can never
-          be moved to another.
-        </p>
+        <p role="note" className="text-[12px] text-slate-500 dark:text-slate-400">{t('itemtypestatuses.with-every-state-off-a-card')}</p>
       ) : null}
       {onDefaultStatus ? (
         <div className="mt-2 flex flex-col gap-1.5 border-t border-slate-200 pt-3 dark:border-slate-700">
           <label
             htmlFor={defaultId}
             className="text-[12px] font-semibold text-slate-700 dark:text-slate-200"
-          >
-            Default State
-          </label>
+          >{t('itemtypestatuses.default-state')}</label>
           <Select
             id={defaultId}
             className="w-full sm:w-64"
@@ -205,7 +190,7 @@ export function ItemTypeStatuses({
             }
             onChange={(e) => onDefaultStatus(e.target.value)}
           >
-            {namedDefault ? null : <option value="">None</option>}
+            {namedDefault ? null : <option value="">{t('itemtypestatuses.none')}</option>}
             {statuses
               .filter((s) => !excluded.includes(s.status))
               .map((s) => (
@@ -214,10 +199,7 @@ export function ItemTypeStatuses({
                 </option>
               ))}
           </Select>
-          <p className="text-[12px] text-slate-500 dark:text-slate-400">
-            Cards made outside a board start here; a card added to a board takes that column&apos;s
-            state.
-          </p>
+          <p className="text-[12px] text-slate-500 dark:text-slate-400">{t('itemtypestatuses.cards-made-outside-a-board-start')}</p>
         </div>
       ) : null}
     </div>

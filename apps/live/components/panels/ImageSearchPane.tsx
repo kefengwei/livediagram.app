@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { Button, TextInput } from '@livediagram/ui';
 import { useImageSearch } from '@/hooks/ui/useImageSearch';
@@ -27,6 +28,7 @@ export function ImageSearchPane({
   documentId: string;
   onPicked: (image: PickedImage) => void;
 }) {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState('');
   const search = useImageSearch({ ownerId, documentId, onPicked });
   const loading = search.status === 'loading';
@@ -41,32 +43,28 @@ export function ImageSearchPane({
           search.submit(draft);
         }}
       >
-        <label htmlFor="image-search-query" className="sr-only">
-          Search images
-        </label>
+        <label htmlFor="image-search-query" className="sr-only">{t('imagesearchpane.search-images')}</label>
         <TextInput
           id="image-search-query"
           type="search"
           autoFocus
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
-          placeholder="Search openly licensed images"
+          placeholder={t('imagesearchpane.search-openly-licensed-images')}
           className="min-w-0 flex-1"
         />
-        <Button type="submit" size="sm" disabled={loading}>
-          Search
-        </Button>
+        <Button type="submit" size="sm" disabled={loading}>{t('imagesearchpane.search')}</Button>
       </form>
 
       <div aria-live="polite" className="text-xs text-slate-500 dark:text-slate-400">
         {search.status === 'idle' ? (
-          <p>Find openly licensed photos and illustrations from Openverse.</p>
+          <p>{t('imagesearchpane.find-openly-licensed-photos-and-illustrations')}</p>
         ) : loading ? (
-          <p>Searching…</p>
+          <p>{t('imagesearchpane.searching')}</p>
         ) : search.status === 'error' && search.error ? (
           <p className={ERROR_BOX}>{SEARCH_ERROR_COPY[search.error]}</p>
         ) : search.status === 'ready' && search.results.length === 0 ? (
-          <p>No images match “{search.query}”. Try a broader word.</p>
+          <p>{t('imagesearchpane.no-images-match')}{search.query}{t('imagesearchpane.try-a-broader-word')}</p>
         ) : null}
       </div>
 
@@ -98,21 +96,16 @@ export function ImageSearchPane({
           className="self-center"
           disabled={loading}
           onClick={search.loadMore}
-        >
-          Load more
-        </Button>
+        >{t('imagesearchpane.load-more')}</Button>
       ) : null}
 
-      <p className="text-[11px] text-slate-500 dark:text-slate-400">
-        Images from{' '}
+      <p className="text-[11px] text-slate-500 dark:text-slate-400">{t('imagesearchpane.images-from')}{' '}
         <a
           href="https://openverse.org"
           target="_blank"
           rel="noopener noreferrer"
           className="underline hover:text-slate-700 dark:hover:text-slate-200"
-        >
-          Openverse
-        </a>
+        >{t('imagesearchpane.openverse')}</a>
       </p>
     </div>
   );
@@ -129,6 +122,7 @@ function SearchTile({
   disabled: boolean;
   onPick: () => void;
 }) {
+  const { t } = useTranslation();
   const licence = licenceLabel(result.license, result.licenseVersion);
   return (
     <li>
@@ -163,7 +157,7 @@ function SearchTile({
               aria-hidden
               className="h-5 w-5 animate-spin rounded-full border-2 border-slate-300 border-t-brand-500 dark:border-slate-600 dark:border-t-brand-400"
             />
-            <span className="sr-only">Adding image…</span>
+            <span className="sr-only">{t('imagesearchpane.adding-image')}</span>
           </span>
         ) : null}
       </button>

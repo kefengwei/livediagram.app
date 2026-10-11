@@ -5,6 +5,7 @@
 // Takes input in Plan mode only; elsewhere it is drawn and moved like any element, and a double-click offers Plan.
 // Maximises as a board does: one stable tree inside MaximisableSlot, so nothing is lost either way. Loaded as its
 // own chunk, with the engine, only when a Sheet is drawn.
+import { useTranslation } from '@/lib/i18n';
 import { useCardTableSync, type CardTablePush } from './useCardTableSync';
 import { SheetSetup } from './SheetSetup';
 import { usePublishSheetSettings } from './sheet-settings-registry';
@@ -50,6 +51,7 @@ export function PlanSheetView({
   element: ShapeElement;
   fontFamily?: string;
 }) {
+  const { t } = useTranslation();
   const bridge = useSheetsBridgeContext();
   const plan = usePlan();
   const palette = planPalette(useCanvasSurface(), planOwnColours(element));
@@ -57,7 +59,7 @@ export function PlanSheetView({
   // Maximised for this person, or filling its tab for everyone (sheet.md "Fill Tab"); filling wins, as a board's.
   const { maximised, filled } = useBoardMaximised(element.id, interactive);
   // Outside the editor (no bridge): the frame and its title only.
-  if (!bridge) return <SheetFace palette={palette} title="Sheet" message="" />;
+  if (!bridge) return <SheetFace palette={palette} title={t('plansheetview.sheet')} message="" />;
   return (
     <MaximisableSlot
       id={element.id}
@@ -93,6 +95,7 @@ function SheetBody({
   maximised: boolean;
   interactive: boolean;
 }) {
+  const { t } = useTranslation();
   const bridge = useSheetsBridgeContext()!;
   const plan = usePlan();
   const palette = planPalette(useCanvasSurface(), planOwnColours(element));
@@ -103,21 +106,21 @@ function SheetBody({
     return (
       <SheetFace
         palette={palette}
-        title="Sheet"
+        title={t('plansheetview.sheet-2')}
         loading={model.status !== 'error' && (loading || !!element.planSheet?.copyOf)}
         message={
           model.status === 'error'
-            ? "Couldn't load this sheet"
+            ? t('plansheetview.couldn-t-load-this-sheet')
             : loading || element.planSheet?.copyOf
-              ? 'Opening Sheet'
-              : 'This sheet is no longer in this document'
+              ? t('plansheetview.opening-sheet')
+              : t('plansheetview.this-sheet-is-no-longer-in')
         }
         action={
           model.status === 'error'
-            ? { label: 'Try Again', run: () => void model.store.loadTab(bridge.activeTabId, true) }
+            ? { label: t('plansheetview.try-again'), run: () => void model.store.loadTab(bridge.activeTabId, true) }
             : !loading && !element.planSheet?.copyOf && bridge.canEdit
               ? {
-                  label: 'Remove',
+                  label: t('plansheetview.remove'),
                   run: () =>
                     bridge.commitElements((els) => els.filter((el) => el.id !== element.id)),
                 }
@@ -150,16 +153,14 @@ function SheetBody({
       {hint && !interactive ? (
         <div
           role="dialog"
-          aria-label="Switch to Plan"
+          aria-label={t('plansheetview.switch-to-plan')}
           className="absolute left-1/2 top-1/2 z-40 w-max max-w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-lg border px-4 py-3 text-[13px] shadow-lg"
           style={{ backgroundColor: palette.surface, borderColor: palette.border }}
           onPointerDown={(e) => e.stopPropagation()}
         >
-          <p>Switch to Plan to edit this sheet</p>
+          <p>{t('plansheetview.switch-to-plan-to-edit-this')}</p>
           <div className="mt-2 flex justify-end gap-2">
-            <Button variant="ghost" size="xs" onClick={() => setHint(false)}>
-              Not Now
-            </Button>
+            <Button variant="ghost" size="xs" onClick={() => setHint(false)}>{t('plansheetview.not-now')}</Button>
             <Button
               variant="primary"
               size="xs"
@@ -168,9 +169,7 @@ function SheetBody({
                 setHint(false);
                 bridge.switchToPlan();
               }}
-            >
-              Switch to Plan
-            </Button>
+            >{t('plansheetview.switch-to-plan-2')}</Button>
           </div>
         </div>
       ) : null}
@@ -244,6 +243,7 @@ function SheetParts({
   interactive: boolean;
   fontFamily?: string;
 }) {
+  const { t } = useTranslation();
   const bridge = useSheetsBridgeContext()!;
   const actions = useSheetActions();
   const input = useFormulaInput(actions);
@@ -370,19 +370,15 @@ function SheetParts({
       {importText !== null ? (
         <div
           role="dialog"
-          aria-label="Import CSV"
+          aria-label={t('plansheetview.import-csv')}
           className="absolute left-1/2 top-1/2 z-40 w-72 -translate-x-1/2 -translate-y-1/2 rounded-lg border px-4 py-3 text-[13px] shadow-lg"
           style={{ backgroundColor: c.palette.surface, borderColor: c.palette.border }}
           onPointerDown={(e) => e.stopPropagation()}
         >
-          <p className="font-semibold">Import CSV</p>
-          <p className="mt-1" style={{ color: c.palette.muted }}>
-            This sheet already has cells.
-          </p>
+          <p className="font-semibold">{t('plansheetview.import-csv-2')}</p>
+          <p className="mt-1" style={{ color: c.palette.muted }}>{t('plansheetview.this-sheet-already-has-cells')}</p>
           <div className="mt-3 flex flex-wrap justify-end gap-2">
-            <Button variant="ghost" size="xs" onClick={() => setImportText(null)}>
-              Cancel
-            </Button>
+            <Button variant="ghost" size="xs" onClick={() => setImportText(null)}>{t('plansheetview.cancel')}</Button>
             <Button
               variant="ghost"
               size="xs"
@@ -390,9 +386,7 @@ function SheetParts({
                 importCsvText(c, importText, 'insert');
                 setImportText(null);
               }}
-            >
-              Insert at Selection
-            </Button>
+            >{t('plansheetview.insert-at-selection')}</Button>
             <Button
               variant="primary"
               size="xs"
@@ -401,9 +395,7 @@ function SheetParts({
                 importCsvText(c, importText, 'replace');
                 setImportText(null);
               }}
-            >
-              Replace Sheet
-            </Button>
+            >{t('plansheetview.replace-sheet')}</Button>
           </div>
         </div>
       ) : null}

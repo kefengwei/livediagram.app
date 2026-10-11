@@ -5,6 +5,7 @@
 // its button in Plan mode's bottom-right cluster. Edit and Add New Card Type open the type editor, Duplicate opens it on a
 // new type filled from that one; Add Default Types adds any of the five default types the document lacks. One list:
 // no type is set apart from another. Someone who may only view sees the list.
+import { useTranslation } from '@/lib/i18n';
 import { AddCardTypeButton } from './AddCardTypeButton';
 import { useMemo, useState } from 'react';
 import type { DockAnchor } from '@/lib/canvas-chrome';
@@ -25,6 +26,7 @@ export function CardTypesPanel({
   popoverAnchor?: DockAnchor;
   onPopoverClose: () => void;
 }) {
+  const { t } = useTranslation();
   const plan = usePlan();
   // The Add Default Types button while its confirmation is open.
   const [confirmingAt, setConfirmingAt] = useState<HTMLElement | null>(null);
@@ -139,7 +141,7 @@ export function CardTypesPanel({
 
   return (
     <MovablePanel
-      title="Card Types"
+      title={t('cardtypespanel.card-types')}
       helpArticle="planCardTypes"
       position={null}
       defaultCorner="bottom-right"
@@ -156,7 +158,7 @@ export function CardTypesPanel({
         {/* One to a row in a bordered box, as Plan's option lists are (docs/specs/026-plan/plan-board.md "Option
             lists"); a catalogue always holds at least one type. */}
         <ul
-          aria-label="Card Types"
+          aria-label={t('cardtypespanel.card-types-2')}
           className="flex flex-col divide-y divide-slate-100 overflow-hidden rounded-lg border border-slate-200 dark:divide-slate-800 dark:border-slate-700"
         >
           {types.map(row)}
@@ -172,9 +174,7 @@ export function CardTypesPanel({
                 aria-haspopup="dialog"
                 aria-expanded={confirmingAt !== null}
                 onClick={(e) => setConfirmingAt(e.currentTarget)}
-              >
-                Add Default Types
-              </Button>
+              >{t('cardtypespanel.add-default-types')}</Button>
             ) : null}
             {confirmingAt && missingDefaults.length > 0 ? (
               <ConfirmPopover

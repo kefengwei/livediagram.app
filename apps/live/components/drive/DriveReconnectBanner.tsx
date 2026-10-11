@@ -5,6 +5,7 @@
 // browser-only token lapsed (**Resume sync**). Bottom-left, dismissible for
 // the session (D10). Nothing is deleted either way.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { CloseIcon } from '@livediagram/ui';
 import { useDriveMirror } from './drive-mirror-context';
@@ -12,6 +13,7 @@ import { useDriveMirror } from './drive-mirror-context';
 const DISMISS_KEY = 'livediagram:v2:drive-banner-dismissed';
 
 export function DriveReconnectBanner() {
+  const { t } = useTranslation();
   const { status, connect, resume } = useDriveMirror();
   const [dismissed, setDismissed] = useState(() =>
     typeof sessionStorage !== 'undefined' ? sessionStorage.getItem(DISMISS_KEY) === '1' : false,
@@ -24,17 +26,17 @@ export function DriveReconnectBanner() {
       role="status"
       className="fixed bottom-16 left-3 z-[var(--z-chrome)] flex max-w-[22rem] items-center gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-lg shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:shadow-black/30"
     >
-      <span className="min-w-0 flex-1">Google Drive sync is paused.</span>
+      <span className="min-w-0 flex-1">{t('drivereconnectbanner.google-drive-sync-is-paused')}</span>
       <button
         type="button"
         onClick={() => void (reconnect ? connect() : resume())}
         className="shrink-0 rounded-md px-2 py-1 font-medium text-brand-700 transition hover:bg-brand-50 dark:text-brand-300 dark:hover:bg-slate-800"
       >
-        {reconnect ? 'Reconnect' : 'Resume sync'}
+        {reconnect ? 'Reconnect' : t('drivereconnectbanner.resume-sync')}
       </button>
       <button
         type="button"
-        aria-label="Dismiss"
+        aria-label={t('drivereconnectbanner.dismiss')}
         onClick={() => {
           sessionStorage.setItem(DISMISS_KEY, '1');
           setDismissed(true);

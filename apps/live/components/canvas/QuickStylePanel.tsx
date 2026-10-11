@@ -5,6 +5,7 @@
 // menu stays the complete home of every setting; this is the fast path to a
 // handful of them, and never grows into the old Editor panel.
 
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState, type PointerEvent } from 'react';
 import {
   BorderRadiusIcon,
@@ -156,6 +157,7 @@ export function QuickStylePanel({
   // names either way.
   showTitles?: boolean;
 }) {
+  const { t } = useTranslation();
   const isMobile = useIsMobileViewport();
   // UI scale (docs/specs/007-editor/ui-scale.md): zoomed at the root, so the
   // placement's screen-px spot is converted to the panel's own px.
@@ -184,7 +186,7 @@ export function QuickStylePanel({
     <div
       ref={panelRef}
       role="region"
-      aria-label="Quick style"
+      aria-label={t('quickstylepanel.quick-style')}
       data-quick-style-panel=""
       data-testid="quick-style-panel"
       // A panel, so the panel-opacity preference (docs/specs/007-editor/user-preferences.md) applies to it.
@@ -221,20 +223,16 @@ export function QuickStylePanel({
               <span
                 aria-hidden
                 className="select-none px-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400"
-              >
-                Actions
-              </span>
+              >{t('quickstylepanel.actions')}</span>
             ) : null}
-            <div role="group" aria-label="Actions">
+            <div role="group" aria-label={t('quickstylepanel.actions-2')}>
               <button
                 type="button"
                 onClick={quickStyle.clearStyles}
                 data-testid="quick-style-clear"
                 className="flex h-7 w-full items-center justify-center gap-1.5 rounded-md text-xs font-medium text-slate-700 transition hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:text-slate-200 dark:hover:bg-slate-800"
               >
-                <ClearStylesGlyph />
-                Clear styles
-              </button>
+                <ClearStylesGlyph />{t('quickstylepanel.clear-styles')}</button>
             </div>
           </div>
         ) : null}
@@ -283,6 +281,7 @@ function QuickStyleSections({
   showSubject: boolean;
   onEditSwatch: (role: QuickSwatchRole, slot: QuickSwatchSlot, anchor: HTMLButtonElement) => void;
 }) {
+  const { t } = useTranslation();
   // Slot 0 is the way back to the theme and is never overridden.
   // Nor is Ink: it is the same colour on every theme.
   const editFor =
@@ -322,7 +321,7 @@ function QuickStyleSections({
             <BoardColourRows
               key={row.role}
               title={row.title}
-              customTitle={row.role === 'stroke' ? 'Custom stroke colours' : 'Custom text colours'}
+              customTitle={row.role === 'stroke' ? t('quickstylepanel.custom-stroke-colours') : t('quickstylepanel.custom-text-colours')}
               testId={row.testId}
               section={board}
               showTitles={showTitles}
@@ -376,7 +375,7 @@ function QuickStyleSections({
       })}
       {width ? (
         <QuickRadioRow
-          title="Stroke width"
+          title={t('quickstylepanel.stroke-width')}
           testId="quick-style-width"
           showTitle={showTitles}
           options={QUICK_WIDTHS.map((w) => ({
@@ -390,7 +389,7 @@ function QuickStyleSections({
       ) : null}
       {style ? (
         <QuickRadioRow
-          title="Stroke style"
+          title={t('quickstylepanel.stroke-style')}
           testId="quick-style-style"
           showTitle={showTitles}
           options={style.options.map((s) => ({
@@ -404,7 +403,7 @@ function QuickStyleSections({
       ) : null}
       {corners ? (
         <QuickRadioRow
-          title="Corners"
+          title={t('quickstylepanel.corners')}
           testId="quick-style-corners"
           showTitle={showTitles}
           columns={QUICK_CORNERS.length}
@@ -419,7 +418,7 @@ function QuickStyleSections({
       ) : null}
       {textAlign ? (
         <QuickRadioRow
-          title="Text alignment"
+          title={t('quickstylepanel.text-alignment')}
           testId="quick-style-text-align"
           showTitle={showTitles}
           options={QUICK_TEXT_ALIGNS.map((a) => ({
@@ -433,7 +432,7 @@ function QuickStyleSections({
       ) : null}
       {iconAlign ? (
         <QuickRadioRow
-          title="Icon alignment"
+          title={t('quickstylepanel.icon-alignment')}
           testId="quick-style-icon-align"
           showTitle={showTitles}
           options={QUICK_ICON_ALIGNS.map((a) => ({

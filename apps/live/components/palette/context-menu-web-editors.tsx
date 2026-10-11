@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import {
   NAV_LINKS_MAX,
@@ -90,6 +91,7 @@ export function StatsEditor({
   stats: StatItem[];
   onChange: (stats: StatItem[]) => void;
 }) {
+  const { t } = useTranslation();
   const [rows, setRows] = useState<StatItem[]>(stats);
   const set = (i: number, patch: Partial<StatItem>) =>
     setRows((r) => r.map((s, j) => (j === i ? { ...s, ...patch } : s)));
@@ -101,7 +103,7 @@ export function StatsEditor({
             <input
               className={`${MENU_CELL_INPUT} w-[4.5rem]`}
               value={st.value}
-              placeholder="value"
+              placeholder={t('context-menu-web-editors.value')}
               aria-label={`Stat ${i + 1} value`}
               maxLength={WEB_TEXT_MAX}
               onChange={(e) => set(i, { value: e.target.value })}
@@ -110,7 +112,7 @@ export function StatsEditor({
             <input
               className={`${MENU_CELL_INPUT} flex-1`}
               value={st.caption}
-              placeholder="caption"
+              placeholder={t('context-menu-web-editors.caption')}
               aria-label={`Stat ${i + 1} caption`}
               maxLength={WEB_TEXT_MAX}
               onChange={(e) => set(i, { caption: e.target.value })}
@@ -132,9 +134,7 @@ export function StatsEditor({
         disabled={rows.length >= STATS_MAX}
         onClick={() => onChange([...rows, { value: '0', caption: 'Metric' }])}
         className={MENU_ADD_ROW_BUTTON}
-      >
-        Add Stat
-      </button>
+      >{t('context-menu-web-editors.add-stat')}</button>
     </div>
   );
 }
@@ -205,9 +205,10 @@ export function WebRowsMenuSection({
   sectionProps: (id: string) => { open: boolean; onToggle: () => void; flush: boolean };
   onSetRows: (rows: WebRows) => void;
 }) {
+  const { t } = useTranslation();
   if (target.shape === 'stat-row') {
     return (
-      <MenuAccordionSection title="Stats" icon={<DataMenuGlyph />} {...sectionProps('stats')}>
+      <MenuAccordionSection title={t('context-menu-web-editors.stats')} icon={<DataMenuGlyph />} {...sectionProps('stats')}>
         {/* Keyed on the rows so a change from elsewhere (an inline edit, the
             ring's Add) resets the local draft rather than being shadowed by it. */}
         <StatsEditor
@@ -220,7 +221,7 @@ export function WebRowsMenuSection({
   }
   if (target.shape === 'process') {
     return (
-      <MenuAccordionSection title="Steps" icon={<DataMenuGlyph />} {...sectionProps('steps')}>
+      <MenuAccordionSection title={t('context-menu-web-editors.steps')} icon={<DataMenuGlyph />} {...sectionProps('steps')}>
         <TextRowsEditor
           key={JSON.stringify(target.processSteps ?? [])}
           rows={target.processSteps ?? []}
@@ -236,7 +237,7 @@ export function WebRowsMenuSection({
   }
   if (target.shape === 'site-header') {
     return (
-      <MenuAccordionSection title="Links" icon={<DataMenuGlyph />} {...sectionProps('links')}>
+      <MenuAccordionSection title={t('context-menu-web-editors.links')} icon={<DataMenuGlyph />} {...sectionProps('links')}>
         <TextRowsEditor
           key={JSON.stringify(target.navLinks ?? [])}
           rows={target.navLinks ?? []}

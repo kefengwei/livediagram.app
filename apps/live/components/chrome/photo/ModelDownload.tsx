@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import type { ModelDownload as Download } from '@/lib/reading/download-progress';
 
 // The in-browser reader's model arriving (docs/specs/021-event-storming/event-storming.md Phase 9): ~180 MB, fetched
@@ -10,6 +11,7 @@ import type { ModelDownload as Download } from '@/lib/reading/download-progress'
 const MB = 1024 * 1024;
 
 export function ModelDownload({ download }: { download: Download }) {
+  const { t } = useTranslation();
   const share = download.total > 0 ? Math.round((download.loaded / download.total) * 100) : 0;
   return (
     <div
@@ -17,14 +19,13 @@ export function ModelDownload({ download }: { download: Download }) {
       className="pointer-events-auto flex w-[min(26rem,80vw)] flex-col gap-1.5 rounded-2xl bg-slate-900/90 px-3 py-2 text-xs text-white shadow-lg backdrop-blur"
     >
       <p className="flex justify-between gap-3">
-        <span>Downloading the reading model (only the first time)</span>
+        <span>{t('modeldownload.downloading-the-reading-model-only-the')}</span>
         <span className="tabular-nums text-slate-300">
-          {Math.round(download.loaded / MB)} of {Math.round(download.total / MB)} MB
-        </span>
+          {Math.round(download.loaded / MB)}{t('modeldownload.of')}{Math.round(download.total / MB)}{t('modeldownload.mb')}</span>
       </p>
       <div
         role="progressbar"
-        aria-label="Reading model download"
+        aria-label={t('modeldownload.reading-model-download')}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={share}

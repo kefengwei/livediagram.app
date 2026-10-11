@@ -4,6 +4,7 @@
 // gallery's search box reads: the filters are chips inside the box, before the text, so the box always reads as the
 // whole query; the control that adds a filter sits inside its right edge, with the clear. Backspace in an empty box
 // takes the last filter off. The caller owns what a chip and the filter control mean.
+import { useTranslation } from '@/lib/i18n';
 import { useRef, type ReactNode } from 'react';
 import { CloseIcon, SearchIcon, Tooltip } from '@livediagram/ui';
 
@@ -40,6 +41,7 @@ export function FilterSearchBox({
   autoFocus?: boolean;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }) {
+  const { t } = useTranslation();
   const input = useRef<HTMLInputElement>(null);
   const filled = query !== '' || chips.length > 0;
   return (
@@ -57,7 +59,7 @@ export function FilterSearchBox({
       <SearchIcon size={14} aria-hidden className="shrink-0 text-slate-500 dark:text-slate-400" />
       <div
         role="group"
-        aria-label="Filters"
+        aria-label={t('filtersearchbox.filters')}
         className="flex min-w-0 flex-1 flex-wrap items-center gap-1"
       >
         {chips.map((chip, i) => (
@@ -90,7 +92,7 @@ export function FilterSearchBox({
           value={query}
           autoFocus={autoFocus}
           aria-label={ariaLabel}
-          placeholder={chips.length ? 'Search these…' : placeholder}
+          placeholder={chips.length ? t('filtersearchbox.search-these') : placeholder}
           className="min-w-[6rem] flex-1 bg-transparent py-0.5 text-xs text-slate-700 outline-none placeholder:text-slate-400 dark:text-slate-200"
           onChange={(e) => onQuery(e.target.value)}
           onKeyDown={(e) => {
@@ -104,10 +106,10 @@ export function FilterSearchBox({
       </div>
       <div className="flex shrink-0 items-center gap-0.5 self-start">
         {filled ? (
-          <Tooltip label="Clear Search">
+          <Tooltip label={t('filtersearchbox.clear-search')}>
             <button
               type="button"
-              aria-label="Clear Search"
+              aria-label={t('filtersearchbox.clear-search-2')}
               className="flex h-6 w-6 cursor-pointer items-center justify-center rounded text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-700 dark:hover:text-slate-200"
               onClick={() => {
                 onClear();

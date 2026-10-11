@@ -5,6 +5,7 @@
 // latest author's colour. The whole body is one button that jumps to the
 // element; the check is its own button beside it (buttons don't nest).
 
+
 import { useState, type CSSProperties, type ReactNode } from 'react';
 import {
   CheckIcon,
@@ -19,6 +20,7 @@ import { formatRelativeTimeCompact, useRelativeNow } from '@/lib/relative-time';
 import { initialsOf } from '@/lib/identity';
 import type { ActionRow, CommentRow } from '@/components/panels/CollaboratePanel';
 import { firstName } from './collaborate-model';
+import { useTranslation } from '@/lib/i18n';
 
 // A comment author's colour as ink: as chosen on light, lifted toward white on
 // dark, where a deep blue or purple name would sink into the panel.
@@ -45,6 +47,8 @@ function RowShell({
   onClick: () => void;
   label: string;
 }) {
+  
+  
   return (
     <li
       className="animate-slide-row-in stagger-enter"
@@ -84,6 +88,8 @@ export function ActionRowItem({
   // Absent for a read-only visitor: the check is then a static status disc.
   onToggleDone?: (done: boolean) => void;
 }) {
+  const { t } = useTranslation();
+  
   const now = useRelativeNow();
   const [pressed, setPressed] = useState(false);
   const done = row.status === 'done';
@@ -139,11 +145,9 @@ export function ActionRowItem({
       {row.mine ? (
         <span
           className={`mt-px shrink-0 rounded-full bg-brand-500 px-1.5 py-0.5 text-[9px] font-semibold text-white ${SOLID_BRAND_DARK}`}
-        >
-          You
-        </span>
+        >{t('collaboraterows.you')}</span>
       ) : (
-        <HoverCard title={row.assigneeName} description="Assignee">
+        <HoverCard title={row.assigneeName} description={t('collaboraterows.assignee')}>
           <GlyphDisc
             size={20}
             className="mt-px bg-slate-200 text-[8px] font-semibold text-slate-600 dark:bg-slate-700 dark:text-slate-200"
@@ -165,6 +169,8 @@ export function CommentRowItem({
   index: number;
   onClick: () => void;
 }) {
+  const { t } = useTranslation();
+  
   const now = useRelativeNow();
   const color = row.latestAuthorColor;
   return (
@@ -174,7 +180,7 @@ export function CommentRowItem({
       label={`Open the comment thread on ${row.label}`}
       lead={
         <HoverCard
-          title={row.count === 1 ? '1 comment' : `${row.count} comments`}
+          title={row.count === 1 ? t('collaboraterows.1-comment') : `${row.count} comments`}
           description={`Latest from ${row.latestAuthorName}`}
         >
           <span

@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { BackBar } from '@/components/primitives/BackBar';
 import { Button } from '@livediagram/ui';
@@ -113,6 +114,7 @@ function PickStep({
   error?: string;
   onPicked: (picked: Awaited<ReturnType<typeof pickExport>>) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <>
       <p className="mb-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
@@ -121,7 +123,7 @@ function PickStep({
         nothing here changes.
       </p>
       <ImportDropZone
-        label="Drop a board folder or .zip here, or choose a folder"
+        label={t('mswhiteboardimportpanel.drop-a-board-folder-or-zip')}
         onChoose={async () => onPicked(await pickExport('folder'))}
         onDropData={async (data) => onPicked(await readDrop(data))}
         {...(error ? { error } : {})}
@@ -131,16 +133,12 @@ function PickStep({
           variant="secondary"
           size="md"
           onClick={async () => onPicked(await pickExport('zip'))}
-        >
-          Choose a .zip
-        </Button>
+        >{t('mswhiteboardimportpanel.choose-a-zip')}</Button>
         <Button
           variant="primary"
           size="md"
           onClick={async () => onPicked(await pickExport('folder'))}
-        >
-          Choose a folder
-        </Button>
+        >{t('mswhiteboardimportpanel.choose-a-folder')}</Button>
       </div>
     </>
   );

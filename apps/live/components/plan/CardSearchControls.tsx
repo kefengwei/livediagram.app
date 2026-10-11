@@ -5,6 +5,7 @@
 // its clear takes the words and the filters). Shared by the
 // Cards panel and Setup Sheet's Plan Cards (docs/specs/029-sheets/sheet.md "Setup Sheet"), so a card is found the
 // same way wherever it is looked for.
+import { useTranslation } from '@/lib/i18n';
 import { useState, type ReactNode } from 'react';
 import {
   CARD_SEARCH_FILTERS_MAX,
@@ -73,6 +74,7 @@ export function CardSearchControls({
   // Drawn under the search (the Cards panel's All Cards / Not on a Board).
   children?: ReactNode;
 }) {
+  const { t } = useTranslation();
   const { query, setQuery, filters, setFilters, found } = search;
   // What Add Filter offers: the fields the found cards have (Card Type always among them).
   const filterFields = searchFields(found, filters, plan.types);
@@ -82,7 +84,7 @@ export function CardSearchControls({
       <FilterSearchBox
         autoFocus={autoFocus}
         ariaLabel="Search cards"
-        placeholder="Search by #, title, description or type"
+        placeholder={t('cardsearchcontrols.search-by-title-description-or-type')}
         query={query}
         onQuery={setQuery}
         onKeyDown={(e) => e.stopPropagation()}

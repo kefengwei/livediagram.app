@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import dynamic from 'next/dynamic';
 import { hasPlanContent } from '@/hooks/plan/usePlanNeeded';
 import { MenuErrorBoundary } from '@/components/primitives/MenuErrorBoundary';
@@ -213,6 +214,7 @@ export function TabBar({
   powerUser = false,
   workbenchLink,
 }: TabBarProps) {
+  const { t } = useTranslation();
   const minimalChrome = useMinimalChrome();
   const [menuFor, setMenuFor] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -364,9 +366,7 @@ export function TabBar({
             className="hidden items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400 sm:flex dark:text-slate-400"
             aria-hidden
           >
-            <TabsLabelIcon />
-            Tabs
-          </span>
+            <TabsLabelIcon />{t('tabbar.tabs')}</span>
         )}
         {/* -m-1/p-1 gives the scroll clip 4px of clearance on every side
             without moving the content: the active pill's accent ring and
@@ -402,7 +402,7 @@ export function TabBar({
             <button
               type="button"
               onClick={onAdd}
-              aria-label="Add tab"
+              aria-label={t('tabbar.add-tab')}
               data-tour-id="add-tab"
               className="relative ml-1 flex h-7 w-7 shrink-0 touch-target items-center justify-center rounded-md text-lg leading-none text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
             >

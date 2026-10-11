@@ -4,6 +4,7 @@
 // opened it, its entries in groups, filtered by what is typed after it; Up and Down move, Enter or
 // Tab choose (the writing's keys, through article-slash.ts), a press chooses too. It never takes focus
 // from the writing.
+import { useTranslation } from '@/lib/i18n';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { Portal } from '@livediagram/ui';
 import type { SlashItem } from '@/lib/article/article-slash-items';
@@ -30,6 +31,7 @@ export function SlashMenu({
   onPick: (item: SlashItem) => void;
   onHover: (index: number) => void;
 }) {
+  const { t } = useTranslation();
   const list = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
   useLayoutEffect(() => {
@@ -59,7 +61,7 @@ export function SlashMenu({
         ref={list}
         id={SLASH_MENU_ID}
         role="listbox"
-        aria-label="Insert a block"
+        aria-label={t('slashmenu.insert-a-block')}
         data-article-keep-active=""
         onMouseDown={(e) => e.preventDefault()}
         onPointerDown={(e) => e.stopPropagation()}
@@ -72,7 +74,7 @@ export function SlashMenu({
         }}
       >
         {items.length === 0 ? (
-          <p className="px-3 py-2 text-xs text-slate-500 dark:text-slate-400">No blocks match</p>
+          <p className="px-3 py-2 text-xs text-slate-500 dark:text-slate-400">{t('slashmenu.no-blocks-match')}</p>
         ) : (
           groups.map((group) => (
             <div key={`${group.name}-${group.entries[0]!.i}`} role="group" aria-label={group.name}>

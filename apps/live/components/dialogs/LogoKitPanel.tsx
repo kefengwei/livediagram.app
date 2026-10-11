@@ -4,6 +4,7 @@
 // page (when the tab has several), the page as it will export (see-through paper shown over a
 // checkerboard), what the kit holds, and the download. It owns the kit's making; the dialog hands
 // it the images it has loaded for previews.
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import type { LaidOutPage, Tab } from '@livediagram/document';
 import { Button, Select } from '@livediagram/ui';
@@ -38,6 +39,7 @@ export function LogoKitPanel({
   onDone: () => void;
   onBack: () => void;
 }) {
+  const { t } = useTranslation();
   const logoPages = pages.filter((p) => p.kind === 'logo');
   const [pageId, setPageId] = useState<string | null>(null);
   const page = logoPages.find((p) => p.id === pageId) ?? logoPages[0];
@@ -66,24 +68,19 @@ export function LogoKitPanel({
       onDone();
     } catch (e) {
       console.warn('[logo-kit] export failed', e);
-      setError(e instanceof Error ? e.message : 'Export failed.');
+      setError(e instanceof Error ? e.message : t('logokitpanel.export-failed'));
       setBusy(false);
     }
   };
 
   return (
     <div className="flex flex-col gap-4">
-      <BackBar label="All formats" current="Logo Kit" onClick={onBack} disabled={busy} />
-      <p className="text-sm text-slate-600 dark:text-slate-300">
-        An SVG, PNGs at {LOGO_KIT_PNG_SIZES[0]} to{' '}
-        {LOGO_KIT_PNG_SIZES[LOGO_KIT_PNG_SIZES.length - 1]} px and a favicon.ico, in one .zip. Plain
-        paper stays see-through.
-      </p>
+      <BackBar label={t('logokitpanel.all-formats')} current="Logo Kit" onClick={onBack} disabled={busy} />
+      <p className="text-sm text-slate-600 dark:text-slate-300">{t('logokitpanel.an-svg-pngs-at')}{LOGO_KIT_PNG_SIZES[0]}{t('logokitpanel.to')}{' '}
+        {LOGO_KIT_PNG_SIZES[LOGO_KIT_PNG_SIZES.length - 1]}{t('logokitpanel.px-and-a-favicon-ico-in')}</p>
       {logoPages.length > 1 ? (
         // Each page by its full label, as the page picker of every other format names it.
-        <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200">
-          Logo page
-          <Select
+        <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200">{t('logokitpanel.logo-page')}<Select
             size="sm"
             className="min-w-0 flex-1"
             value={page.id}
@@ -104,11 +101,11 @@ export function LogoKitPanel({
         {previewSvg ? (
           <img
             src={`data:image/svg+xml;charset=utf-8,${encodeURIComponent(previewSvg)}`}
-            alt="The logo as it will export"
+            alt={t('logokitpanel.the-logo-as-it-will-export')}
             className="h-full w-full object-contain"
           />
         ) : (
-          <span className="text-xs text-slate-500">Preparing the preview…</span>
+          <span className="text-xs text-slate-500">{t('logokitpanel.preparing-the-preview')}</span>
         )}
       </div>
       {error ? (
@@ -118,7 +115,7 @@ export function LogoKitPanel({
       ) : null}
       <div className="flex justify-end">
         <Button size="sm" onClick={() => void download()} disabled={busy}>
-          {busy ? 'Making the kit…' : 'Download .zip'}
+          {busy ? 'Making the kit…' : t('logokitpanel.download-zip')}
         </Button>
       </div>
     </div>

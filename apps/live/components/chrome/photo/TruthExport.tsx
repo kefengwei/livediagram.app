@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useSyncExternalStore } from 'react';
 import type { DetectedSticky } from '@livediagram/sticky-vision';
 import { downloadTruth, truthArmed, truthOf } from '@/lib/photo-truth';
@@ -41,6 +42,7 @@ export function TruthExport({
   // A saved label file the author picked, to lay over the photo and correct.
   onOpen: (file: File) => void;
 }) {
+  const { t } = useTranslation();
   const picker = useRef<HTMLInputElement | null>(null);
   const armed = useSyncExternalStore(subscribeNever, truthArmed, disarmed);
   const kept = notes
@@ -51,14 +53,12 @@ export function TruthExport({
     'pointer-events-auto rounded-full border border-amber-300/60 bg-amber-950/80 px-3 py-1.5 text-xs font-medium text-amber-100 shadow-lg backdrop-blur hover:bg-amber-900/90';
   return (
     <>
-      <button type="button" onClick={() => picker.current?.click()} className={pill}>
-        Open label
-      </button>
+      <button type="button" onClick={() => picker.current?.click()} className={pill}>{t('truthexport.open-label')}</button>
       <input
         ref={picker}
         type="file"
         accept="application/json,.json"
-        aria-label="Open a saved label"
+        aria-label={t('truthexport.open-a-saved-label')}
         className="hidden"
         onChange={(e) => {
           const file = e.target.files?.[0];
@@ -71,8 +71,7 @@ export function TruthExport({
         type="button"
         onClick={() => downloadTruth(truthOf(photoName, size, kept))}
         className={pill}
-      >
-        Save as truth ({kept.length})
+      >{t('truthexport.save-as-truth')}{kept.length})
       </button>
     </>
   );

@@ -1,3 +1,4 @@
+
 import { useRef } from 'react';
 import { useEdgeAwarePlacement } from '@/hooks/canvas/useEdgeAwarePlacement';
 import { FloatingTitle } from '@/components/chrome/FloatingTitle';
@@ -13,6 +14,7 @@ import {
 import { MIND_CHILD_OPTION, MIND_SIBLING_OPTION } from '@/components/canvas/quick-connect-options';
 import { EditPointsIcon } from '@/components/palette/palette-icons';
 import { TOOLBAR_DIVIDER } from '@/components/chrome/toolbar-surface';
+import { useTranslation } from '@/lib/i18n';
 
 type Bounds = { x: number; y: number; width: number; height: number };
 
@@ -100,6 +102,8 @@ export function SelectionPopover({
   suspended = false,
   title,
 }: SelectionPopoverProps) {
+  const { t } = useTranslation();
+  
   const ellipsisRef = useRef<HTMLButtonElement>(null);
   // More opens the element menu: on every device, since right-click is not something a desktop
   // user finds, except in power user mode, where right-click is the way in. Touch can't
@@ -139,7 +143,7 @@ export function SelectionPopover({
       {title && !minimalChrome ? <FloatingTitle title={title} placeAbove={placeAbove} /> : null}
       {showMore && onOpenContextMenu ? (
         <>
-          <HoverCard title="More" description="Open the element menu.">
+          <HoverCard title={t('selectionpopover.more')} description={t('selectionpopover.open-the-element-menu')}>
             <button
               ref={ellipsisRef}
               // A stable id: this toolbar unmounts while the element menu it opens is up, and
@@ -152,7 +156,7 @@ export function SelectionPopover({
                 if (!rect) return;
                 onOpenContextMenu(rect.left, rect.bottom);
               }}
-              aria-label="More actions"
+              aria-label={t('selectionpopover.more-actions')}
               aria-haspopup="dialog"
               className="flex h-8 w-8 items-center justify-center rounded-md text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
             >
@@ -166,8 +170,8 @@ export function SelectionPopover({
       {onEditText ? (
         <>
           <PopoverButton
-            label={hasText ? 'Edit text' : 'Add text'}
-            description={hasText ? "Edit this element's text." : 'Give this element a text label.'}
+            label={hasText ? t('selectionpopover.edit-text') : t('selectionpopover.add-text')}
+            description={hasText ? t('selectionpopover.edit-this-element-s-text') : t('selectionpopover.give-this-element-a-text-label')}
             onClick={onEditText}
           >
             <TextIcon />
@@ -179,8 +183,8 @@ export function SelectionPopover({
       {onEditPoints ? (
         <>
           <PopoverButton
-            label="Edit points"
-            description="Adjust the path's points, corners and curves."
+            label={t('selectionpopover.edit-points')}
+            description={t('selectionpopover.adjust-the-path-s-points-corners')}
             onClick={onEditPoints}
           >
             <EditPointsIcon />
@@ -212,8 +216,8 @@ export function SelectionPopover({
       {onDuplicate ? (
         <>
           <PopoverButton
-            label="Duplicate"
-            description="Create a copy of this element."
+            label={t('selectionpopover.duplicate')}
+            description={t('selectionpopover.create-a-copy-of-this-element')}
             onClick={onDuplicate}
           >
             <DuplicateIcon />
@@ -225,15 +229,15 @@ export function SelectionPopover({
       {onBringToFront && onSendToBack ? (
         <>
           <PopoverButton
-            label="Bring to front"
-            description="Stack this in front of everything else on its layer."
+            label={t('selectionpopover.bring-to-front')}
+            description={t('selectionpopover.stack-this-in-front-of-everything')}
             onClick={onBringToFront}
           >
             <BringToFrontIcon />
           </PopoverButton>
           <PopoverButton
-            label="Send to back"
-            description="Stack this behind everything else on its layer."
+            label={t('selectionpopover.send-to-back')}
+            description={t('selectionpopover.stack-this-behind-everything-else-on')}
             onClick={onSendToBack}
           >
             <SendToBackIcon />
@@ -250,8 +254,8 @@ export function SelectionPopover({
           beats a two-click context menu open + click. */}
       {onOpenComments ? (
         <PopoverButton
-          label="Add Comment"
-          description="Open the comment thread for this element."
+          label={t('selectionpopover.add-comment')}
+          description={t('selectionpopover.open-the-comment-thread-for-this')}
           onClick={onOpenComments}
         >
           <CommentIcon />
@@ -263,8 +267,8 @@ export function SelectionPopover({
           title={locked ? 'Unlock' : 'Lock'}
           description={
             locked
-              ? 'Allow this element to be moved, resized, and deleted again.'
-              : 'Protect from moves, resizes, and deletion. You can still unlock it.'
+              ? t('selectionpopover.allow-this-element-to-be-moved')
+              : t('selectionpopover.protect-from-moves-resizes-and-deletion')
           }
         >
           <button
@@ -285,16 +289,16 @@ export function SelectionPopover({
       {showDelete ? (
         <>
           <HoverCard
-            title="Delete"
+            title={t('selectionpopover.delete')}
             description={
-              locked ? 'Locked. Unlock it to delete.' : 'Delete this element (arrows too).'
+              locked ? t('selectionpopover.locked-unlock-it-to-delete') : t('selectionpopover.delete-this-element-arrows-too')
             }
           >
             <button
               type="button"
               onClick={onDelete}
               disabled={locked}
-              aria-label="Delete"
+              aria-label={t('selectionpopover.delete-2')}
               className={
                 locked
                   ? 'flex h-8 w-8 items-center justify-center rounded-md text-slate-300 dark:text-slate-400'
@@ -327,6 +331,7 @@ function PopoverButton({
   children: React.ReactNode;
   active?: boolean;
 }) {
+  
   return (
     <HoverCard title={label} description={description}>
       <button

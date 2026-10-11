@@ -1,6 +1,7 @@
 'use client';
 
 import { PrivateDotIcon, SharedDotIcon } from '@livediagram/ui';
+import type { MessageKey } from '@/lib/i18n';
 import { ThisBrowserIcon } from '@/components/primitives/explorer-icons';
 import {
   LOCAL_ONLY_DESCRIPTION,
@@ -16,34 +17,51 @@ export type ShareState = 'private' | 'shared' | 'team' | 'community' | 'offline'
 // Per-state pill styling, keyed by the resolved share state so the label /
 // description / badge + dot colours stay in one table rather than four
 // parallel `state === ...` ternaries. Also drives the legend rows.
+// `labelKey` / `descriptionKey` are what render; the English beside them is the fallback and
+// what the legend's own tests read (docs/specs/004-interface-design/localization.md).
 export const SHARE_STATE_META: Record<
   ShareState,
-  { label: string; description: string; badge: string; dot: string }
+  {
+    label: string;
+    labelKey: MessageKey;
+    description: string;
+    descriptionKey: MessageKey;
+    badge: string;
+    dot: string;
+  }
 > = {
   private: {
     label: 'Private',
+    labelKey: 'sharestates.private.label',
     description: 'Only visible to you.',
+    descriptionKey: 'sharestates.private.description',
     badge:
       'bg-slate-100 px-2 text-[10px] font-semibold text-slate-500 ring-1 ring-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:ring-slate-700',
     dot: 'text-slate-400',
   },
   shared: {
     label: 'Shared',
+    labelKey: 'sharestates.shared.label',
     description: 'Anyone with a link can view.',
+    descriptionKey: 'sharestates.shared.description',
     badge:
       'bg-emerald-50 px-2 text-[10px] font-semibold text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/30',
     dot: 'text-emerald-500',
   },
   team: {
     label: 'Team',
+    labelKey: 'sharestates.team.label',
     description: 'In a team library: every member of the team can open it.',
+    descriptionKey: 'sharestates.team.description',
     badge:
       'bg-brand-50 px-2 text-[10px] font-semibold text-brand-700 ring-1 ring-brand-200 dark:bg-brand-500/10 dark:text-brand-300 dark:ring-brand-500/30',
     dot: 'text-brand-500 dark:text-brand-400',
   },
   community: {
     label: 'Public',
+    labelKey: 'sharestates.community.label',
     description: 'In the public Community: anyone can find it, view it and make their own copy.',
+    descriptionKey: 'sharestates.community.description',
     badge:
       'bg-pink-50 px-2 text-[10px] font-semibold text-pink-700 ring-1 ring-pink-200 dark:bg-pink-500/10 dark:text-pink-300 dark:ring-pink-500/30',
     dot: 'text-pink-500',
@@ -52,7 +70,9 @@ export const SHARE_STATE_META: Record<
   // server. The Local only pill's words, sentence and amber tone (text 4.5:1 on its fill, ring 3:1).
   offline: {
     label: LOCAL_ONLY_LABEL,
+    labelKey: 'sharestates.offline.label',
     description: LOCAL_ONLY_DESCRIPTION,
+    descriptionKey: 'sharestates.offline.description',
     badge: `px-2 text-[10px] font-semibold ${LOCAL_ONLY_TONE}`,
     dot: '',
   },

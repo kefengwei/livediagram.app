@@ -6,6 +6,7 @@
 // menu (right-click, long-press, Shift+F10) does the same without a drag. Shapes dragged from the
 // flyout land here, with a drop marker while they travel.
 
+
 import { useRef } from 'react';
 import { WHITEBOARD_TOOL_KEYS } from '@/hooks/canvas/editor-shortcut-keys';
 import { useLongPress } from '@/hooks/ui/useLongPress';
@@ -17,6 +18,7 @@ import { ShapePreview, shapeShortcut } from './ShapePreview';
 import type { DockFlyoutApi } from './useDockFlyout';
 import type { ShapeSlotDragApi } from './useShapeSlotDrag';
 import { ShapesGlyph } from './whiteboard-icons';
+import { useTranslation } from '@/lib/i18n';
 
 export const PINS_FULL_HINT = 'Seven shapes are pinned. Drag one out to swap.';
 
@@ -40,6 +42,8 @@ export function ShapesGroup({
   refusing: boolean;
   pickAndClose: (pick: () => void) => void;
 }) {
+  const { t } = useTranslation();
+  
   const { drag } = slotDrag;
   const armed = model.armedShape;
   // Any shape in hand (a catalogue shape, the sticky note included) that is not pinned.
@@ -57,7 +61,7 @@ export function ShapesGroup({
 
   return (
     <div className="relative flex shrink-0">
-      <DockToolbar label="Shapes" group="shapes">
+      <DockToolbar label={t('shapesgroup.shapes')} group="shapes">
         {pinned.map((key) => (
           <PinnedShape
             key={key}
@@ -82,7 +86,7 @@ export function ShapesGroup({
         <DockDivider data-pinned-separator="" />
         <DockButton
           itemKey="shapes"
-          label="Shapes"
+          label={t('shapesgroup.shapes-2')}
           shortcut={WHITEBOARD_TOOL_KEYS.shapes}
           icon={<ShapesGlyph />}
           pressed={shapeInHand}
@@ -127,6 +131,7 @@ function PinnedShape({
   onPointerDown: (e: React.PointerEvent, source: SlotSource) => void;
   onMenu: (el: HTMLElement, key: WhiteboardShapeKey) => void;
 }) {
+  
   const ref = useRef<HTMLButtonElement>(null);
   const longPressed = useRef(false);
   const longPress = useLongPress(() => {

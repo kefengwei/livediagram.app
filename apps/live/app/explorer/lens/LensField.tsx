@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import {
   useId,
   useLayoutEffect,
@@ -35,6 +36,7 @@ export function LensField({
   /** The rows the current view's lens reads, for marking a suggestion that matches nothing. */
   subjects: readonly LensSubject[];
 }) {
+  const { t } = useTranslation();
   const { input, caret, context, now, setField, setInput, blur } = lens;
   const id = useId();
   const listId = `${id}-suggestions`;
@@ -173,16 +175,16 @@ export function LensField({
             >
               {pill.note ? (
                 // A muted pill says why on hover and focus, and to a screen reader.
-                <HoverCard title="Not applied" description={pill.note}>
+                <HoverCard title={t('lensfield.not-applied')} description={pill.note}>
                   <span className="text-optical-centre">
-                    <span className="sr-only">Filter </span>
+                    <span className="sr-only">{t('lensfield.filter')}</span>
                     {pill.label}
-                    <span className="sr-only">, not applied: {pill.note}</span>
+                    <span className="sr-only">{t('lensfield.not-applied-2')}{pill.note}</span>
                   </span>
                 </HoverCard>
               ) : (
                 <span className="text-optical-centre">
-                  <span className="sr-only">Filter </span>
+                  <span className="sr-only">{t('lensfield.filter-2')}</span>
                   {pill.label}
                 </span>
               )}
@@ -205,7 +207,7 @@ export function LensField({
           ref={field}
           type="text"
           role="combobox"
-          aria-label="Filter documents"
+          aria-label={t('lensfield.filter-documents')}
           aria-autocomplete="list"
           aria-expanded={listOpen}
           aria-controls={listId}
@@ -230,7 +232,7 @@ export function LensField({
       <div
         id={listId}
         role="listbox"
-        aria-label="Suggestions"
+        aria-label={t('lensfield.suggestions')}
         hidden={!listOpen}
         className="absolute left-0 right-0 top-full z-[var(--z-popover)] mt-1 max-h-72 overflow-y-auto rounded-md border border-slate-200 bg-white py-1 text-sm shadow-lg dark:border-slate-700 dark:bg-slate-900 dark:shadow-slate-950/40"
       >
@@ -256,9 +258,7 @@ export function LensField({
                   </span>
                 ) : null}
                 {s.matchesNothing ? (
-                  <span className="ml-auto shrink-0 text-xs text-amber-800 dark:text-amber-200">
-                    No matches
-                  </span>
+                  <span className="ml-auto shrink-0 text-xs text-amber-800 dark:text-amber-200">{t('lensfield.no-matches')}</span>
                 ) : null}
               </div>
             ))

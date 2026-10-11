@@ -3,6 +3,7 @@
 // A Plan card's settings in its element menu (docs/specs/026-plan/plan-board.md "The Plan card"): a Card flyout
 // holding a collapsible Card Size row, closed until opened as every menu row is, with the same choice a board makes
 // for its cards (CardSizeOptions). One element edit, through PlanContext; absent is Detailed.
+import { useTranslation } from '@/lib/i18n';
 import type { ComponentProps } from 'react';
 import type { ShapeElement } from '@livediagram/document';
 import { PlanIcon } from '@livediagram/ui';
@@ -26,19 +27,18 @@ export function PlanCardMenuSection({
   // Each row's open state, from the menu scaffold: closed by default, and kept as the menu retargets.
   sectionProps: (id: string) => SectionProps;
 }) {
+  const { t } = useTranslation();
   const plan = usePlan();
   const ref = element.planCard;
   if (!plan || !plan.canEdit || !ref) return null;
   return (
-    <MenuFlyoutSection title="Card" icon={<PlanIcon size={16} />} {...flyoutProps}>
+    <MenuFlyoutSection title={t('plancardmenusection.card')} icon={<PlanIcon size={16} />} {...flyoutProps}>
       <MenuAccordionSection
-        title="Card Size"
+        title={t('plancardmenusection.card-size')}
         icon={<CardSizeArt size={ref.size ?? 'detailed'} />}
         {...sectionProps('plan-card-size')}
       >
-        <InfoNote>
-          How much of the card shows. Its card type’s Display sets what shows at each size.
-        </InfoNote>
+        <InfoNote>{t('plancardmenusection.how-much-of-the-card-shows')}</InfoNote>
         <CardSizeOptions
           size={ref.size}
           onPick={(size) => {

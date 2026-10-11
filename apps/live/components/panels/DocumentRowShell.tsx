@@ -15,6 +15,7 @@
 // DocumentRow the same props and two do not (the current-document row and the
 // Recent sections each have their own verbs), so hoisting the row as well
 // would mean a component with two shapes pretending to be one.
+
 export function DocumentRowShell({
   exiting,
   indent,

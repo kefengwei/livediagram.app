@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { OpenIcon, PlusIcon } from '@/components/primitives/explorer-icons';
 import { useState, type ReactNode } from 'react';
 import { EllipsisTriggerButton } from '@/components/primitives/EllipsisTriggerButton';
@@ -34,6 +35,7 @@ export function ExplorerHeaderMenu({
   // here (docs/specs/007-editor/power-user-mode.md).
   helpArticle?: HelpArticleKey;
 }) {
+  const { t } = useTranslation();
   const minimalChrome = useMinimalChrome();
   const [anchor, setAnchor] = useState<HTMLElement | null>(null);
   const close = () => setAnchor(null);
@@ -51,7 +53,7 @@ export function ExplorerHeaderMenu({
             key="new"
             plain
             icon={<PlusIcon />}
-            label="New Document"
+            label={t('explorerheadermenu.new-document')}
             onClick={run(onNewDocument)}
           />
         ) : null,
@@ -59,7 +61,7 @@ export function ExplorerHeaderMenu({
           key="open"
           plain
           icon={<OpenIcon />}
-          label="Open Explorer"
+          label={t('explorerheadermenu.open-explorer')}
           onClick={run(() => {
             window.location.assign('/explorer');
           })}
@@ -74,7 +76,7 @@ export function ExplorerHeaderMenu({
             key="share"
             plain
             icon={<ShareGlyph />}
-            label="Share"
+            label={t('explorerheadermenu.share')}
             onClick={run(actions.onShare)}
           />
         ) : null,
@@ -83,7 +85,7 @@ export function ExplorerHeaderMenu({
             key="export"
             plain
             icon={<ExportGlyph />}
-            label="Export"
+            label={t('explorerheadermenu.export')}
             onClick={run(actions.onExport)}
           />
         ) : null,
@@ -97,7 +99,7 @@ export function ExplorerHeaderMenu({
             key="help"
             plain
             icon={<HelpMarkIcon />}
-            label="Help"
+            label={t('explorerheadermenu.help')}
             onClick={run(() => openHelpArticle(helpArticle))}
           />
         ) : null,
@@ -106,7 +108,7 @@ export function ExplorerHeaderMenu({
             key="search"
             plain
             icon={<SearchGlyph />}
-            label="Search"
+            label={t('explorerheadermenu.search')}
             onClick={run(actions.onSearch)}
           />
         ) : null,
@@ -114,7 +116,7 @@ export function ExplorerHeaderMenu({
           key="github"
           plain
           icon={<GithubIcon />}
-          label="GitHub"
+          label={t('explorerheadermenu.github')}
           onClick={run(() => {
             window.open(REPO_URL, '_blank', 'noopener,noreferrer');
           })}
@@ -125,7 +127,7 @@ export function ExplorerHeaderMenu({
           key="licences"
           plain
           icon={<ScaleIcon />}
-          label="Licences"
+          label={t('explorerheadermenu.licences')}
           onClick={run(() => {
             window.open('/licences', '_blank', 'noopener,noreferrer');
           })}
@@ -135,7 +137,7 @@ export function ExplorerHeaderMenu({
             key="settings"
             plain
             icon={<SettingsIcon />}
-            label="Settings"
+            label={t('explorerheadermenu.settings')}
             onClick={run(actions.onOpenSettings)}
           />
         ) : null,
@@ -149,7 +151,7 @@ export function ExplorerHeaderMenu({
     <>
       <EllipsisTriggerButton
         size="sm"
-        label="More"
+        label={t('explorerheadermenu.more')}
         expanded={anchor !== null}
         onClick={(e) => setAnchor(anchor ? null : e.currentTarget)}
       />

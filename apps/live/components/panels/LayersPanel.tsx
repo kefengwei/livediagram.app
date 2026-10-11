@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useRef, useState } from 'react';
 import { type Element, type Layer } from '@livediagram/document';
 import { useLayerThumbnails } from '@/hooks/ui/useLayerThumbnails';
@@ -92,6 +93,7 @@ export function LayersPanel({
   showPreview: boolean;
   showCount: boolean;
 } & Pick<MovablePanelPopoverProps, 'popoverOpen' | 'popoverAnchor' | 'onPopoverClose'>) {
+  const { t } = useTranslation();
   // Inline rename: which layer id is being edited. The draft text lives
   // inside InlineRenameInput, so a re-render of this panel mid-rename
   // cannot reach in and reset what has been typed.
@@ -194,7 +196,7 @@ export function LayersPanel({
   return (
     <MovablePanel
       helpArticle="layers"
-      title="Layers"
+      title={t('layerspanel.layers')}
       // A popover over its bottom-right cluster button (docs/specs/006-document/layers.md): never placed or dragged.
       position={null}
       defaultCorner="bottom-right"
@@ -237,17 +239,17 @@ export function LayersPanel({
         <div className="mt-2 flex items-center justify-between gap-1.5">
           <div className="flex gap-1.5">
             <HoverCard
-              title="Merge Up"
+              title={t('layerspanel.merge-up')}
               description={
                 canMergeUp
-                  ? 'Fold the active layer into the one above it.'
-                  : 'No layer above to merge into.'
+                  ? t('layerspanel.fold-the-active-layer-into-the')
+                  : t('layerspanel.no-layer-above-to-merge-into')
               }
             >
               <button
                 type="button"
                 disabled={!canMergeUp}
-                aria-label="Merge with the layer above"
+                aria-label={t('layerspanel.merge-with-the-layer-above')}
                 onClick={() => onMergeLayer('above')}
                 className="flex items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1 text-slate-500 transition hover:bg-slate-50 hover:text-slate-700 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200 dark:disabled:text-slate-600 dark:disabled:hover:bg-slate-900"
               >
@@ -255,17 +257,17 @@ export function LayersPanel({
               </button>
             </HoverCard>
             <HoverCard
-              title="Merge Down"
+              title={t('layerspanel.merge-down')}
               description={
                 canMergeDown
-                  ? 'Fold the active layer into the one below it.'
-                  : 'No layer below to merge into.'
+                  ? t('layerspanel.fold-the-active-layer-into-the-2')
+                  : t('layerspanel.no-layer-below-to-merge-into')
               }
             >
               <button
                 type="button"
                 disabled={!canMergeDown}
-                aria-label="Merge with the layer below"
+                aria-label={t('layerspanel.merge-with-the-layer-below')}
                 onClick={() => onMergeLayer('below')}
                 className="flex items-center justify-center rounded-md border border-slate-200 bg-white px-2 py-1 text-slate-500 transition hover:bg-slate-50 hover:text-slate-700 disabled:cursor-not-allowed disabled:text-slate-300 disabled:hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200 dark:disabled:text-slate-600 dark:disabled:hover:bg-slate-900"
               >
@@ -274,28 +276,26 @@ export function LayersPanel({
             </HoverCard>
           </div>
           <div className="flex gap-1.5">
-            <HoverCard title="Add Layer" description="Insert a new layer above the active one.">
+            <HoverCard title={t('layerspanel.add-layer')} description={t('layerspanel.insert-a-new-layer-above-the')}>
               <button
                 type="button"
                 onClick={onAddLayer}
                 className="flex items-center justify-center gap-1 rounded-md border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-600 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
               >
-                <PlusIcon />
-                Add
-              </button>
+                <PlusIcon />{t('layerspanel.add')}</button>
             </HoverCard>
             <HoverCard
-              title="Delete Layer"
+              title={t('layerspanel.delete-layer')}
               description={
                 layers.length <= 1
-                  ? 'The last layer can’t be deleted.'
-                  : 'Delete the active layer and everything on it.'
+                  ? t('layerspanel.the-last-layer-can-t-be')
+                  : t('layerspanel.delete-the-active-layer-and-everything')
               }
             >
               <button
                 type="button"
                 disabled={layers.length <= 1}
-                aria-label="Delete Layer"
+                aria-label={t('layerspanel.delete-layer-2')}
                 onClick={(e) => {
                   // Empty layers delete straight away; a populated one
                   // asks first via an anchored popover (docs/specs/006-document/layers.md).

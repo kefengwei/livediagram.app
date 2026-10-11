@@ -1,3 +1,4 @@
+import { useTranslation } from '@/lib/i18n';
 import type { StickerDef } from '@livediagram/icons';
 import { STICKER_CATEGORIES, STICKER_DND_MIME, stickersInCategory } from '@/lib/stickers';
 import { StickerArt } from '@/components/canvas/StickerView';
@@ -13,6 +14,7 @@ import { HoverCard } from '@livediagram/ui';
 // hover card, though — 220 small pictures can't tell you "Pleading face" from
 // "Weary face" on their own.
 function StickerTile({ sticker, onAdd }: { sticker: StickerDef; onAdd: (id: string) => void }) {
+  const { t } = useTranslation();
   // A badge pill takes two of the four columns: at one column's width its word
   // would be unreadable. The span lives on THIS wrapper, not on the button —
   // HoverCard wraps its child, so the button is a grandchild of the grid and a
@@ -20,7 +22,7 @@ function StickerTile({ sticker, onAdd }: { sticker: StickerDef; onAdd: (id: stri
   const wide = sticker.kind === 'badge';
   return (
     <div className={wide ? 'col-span-2 w-full' : ''}>
-      <HoverCard title={sticker.label} description="Click to add, or drag it onto the canvas.">
+      <HoverCard title={sticker.label} description={t('stickerpickertab.click-to-add-or-drag-it')}>
         <button
           type="button"
           aria-label={sticker.label}
@@ -62,6 +64,7 @@ export function StickerPickerTab({
   // empty then, so show a loading note rather than a false "no matches".
   loading?: boolean;
 }) {
+  const { t } = useTranslation();
   // Group artwork = the group's first sticker, the same "a category looks like
   // what it holds" rule the Icons and Tools tabs follow.
   const categories = STICKER_CATEGORIES.map((cat) => {
@@ -96,7 +99,7 @@ export function StickerPickerTab({
       query={stickerQuery}
       onQueryChange={setStickerQuery}
       searchInput={{
-        placeholder: 'Search stickers',
+        placeholder: t('stickerpickertab.search-stickers'),
         ariaLabel: 'Search stickers',
         clearAriaLabel: 'Clear sticker search',
         clearDescription: 'Clear the sticker search query.',

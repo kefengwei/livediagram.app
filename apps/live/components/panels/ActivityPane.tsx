@@ -9,6 +9,7 @@
 // sidebar badge reads the same list; this file only owns the section
 // order and the row -> editor hand-off.
 
+import { useTranslation } from '@/lib/i18n';
 import { useEffect } from 'react';
 import { track } from '@/lib/telemetry';
 import type { ActivityFeed } from '@/app/explorer/useActivityFeed';
@@ -24,6 +25,7 @@ import {
 } from './activity-pane-parts';
 
 export function ActivityPane({ feed }: { feed: ActivityFeed }) {
+  const { t } = useTranslation();
   // Once per visit to the section, not per fetch: the feed re-reads on
   // return-to-tab and a guest signing in, neither of which is a visit.
   useEffect(() => {
@@ -38,7 +40,7 @@ export function ActivityPane({ feed }: { feed: ActivityFeed }) {
   return (
     <div>
       {feed.assignedToMe.length > 0 ? (
-        <ActivitySection title="Assigned to You" count={feed.assignedToMe.length}>
+        <ActivitySection title={t('activitypane.assigned-to-you')} count={feed.assignedToMe.length}>
           {feed.assignedToMe.map((row) =>
             row.kind === 'card' ? (
               <ActivityCardRow
@@ -57,7 +59,7 @@ export function ActivityPane({ feed }: { feed: ActivityFeed }) {
         </ActivitySection>
       ) : null}
       {feed.youAssigned.length > 0 ? (
-        <ActivitySection title="You Assigned" count={feed.youAssigned.length}>
+        <ActivitySection title={t('activitypane.you-assigned')} count={feed.youAssigned.length}>
           {feed.youAssigned.map((a) => (
             <ActivityActionRow
               key={`${a.tabId}:${a.elementId}`}
@@ -68,7 +70,7 @@ export function ActivityPane({ feed }: { feed: ActivityFeed }) {
         </ActivitySection>
       ) : null}
       {feed.threads.length > 0 ? (
-        <ActivitySection title="Open Comment Threads" count={feed.threads.length}>
+        <ActivitySection title={t('activitypane.open-comment-threads')} count={feed.threads.length}>
           {feed.threads.map((t) =>
             t.kind === 'card' ? (
               <ActivityCardThreadRow

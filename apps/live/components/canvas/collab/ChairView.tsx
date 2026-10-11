@@ -1,4 +1,5 @@
 'use client';
+import { useTranslation } from '@/lib/i18n';
 
 import { IDENTITY_FILL, identityVars } from '@livediagram/ui';
 import {
@@ -42,6 +43,7 @@ export function ChairView({
   // rather than on the svg, whose `transform` already carries the facing.
   animClass?: string;
 }) {
+  const { t } = useTranslation();
   const stroke = element.strokeColor ?? '#94a3b8';
   // The seat's surface. `transparent` is the element default (the chair is
   // furniture, not a box), so it falls back to a wash of its own STROKE —
@@ -74,7 +76,7 @@ export function ChairView({
         style={{ transform: `rotate(${CHAIR_FACING_ROTATION[facing]}deg)` }}
         role="img"
         aria-label={
-          occupied ? `Chair, ${sitters.map((s) => s.name).join(' and ')} sitting` : 'Empty chair'
+          occupied ? `Chair, ${sitters.map((s) => s.name).join(' and ')} sitting` : t('chairview.empty-chair')
         }
       >
         {/* Contact shadow, so the chair sits ON the canvas rather than

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import type { ReactNode } from 'react';
 import { BrandMark, Glyph } from '@livediagram/ui';
 import { PlacementCard } from '@/components/placement/PlacementCard';
@@ -17,11 +18,12 @@ export function SaveLocationPicker({
   value: SaveLocationId;
   onChange: (v: SaveLocationId) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div
       className="grid grid-cols-3 gap-2 sm:grid-cols-4"
       role="radiogroup"
-      aria-label="Save location"
+      aria-label={t('savelocationpicker.save-location')}
     >
       {SAVE_LOCATIONS.map((loc) => (
         <PlacementCard

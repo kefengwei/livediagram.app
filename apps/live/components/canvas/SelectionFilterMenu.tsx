@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import { elementKindLabel, type Element } from '@livediagram/document';
 import { PortalMenu } from '@/components/primitives/PortalMenu';
@@ -66,6 +67,7 @@ type SelectionFilterMenuProps = {
 // to just its Arrows / Squares / Text in a click. Hidden when there's nothing
 // to narrow (a single-kind selection).
 export function SelectionFilterMenu({ selectedElements, onFilter }: SelectionFilterMenuProps) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   // The button the menu anchors to, held in state so the menu has it on the render that opens it.
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
@@ -76,12 +78,12 @@ export function SelectionFilterMenu({ selectedElements, onFilter }: SelectionFil
 
   return (
     <>
-      <HoverCard title="Filter Selection" description="Keep only one kind of element.">
+      <HoverCard title={t('selectionfiltermenu.filter-selection')} description={t('selectionfiltermenu.keep-only-one-kind-of-element')}>
         <button
           ref={setAnchor}
           type="button"
           onClick={() => setOpen((v) => !v)}
-          aria-label="Filter selection by type"
+          aria-label={t('selectionfiltermenu.filter-selection-by-type')}
           aria-haspopup="menu"
           aria-expanded={open}
           className={open ? TOOLBAR_BTN_ON : TOOLBAR_BTN}

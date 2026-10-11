@@ -6,6 +6,7 @@
 // a themed card as over the comment popover. Pointer-down keeps focus in the
 // field (the pick writes into it) and never starts a canvas drag.
 
+import { useTranslation } from '@/lib/i18n';
 import { Chip, GlyphDisc, SOLID_BRAND_DARK } from '@livediagram/ui';
 import { initialsOf } from '@/lib/identity';
 import type { MentionCandidate } from '@/hooks/collab/useCommentMentions';
@@ -21,6 +22,7 @@ export function MentionMenu({
   hint: string | null;
   onPick: (index: number) => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div
       onPointerDown={(e) => {
@@ -32,7 +34,7 @@ export function MentionMenu({
       {hint ? (
         <p className="px-2 py-1.5 text-[11px] text-slate-500 dark:text-slate-400">{hint}</p>
       ) : (
-        <ul role="listbox" aria-label="Mention a teammate" className="flex flex-col gap-0.5">
+        <ul role="listbox" aria-label={t('mentionmenu.mention-a-teammate')} className="flex flex-col gap-0.5">
           {items.map((c, i) => (
             <li
               key={c.memberId}
@@ -64,9 +66,7 @@ export function MentionMenu({
                 </span>
               </span>
               {c.pending ? (
-                <Chip className="bg-amber-100 px-1.5 text-[9px] font-semibold text-amber-800 dark:bg-amber-500/15 dark:text-amber-300">
-                  Invited
-                </Chip>
+                <Chip className="bg-amber-100 px-1.5 text-[9px] font-semibold text-amber-800 dark:bg-amber-500/15 dark:text-amber-300">{t('mentionmenu.invited')}</Chip>
               ) : null}
             </li>
           ))}

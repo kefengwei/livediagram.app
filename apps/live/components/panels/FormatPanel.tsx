@@ -9,6 +9,7 @@
 // press hopefully — and with the toggles in play, "why didn't that copy the
 // fill?" is a question the panel should answer before it is asked.
 
+import { useTranslation } from '@/lib/i18n';
 import { useState } from 'react';
 import {
   formatCopiesSummary,
@@ -35,6 +36,7 @@ function BrushPreview({
   config: FormatConfig;
   source: { name: string; fill?: string; stroke?: string; textColor?: string } | null;
 }) {
+  const { t } = useTranslation();
   const on = config.copies;
   return (
     <div className="mb-1 flex items-center gap-2 rounded-lg bg-slate-50 px-2 py-2 dark:bg-slate-800/60">
@@ -49,15 +51,13 @@ function BrushPreview({
           color: on.text ? (source?.textColor ?? '#0f172a') : '#cbd5e1',
           opacity: source ? 1 : 0.5,
         }}
-      >
-        Aa
-      </span>
+      >{t('formatpanel.aa')}</span>
       <span className="min-w-0">
         <span className="block truncate text-[11px] font-semibold text-slate-700 dark:text-slate-200">
-          {source ? source.name : 'Nothing loaded'}
+          {source ? source.name : t('formatpanel.nothing-loaded')}
         </span>
         <span className="block truncate text-[10px] text-slate-500 dark:text-slate-400">
-          {source ? `Copies: ${formatCopiesSummary(config)}` : 'Pick something to copy from'}
+          {source ? `Copies: ${formatCopiesSummary(config)}` : t('formatpanel.pick-something-to-copy-from')}
         </span>
       </span>
     </div>
@@ -77,20 +77,21 @@ export function FormatPanel({
   // The loaded element, described for the preview. Null until one is picked.
   source: { name: string; fill?: string; stroke?: string; textColor?: string } | null;
 } & ModePanelProps) {
+  const { t } = useTranslation();
   const [openRow, setOpenRow] = useState<Row | null>(null);
   const toggle = (row: Row) => setOpenRow((r) => (r === row ? null : row));
   const paintsAnything = formatPaintsAnything(config);
   const mode = FORMAT_MODES.find((m) => m.id === config.mode);
 
   return (
-    <ModePanel helpArticle="formatPainter" title="Format" {...placement}>
+    <ModePanel helpArticle="formatPainter" title={t('formatpanel.format')} {...placement}>
       <div className="flex flex-col px-2 pb-2">
         <BrushPreview config={config} source={source} />
         <div className="divide-y divide-slate-100 dark:divide-slate-800">
           {/* Copies is a MULTI-select, so the options are checkboxes rather
               than the radio rows the other panels use: the groups combine. */}
           <AccordionSection
-            title="Copies"
+            title={t('formatpanel.copies')}
             open={openRow === 'copies'}
             onToggle={() => toggle('copies')}
             headerClassName="flex w-full items-center justify-between gap-2 py-1.5 text-left"
@@ -133,7 +134,7 @@ export function FormatPanel({
             </div>
           </AccordionSection>
           <AccordionSection
-            title="After painting"
+            title={t('formatpanel.after-painting')}
             open={openRow === 'mode'}
             onToggle={() => toggle('mode')}
             headerClassName="flex w-full items-center justify-between gap-2 py-1.5 text-left"
@@ -146,7 +147,7 @@ export function FormatPanel({
               </span>
             }
           >
-            <div className="flex flex-wrap gap-1" role="radiogroup" aria-label="After painting">
+            <div className="flex flex-wrap gap-1" role="radiogroup" aria-label={t('formatpanel.after-painting-2')}>
               {FORMAT_MODES.map((option) => {
                 const active = option.id === config.mode;
                 return (
@@ -178,8 +179,8 @@ export function FormatPanel({
           }`}
         >
           {paintsAnything
-            ? 'Labels, links and comments are never copied, only the look.'
-            : 'Nothing is turned on, so the brush has nothing to paint.'}
+            ? t('formatpanel.labels-links-and-comments-are-never')
+            : t('formatpanel.nothing-is-turned-on-so-the')}
         </p>
       </div>
     </ModePanel>

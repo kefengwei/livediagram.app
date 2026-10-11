@@ -3,6 +3,7 @@
 // but not what, and one Reveal turns every card face up with the spread called
 // out. Built in the behaviour elements' current look ("The look").
 
+import { useTranslation } from '@/lib/i18n';
 import {
   estimateScalePending,
   estimateValues,
@@ -48,6 +49,7 @@ export function EstimateFace({
   // Sets a new card's scale from the chooser it shows until one is picked.
   onChooseScale?: (scale: EstimateScale) => void;
 }) {
+  const { t } = useTranslation();
   const responses = element.responses ?? [];
   const revealed = element.responsesRevealed === true;
   const inRoom = Math.max(participants.length, responses.length);
@@ -70,14 +72,10 @@ export function EstimateFace({
                 onPress={() => onSetRevealed(true)}
                 icon={<EyeGlyph />}
                 count={responses.length}
-              >
-                Reveal
-              </AccentBar>
+              >{t('estimateface.reveal')}</AccentBar>
             ) : null}
             {revealed && onClear ? (
-              <AccentBar onPress={onClear} icon={<ReopenGlyph />}>
-                New round
-              </AccentBar>
+              <AccentBar onPress={onClear} icon={<ReopenGlyph />}>{t('estimateface.new-round')}</AccentBar>
             ) : null}
           </>
         }

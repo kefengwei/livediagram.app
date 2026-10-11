@@ -10,6 +10,7 @@
 // restricted eraser that looks identical to an unrestricted one is how someone
 // concludes the eraser is broken.
 
+
 import { useState } from 'react';
 import {
   eraserRadius,
@@ -20,6 +21,7 @@ import {
 } from '@/lib/eraser-config';
 import { ToolOptionRow } from '@/components/panels/ToolOptionRow';
 import { ModePanel, type ModePanelProps } from '@/components/panels/ModePanel';
+import { useTranslation } from '@/lib/i18n';
 
 type Row = 'mode' | 'size' | 'target';
 
@@ -27,6 +29,8 @@ type Row = 'mode' | 'size' | 'target';
 // rather than a word. Capped to the preview box: a 72px radius is bigger than
 // the panel is tall, and a preview that overflows teaches nothing.
 function BrushPreview({ config }: { config: EraserConfig }) {
+  
+  
   const radius = Math.min(eraserRadius(config), 26);
   const filtered = config.target !== 'anything';
   return (
@@ -59,16 +63,18 @@ export function EraserPanel({
   config: EraserConfig;
   onChange: <K extends keyof EraserConfig>(field: K, value: EraserConfig[K]) => void;
 } & ModePanelProps) {
+  const { t } = useTranslation();
+  
   const [openRow, setOpenRow] = useState<Row | null>(null);
   const toggle = (row: Row) => setOpenRow((r) => (r === row ? null : row));
 
   return (
-    <ModePanel helpArticle="eraser" title="Eraser" {...placement}>
+    <ModePanel helpArticle="eraser" title={t('eraserpanel.eraser')} {...placement}>
       <div className="flex flex-col px-2 pb-2">
         <BrushPreview config={config} />
         <div className="divide-y divide-slate-100 dark:divide-slate-800">
           <ToolOptionRow
-            label="Mode"
+            label={t('eraserpanel.mode')}
             options={ERASER_MODES}
             value={config.mode}
             open={openRow === 'mode'}
@@ -76,7 +82,7 @@ export function EraserPanel({
             onPick={(id) => onChange('mode', id)}
           />
           <ToolOptionRow
-            label="Size"
+            label={t('eraserpanel.size')}
             options={ERASER_SIZES}
             value={config.size}
             open={openRow === 'size'}
@@ -84,7 +90,7 @@ export function EraserPanel({
             onPick={(id) => onChange('size', id)}
           />
           <ToolOptionRow
-            label="Erases"
+            label={t('eraserpanel.erases')}
             options={ERASER_TARGETS}
             value={config.target}
             open={openRow === 'target'}
@@ -94,7 +100,7 @@ export function EraserPanel({
         </div>
         <p className="px-1 pt-1.5 text-[10px] leading-snug text-slate-400">
           {config.target === 'anything'
-            ? 'Locked elements and locked layers are never erased. One sweep is one undo.'
+            ? t('eraserpanel.locked-elements-and-locked-layers-are')
             : `Erasing ${config.target === 'drawings' ? 'drawings' : 'arrows'} only; everything else is safe from the brush.`}
         </p>
       </div>

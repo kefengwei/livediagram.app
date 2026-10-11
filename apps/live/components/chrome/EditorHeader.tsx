@@ -10,6 +10,8 @@ import {
   safeInset,
 } from '@livediagram/ui';
 import { AuthControls } from '@/components/chrome/AuthControls';
+import { LanguageToggle } from '@/components/chrome/LanguageToggle';
+import { useTranslation } from '@/lib/i18n';
 import { SharedBadge } from '@/components/chrome/SharedBadge';
 import { HEADER_ACTION_BTN, HeaderGlyph } from '@/components/chrome/header-action';
 
@@ -89,6 +91,7 @@ export function EditorHeader({
   renameNonce = 0,
   rolePill,
 }: EditorHeaderProps) {
+  const { t } = useTranslation();
   const [editing, setEditing] = useState(false);
 
   // The command palette requests a rename by bumping renameNonce. Each request is
@@ -138,7 +141,10 @@ export function EditorHeader({
                 {documentName}
               </span>
             ) : (
-              <HoverCard title="Rename document" description="Click to edit the name.">
+              <HoverCard
+                title={t('header.rename.title')}
+                description={t('header.rename.description')}
+              >
                 <button
                   type="button"
                   onClick={() => setEditing(true)}
@@ -164,7 +170,7 @@ export function EditorHeader({
           the bar (the -mr-4 cancels the header's right padding). */}
       <div className="-mr-4 flex items-stretch self-stretch">
         {onMakeCopy ? (
-          <HoverCard title="Make a copy" description="Duplicate this document into your own files.">
+          <HoverCard title={t('header.copy.title')} description={t('header.copy.description')}>
             <button
               type="button"
               onClick={onMakeCopy}
@@ -174,14 +180,16 @@ export function EditorHeader({
               <HeaderGlyph>
                 <CopyIcon />
               </HeaderGlyph>
-              {copying ? 'Copying' : 'Copy'}
+              {copying ? t('header.copy.busy') : t('header.copy.label')}
             </button>
           </HoverCard>
         ) : null}
         {showShare ? (
           <HoverCard
-            title={shareable ? 'Shared' : 'Share'}
-            description={shareable ? 'Click to manage links.' : 'Invite collaborators with a link.'}
+            title={shareable ? t('header.share.titleShared') : t('header.share.title')}
+            description={
+              shareable ? t('header.share.descriptionShared') : t('header.share.description')
+            }
           >
             <button
               type="button"
@@ -200,13 +208,16 @@ export function EditorHeader({
                   verb changing to "Shared". State is communicated by the
                   brand-500 fill + aria-pressed flip + the green SharedBadge by
                   the title. */}
-              <span>Share</span>
+              <span>{t('header.share.label')}</span>
             </button>
           </HoverCard>
         ) : null}
         {/* Explorer + Help used to sit here as top-right links; both now live
             in the ProductNav apps menu next to the logo, so the header keeps
             just its primary actions. */}
+        <div className="flex items-center pr-3 pl-1">
+          <LanguageToggle />
+        </div>
         <AuthControls onOpenAccount={onOpenAccount} />
       </div>
     </header>
